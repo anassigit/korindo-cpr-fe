@@ -132,7 +132,7 @@ function* fetchEditServiceMember({ payload: req }) {
   }
 }
 
-function* ssoSaga() {
+function* rekomendasiSaga() {
 
   yield takeEvery(GET_DEPT, fetchGetDept)
   yield takeEvery(GET_DETAIL_DEPT, fetchGetDetailDept)
@@ -147,4 +147,4 @@ function* ssoSaga() {
 
 }
 
-export default ssoSaga
+export default rekomendasiSaga

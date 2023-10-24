@@ -14,11 +14,11 @@ const Authmiddleware = ({
   <Route
     {...rest}
     render={props => {
+      debugger
       const queryParameters = new URLSearchParams(window.location.search)
       const korToken = queryParameters.get("KOR_TOKEN")
 
       if (korToken && !localStorage.getItem("authUser")) {
-        debugger
         localStorage.setItem('authUser', korToken)
         window.location.reload()
       }
@@ -31,7 +31,7 @@ const Authmiddleware = ({
         }
         return (
           <Redirect
-            to={{ pathname: "/", state: { from: props.location } }}
+            to={{ pathname: "/login", state: { from: props.location } }}
           />
         )
       }

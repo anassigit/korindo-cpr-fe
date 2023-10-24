@@ -594,16 +594,16 @@ body[data-sidebar="greatwhale"] {
   }
 
   .mm-active {
-    color: $white !important;
+    color: $dark !important;
     > a {
-      color: $white !important;
+      color: $dark !important;
       i {
-        color: $white !important;
+        color: $dark !important;
       }
     }
     > i,
     .active {
-      color: $white !important;
+      color: $dark !important;
     }
   }
 
@@ -611,25 +611,25 @@ body[data-sidebar="greatwhale"] {
     ul {
       li {
         &.menu-title {
-          color: rgba($white, 0.6);
+          color: rgba($dark, 0.8);
         }
 
         a {
-          color: rgba($white, 0.6);
+          color: rgba($dark, 0.8);
           i {
-            color: rgba($white, 0.6);
+            color: rgba($dark, 0.8);
           }
           &.waves-effect {
             .waves-ripple {
-              background: rgba($white, 0.1);
+              background: rgba($dark, 0.1);
             }
           }
 
           &:hover {
-            color: $white;
+            color: $dark;
 
             i {
-              color: $white;
+              color: $dark;
             }
           }
         }
@@ -637,9 +637,9 @@ body[data-sidebar="greatwhale"] {
         ul.sub-menu {
           li {
             a {
-              color: rgba($white, 0.5);
+              color: rgba($dark, 0.5);
               &:hover {
-                color: $white;
+                color: $dark;
               }
             }
           }
@@ -654,9 +654,9 @@ body[data-sidebar="greatwhale"] {
         > ul {
           > li {
             &:hover > a {
-              color: $white;
+              color: $dark;
               i {
-                color: $white;
+                color: $dark;
               }
             }
           }
@@ -701,19 +701,19 @@ body[data-sidebar="greatwhale"] {
 }
 body[data-sidebar="colored"] {
   .vertical-menu {
-    background-color: $primary;
+    background-color: $light;
   }
 
   &.vertical-collpsed {
     .vertical-menu {
       .navbar-brand-box {
-        background-color: $primary;
+        background-color: $light;
       }
       #sidebar-menu {
         > ul {
           > li {
             &:hover > a {
-              background-color: lighten($primary, 2%);
+              background-color: lighten($light, 2%);
             }
           }
         }

@@ -25,9 +25,9 @@ const ProfileMenu = props => {
 
   useEffect(() => {
     
-    if (ReactSession.get("user")) {
-        const u = JSON.parse(ReactSession.get("user"))
-        setusername(u.userFisrtNm)
+    if (localStorage.getItem("user")) {
+        const u = localStorage.getItem("user")
+        setusername(u)
     }
   }, [props.success])
 
@@ -41,7 +41,7 @@ const ProfileMenu = props => {
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"
-          style={{borderLeft : "2px solid rgb(243 103 4)"}}
+          style={{borderLeft : "2px solid #2596BE"}}
           tag="button"
         >
           <img

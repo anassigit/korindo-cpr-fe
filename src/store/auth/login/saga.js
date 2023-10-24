@@ -5,25 +5,26 @@ import { ReactSession } from 'react-client-session';
 import { LOGIN_USER, LOGOUT_USER, RELOGIN_USER } from "./actionTypes"
 import { apiError, loginSuccess, reloginSuccess } from "./actions"
 
-import { login, getMenu} from "helpers/backend_helper"
+import { login } from "helpers/backend_helper"
 
 function* loginUser({ payload: { user, history } }) {
   try {
-      const response = yield call(login, user);
-      if(response.status == 1){
-        localStorage.setItem("authUser", response.data.KOR_TOKEN);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        const res = yield call(getMenu)
-       
-        
-        if(res.status == 1){
-          ReactSession.set("menu", JSON.stringify(res.data.menu));
-        }
-        history.push("/home");
-        yield put(loginSuccess(response));
-      }else{
-        yield put(apiError(response.listmessage))
-      }
+    debugger
+    const response = yield call(login, user);
+    if (response.status == 1) {
+      localStorage.setItem("authUser", response.data.KOR_TOKEN);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      // const res = yield call(getMenu)
+
+      // if (res.status == 1) {
+      //   ReactSession.set("menu", JSON.stringify(res.data.menu));
+      // }
+
+      history.push("/home");
+      yield put(loginSuccess(response));
+    } else {
+      yield put(apiError(response.listmessage))
+    }
   } catch (error) {
     yield put(apiError(error))
   }
@@ -31,16 +32,16 @@ function* loginUser({ payload: { user, history } }) {
 
 function* reloginUser({ payload: { user, history } }) {
   try {
-      const response = yield call(login, user);
-      if(response.status == 1){
-        localStorage.setItem("authUser", response.data.KOR_TOKEN);
-        ReactSession.set("user", JSON.stringify(response.data.user));
-        yield put(reloginSuccess(response));
-        document.getElementById("reloginForm").style.display = "none";
-        yield put(apiError(''))
-      }else{
-        yield put(apiError("Username and password tidak sesuai"))
-      }
+    const response = yield call(login, user);
+    if (response.status == 1) {
+      localStorage.setItem("authUser", response.data.KOR_TOKEN);
+      ReactSession.set("user", JSON.stringify(response.data.user));
+      yield put(reloginSuccess(response));
+      document.getElementById("reloginForm").style.display = "none";
+      yield put(apiError(''))
+    } else {
+      yield put(apiError("Username and password tidak sesuai"))
+    }
   } catch (error) {
     yield put(apiError(error))
   }

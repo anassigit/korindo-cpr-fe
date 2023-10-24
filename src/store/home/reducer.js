@@ -33,7 +33,7 @@ const INIT_STATE = {
   msgEdit: '',
 }
 
-const ssoReducer = (state = INIT_STATE, action) => {
+const rekomendasiReducer = (state = INIT_STATE, action) => {
 
   switch (action.type) {
     case GET_DEPT:
@@ -138,4 +138,4 @@ const ssoReducer = (state = INIT_STATE, action) => {
   }
 }
 
-export default ssoReducer
+export default rekomendasiReducer

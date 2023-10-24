@@ -6,11 +6,12 @@ import Login from "../pages/Authentication/Login"
 import Logout from "../pages/Authentication/Logout"
 
 // Dashboard
-import Rekomendasi from "pages/Home/Rekomendasi"
+import Rekomendasi from "pages/Rekomendasi/Rekomendasi"
+import Dashboard from "pages/Dashboard/Dashboard"
 
 const authProtectedRoutes = [
 
-  { path: "/home", component: Rekomendasi},
+  { path: "/home", component: Dashboard},
   
   
   // this route should be at the end of all other routes

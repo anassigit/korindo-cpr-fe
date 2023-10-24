@@ -3,9 +3,9 @@ import { saveAs } from 'file-saver';
 import { ReactSession } from 'react-client-session';
 
 //apply base url for axios
-var API_URL = "http://localhost:9002/kth";
+var API_URL = "http://localhost:9013/cpr";
 if(process.env.REACT_APP_APIKEY === "development"){
-  API_URL = "http://192.168.0.29:9002/kth";
+  API_URL = "http://192.168.0.29:9013/cpr";
 }else if(process.env.REACT_APP_APIKEY === "production"){
   API_URL = "http://10.10.20.94:9002/kth";
 }
@@ -20,7 +20,7 @@ axiosApi.interceptors.response.use(
 );
 
 export async function postLogin(url, data, config = {}) {
-  axiosApi.defaults.headers.common["Authorization"] = 'Basic ' + btoa(data.nik + ':' + data.password);
+  axiosApi.defaults.headers.common["Authorization"] = 'Basic ' + btoa(data.username + ':' + data.password);
   return axiosApi
     .post(url, { ...data }, { ...config })
     .then(response => response.data);
@@ -41,6 +41,25 @@ export async function getWithParam(url, data, config = { responseType: 'blob' })
       return responseError(response);
     })
 }
+
+
+export async function postWithParam(url, data, config = {}) {
+  axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");
+
+  // Create a custom encoder that doesn't encode square brackets
+  const customEncoder = (key, value) => {
+    return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+  };
+
+  // Serialize the data using the custom encoder
+  const queryString = $.param(data, customEncoder);
+
+  return await axiosApi.post(url + "?" + queryString, { ...config })
+    .then(function (response) {
+      return responseError(response);
+    });
+}
+
 
 export async function post(url, data, config = {}) {
   axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");

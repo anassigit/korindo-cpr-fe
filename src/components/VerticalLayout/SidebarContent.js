@@ -23,7 +23,6 @@ const SidebarContent = props => {
 
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
-    validateToken()
     const pathName = props.location.pathname
     new MetisMenu("#side-menu")
     let matchingMenuItem = null
@@ -42,13 +41,13 @@ const SidebarContent = props => {
     }
   }, [props.location.pathname])
 
-  const validateToken = useCallback(async () => {
-    const response = await cekToken();
-    if (response.status != 1) {
-      localStorage.setItem("authUser", "");
-      localStorage.setItem("user", "");
-    }
-  })
+  // const validateToken = useCallback(async () => {
+  //   const response = await cekToken();
+  //   if (response.status != 1) {
+  //     localStorage.setItem("authUser", "");
+  //     localStorage.setItem("user", "");
+  //   }
+  // })
 
   useEffect(() => {
     ref.current.recalculate()
