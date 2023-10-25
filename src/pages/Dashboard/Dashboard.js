@@ -96,7 +96,7 @@ const Rekomendasi = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setBlinker(false);
-        }, 200);
+        }, 2);
 
         return () => {
             clearInterval(intervalId);
@@ -319,13 +319,59 @@ const Rekomendasi = () => {
                                             <CardHeader>
                                                 <span className="mdi mdi-star-circle"></span> Employee of the Year
                                             </CardHeader>
-                                            <CardBody style={{ padding: 0, margin: 0, backgroundColor: "transparent" }}>
-                                                <Row
-                                                    className="d-flex justify-content-between py-1"
+                                            <CardBody style={{ padding: 0, margin: 0, backgroundColor: "transparent", display: "flex", justifyContent: "center" }}>
+                                                <div
+                                                    className="d-flex justify-content-between py-2"
                                                     style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
                                                 >
-                                                    texst
-                                                </Row>
+                                                    <a className="arrow-left" style={{ position: "absolute", left: 0, top: '19.2%', height: "80.6%", width: "12%", zIndex: 2 }}>
+                                                        <span className="mdi mdi-chevron-left" style={{ position: "absolute", left: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
+                                                    </a>
+                                                    <Card
+                                                        className="fade-in"
+                                                        hidden={blinker}
+                                                        style={{
+                                                            width: "25vw",
+                                                            height: "150px",
+                                                            overflow: "hidden",
+                                                        }}>
+                                                        <CardBody
+                                                            style={{
+                                                                display: "flex",
+                                                                padding: "10px",
+                                                                justifyContent: "center",
+                                                                alignItems: "center",
+                                                                height: "100%",
+                                                            }}>
+                                                            <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
+                                                            <div
+                                                                style={{
+                                                                    minWidth: "10em",
+                                                                    maxWidth: "10em",
+                                                                    height: "10em",
+                                                                    borderRadius: "50%",
+                                                                    marginRight: "5%",
+                                                                    backgroundImage: 'url("https://dummyimage.com/600x600/000/fff")',
+                                                                    backgroundSize: "cover",
+                                                                }}
+                                                            ></div>
+                                                            <Col style={{
+                                                                display: 'flex',
+                                                                flexDirection: 'column',
+                                                                alignItems: 'flex-start',
+                                                                gap: '8px',
+                                                                maxWidth: "60%"
+                                                            }}>
+                                                                <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>Annas Sigit Adityo Mulyo</div>
+                                                                <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>lorem ipsum</div>
+                                                                <div style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>Appreciation Name</div>
+                                                            </Col>
+                                                        </CardBody>
+                                                    </Card>
+                                                    <a className="arrow-right" style={{ position: "absolute", right: 0, top: '19.2%', height: "80.6%", width: "12%", zIndex: 2 }}>
+                                                        <span className="mdi mdi-chevron-right" style={{ position: "absolute", right: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
+                                                    </a>
+                                                </div>
                                             </CardBody>
                                         </Card>
                                     </div>

@@ -40,69 +40,69 @@ const Rekomendasi = () => {
 
   const [appMemberList, setMemberList] = useState();
 
-  // const appDeptData = useSelector((state) => state.rekomendasiReducer.respGetDept);
-  // const appSearchData = useSelector((state) => state.rekomendasiReducer.respGetSearch);
+  const appDeptData = useSelector((state) => state.rekomendasiReducer.respGetDept);
+  const appSearchData = useSelector((state) => state.rekomendasiReducer.respGetSearch);
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (ReactSession.get('collapser')) {
-  //     setCollapser(ReactSession.get('collapser'))
-  //   }
-  //   if (ReactSession.get('selectedDeptData')) {
-  //     setSelectedDeptData(ReactSession.get('selectedDeptData'))
-  //   }
-  //   if (ReactSession.get('selectedMemberData')) {
-  //     setSelectedMemberData(ReactSession.get('selectedMemberData'))
-  //   }
+    if (ReactSession.get('collapser')) {
+      setCollapser(ReactSession.get('collapser'))
+    }
+    if (ReactSession.get('selectedDeptData')) {
+      setSelectedDeptData(ReactSession.get('selectedDeptData'))
+    }
+    if (ReactSession.get('selectedMemberData')) {
+      setSelectedMemberData(ReactSession.get('selectedMemberData'))
+    }
 
-  //   if (ReactSession.get('selectedDeptData')) {
-  //     dispatch(getDetailDeptData({ dept_id: ReactSession.get('selectedDeptData') }));
-  //   }
+    if (ReactSession.get('selectedDeptData')) {
+      dispatch(getDetailDeptData({ dept_id: ReactSession.get('selectedDeptData') }));
+    }
 
-  //   dispatch(getDeptData())
-  //   setLoadingSpinner(true)
-  // }, [])
+    dispatch(getDeptData())
+    setLoadingSpinner(true)
+  }, [])
 
-  // useEffect(() => {
-  //   dispatch(resetMessage())
-  // }, [dispatch])
+  useEffect(() => {
+    dispatch(resetMessage())
+  }, [dispatch])
 
-  // useEffect(() => {
-  //   if (appDeptData.status == '1') {
-  //     setLoadingSpinner(false)
-  //   } else if (appDeptData.status == '0') {
-  //     setLoadingSpinner(true)
-  //   }
-  // }, [appDeptData])
+  useEffect(() => {
+    if (appDeptData.status == '1') {
+      setLoadingSpinner(false)
+    } else if (appDeptData.status == '0') {
+      setLoadingSpinner(true)
+    }
+  }, [appDeptData])
 
-  // useEffect(() => {
-  //   setSelectedDeptData(null)
-  //   if (appSearchData.status === '1' && searchVal) {
-  //     setMemberList(appSearchData)
-  //     setSearchEntered(true)
-  //   }
-  // }, [appSearchData])
+  useEffect(() => {
+    setSelectedDeptData(null)
+    if (appSearchData.status === '1' && searchVal) {
+      setMemberList(appSearchData)
+      setSearchEntered(true)
+    }
+  }, [appSearchData])
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (selectedDeptData) {
-  //     setSearchEntered(false)
-  //     ReactSession.set('collapser', collapser)
-  //     ReactSession.remove('selectedMemberData')
-  //   } else {
-  //     setSelectedDeptData(ReactSession.get('selectedDeptData'))
-  //   }
-  // }, [selectedDeptData])
+    if (selectedDeptData) {
+      setSearchEntered(false)
+      ReactSession.set('collapser', collapser)
+      ReactSession.remove('selectedMemberData')
+    } else {
+      setSelectedDeptData(ReactSession.get('selectedDeptData'))
+    }
+  }, [selectedDeptData])
 
-  // useEffect(() => {
-  //   if (searchEntered === true) {
-  //     setOffset(0)
-  //     setLimit(10)
-  //     setCurrentPage(1)
-  //     ReactSession.set('searchVal', searchVal)
-  //     ReactSession.set('selectedDeptData', null)
-  //   }
-  // }, [searchEntered])
+  useEffect(() => {
+    if (searchEntered === true) {
+      setOffset(0)
+      setLimit(10)
+      setCurrentPage(1)
+      ReactSession.set('searchVal', searchVal)
+      ReactSession.set('selectedDeptData', null)
+    }
+  }, [searchEntered])
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -184,9 +184,9 @@ const Rekomendasi = () => {
                       style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", width: "20%", height: "85vh", overflowX: "auto", overflowY: "auto" }}
                     >
 
-                      {/* {
-                    Array.isArray(appDeptData?.data?.list)
-                      ? appDeptData?.data?.list.map((item, index) => {
+                      {
+                    Array.isArray(appDeptData?.data?.result)
+                      ? appDeptData?.data?.result.map((item, index) => {
                         return (
                           <React.Fragment key={index}>
                             {item.parent_id === 'Top' ? (
@@ -210,7 +210,7 @@ const Rekomendasi = () => {
                                     }
                                   >
                                     &nbsp;
-                                    {item.name}
+                                    {item.dept_name}
                                   </a>
                                 </Col>
                               </Row>
@@ -233,14 +233,14 @@ const Rekomendasi = () => {
                               ></span>
                               &nbsp;
                               <span className="mdi mdi-domain"></span>
-                              <a style={{ fontWeight: (collapser["0"] || selectedDeptData === appDeptData?.data?.list?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                              <a style={{ fontWeight: (collapser["0"] || selectedDeptData === appDeptData?.data?.result?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                 className="unselectable-two"
                                 onClick={(e) => {
 
                                   dispatch(getMemberDetailData({ member_id: '' }))
-                                  dispatch(getDetailDeptData({ dept_id: appDeptData?.data?.list?.dept_id }));
+                                  dispatch(getDetailDeptData({ dept_id: appDeptData?.data?.result?.dept_id }));
                                   let dept_id = ''
-                                  dept_id = appDeptData?.data?.list?.dept_id
+                                  dept_id = appDeptData?.data?.result?.dept_id
                                   ReactSession.remove('selectedMemberData')
                                   ReactSession.set('selectedMemberData')
                                   setSelectedDeptData(dept_id)
@@ -249,14 +249,14 @@ const Rekomendasi = () => {
                                 }
                               >
                                 &nbsp;
-                                {appDeptData?.data?.list?.name}
+                                {appDeptData?.data?.result?.dept_name}
                               </a>
                             </Col>
                           </Row>
                           {
                             collapser["0"] === true &&
-                              Array.isArray(appDeptData?.data?.list?.childList)
-                              ? appDeptData?.data?.list?.childList.map((childItem, childIndex) => {
+                              Array.isArray(appDeptData?.data?.result?.childList)
+                              ? appDeptData?.data?.result?.childList.map((childItem, childIndex) => {
                                 return (
                                   <React.Fragment key={childIndex}>
                                     <Row style={{ marginBottom: "8px" }}>
@@ -291,7 +291,7 @@ const Rekomendasi = () => {
                                           }
                                         >
                                           &nbsp;
-                                          {childItem.name}
+                                          {childItem.dept_name}
                                         </a>
                                       </Col>
                                     </Row>
@@ -334,7 +334,7 @@ const Rekomendasi = () => {
                                                     }
                                                   >
                                                     &nbsp;
-                                                    {childItem2.name}
+                                                    {childItem2.dept_name}
                                                   </a>
                                                 </Col>
                                               </Row>
@@ -375,7 +375,7 @@ const Rekomendasi = () => {
                                                             }
                                                           >
                                                             &nbsp;
-                                                            {childItem3.name}
+                                                            {childItem3.dept_name}
                                                           </a>
                                                         </Col>
                                                       </Row>
@@ -415,7 +415,7 @@ const Rekomendasi = () => {
                                                                     }
                                                                   >
                                                                     &nbsp;
-                                                                    {childItem4.name}
+                                                                    {childItem4.dept_name}
                                                                   </a>
                                                                 </Col>
                                                               </Row>
@@ -455,7 +455,7 @@ const Rekomendasi = () => {
                                                                             }
                                                                           >
                                                                             &nbsp;
-                                                                            {childItem5.name}
+                                                                            {childItem5.dept_name}
                                                                           </a>
                                                                         </Col>
                                                                       </Row>
@@ -495,7 +495,7 @@ const Rekomendasi = () => {
                                                                                     }
                                                                                   >
                                                                                     &nbsp;
-                                                                                    {childItem6.name}
+                                                                                    {childItem6.dept_name}
                                                                                   </a>
                                                                                 </Col>
                                                                               </Row>
@@ -537,7 +537,7 @@ const Rekomendasi = () => {
                           }
                         </>
                       )
-                  } */}
+                  }
                     </Col>
 
 

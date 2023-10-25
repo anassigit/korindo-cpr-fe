@@ -106,13 +106,25 @@ const SidebarContent = props => {
         <div id="sidebar-menu" style={{ marginTop: "40px" }}>
 
           <ul className="metismenu list-unstyled" id="side-menu">
-            <li className="menu-title">{props.t("Management System")} </li>
             <li>
-              <Link to="/home" className="">
+              <Link to="/#" className="has-arrow">
                 <i className="bx bx-home-circle"></i>
-                <span>{props.t("Home")}</span>
+                <span>{props.t("Transaksi")}</span>
               </Link>
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/home" className="">
+                    <span>{props.t("Home")}</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to={'/rekomendasi'} className="">
+                    <span>{props.t("Rekomendasi")}</span>
+                  </Link>
+                </li>
+              </ul>
             </li>
+
           </ul>
         </div>
       </SimpleBar>
