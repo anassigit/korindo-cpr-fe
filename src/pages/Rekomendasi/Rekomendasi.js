@@ -129,7 +129,7 @@ const Rekomendasi = () => {
                 <CardHeader>
                   <span className="mdi mdi-magnify"></span> Pilih Karyawan
                 </CardHeader>
-                <CardBody style={{ padding: 0, margin: 0, backgroundColor: "#F6F6F6", border: "1px solid #BBB" }}>
+                <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
                   <Row
                     className="py-2 m-2"
                   >
@@ -180,7 +180,7 @@ const Rekomendasi = () => {
                   >
                     <Col
                       xs={3}
-                      className="py-2"
+                      className="bg-light py-2"
                       style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", width: "20%", height: "85vh", overflowX: "auto", overflowY: "auto" }}
                     >
 
@@ -543,7 +543,7 @@ const Rekomendasi = () => {
 
                     <Col
                       xs={5}
-                      className="py-2"
+                      className="bg-light py-2"
                       style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", width: "37%", paddingRight: 0, paddingLeft: 0, height: "85vh" }}
                     >
                       {/* <Member
@@ -566,6 +566,7 @@ const Rekomendasi = () => {
                     </Col>
                     <Col
                       xs={5}
+                      className="bg-light"
                       style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", padding: 0, margin: 0, overflowX: "auto", overflowY: "auto" }}
                     >
                       {/* <DetailService

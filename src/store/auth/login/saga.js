@@ -9,7 +9,6 @@ import { login } from "helpers/backend_helper"
 
 function* loginUser({ payload: { user, history } }) {
   try {
-    debugger
     const response = yield call(login, user);
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);

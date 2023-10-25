@@ -14,7 +14,6 @@ const Authmiddleware = ({
   <Route
     {...rest}
     render={props => {
-      debugger
       const queryParameters = new URLSearchParams(window.location.search)
       const korToken = queryParameters.get("KOR_TOKEN")
 

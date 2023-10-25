@@ -49,3 +49,20 @@
 .rangeslider-horizontal .rangeslider__fill {
   background-color: #7cb342 !important;
 }
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.fade-in.card{
+  margin-bottom: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
