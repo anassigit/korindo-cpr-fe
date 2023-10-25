@@ -265,9 +265,9 @@ const Rekomendasi = () => {
                                                     className="d-flex justify-content-between py-2"
                                                     style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
                                                 >
-                                                    <div className="arrow-left" style={{ position: "absolute", left: 0, top: 39, backgroundColor: "black", height: "81%", width: "12%", zIndex: 2 }}>
-                                                    </div>
-                                                    <span className="mdi mdi-chevron-left arrow" style={{ position: "absolute", left: "2%", top: 80, fontSize: "50px", zIndex: 2 }} />
+                                                    <a className="arrow-left" style={{ position: "absolute", left: 0, top: '19.2%', height: "80.6%", width: "12%", zIndex: 2 }}>
+                                                        <span className="mdi mdi-chevron-left" style={{ position: "absolute", left: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
+                                                    </a>
                                                     <Card
                                                         className="fade-in"
                                                         hidden={blinker}
@@ -309,9 +309,9 @@ const Rekomendasi = () => {
                                                             </Col>
                                                         </CardBody>
                                                     </Card>
-                                                    <div className="arrow-right" style={{ position: "absolute", right: 0, top: 39, backgroundColor: "black", height: "81%", width: "12%", zIndex: 2 }}>
-                                                    </div>
-                                                    <span className="mdi mdi-chevron-right arrow" style={{ position: "absolute", right: "2%", top: 80, fontSize: "50px", zIndex: 2 }} />
+                                                    <a className="arrow-right" style={{ position: "absolute", right: 0, top: '19.2%', height: "80.6%", width: "12%", zIndex: 2 }}>
+                                                        <span className="mdi mdi-chevron-right" style={{ position: "absolute", right: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
+                                                    </a>
                                                 </div>
                                             </CardBody>
                                         </Card>

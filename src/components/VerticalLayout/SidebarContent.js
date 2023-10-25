@@ -17,7 +17,7 @@ import { cekToken } from "../../helpers/backend_helper"
 
 const SidebarContent = props => {
 
-  const menu = JSON.parse(ReactSession.get("menu"))
+  // const menu = JSON.parse(ReactSession.get("menu"))
 
   const ref = useRef();
 
