@@ -15,8 +15,8 @@ const Member = (props) => {
   let offset = props?.offset
   let limit = props?.limit
 
-  const appDetailDeptData = useSelector((state) => state.ssoReducer.respGetDetailDept);
-  const appMemberList2 = useSelector((state) => state.ssoReducer.respGetMemberList);
+  // const appDetailDeptData = useSelector((state) => state.rekomendasiReducer.respGetDetailDept);
+  const appMemberList2 = useSelector((state) => state.rekomendasiReducer.respGetMemberList);
 
   useEffect(() => {
     dispatch(resetMessage())
@@ -50,7 +50,7 @@ const Member = (props) => {
         }
       }))
     }
-    props.setAppDetailDeptDataState(appDetailDeptData)
+    // props.setAppDetailDeptDataState(appDetailDeptData)
   }, [props.searchEntered, selectedDeptData, offset, limit]);
 
   // Calculate the number of pages
@@ -67,9 +67,9 @@ const Member = (props) => {
     <>
       <div style={{ overflow: "auto", height: "100%" }}>
         <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px' }}></span>
-        {appDetailDeptData?.data?.list?.dept_name ? appDetailDeptData?.data?.list?.dept_name : 'Member List'}
+        {props.selectedDeptName ? props.selectedDeptName : 'Member List'}
         <div style={{ width: "100%", position: "relative", marginTop: "8px" }}>
-          <Row className="px-2 py-3 text-white fw-bold" style={{ backgroundColor: "#8C8C8C", width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em" }}>
+          <Row className="px-2 py-3 text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em" }}>
             {props.searchEntered ?
               <>
                 <Col xs='3'>Departement</Col>
@@ -230,8 +230,8 @@ const Member = (props) => {
 Member.propTypes = {
   appDeptData: PropTypes.any,
   selectedDeptData: PropTypes.any,
+  selectedDeptName: PropTypes.any,
   setSelectedMemberData: PropTypes.any,
-  setAppDetailDeptDataState: PropTypes.any,
   offset: PropTypes.any,
   limit: PropTypes.any,
   setOffset: PropTypes.any,

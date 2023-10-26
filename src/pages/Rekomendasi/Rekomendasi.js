@@ -33,6 +33,8 @@ const Rekomendasi = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [selectedDeptData, setSelectedDeptData] = useState();
+  const [selectedDeptName, setSelectedDeptName] = useState();
+
   const [selectedMemberData, setSelectedMemberData] = useState();
 
   const [appDetailDeptDataState, setAppDetailDeptDataState] = useState()
@@ -59,6 +61,10 @@ const Rekomendasi = () => {
       dispatch(getDetailDeptData({ dept_id: ReactSession.get('selectedDeptData') }));
     }
 
+    if (ReactSession.get('selectedDeptName')) {
+      setSelectedDeptName(ReactSession.get('selectedDeptName'))
+    }
+
     dispatch(getDeptData())
     setLoadingSpinner(true)
   }, [])
@@ -74,6 +80,10 @@ const Rekomendasi = () => {
       setLoadingSpinner(true)
     }
   }, [appDeptData])
+
+  useEffect(() => {
+    ReactSession.set('selectedDeptName', selectedDeptName)
+  }, [selectedDeptName])
 
   useEffect(() => {
     setSelectedDeptData(null)
@@ -195,7 +205,7 @@ const Rekomendasi = () => {
                                       <span className="mdi mdi-plus-box"></span>
                                       &nbsp;
                                       <span className="mdi mdi-domain"></span>
-                                      <a style={{ color:"black", fontWeight: (collapser["0"] || selectedDeptData === item.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0"] || selectedDeptData === item.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                         className="unselectable-two"
                                         onClick={(e) => {
 
@@ -205,6 +215,7 @@ const Rekomendasi = () => {
                                           dept_id = item.dept_id
                                           ReactSession.remove('selectedMemberData')
                                           setSelectedDeptData(dept_id)
+                                          setSelectedDeptName(item.dept_name)
                                           ReactSession.set('selectedDeptData', dept_id)
                                         }
                                         }
@@ -233,7 +244,7 @@ const Rekomendasi = () => {
                                   ></span>
                                   &nbsp;
                                   <span className="mdi mdi-domain"></span>
-                                  <a style={{ color:"black", fontWeight: (collapser["0"] || selectedDeptData === appDeptData?.data?.result?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                  <a style={{ color: "#4c4c4c", fontWeight: (collapser["0"] || selectedDeptData === appDeptData?.data?.result?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                     className="unselectable-two"
                                     onClick={(e) => {
 
@@ -244,6 +255,7 @@ const Rekomendasi = () => {
                                       ReactSession.remove('selectedMemberData')
                                       ReactSession.set('selectedMemberData')
                                       setSelectedDeptData(dept_id)
+                                      setSelectedDeptName(appDeptData?.data?.result?.dept_name)
                                       ReactSession.set('selectedDeptData', dept_id)
                                     }
                                     }
@@ -276,7 +288,7 @@ const Rekomendasi = () => {
                                             }
                                             &nbsp;
                                             <span className="mdi mdi-domain"></span>
-                                            <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex] || selectedDeptData === childItem.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                            <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex] || selectedDeptData === childItem.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                               className="unselectable-two"
                                               onClick={(e) => {
 
@@ -286,6 +298,7 @@ const Rekomendasi = () => {
                                                 dept_id = childItem.dept_id
                                                 ReactSession.remove('selectedMemberData')
                                                 setSelectedDeptData(dept_id)
+                                                setSelectedDeptName(childItem.dept_name)
                                                 ReactSession.set('selectedDeptData', dept_id)
                                               }
                                               }
@@ -319,7 +332,7 @@ const Rekomendasi = () => {
                                                       }
                                                       &nbsp;
                                                       <span className="mdi mdi-domain"></span>
-                                                      <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                                         className="unselectable-two"
                                                         onClick={(e) => {
 
@@ -329,6 +342,7 @@ const Rekomendasi = () => {
                                                           dept_id = childItem2.dept_id
                                                           ReactSession.remove('selectedMemberData')
                                                           setSelectedDeptData(dept_id)
+                                                          setSelectedDeptName(childItem2.dept_name)
                                                           ReactSession.set('selectedDeptData', dept_id)
                                                         }
                                                         }
@@ -360,7 +374,7 @@ const Rekomendasi = () => {
                                                               }
                                                               &nbsp;
                                                               <span className="mdi mdi-domain"></span>
-                                                              <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                 className="unselectable-two"
                                                                 onClick={(e) => {
 
@@ -370,6 +384,7 @@ const Rekomendasi = () => {
                                                                   dept_id = childItem3.dept_id
                                                                   ReactSession.remove('selectedMemberData')
                                                                   setSelectedDeptData(dept_id)
+                                                                  setSelectedDeptName(childItem3.dept_name)
                                                                   ReactSession.set('selectedDeptData', dept_id)
                                                                 }
                                                                 }
@@ -400,7 +415,7 @@ const Rekomendasi = () => {
                                                                       }
                                                                       &nbsp;
                                                                       <span className="mdi mdi-domain"></span>
-                                                                      <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                         className="unselectable-two"
                                                                         onClick={(e) => {
 
@@ -410,6 +425,7 @@ const Rekomendasi = () => {
                                                                           dept_id = childItem4.dept_id
                                                                           ReactSession.remove('selectedMemberData')
                                                                           setSelectedDeptData(dept_id)
+                                                                          setSelectedDeptName(childItem4.dept_name)
                                                                           ReactSession.set('selectedDeptData', dept_id)
                                                                         }
                                                                         }
@@ -440,7 +456,7 @@ const Rekomendasi = () => {
                                                                               }
                                                                               &nbsp;
                                                                               <span className="mdi mdi-domain"></span>
-                                                                              <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                                 className="unselectable-two"
                                                                                 onClick={(e) => {
 
@@ -450,6 +466,7 @@ const Rekomendasi = () => {
                                                                                   dept_id = childItem5.dept_id
                                                                                   ReactSession.remove('selectedMemberData')
                                                                                   setSelectedDeptData(dept_id)
+                                                                                  setSelectedDeptName(childItem5.dept_name)
                                                                                   ReactSession.set('selectedDeptData', dept_id)
                                                                                 }
                                                                                 }
@@ -480,7 +497,7 @@ const Rekomendasi = () => {
                                                                                       }
                                                                                       &nbsp;
                                                                                       <span className="mdi mdi-domain"></span>
-                                                                                      <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                                         className="unselectable-two"
                                                                                         onClick={(e) => {
 
@@ -490,6 +507,7 @@ const Rekomendasi = () => {
                                                                                           dept_id = childItem6.dept_id
                                                                                           ReactSession.remove('selectedMemberData')
                                                                                           setSelectedDeptData(dept_id)
+                                                                                          setSelectedDeptName(childItem6.dept_name)
                                                                                           ReactSession.set('selectedDeptData', dept_id)
                                                                                         }
                                                                                         }
@@ -546,23 +564,23 @@ const Rekomendasi = () => {
                       className="bg-light py-2"
                       style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", width: "37%", paddingRight: 0, paddingLeft: 0, height: "85vh" }}
                     >
-                      {/* <Member
-                    appDeptData={appDeptData}
-                    selectedDeptData={selectedDeptData}
-                    setSelectedDeptData={setSelectedDeptData}
-                    setSelectedMemberData={setSelectedMemberData}
-                    setAppDetailDeptDataState={setAppDetailDeptDataState}
-                    offset={offset}
-                    limit={limit}
-                    setOffset={setOffset}
-                    setLimit={setLimit}
-                    setMemberList={setMemberList}
-                    appMemberList={appMemberList}
-                    searchVal={searchVal}
-                    setCurrentPage={setCurrentPage}
-                    currentPage={currentPage}
-                    searchEntered={searchEntered}
-                  /> */}
+                      <Member
+                        appDeptData={appDeptData}
+                        selectedDeptData={selectedDeptData}
+                        selectedDeptName={selectedDeptName}
+                        setSelectedDeptData={setSelectedDeptData}
+                        setSelectedMemberData={setSelectedMemberData}
+                        offset={offset}
+                        limit={limit}
+                        setOffset={setOffset}
+                        setLimit={setLimit}
+                        setMemberList={setMemberList}
+                        appMemberList={appMemberList}
+                        searchVal={searchVal}
+                        setCurrentPage={setCurrentPage}
+                        currentPage={currentPage}
+                        searchEntered={searchEntered}
+                      />
                     </Col>
                     <Col
                       xs={5}
