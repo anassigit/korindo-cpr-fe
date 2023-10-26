@@ -125,7 +125,7 @@ const Rekomendasi = () => {
         <>
           <React.Fragment>
             <Container fluid>
-              <Card style={{marginBottom:0}}>
+              <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
                   <span className="mdi mdi-magnify"></span> Pilih Karyawan
                 </CardHeader>
@@ -172,11 +172,11 @@ const Rekomendasi = () => {
                   </Row>
                 </CardBody>
               </Card>
-              <Card style={{padding:0, margin:"6px 0 0 0", backgroundColor:"transparent"}}>
-                <CardBody style={{ padding: 0, margin: 0,}}>
+              <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent" }}>
+                <CardBody style={{ padding: 0, margin: 0, }}>
                   <Row
                     className="d-flex justify-content-between py-1"
-                    style={{ fontSize: "14px", marginRight:1, marginLeft:1 }}
+                    style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
                   >
                     <Col
                       xs={3}
@@ -185,359 +185,359 @@ const Rekomendasi = () => {
                     >
 
                       {
-                    Array.isArray(appDeptData?.data?.result)
-                      ? appDeptData?.data?.result.map((item, index) => {
-                        return (
-                          <React.Fragment key={index}>
-                            {item.parent_id === 'Top' ? (
+                        Array.isArray(appDeptData?.data?.result)
+                          ? appDeptData?.data?.result.map((item, index) => {
+                            return (
+                              <React.Fragment key={index}>
+                                {item.parent_id === 'Top' ? (
+                                  <Row style={{ marginBottom: "8px" }}>
+                                    <Col xs="12" style={{ color: "#3F4031" }}>
+                                      <span className="mdi mdi-plus-box"></span>
+                                      &nbsp;
+                                      <span className="mdi mdi-domain"></span>
+                                      <a style={{ color:"black", fontWeight: (collapser["0"] || selectedDeptData === item.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                        className="unselectable-two"
+                                        onClick={(e) => {
+
+                                          dispatch(getMemberDetailData({ member_id: '' }))
+                                          dispatch(getDetailDeptData({ dept_id: item.dept_id }));
+                                          let dept_id = ''
+                                          dept_id = item.dept_id
+                                          ReactSession.remove('selectedMemberData')
+                                          setSelectedDeptData(dept_id)
+                                          ReactSession.set('selectedDeptData', dept_id)
+                                        }
+                                        }
+                                      >
+                                        &nbsp;
+                                        {item.dept_name}
+                                      </a>
+                                    </Col>
+                                  </Row>
+                                ) : null}
+                              </React.Fragment>
+                            );
+                          })
+                          : (
+                            <>
                               <Row style={{ marginBottom: "8px" }}>
                                 <Col xs="12" style={{ color: "#3F4031" }}>
-                                  <span className="mdi mdi-plus-box"></span>
+                                  <span
+                                    className={collapser["0"] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                    onClick={() => {
+                                      setCollapser((prevCollapser) => ({
+                                        ...prevCollapser,
+                                        ["0"]: !prevCollapser["0"],
+                                      }));
+                                    }}
+                                  ></span>
                                   &nbsp;
                                   <span className="mdi mdi-domain"></span>
-                                  <a style={{ fontWeight: (collapser["0"] || selectedDeptData === item.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                  <a style={{ color:"black", fontWeight: (collapser["0"] || selectedDeptData === appDeptData?.data?.result?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                     className="unselectable-two"
                                     onClick={(e) => {
 
                                       dispatch(getMemberDetailData({ member_id: '' }))
-                                      dispatch(getDetailDeptData({ dept_id: item.dept_id }));
+                                      dispatch(getDetailDeptData({ dept_id: appDeptData?.data?.result?.dept_id }));
                                       let dept_id = ''
-                                      dept_id = item.dept_id
+                                      dept_id = appDeptData?.data?.result?.dept_id
                                       ReactSession.remove('selectedMemberData')
+                                      ReactSession.set('selectedMemberData')
                                       setSelectedDeptData(dept_id)
                                       ReactSession.set('selectedDeptData', dept_id)
                                     }
                                     }
                                   >
                                     &nbsp;
-                                    {item.dept_name}
+                                    {appDeptData?.data?.result?.dept_name}
                                   </a>
                                 </Col>
                               </Row>
-                            ) : null}
-                          </React.Fragment>
-                        );
-                      })
-                      : (
-                        <>
-                          <Row style={{ marginBottom: "8px" }}>
-                            <Col xs="12" style={{ color: "#3F4031" }}>
-                              <span
-                                className={collapser["0"] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
-                                onClick={() => {
-                                  setCollapser((prevCollapser) => ({
-                                    ...prevCollapser,
-                                    ["0"]: !prevCollapser["0"],
-                                  }));
-                                }}
-                              ></span>
-                              &nbsp;
-                              <span className="mdi mdi-domain"></span>
-                              <a style={{ fontWeight: (collapser["0"] || selectedDeptData === appDeptData?.data?.result?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
-                                className="unselectable-two"
-                                onClick={(e) => {
+                              {
+                                collapser["0"] === true &&
+                                  Array.isArray(appDeptData?.data?.result?.childList)
+                                  ? appDeptData?.data?.result?.childList.map((childItem, childIndex) => {
+                                    return (
+                                      <React.Fragment key={childIndex}>
+                                        <Row style={{ marginBottom: "8px" }}>
+                                          <Col xs="12" style={{ color: "#3F4031", paddingLeft: "2vw" }}>
+                                            {childItem.childList ? <span
+                                              className={collapser["0-" + childIndex] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                              onClick={() => {
+                                                setCollapser((prevCollapser) => ({
+                                                  ...prevCollapser,
+                                                  ["0-" + childIndex]: !prevCollapser["0-" + childIndex],
+                                                }));
+                                              }}
+                                            ></span> :
+                                              <span
+                                                className={collapser["0-" + childIndex] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
+                                              ></span>
+                                            }
+                                            &nbsp;
+                                            <span className="mdi mdi-domain"></span>
+                                            <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex] || selectedDeptData === childItem.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                              className="unselectable-two"
+                                              onClick={(e) => {
 
-                                  dispatch(getMemberDetailData({ member_id: '' }))
-                                  dispatch(getDetailDeptData({ dept_id: appDeptData?.data?.result?.dept_id }));
-                                  let dept_id = ''
-                                  dept_id = appDeptData?.data?.result?.dept_id
-                                  ReactSession.remove('selectedMemberData')
-                                  ReactSession.set('selectedMemberData')
-                                  setSelectedDeptData(dept_id)
-                                  ReactSession.set('selectedDeptData', dept_id)
-                                }
-                                }
-                              >
-                                &nbsp;
-                                {appDeptData?.data?.result?.dept_name}
-                              </a>
-                            </Col>
-                          </Row>
-                          {
-                            collapser["0"] === true &&
-                              Array.isArray(appDeptData?.data?.result?.childList)
-                              ? appDeptData?.data?.result?.childList.map((childItem, childIndex) => {
-                                return (
-                                  <React.Fragment key={childIndex}>
-                                    <Row style={{ marginBottom: "8px" }}>
-                                      <Col xs="12" style={{ color: "#3F4031", paddingLeft: "2vw" }}>
-                                        {childItem.childList ? <span
-                                          className={collapser["0-" + childIndex] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
-                                          onClick={() => {
-                                            setCollapser((prevCollapser) => ({
-                                              ...prevCollapser,
-                                              ["0-" + childIndex]: !prevCollapser["0-" + childIndex],
-                                            }));
-                                          }}
-                                        ></span> :
-                                          <span
-                                            className={collapser["0-" + childIndex] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
-                                          ></span>
-                                        }
-                                        &nbsp;
-                                        <span className="mdi mdi-domain"></span>
-                                        <a style={{ fontWeight: (collapser["0-" + childIndex] || selectedDeptData === childItem.dept_id) ? "bold" : "normal", cursor: "pointer" }}
-                                          className="unselectable-two"
-                                          onClick={(e) => {
-
-                                            dispatch(getMemberDetailData({ member_id: '' }))
-                                            dispatch(getDetailDeptData({ dept_id: childItem.dept_id }));
-                                            let dept_id = ''
-                                            dept_id = childItem.dept_id
-                                            ReactSession.remove('selectedMemberData')
-                                            setSelectedDeptData(dept_id)
-                                            ReactSession.set('selectedDeptData', dept_id)
-                                          }
-                                          }
-                                        >
-                                          &nbsp;
-                                          {childItem.dept_name}
-                                        </a>
-                                      </Col>
-                                    </Row>
-                                    {
-                                      collapser["0-" + childIndex] === true &&
-                                        Array.isArray(childItem?.childList)
-                                        ? childItem?.childList.map((childItem2, childIndex2) => {
-                                          let viewWidth = 1
-                                          return (
-                                            <React.Fragment key={childIndex2}>
-                                              <Row style={{ marginBottom: "8px" }}>
-                                                <Col xs="12" style={{ color: "#3F4031", paddingLeft: "3vw" }}>
-                                                  {childItem2.childList ? <span
-                                                    className={collapser["0-" + childIndex + childIndex2] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
-                                                    onClick={() => {
-                                                      setCollapser((prevCollapser) => ({
-                                                        ...prevCollapser,
-                                                        ["0-" + childIndex + childIndex2]: !prevCollapser["0-" + childIndex + childIndex2],
-                                                      }));
-                                                    }}
-                                                  ></span> :
-                                                    <span
-                                                      className={collapser["0-" + childIndex + childIndex2] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
-                                                    ></span>
-                                                  }
-                                                  &nbsp;
-                                                  <span className="mdi mdi-domain"></span>
-                                                  <a style={{ fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.dept_id) ? "bold" : "normal", cursor: "pointer" }}
-                                                    className="unselectable-two"
-                                                    onClick={(e) => {
-
-                                                      dispatch(getMemberDetailData({ member_id: '' }))
-                                                      dispatch(getDetailDeptData({ dept_id: childItem2.dept_id }));
-                                                      let dept_id = ''
-                                                      dept_id = childItem2.dept_id
-                                                      ReactSession.remove('selectedMemberData')
-                                                      setSelectedDeptData(dept_id)
-                                                      ReactSession.set('selectedDeptData', dept_id)
-                                                    }
-                                                    }
-                                                  >
-                                                    &nbsp;
-                                                    {childItem2.dept_name}
-                                                  </a>
-                                                </Col>
-                                              </Row>
-
-                                              {collapser["0-" + childIndex + childIndex2] === true && Array.isArray(childItem2?.childList)
-                                                ? childItem2?.childList.map((childItem3, childIndex3) => {
-                                                  return (
-                                                    <React.Fragment key={childIndex3}>
-                                                      <Row style={{ marginBottom: "8px" }}>
-                                                        <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 3}vw` }}>
-                                                          {childItem3.childList ? <span
-                                                            className={collapser["0-" + childIndex + childIndex2 + childIndex3] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
-                                                            onClick={() => {
-                                                              setCollapser((prevCollapser) => ({
-                                                                ...prevCollapser,
-                                                                ["0-" + childIndex + childIndex2 + childIndex3]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3],
-                                                              }));
-                                                            }}
-                                                          ></span> :
-                                                            <span
-                                                              className={collapser["0-" + childIndex + childIndex2 + childIndex3] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
-                                                            ></span>
-                                                          }
-                                                          &nbsp;
-                                                          <span className="mdi mdi-domain"></span>
-                                                          <a style={{ fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.dept_id) ? "bold" : "normal", cursor: "pointer" }}
-                                                            className="unselectable-two"
-                                                            onClick={(e) => {
-
-                                                              dispatch(getMemberDetailData({ member_id: '' }))
-                                                              dispatch(getDetailDeptData({ dept_id: childItem3.dept_id }));
-                                                              let dept_id = ''
-                                                              dept_id = childItem3.dept_id
-                                                              ReactSession.remove('selectedMemberData')
-                                                              setSelectedDeptData(dept_id)
-                                                              ReactSession.set('selectedDeptData', dept_id)
-                                                            }
-                                                            }
-                                                          >
-                                                            &nbsp;
-                                                            {childItem3.dept_name}
-                                                          </a>
-                                                        </Col>
-                                                      </Row>
-                                                      {collapser["0-" + childIndex + childIndex2 + childIndex3] === true && Array.isArray(childItem3?.childList)
-                                                        ? childItem3?.childList.map((childItem4, childIndex4) => {
-                                                          return (
-                                                            <React.Fragment key={childIndex4}>
-                                                              <Row style={{ marginBottom: "8px" }}>
-                                                                <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 4}vw` }}>
-                                                                  {childItem4.childList ? <span
-                                                                    className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
-                                                                    onClick={() => {
-                                                                      setCollapser((prevCollapser) => ({
-                                                                        ...prevCollapser,
-                                                                        ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4],
-                                                                      }));
-                                                                    }}
-                                                                  ></span> :
-                                                                    <span
-                                                                      className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
-                                                                    ></span>
-                                                                  }
-                                                                  &nbsp;
-                                                                  <span className="mdi mdi-domain"></span>
-                                                                  <a style={{ fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.dept_id) ? "bold" : "normal", cursor: "pointer" }}
-                                                                    className="unselectable-two"
-                                                                    onClick={(e) => {
-
-                                                                      dispatch(getMemberDetailData({ member_id: '' }))
-                                                                      dispatch(getDetailDeptData({ dept_id: childItem4.dept_id }));
-                                                                      let dept_id = ''
-                                                                      dept_id = childItem4.dept_id
-                                                                      ReactSession.remove('selectedMemberData')
-                                                                      setSelectedDeptData(dept_id)
-                                                                      ReactSession.set('selectedDeptData', dept_id)
-                                                                    }
-                                                                    }
-                                                                  >
-                                                                    &nbsp;
-                                                                    {childItem4.dept_name}
-                                                                  </a>
-                                                                </Col>
-                                                              </Row>
-                                                              {collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] === true && Array.isArray(childItem4?.childList)
-                                                                ? childItem4?.childList.map((childItem5, childIndex5) => {
-                                                                  return (
-                                                                    <React.Fragment key={childIndex5}>
-                                                                      <Row style={{ marginBottom: "8px" }}>
-                                                                        <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 5}vw` }}>
-                                                                          {childItem5.childList ? <span
-                                                                            className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
-                                                                            onClick={() => {
-                                                                              setCollapser((prevCollapser) => ({
-                                                                                ...prevCollapser,
-                                                                                ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5],
-                                                                              }));
-                                                                            }}
-                                                                          ></span> :
-                                                                            <span
-                                                                              className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
-                                                                            ></span>
-                                                                          }
-                                                                          &nbsp;
-                                                                          <span className="mdi mdi-domain"></span>
-                                                                          <a style={{ fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.dept_id) ? "bold" : "normal", cursor: "pointer" }}
-                                                                            className="unselectable-two"
-                                                                            onClick={(e) => {
-
-                                                                              dispatch(getMemberDetailData({ member_id: '' }))
-                                                                              dispatch(getDetailDeptData({ dept_id: childItem5.dept_id }));
-                                                                              let dept_id = ''
-                                                                              dept_id = childItem5.dept_id
-                                                                              ReactSession.remove('selectedMemberData')
-                                                                              setSelectedDeptData(dept_id)
-                                                                              ReactSession.set('selectedDeptData', dept_id)
-                                                                            }
-                                                                            }
-                                                                          >
-                                                                            &nbsp;
-                                                                            {childItem5.dept_name}
-                                                                          </a>
-                                                                        </Col>
-                                                                      </Row>
-                                                                      {collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] === true && Array.isArray(childItem5?.childList)
-                                                                        ? childItem5?.childList.map((childItem6, childIndex6) => {
-                                                                          return (
-                                                                            <React.Fragment key={childIndex6}>
-                                                                              <Row style={{ marginBottom: "8px" }}>
-                                                                                <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 6}vw` }}>
-                                                                                  {childItem6.childList ? <span
-                                                                                    className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
-                                                                                    onClick={() => {
-                                                                                      setCollapser((prevCollapser) => ({
-                                                                                        ...prevCollapser,
-                                                                                        ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6],
-                                                                                      }));
-                                                                                    }}
-                                                                                  ></span> :
-                                                                                    <span
-                                                                                      className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
-                                                                                    ></span>
-                                                                                  }
-                                                                                  &nbsp;
-                                                                                  <span className="mdi mdi-domain"></span>
-                                                                                  <a style={{ fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.dept_id) ? "bold" : "normal", cursor: "pointer" }}
-                                                                                    className="unselectable-two"
-                                                                                    onClick={(e) => {
-
-                                                                                      dispatch(getMemberDetailData({ member_id: '' }))
-                                                                                      dispatch(getDetailDeptData({ dept_id: childItem6.dept_id }));
-                                                                                      let dept_id = ''
-                                                                                      dept_id = childItem6.dept_id
-                                                                                      ReactSession.remove('selectedMemberData')
-                                                                                      setSelectedDeptData(dept_id)
-                                                                                      ReactSession.set('selectedDeptData', dept_id)
-                                                                                    }
-                                                                                    }
-                                                                                  >
-                                                                                    &nbsp;
-                                                                                    {childItem6.dept_name}
-                                                                                  </a>
-                                                                                </Col>
-                                                                              </Row>
-                                                                            </React.Fragment>
-                                                                          );
-                                                                        })
-                                                                        : null
-                                                                      }
-                                                                    </React.Fragment>
-                                                                  );
-                                                                })
-                                                                : null
-                                                              }
-                                                            </React.Fragment>
-                                                          );
-                                                        })
-                                                        : null
-                                                      }
-                                                    </React.Fragment>
-                                                  );
-                                                })
-                                                : null
+                                                dispatch(getMemberDetailData({ member_id: '' }))
+                                                dispatch(getDetailDeptData({ dept_id: childItem.dept_id }));
+                                                let dept_id = ''
+                                                dept_id = childItem.dept_id
+                                                ReactSession.remove('selectedMemberData')
+                                                setSelectedDeptData(dept_id)
+                                                ReactSession.set('selectedDeptData', dept_id)
                                               }
+                                              }
+                                            >
+                                              &nbsp;
+                                              {childItem.dept_name}
+                                            </a>
+                                          </Col>
+                                        </Row>
+                                        {
+                                          collapser["0-" + childIndex] === true &&
+                                            Array.isArray(childItem?.childList)
+                                            ? childItem?.childList.map((childItem2, childIndex2) => {
+                                              let viewWidth = 1
+                                              return (
+                                                <React.Fragment key={childIndex2}>
+                                                  <Row style={{ marginBottom: "8px" }}>
+                                                    <Col xs="12" style={{ color: "#3F4031", paddingLeft: "3vw" }}>
+                                                      {childItem2.childList ? <span
+                                                        className={collapser["0-" + childIndex + childIndex2] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                                        onClick={() => {
+                                                          setCollapser((prevCollapser) => ({
+                                                            ...prevCollapser,
+                                                            ["0-" + childIndex + childIndex2]: !prevCollapser["0-" + childIndex + childIndex2],
+                                                          }));
+                                                        }}
+                                                      ></span> :
+                                                        <span
+                                                          className={collapser["0-" + childIndex + childIndex2] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
+                                                        ></span>
+                                                      }
+                                                      &nbsp;
+                                                      <span className="mdi mdi-domain"></span>
+                                                      <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                        className="unselectable-two"
+                                                        onClick={(e) => {
 
-                                            </React.Fragment>
-                                          );
-                                        })
-                                        : (
-                                          null
-                                        )
-                                    }
-                                  </React.Fragment>
-                                );
-                              })
-                              : (
-                                <>
-                                </>
-                              )
-                          }
-                        </>
-                      )
-                  }
+                                                          dispatch(getMemberDetailData({ member_id: '' }))
+                                                          dispatch(getDetailDeptData({ dept_id: childItem2.dept_id }));
+                                                          let dept_id = ''
+                                                          dept_id = childItem2.dept_id
+                                                          ReactSession.remove('selectedMemberData')
+                                                          setSelectedDeptData(dept_id)
+                                                          ReactSession.set('selectedDeptData', dept_id)
+                                                        }
+                                                        }
+                                                      >
+                                                        &nbsp;
+                                                        {childItem2.dept_name}
+                                                      </a>
+                                                    </Col>
+                                                  </Row>
+
+                                                  {collapser["0-" + childIndex + childIndex2] === true && Array.isArray(childItem2?.childList)
+                                                    ? childItem2?.childList.map((childItem3, childIndex3) => {
+                                                      return (
+                                                        <React.Fragment key={childIndex3}>
+                                                          <Row style={{ marginBottom: "8px" }}>
+                                                            <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 3}vw` }}>
+                                                              {childItem3.childList ? <span
+                                                                className={collapser["0-" + childIndex + childIndex2 + childIndex3] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                                                onClick={() => {
+                                                                  setCollapser((prevCollapser) => ({
+                                                                    ...prevCollapser,
+                                                                    ["0-" + childIndex + childIndex2 + childIndex3]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3],
+                                                                  }));
+                                                                }}
+                                                              ></span> :
+                                                                <span
+                                                                  className={collapser["0-" + childIndex + childIndex2 + childIndex3] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
+                                                                ></span>
+                                                              }
+                                                              &nbsp;
+                                                              <span className="mdi mdi-domain"></span>
+                                                              <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                className="unselectable-two"
+                                                                onClick={(e) => {
+
+                                                                  dispatch(getMemberDetailData({ member_id: '' }))
+                                                                  dispatch(getDetailDeptData({ dept_id: childItem3.dept_id }));
+                                                                  let dept_id = ''
+                                                                  dept_id = childItem3.dept_id
+                                                                  ReactSession.remove('selectedMemberData')
+                                                                  setSelectedDeptData(dept_id)
+                                                                  ReactSession.set('selectedDeptData', dept_id)
+                                                                }
+                                                                }
+                                                              >
+                                                                &nbsp;
+                                                                {childItem3.dept_name}
+                                                              </a>
+                                                            </Col>
+                                                          </Row>
+                                                          {collapser["0-" + childIndex + childIndex2 + childIndex3] === true && Array.isArray(childItem3?.childList)
+                                                            ? childItem3?.childList.map((childItem4, childIndex4) => {
+                                                              return (
+                                                                <React.Fragment key={childIndex4}>
+                                                                  <Row style={{ marginBottom: "8px" }}>
+                                                                    <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 4}vw` }}>
+                                                                      {childItem4.childList ? <span
+                                                                        className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                                                        onClick={() => {
+                                                                          setCollapser((prevCollapser) => ({
+                                                                            ...prevCollapser,
+                                                                            ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4],
+                                                                          }));
+                                                                        }}
+                                                                      ></span> :
+                                                                        <span
+                                                                          className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
+                                                                        ></span>
+                                                                      }
+                                                                      &nbsp;
+                                                                      <span className="mdi mdi-domain"></span>
+                                                                      <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                        className="unselectable-two"
+                                                                        onClick={(e) => {
+
+                                                                          dispatch(getMemberDetailData({ member_id: '' }))
+                                                                          dispatch(getDetailDeptData({ dept_id: childItem4.dept_id }));
+                                                                          let dept_id = ''
+                                                                          dept_id = childItem4.dept_id
+                                                                          ReactSession.remove('selectedMemberData')
+                                                                          setSelectedDeptData(dept_id)
+                                                                          ReactSession.set('selectedDeptData', dept_id)
+                                                                        }
+                                                                        }
+                                                                      >
+                                                                        &nbsp;
+                                                                        {childItem4.dept_name}
+                                                                      </a>
+                                                                    </Col>
+                                                                  </Row>
+                                                                  {collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] === true && Array.isArray(childItem4?.childList)
+                                                                    ? childItem4?.childList.map((childItem5, childIndex5) => {
+                                                                      return (
+                                                                        <React.Fragment key={childIndex5}>
+                                                                          <Row style={{ marginBottom: "8px" }}>
+                                                                            <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 5}vw` }}>
+                                                                              {childItem5.childList ? <span
+                                                                                className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                                                                onClick={() => {
+                                                                                  setCollapser((prevCollapser) => ({
+                                                                                    ...prevCollapser,
+                                                                                    ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5],
+                                                                                  }));
+                                                                                }}
+                                                                              ></span> :
+                                                                                <span
+                                                                                  className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
+                                                                                ></span>
+                                                                              }
+                                                                              &nbsp;
+                                                                              <span className="mdi mdi-domain"></span>
+                                                                              <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                                className="unselectable-two"
+                                                                                onClick={(e) => {
+
+                                                                                  dispatch(getMemberDetailData({ member_id: '' }))
+                                                                                  dispatch(getDetailDeptData({ dept_id: childItem5.dept_id }));
+                                                                                  let dept_id = ''
+                                                                                  dept_id = childItem5.dept_id
+                                                                                  ReactSession.remove('selectedMemberData')
+                                                                                  setSelectedDeptData(dept_id)
+                                                                                  ReactSession.set('selectedDeptData', dept_id)
+                                                                                }
+                                                                                }
+                                                                              >
+                                                                                &nbsp;
+                                                                                {childItem5.dept_name}
+                                                                              </a>
+                                                                            </Col>
+                                                                          </Row>
+                                                                          {collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] === true && Array.isArray(childItem5?.childList)
+                                                                            ? childItem5?.childList.map((childItem6, childIndex6) => {
+                                                                              return (
+                                                                                <React.Fragment key={childIndex6}>
+                                                                                  <Row style={{ marginBottom: "8px" }}>
+                                                                                    <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 6}vw` }}>
+                                                                                      {childItem6.childList ? <span
+                                                                                        className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                                                                        onClick={() => {
+                                                                                          setCollapser((prevCollapser) => ({
+                                                                                            ...prevCollapser,
+                                                                                            ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6],
+                                                                                          }));
+                                                                                        }}
+                                                                                      ></span> :
+                                                                                        <span
+                                                                                          className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] ? "mdi mdi-minus-box opacity-0" : "mdi mdi-plus-box opacity-0"}
+                                                                                        ></span>
+                                                                                      }
+                                                                                      &nbsp;
+                                                                                      <span className="mdi mdi-domain"></span>
+                                                                                      <a style={{ color:"black", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                                        className="unselectable-two"
+                                                                                        onClick={(e) => {
+
+                                                                                          dispatch(getMemberDetailData({ member_id: '' }))
+                                                                                          dispatch(getDetailDeptData({ dept_id: childItem6.dept_id }));
+                                                                                          let dept_id = ''
+                                                                                          dept_id = childItem6.dept_id
+                                                                                          ReactSession.remove('selectedMemberData')
+                                                                                          setSelectedDeptData(dept_id)
+                                                                                          ReactSession.set('selectedDeptData', dept_id)
+                                                                                        }
+                                                                                        }
+                                                                                      >
+                                                                                        &nbsp;
+                                                                                        {childItem6.dept_name}
+                                                                                      </a>
+                                                                                    </Col>
+                                                                                  </Row>
+                                                                                </React.Fragment>
+                                                                              );
+                                                                            })
+                                                                            : null
+                                                                          }
+                                                                        </React.Fragment>
+                                                                      );
+                                                                    })
+                                                                    : null
+                                                                  }
+                                                                </React.Fragment>
+                                                              );
+                                                            })
+                                                            : null
+                                                          }
+                                                        </React.Fragment>
+                                                      );
+                                                    })
+                                                    : null
+                                                  }
+
+                                                </React.Fragment>
+                                              );
+                                            })
+                                            : (
+                                              null
+                                            )
+                                        }
+                                      </React.Fragment>
+                                    );
+                                  })
+                                  : (
+                                    <>
+                                    </>
+                                  )
+                              }
+                            </>
+                          )
+                      }
                     </Col>
 
 
