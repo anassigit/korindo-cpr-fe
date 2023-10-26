@@ -15,8 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDeptData, getDetailDeptData, getMemberDetailData, getMemberListData, getSearchData, resetMessage, resetMessageMemberDtl } from "store/actions";
 import '../../assets/scss/custom.scss'
 import Member from "./Member";
-import DetailService from "./DetailService";
 import { ReactSession } from 'react-client-session';
+import HistoryRekomendasi from "./HistoryRekomendasi";
 
 const Rekomendasi = () => {
 
@@ -191,7 +191,7 @@ const Rekomendasi = () => {
                     <Col
                       xs={3}
                       className="bg-light py-2"
-                      style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", width: "20%", height: "85vh", overflowX: "auto", overflowY: "auto" }}
+                      style={{ border: "1px solid #BBB", width: "20%", height: "70vh", overflowX: "auto", overflowY: "auto", fontSize:".8vw" }}
                     >
 
                       {
@@ -211,10 +211,10 @@ const Rekomendasi = () => {
 
                                           dispatch(getMemberDetailData({ member_id: '' }))
                                           dispatch(getDetailDeptData({ dept_id: item.dept_id }));
-                                          let dept_id = ''
-                                          dept_id = item.dept_id
+                                          let org_id = ''
+                                          org_id = item.org_id
                                           ReactSession.remove('selectedMemberData')
-                                          setSelectedDeptData(dept_id)
+                                          setSelectedDeptData(org_id)
                                           setSelectedDeptName(item.dept_name)
                                           ReactSession.set('selectedDeptData', dept_id)
                                         }
@@ -250,13 +250,13 @@ const Rekomendasi = () => {
 
                                       dispatch(getMemberDetailData({ member_id: '' }))
                                       dispatch(getDetailDeptData({ dept_id: appDeptData?.data?.result?.dept_id }));
-                                      let dept_id = ''
-                                      dept_id = appDeptData?.data?.result?.dept_id
+                                      let org_id = ''
+                                      org_id = appDeptData?.data?.result?.org_id
                                       ReactSession.remove('selectedMemberData')
                                       ReactSession.set('selectedMemberData')
-                                      setSelectedDeptData(dept_id)
+                                      setSelectedDeptData(org_id)
                                       setSelectedDeptName(appDeptData?.data?.result?.dept_name)
-                                      ReactSession.set('selectedDeptData', dept_id)
+                                      ReactSession.set('selectedDeptData', org_id)
                                     }
                                     }
                                   >
@@ -294,12 +294,12 @@ const Rekomendasi = () => {
 
                                                 dispatch(getMemberDetailData({ member_id: '' }))
                                                 dispatch(getDetailDeptData({ dept_id: childItem.dept_id }));
-                                                let dept_id = ''
-                                                dept_id = childItem.dept_id
+                                                let org_id = ''
+                                                org_id = childItem.org_id
                                                 ReactSession.remove('selectedMemberData')
-                                                setSelectedDeptData(dept_id)
+                                                setSelectedDeptData(org_id)
                                                 setSelectedDeptName(childItem.dept_name)
-                                                ReactSession.set('selectedDeptData', dept_id)
+                                                ReactSession.set('selectedDeptData', org_id)
                                               }
                                               }
                                             >
@@ -332,18 +332,18 @@ const Rekomendasi = () => {
                                                       }
                                                       &nbsp;
                                                       <span className="mdi mdi-domain"></span>
-                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                         className="unselectable-two"
                                                         onClick={(e) => {
 
                                                           dispatch(getMemberDetailData({ member_id: '' }))
-                                                          dispatch(getDetailDeptData({ dept_id: childItem2.dept_id }));
-                                                          let dept_id = ''
-                                                          dept_id = childItem2.dept_id
+                                                          dispatch(getDetailDeptData({ dept_id: childItem2.org_id }));
+                                                          let org_id = ''
+                                                          org_id = childItem2.org_id
                                                           ReactSession.remove('selectedMemberData')
-                                                          setSelectedDeptData(dept_id)
+                                                          setSelectedDeptData(org_id)
                                                           setSelectedDeptName(childItem2.dept_name)
-                                                          ReactSession.set('selectedDeptData', dept_id)
+                                                          ReactSession.set('selectedDeptData', org_id)
                                                         }
                                                         }
                                                       >
@@ -374,18 +374,18 @@ const Rekomendasi = () => {
                                                               }
                                                               &nbsp;
                                                               <span className="mdi mdi-domain"></span>
-                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                 className="unselectable-two"
                                                                 onClick={(e) => {
 
                                                                   dispatch(getMemberDetailData({ member_id: '' }))
-                                                                  dispatch(getDetailDeptData({ dept_id: childItem3.dept_id }));
-                                                                  let dept_id = ''
-                                                                  dept_id = childItem3.dept_id
+                                                                  dispatch(getDetailDeptData({ dept_id: childItem3.org_id }));
+                                                                  let org_id = ''
+                                                                  org_id = childItem3.org_id
                                                                   ReactSession.remove('selectedMemberData')
-                                                                  setSelectedDeptData(dept_id)
+                                                                  setSelectedDeptData(org_id)
                                                                   setSelectedDeptName(childItem3.dept_name)
-                                                                  ReactSession.set('selectedDeptData', dept_id)
+                                                                  ReactSession.set('selectedDeptData', org_id)
                                                                 }
                                                                 }
                                                               >
@@ -415,18 +415,18 @@ const Rekomendasi = () => {
                                                                       }
                                                                       &nbsp;
                                                                       <span className="mdi mdi-domain"></span>
-                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                         className="unselectable-two"
                                                                         onClick={(e) => {
 
                                                                           dispatch(getMemberDetailData({ member_id: '' }))
-                                                                          dispatch(getDetailDeptData({ dept_id: childItem4.dept_id }));
-                                                                          let dept_id = ''
-                                                                          dept_id = childItem4.dept_id
+                                                                          dispatch(getDetailDeptData({ dept_id: childItem4.org_id }));
+                                                                          let org_id = ''
+                                                                          org_id = childItem4.org_id
                                                                           ReactSession.remove('selectedMemberData')
-                                                                          setSelectedDeptData(dept_id)
+                                                                          setSelectedDeptData(org_id)
                                                                           setSelectedDeptName(childItem4.dept_name)
-                                                                          ReactSession.set('selectedDeptData', dept_id)
+                                                                          ReactSession.set('selectedDeptData', org_id)
                                                                         }
                                                                         }
                                                                       >
@@ -456,18 +456,18 @@ const Rekomendasi = () => {
                                                                               }
                                                                               &nbsp;
                                                                               <span className="mdi mdi-domain"></span>
-                                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                                 className="unselectable-two"
                                                                                 onClick={(e) => {
 
                                                                                   dispatch(getMemberDetailData({ member_id: '' }))
-                                                                                  dispatch(getDetailDeptData({ dept_id: childItem5.dept_id }));
-                                                                                  let dept_id = ''
-                                                                                  dept_id = childItem5.dept_id
+                                                                                  dispatch(getDetailDeptData({ dept_id: childItem5.org_id }));
+                                                                                  let org_id = ''
+                                                                                  org_id = childItem5.org_id
                                                                                   ReactSession.remove('selectedMemberData')
-                                                                                  setSelectedDeptData(dept_id)
+                                                                                  setSelectedDeptData(org_id)
                                                                                   setSelectedDeptName(childItem5.dept_name)
-                                                                                  ReactSession.set('selectedDeptData', dept_id)
+                                                                                  ReactSession.set('selectedDeptData', org_id)
                                                                                 }
                                                                                 }
                                                                               >
@@ -497,18 +497,18 @@ const Rekomendasi = () => {
                                                                                       }
                                                                                       &nbsp;
                                                                                       <span className="mdi mdi-domain"></span>
-                                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                                         className="unselectable-two"
                                                                                         onClick={(e) => {
 
                                                                                           dispatch(getMemberDetailData({ member_id: '' }))
-                                                                                          dispatch(getDetailDeptData({ dept_id: childItem6.dept_id }));
-                                                                                          let dept_id = ''
-                                                                                          dept_id = childItem6.dept_id
+                                                                                          dispatch(getDetailDeptData({ dept_id: childItem6.org_id }));
+                                                                                          let org_id = ''
+                                                                                          org_id = childItem6.org_id
                                                                                           ReactSession.remove('selectedMemberData')
-                                                                                          setSelectedDeptData(dept_id)
+                                                                                          setSelectedDeptData(org_id)
                                                                                           setSelectedDeptName(childItem6.dept_name)
-                                                                                          ReactSession.set('selectedDeptData', dept_id)
+                                                                                          ReactSession.set('selectedDeptData', org_id)
                                                                                         }
                                                                                         }
                                                                                       >
@@ -562,7 +562,7 @@ const Rekomendasi = () => {
                     <Col
                       xs={5}
                       className="bg-light py-2"
-                      style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", width: "37%", paddingRight: 0, paddingLeft: 0, height: "85vh" }}
+                      style={{ border: "1px solid #BBB", width: "37%", paddingRight: 0, paddingLeft: 0, height: "70vh" }}
                     >
                       <Member
                         appDeptData={appDeptData}
@@ -585,16 +585,9 @@ const Rekomendasi = () => {
                     <Col
                       xs={5}
                       className="bg-light"
-                      style={{ backgroundColor: "#F6F6F6", border: "1px solid #BBB", padding: 0, margin: 0, overflowX: "auto", overflowY: "auto" }}
+                      style={{ border: "1px solid #BBB", padding: 0, margin: 0, overflowX: "auto", overflowY: "auto" }}
                     >
-                      {/* <DetailService
-                    appDeptData={appDeptData}
-                    selectedDeptData={selectedDeptData}
-                    setSelectedDeptData={setSelectedDeptData}
-                    setSelectedMemberData={setSelectedMemberData}
-                    selectedMemberData={selectedMemberData}
-                    appDetailDeptDataState={appDetailDeptDataState}
-                  /> */}
+                    <HistoryRekomendasi/>
                     </Col>
                   </Row>
                 </CardBody>

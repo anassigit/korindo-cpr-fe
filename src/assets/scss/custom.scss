@@ -1,6 +1,7 @@
 .noti-icon .badge {
   left: 23px;
 }
+
 .mt-2 {
   margin-top: 20px !important;
 }
@@ -14,16 +15,20 @@
   border: 1px solid #eeeef5;
   height: 239px;
 }
+
 .dz-message {
   text-align: center;
   padding: 100px;
 }
+
 .fcYNFc {
   background-color: #ffffff !important;
 }
+
 .task-box {
   border: 1px solid #e1e1e6;
 }
+
 .react-datepicker-wrapper {
   width: 100% !important;
 }
@@ -36,6 +41,7 @@
   padding: 5px;
   color: #fff;
 }
+
 .chat-conversation .right .conversation-list {
   margin-right: 15px;
 }
@@ -54,7 +60,7 @@
   animation: fadeIn 1s ease-in-out;
 }
 
-.fade-in.card{
+.fade-in.card {
   margin-bottom: 0;
 }
 
@@ -62,21 +68,39 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
-.arrow-left{
+.arrow-left {
   background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
 }
- .arrow-right {
+
+.arrow-right {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
 }
 
-.arrow-left:hover{
+.arrow-left:hover {
   background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
 }
- .arrow-right:hover {
+
+.arrow-right:hover {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+}
+
+.member-row {
+  transition: background-color 0.5s ease;
+  /* Smooth transition effect */
+}
+
+.member-row:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+  /* Darker background color when hovered */
+}
+
+.member-row div {
+  color: #000000ab;
+  margin-right: 0.5vw;
 }

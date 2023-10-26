@@ -4,7 +4,7 @@ import { getDeptData, getDetailDeptData, getMemberDetailData, getMemberListData,
 import PropTypes from 'prop-types';
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { Col, Row } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 import { ReactSession } from 'react-client-session';
 
 const Member = (props) => {
@@ -38,7 +38,7 @@ const Member = (props) => {
         "offset": offset,
         "limit": limit,
         "search": {
-          "dept_id": selectedDeptData
+          "org_id": selectedDeptData
         }
       }));
     } else {
@@ -66,22 +66,24 @@ const Member = (props) => {
   return (
     <>
       <div style={{ overflow: "auto", height: "100%" }}>
-        <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px' }}></span>
-        {props.selectedDeptName ? props.selectedDeptName : 'Member List'}
+        <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px', fontSize:".8vw" }}></span>
+        <span style={{ fontSize:".8vw" }}>
+          {props.selectedDeptName ? props.selectedDeptName : 'Member List'}
+        </span>
         <div style={{ width: "100%", position: "relative", marginTop: "8px" }}>
           <Row className="px-2 py-3 text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em" }}>
             {props.searchEntered ?
               <>
-                <Col xs='3'>Departement</Col>
-                <Col xs='3'>Name</Col>
-                <Col xs='2'>Position</Col>
-                <Col xs='3'>HP</Col>
+                <Col xs='3' style={{ fontSize: ".8vw" }}>Departement</Col>
+                <Col xs='3' style={{ fontSize: ".8vw" }}>Name</Col>
+                <Col xs='2' style={{ fontSize: ".8vw" }}>Position</Col>
+                <Col xs='4' style={{ fontSize: ".8vw" }} className="text-center">Rekomendasikan</Col>
               </>
               :
               <>
-                <Col xs='4'>Name</Col>
-                <Col xs='3'>Position</Col>
-                <Col xs='3'>HP</Col>
+                <Col xs='4' style={{ fontSize: ".8vw" }}>Name</Col>
+                <Col xs='3' style={{ fontSize: ".8vw" }}>Position</Col>
+                <Col xs='4' style={{ fontSize: ".8vw" }} className="text-center">Rekomendasikan</Col>
               </>
             }
           </Row>
@@ -90,14 +92,16 @@ const Member = (props) => {
             props?.appMemberList?.data?.list.map((item, index) => {
               return (
                 <React.Fragment key={index}>
-                  <div
-                    className="px-2 py-3 member-row"
+                  <a
+                    className="px-2 member-row"
                     style={{
                       width: props.searchEntered ? "100%" : "100%",
                       position: "relative",
                       borderBottom: '1px solid rgba(73, 80, 87, 0.2)',
                       display: "flex",
-                      alignItems: "center"
+                      alignItems: "center",
+                      paddingBottom: "1vh",
+                      paddingTop: "1vh",
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -115,6 +119,7 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
+                            fontSize: ".8vw",
                             paddingRight: "1%"
                           }}
                         >{item.name ? item.name : item.dept_name}</Col>
@@ -123,20 +128,23 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
+                            fontSize: ".8vw",
                             paddingRight: "1%"
                           }}
                         >{item.name ? item.name : item.member_name}</Col>
-                        <Col xs='2'>{item.position}</Col>
+                        <Col xs='2' style={{ fontSize: ".8vw", }}>{item.position}</Col>
                         <Col
-                          xs='3'
+                          xs='4'
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            paddingRight: "1%"
+                            fontSize: ".8vw",
+                            display: "flex",
+                            justifyContent: "center",
                           }}
                         >
-                          {item.hp}
+                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: "1.4vh" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
                         </Col>
 
                       </>
@@ -148,24 +156,28 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
+                            fontSize: ".8vw",
                           }}
                         >{item.name ? item.name : item.member_name}</Col>
-                        <Col xs='3'>{item.position}</Col>
+                        <Col xs='3' style={{ fontSize: ".8vw", }}>{item.position}</Col>
                         <Col
-                          xs='3'
+                          xs='4'
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            width: '32%'
+                            fontSize: ".8vw",
+                            display: "flex",
+                            justifyContent: "center",
+                            paddingRight: "1%"
                           }}
                         >
-                          {item.hp}
+                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: "1.4vh" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
                         </Col>
 
                       </>
                     }
-                  </div>
+                  </a>
 
                 </React.Fragment>
               )
@@ -182,7 +194,7 @@ const Member = (props) => {
         </div>
       </div>
 
-      <div className="text-white d-flex justify-content-center align-items-center text-center" style={{ backgroundColor: "#8C8C8C", width: props.searchEntered ? "100%" : "100%", left: "0em", zIndex: 1, position: "absolute", bottom: 0 }}>
+      <div className="text-white d-flex justify-content-center align-items-center text-center bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", left: "0em", zIndex: 1, position: "absolute", bottom: 0 }}>
         <Col xs='3'>
           {props.currentPage > 1 ? (
             <span className="mdi mdi-menu-left" style={{ fontSize: "32px", cursor: "pointer" }} onClick={() => handlePageChange(props.currentPage - 1)} />
@@ -200,7 +212,7 @@ const Member = (props) => {
                   key={pageNumber}
                   className={`unselectable page-number ${pageNumber === props.currentPage ? 'active' : ''}`}
                   style={{
-                    color:"white",
+                    color: "white",
                     paddingLeft: '10%',
                     fontWeight: pageNumber === props.currentPage ? 'bold' : '',
                     fontSize: '16px',
