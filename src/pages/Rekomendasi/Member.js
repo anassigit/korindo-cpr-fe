@@ -119,7 +119,6 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-
                             paddingRight: "1%"
                           }}
                         >{item.name ? item.name : item.dept_name}</Col>
