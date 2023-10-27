@@ -165,13 +165,14 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-
+                            position:"relative",
+                            left:"2.5%",
                             display: "flex",
                             justifyContent: "center",
                             paddingRight: "1%"
                           }}
                         >
-                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize:".6rem" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
+                          <Button className="btn btn-warning text-center text-light" style={{   border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize:".8rem" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
                         </Col>
 
                       </>
