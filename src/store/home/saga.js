@@ -3,16 +3,17 @@ import { call, put, takeEvery } from "redux-saga/effects"
 import {
   GET_DEPT,
   GET_MEMBER_LIST,
+  GET_RECOMMEND_LIST,
   GET_SEARCH
 } from "./actionTypes"
 import {
   respGetDept,
-  respGetMemberList, respGetSearch
+  respGetMemberList, respGetRecommendList, respGetSearch
 } from "./actions"
 
 import {
   getDeptBE,
-  getMemberListBE, getSearchBE
+  getMemberListBE, getRecommendListBE, getSearchBE
 } from "helpers/backend_helper"
 
 function* fetchGetDept({ payload: req }) {
@@ -54,13 +55,26 @@ function* fetchGetSearch({ payload: req }) {
     yield put(respGetSearch({ "status": 0, "message": "Error Get Data" }))
   }
 }
+function* fetchGetRecommendList({ payload: req }) {
+  try {
+    const response = yield call(getRecommendListBE, req)
+    if (response.status == 1) {
+      yield put(respGetRecommendList(response))
+    } else {
+      yield put(respGetRecommendList(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetRecommendList({ "status": 0, "message": "Error Get Data" }))
+  }
+}
 
 function* rekomendasiSaga() {
 
   yield takeEvery(GET_DEPT, fetchGetDept)
   yield takeEvery(GET_MEMBER_LIST, fetchGetMemberList)
   yield takeEvery(GET_SEARCH, fetchGetSearch)
-
+  yield takeEvery(GET_RECOMMEND_LIST, fetchGetRecommendList)
 
 }
 

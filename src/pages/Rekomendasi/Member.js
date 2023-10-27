@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getDeptData, getDetailDeptData, getMemberDetailData, getMemberListData, getSearchData, resetMessage } from "store/actions";
 import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import { ReactSession } from 'react-client-session';
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Col, Row } from "reactstrap";
+import { getMemberListData, getSearchData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { Button, Col, Row } from "reactstrap";
-import { ReactSession } from 'react-client-session';
 
 const Member = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Member = (props) => {
   }, [appMemberList2])
 
   useEffect(() => {
-    dispatch(getDetailDeptData({ dept_id: selectedDeptData }));
+
     props.setCurrentPage(1);
     props.setOffset(0);
   }, [selectedDeptData]);
@@ -66,24 +66,24 @@ const Member = (props) => {
   return (
     <>
       <div style={{ overflow: "auto", height: "100%" }}>
-        <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px', fontSize:".8vw" }}></span>
-        <span style={{ fontSize:".8vw" }}>
+        <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px' }}></span>
+        <span>
           {props.selectedDeptName ? props.selectedDeptName : 'Member List'}
         </span>
         <div style={{ width: "100%", position: "relative", marginTop: "8px" }}>
-          <Row className="px-2 py-3 text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em" }}>
+          <Row className="text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em", paddingTop:"2%", paddingBottom:"2%", display:"flex", justifyContent:"center", alignItems:"center" }}>
             {props.searchEntered ?
               <>
-                <Col xs='3' style={{ fontSize: ".8vw" }}>Departement</Col>
-                <Col xs='3' style={{ fontSize: ".8vw" }}>Name</Col>
-                <Col xs='2' style={{ fontSize: ".8vw" }}>Position</Col>
-                <Col xs='4' style={{ fontSize: ".8vw" }} className="text-center">Rekomendasikan</Col>
+                <Col xs='3'>Departement</Col>
+                <Col xs='3'>Name</Col>
+                <Col xs='2'>Position</Col>
+                <Col xs='5' className="text-center">Rekomendasikan</Col>
               </>
               :
               <>
-                <Col xs='4' style={{ fontSize: ".8vw" }}>Name</Col>
-                <Col xs='3' style={{ fontSize: ".8vw" }}>Position</Col>
-                <Col xs='4' style={{ fontSize: ".8vw" }} className="text-center">Rekomendasikan</Col>
+                <Col xs='4'>Name</Col>
+                <Col xs='3'>Position</Col>
+                <Col xs='5' className="text-center">Rekomendasikan</Col>
               </>
             }
           </Row>
@@ -105,8 +105,8 @@ const Member = (props) => {
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      dispatch(getDetailDeptData({ dept_id: '' }));
-                      dispatch(getMemberDetailData({ member_id: item?.member_id }))
+
+
                       props.setSelectedMemberData(item);
                       ReactSession.set('selectedMemberData', item)
                     }}
@@ -119,7 +119,7 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            fontSize: ".8vw",
+
                             paddingRight: "1%"
                           }}
                         >{item.name ? item.name : item.dept_name}</Col>
@@ -128,23 +128,23 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            fontSize: ".8vw",
+
                             paddingRight: "1%"
                           }}
                         >{item.name ? item.name : item.member_name}</Col>
-                        <Col xs='2' style={{ fontSize: ".8vw", }}>{item.position}</Col>
+                        <Col xs='2' style={{}}>{item.position}</Col>
                         <Col
                           xs='4'
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            fontSize: ".8vw",
+
                             display: "flex",
                             justifyContent: "center",
                           }}
                         >
-                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: "1.4vh" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
+                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
                         </Col>
 
                       </>
@@ -156,23 +156,23 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            fontSize: ".8vw",
+
                           }}
                         >{item.name ? item.name : item.member_name}</Col>
-                        <Col xs='3' style={{ fontSize: ".8vw", }}>{item.position}</Col>
+                        <Col xs='3' style={{}}>{item.position}</Col>
                         <Col
                           xs='4'
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            fontSize: ".8vw",
+
                             display: "flex",
                             justifyContent: "center",
                             paddingRight: "1%"
                           }}
                         >
-                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: "1.4vh" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
+                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize:".6rem" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
                         </Col>
 
                       </>

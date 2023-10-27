@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import MetaTags from 'react-meta-tags';
-import '../../config';
-import RootPageCustom from '../../common/RootPageCustom';
-import BootstrapTable from "react-bootstrap-table-next";
+import React, { useEffect, useState } from "react"
+import { ReactSession } from 'react-client-session'
+import { useDispatch, useSelector } from "react-redux"
 import {
   Button,
   Card,
@@ -10,13 +8,13 @@ import {
   CardHeader,
   Col,
   Container, Input, Row, Spinner,
-} from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { getDeptData, getDetailDeptData, getMemberDetailData, getMemberListData, getSearchData, resetMessage, resetMessageMemberDtl } from "store/actions";
+} from "reactstrap"
+import { getDeptData, getSearchData, resetMessage } from "store/actions"
 import '../../assets/scss/custom.scss'
-import Member from "./Member";
-import { ReactSession } from 'react-client-session';
-import HistoryRekomendasi from "./HistoryRekomendasi";
+import RootPageCustom from '../../common/RootPageCustom'
+import '../../config'
+import HistoryRekomendasi from "./HistoryRekomendasi"
+import Member from "./Member"
 
 const Rekomendasi = () => {
 
@@ -24,26 +22,26 @@ const Rekomendasi = () => {
 
   const [loadingSpinner, setLoadingSpinner] = useState(false)
 
-  const [searchBy, setSearchBy] = useState(false);
-  const [searchVal, setSearchVal] = useState('');
+  const [searchBy, setSearchBy] = useState(false)
+  const [searchVal, setSearchVal] = useState('')
   const [searchEntered, setSearchEntered] = useState(false)
 
-  const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [offset, setOffset] = useState(0)
+  const [limit, setLimit] = useState(10)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  const [selectedDeptData, setSelectedDeptData] = useState();
-  const [selectedDeptName, setSelectedDeptName] = useState();
+  const [selectedDeptData, setSelectedDeptData] = useState()
+  const [selectedDeptName, setSelectedDeptName] = useState()
 
-  const [selectedMemberData, setSelectedMemberData] = useState();
+  const [selectedMemberData, setSelectedMemberData] = useState()
 
   const [appDetailDeptDataState, setAppDetailDeptDataState] = useState()
   const [collapser, setCollapser] = useState({})
 
-  const [appMemberList, setMemberList] = useState();
+  const [appMemberList, setMemberList] = useState()
 
-  const appDeptData = useSelector((state) => state.rekomendasiReducer.respGetDept);
-  const appSearchData = useSelector((state) => state.rekomendasiReducer.respGetSearch);
+  const appDeptData = useSelector((state) => state.rekomendasiReducer.respGetDept)
+  const appSearchData = useSelector((state) => state.rekomendasiReducer.respGetSearch)
 
   useEffect(() => {
 
@@ -58,7 +56,6 @@ const Rekomendasi = () => {
     }
 
     if (ReactSession.get('selectedDeptData')) {
-      dispatch(getDetailDeptData({ dept_id: ReactSession.get('selectedDeptData') }));
     }
 
     if (ReactSession.get('selectedDeptName')) {
@@ -117,7 +114,7 @@ const Rekomendasi = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       // Prevent the default form submission behavior
-      e.preventDefault();
+      e.preventDefault()
       setCurrentPage(1)
       dispatch(getSearchData({
         "offset": 0,
@@ -127,7 +124,7 @@ const Rekomendasi = () => {
         }
       }))
     }
-  };
+  }
 
   return (
     <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -191,7 +188,7 @@ const Rekomendasi = () => {
                     <Col
                       xs={3}
                       className="bg-light py-2"
-                      style={{ border: "1px solid #BBB", width: "20%", height: "70vh", overflowX: "auto", overflowY: "auto", fontSize:".8vw" }}
+                      style={{ border: "1px solid #BBB", width: "20%", height: "70vh", overflowX: "auto", overflowY: "auto", fontSize: "1.5vh" }}
                     >
 
                       {
@@ -208,9 +205,6 @@ const Rekomendasi = () => {
                                       <a style={{ color: "#4c4c4c", fontWeight: (collapser["0"] || selectedDeptData === item.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                         className="unselectable-two"
                                         onClick={(e) => {
-
-                                          dispatch(getMemberDetailData({ member_id: '' }))
-                                          dispatch(getDetailDeptData({ dept_id: item.dept_id }));
                                           let org_id = ''
                                           org_id = item.org_id
                                           ReactSession.remove('selectedMemberData')
@@ -227,7 +221,7 @@ const Rekomendasi = () => {
                                   </Row>
                                 ) : null}
                               </React.Fragment>
-                            );
+                            )
                           })
                           : (
                             <>
@@ -239,7 +233,7 @@ const Rekomendasi = () => {
                                       setCollapser((prevCollapser) => ({
                                         ...prevCollapser,
                                         ["0"]: !prevCollapser["0"],
-                                      }));
+                                      }))
                                     }}
                                   ></span>
                                   &nbsp;
@@ -247,9 +241,6 @@ const Rekomendasi = () => {
                                   <a style={{ color: "#4c4c4c", fontWeight: (collapser["0"] || selectedDeptData === appDeptData?.data?.result?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                     className="unselectable-two"
                                     onClick={(e) => {
-
-                                      dispatch(getMemberDetailData({ member_id: '' }))
-                                      dispatch(getDetailDeptData({ dept_id: appDeptData?.data?.result?.dept_id }));
                                       let org_id = ''
                                       org_id = appDeptData?.data?.result?.org_id
                                       ReactSession.remove('selectedMemberData')
@@ -279,7 +270,7 @@ const Rekomendasi = () => {
                                                 setCollapser((prevCollapser) => ({
                                                   ...prevCollapser,
                                                   ["0-" + childIndex]: !prevCollapser["0-" + childIndex],
-                                                }));
+                                                }))
                                               }}
                                             ></span> :
                                               <span
@@ -291,9 +282,6 @@ const Rekomendasi = () => {
                                             <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex] || selectedDeptData === childItem.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                               className="unselectable-two"
                                               onClick={(e) => {
-
-                                                dispatch(getMemberDetailData({ member_id: '' }))
-                                                dispatch(getDetailDeptData({ dept_id: childItem.dept_id }));
                                                 let org_id = ''
                                                 org_id = childItem.org_id
                                                 ReactSession.remove('selectedMemberData')
@@ -323,7 +311,7 @@ const Rekomendasi = () => {
                                                           setCollapser((prevCollapser) => ({
                                                             ...prevCollapser,
                                                             ["0-" + childIndex + childIndex2]: !prevCollapser["0-" + childIndex + childIndex2],
-                                                          }));
+                                                          }))
                                                         }}
                                                       ></span> :
                                                         <span
@@ -335,9 +323,6 @@ const Rekomendasi = () => {
                                                       <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                         className="unselectable-two"
                                                         onClick={(e) => {
-
-                                                          dispatch(getMemberDetailData({ member_id: '' }))
-                                                          dispatch(getDetailDeptData({ dept_id: childItem2.org_id }));
                                                           let org_id = ''
                                                           org_id = childItem2.org_id
                                                           ReactSession.remove('selectedMemberData')
@@ -365,7 +350,7 @@ const Rekomendasi = () => {
                                                                   setCollapser((prevCollapser) => ({
                                                                     ...prevCollapser,
                                                                     ["0-" + childIndex + childIndex2 + childIndex3]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3],
-                                                                  }));
+                                                                  }))
                                                                 }}
                                                               ></span> :
                                                                 <span
@@ -377,9 +362,6 @@ const Rekomendasi = () => {
                                                               <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                 className="unselectable-two"
                                                                 onClick={(e) => {
-
-                                                                  dispatch(getMemberDetailData({ member_id: '' }))
-                                                                  dispatch(getDetailDeptData({ dept_id: childItem3.org_id }));
                                                                   let org_id = ''
                                                                   org_id = childItem3.org_id
                                                                   ReactSession.remove('selectedMemberData')
@@ -406,7 +388,7 @@ const Rekomendasi = () => {
                                                                           setCollapser((prevCollapser) => ({
                                                                             ...prevCollapser,
                                                                             ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4],
-                                                                          }));
+                                                                          }))
                                                                         }}
                                                                       ></span> :
                                                                         <span
@@ -418,9 +400,6 @@ const Rekomendasi = () => {
                                                                       <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                         className="unselectable-two"
                                                                         onClick={(e) => {
-
-                                                                          dispatch(getMemberDetailData({ member_id: '' }))
-                                                                          dispatch(getDetailDeptData({ dept_id: childItem4.org_id }));
                                                                           let org_id = ''
                                                                           org_id = childItem4.org_id
                                                                           ReactSession.remove('selectedMemberData')
@@ -447,7 +426,7 @@ const Rekomendasi = () => {
                                                                                   setCollapser((prevCollapser) => ({
                                                                                     ...prevCollapser,
                                                                                     ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5],
-                                                                                  }));
+                                                                                  }))
                                                                                 }}
                                                                               ></span> :
                                                                                 <span
@@ -459,9 +438,6 @@ const Rekomendasi = () => {
                                                                               <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                                 className="unselectable-two"
                                                                                 onClick={(e) => {
-
-                                                                                  dispatch(getMemberDetailData({ member_id: '' }))
-                                                                                  dispatch(getDetailDeptData({ dept_id: childItem5.org_id }));
                                                                                   let org_id = ''
                                                                                   org_id = childItem5.org_id
                                                                                   ReactSession.remove('selectedMemberData')
@@ -488,7 +464,7 @@ const Rekomendasi = () => {
                                                                                           setCollapser((prevCollapser) => ({
                                                                                             ...prevCollapser,
                                                                                             ["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6]: !prevCollapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6],
-                                                                                          }));
+                                                                                          }))
                                                                                         }}
                                                                                       ></span> :
                                                                                         <span
@@ -500,9 +476,6 @@ const Rekomendasi = () => {
                                                                                       <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.org_id) ? "bold" : "normal", cursor: "pointer" }}
                                                                                         className="unselectable-two"
                                                                                         onClick={(e) => {
-
-                                                                                          dispatch(getMemberDetailData({ member_id: '' }))
-                                                                                          dispatch(getDetailDeptData({ dept_id: childItem6.org_id }));
                                                                                           let org_id = ''
                                                                                           org_id = childItem6.org_id
                                                                                           ReactSession.remove('selectedMemberData')
@@ -518,35 +491,35 @@ const Rekomendasi = () => {
                                                                                     </Col>
                                                                                   </Row>
                                                                                 </React.Fragment>
-                                                                              );
+                                                                              )
                                                                             })
                                                                             : null
                                                                           }
                                                                         </React.Fragment>
-                                                                      );
+                                                                      )
                                                                     })
                                                                     : null
                                                                   }
                                                                 </React.Fragment>
-                                                              );
+                                                              )
                                                             })
                                                             : null
                                                           }
                                                         </React.Fragment>
-                                                      );
+                                                      )
                                                     })
                                                     : null
                                                   }
 
                                                 </React.Fragment>
-                                              );
+                                              )
                                             })
                                             : (
                                               null
                                             )
                                         }
                                       </React.Fragment>
-                                    );
+                                    )
                                   })
                                   : (
                                     <>
@@ -585,9 +558,9 @@ const Rekomendasi = () => {
                     <Col
                       xs={5}
                       className="bg-light"
-                      style={{ border: "1px solid #BBB", padding: 0, margin: 0, overflowX: "auto", overflowY: "auto" }}
+                      style={{ border: "1px solid #BBB", padding: 0, margin: 0 }}
                     >
-                    <HistoryRekomendasi/>
+                      <HistoryRekomendasi />
                     </Col>
                   </Row>
                 </CardBody>
@@ -600,7 +573,7 @@ const Rekomendasi = () => {
         </>
       }
     />
-  );
-};
+  )
+}
 
-export default Rekomendasi;
+export default Rekomendasi
