@@ -18,7 +18,7 @@ const MsgModal = ({ modal, toggle, message, toggleApply }) => {
                                 left: '50%',
                                 top: '50%',
                             }}
-                            color="grey"
+                            color="primary"
                         />
                     </div>
                 ) : (
