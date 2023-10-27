@@ -111,9 +111,9 @@ const HistoryRekomendasi = () => {
                                         <div id='comment-recommendation' style={{ fontSize: "1.5vh" }}>
                                             {item.comment}
                                         </div>
-                                        <span className='mdi mdi-pencil text-primary' style={{position:"absolute", bottom:0, right:40, paddingRight:"4%", paddingBottom:"2%", fontSize:"2.5vh"}}>
+                                        <span className='mdi mdi-pencil text-primary' style={{position:"absolute", bottom:0, right:"15%", paddingBottom:"2%", fontSize:"2.5vh"}}>
                                         </span>
-                                        <span className='mdi mdi-close text-danger' style={{position:"absolute", bottom:0, right:0, paddingRight:"4%", fontSize:"3vh"}}>
+                                        <span className='mdi mdi-close text-danger' style={{position:"absolute", bottom:0, right:"0", paddingRight:"4%", fontSize:"3vh"}}>
                                         </span>
                                     </div>
                                 </CardBody>
