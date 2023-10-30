@@ -1,21 +1,25 @@
 import PropTypes from 'prop-types';
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactSession } from 'react-client-session';
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, Row } from "reactstrap";
 import { getMemberListData, getSearchData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
+import RekomendasiModal from './RekomendasiModal';
 
 const Member = (props) => {
   const dispatch = useDispatch();
+
+  const [modalRekomendasi, setModalRekomendasi] = useState(false)
+  const [isAdd, setIsAdd] = useState(false)
+  const [employeeId, setEmployeeId] = useState()
 
   let selectedDeptData = ReactSession.get('selectedDeptData')
 
   let offset = props?.offset
   let limit = props?.limit
 
-  // const appDetailDeptData = useSelector((state) => state.rekomendasiReducer.respGetDetailDept);
   const appMemberList2 = useSelector((state) => state.rekomendasiReducer.respGetMemberList);
 
   useEffect(() => {
@@ -33,6 +37,8 @@ const Member = (props) => {
   }, [selectedDeptData]);
 
   useEffect(() => {
+    ReactSession.set('offset', offset)
+    ReactSession.set('limit', limit)
     if (!props.searchEntered || selectedDeptData) {
       dispatch(getMemberListData({
         "offset": offset,
@@ -63,21 +69,31 @@ const Member = (props) => {
     props.setCurrentPage(newPage);
   };
 
+  const toggleModal = () => {
+    setModalRekomendasi(!modalRekomendasi)
+  }
+
   return (
     <>
+      <RekomendasiModal
+        toggle={toggleModal}
+        modal={modalRekomendasi}
+        isAdd={isAdd}
+        employee_id={employeeId}
+      />
       <div style={{ overflow: "auto", height: "100%" }}>
         <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px' }}></span>
         <span>
           {props.selectedDeptName ? props.selectedDeptName : 'Member List'}
         </span>
         <div style={{ width: "100%", position: "relative", marginTop: "8px" }}>
-          <Row className="text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em", paddingTop:"2%", paddingBottom:"2%", display:"flex", justifyContent:"center", alignItems:"center" }}>
+          <Row className="text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em", paddingTop: "2%", paddingBottom: "2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
             {props.searchEntered ?
               <>
                 <Col xs='3'>Departement</Col>
                 <Col xs='3'>Name</Col>
                 <Col xs='2'>Position</Col>
-                <Col xs='5' className="text-center">Rekomendasikan</Col>
+                <Col xs='4' style={{paddingLeft:"10%"}} className="text-center">Rekomendasikan</Col>
               </>
               :
               <>
@@ -105,8 +121,6 @@ const Member = (props) => {
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
-
-
                       props.setSelectedMemberData(item);
                       ReactSession.set('selectedMemberData', item)
                     }}
@@ -143,7 +157,36 @@ const Member = (props) => {
                             justifyContent: "center",
                           }}
                         >
-                          <Button className="btn btn-warning text-center text-light" style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
+                          {
+                            item.recommend_type?.toUpperCase() === "CAN" ?
+                              (
+                                <Button
+                                  className="btn btn-warning text-center text-light"
+                                  style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: ".8rem", gap: "2px" }}
+                                  onClick={() => {
+                                    setIsAdd(true)
+                                    setModalRekomendasi(true)
+                                    debugger
+                                    setEmployeeId(item.id)
+                                  }}
+                                >
+                                  Rekomendasi
+                                  <span className="mdi mdi-thumb-up" style={{ marginLeft: '2px' }}></span>
+                                </Button>
+                              )
+                              :
+                              item.recommend_type.toUpperCase() === "CANNOT" ?
+                                null
+                                :
+                                <span
+                                  className="mdi mdi-check-circle text-success"
+                                  style={{
+                                    marginTop: "-8px",
+                                    marginBottom: "-8px",
+                                    fontSize: "24px"
+                                  }}>
+                                </span>
+                          }
                         </Col>
 
                       </>
@@ -165,14 +208,43 @@ const Member = (props) => {
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-                            position:"relative",
-                            left:"2.5%",
+                            position: "relative",
+                            left: "2.5%",
                             display: "flex",
                             justifyContent: "center",
                             paddingRight: "1%"
                           }}
                         >
-                          <Button className="btn btn-warning text-center text-light" style={{   border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize:".8rem" }}>Rekomendasi <span className="mdi mdi-thumb-up"></span></Button>
+                          {
+                            item.recommend_type?.toUpperCase() === "CAN" ?
+                              (
+                                <Button
+                                  className="btn btn-warning text-center text-light"
+                                  style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: ".8rem", gap: "2px" }}
+                                  onClick={() => {
+                                    setIsAdd(true)
+                                    setModalRekomendasi(true)
+                                    debugger
+                                    setEmployeeId(item.id)
+                                  }}
+                                >
+                                  Rekomendasi
+                                  <span className="mdi mdi-thumb-up" style={{ marginLeft: '2px' }}></span>
+                                </Button>
+                              )
+                              :
+                              item.recommend_type.toUpperCase() === "CANNOT" ?
+                                null
+                                :
+                                <span
+                                  className="mdi mdi-check-circle text-success"
+                                  style={{
+                                    marginTop: "-8px",
+                                    marginBottom: "-8px",
+                                    fontSize: "24px"
+                                  }}>
+                                </span>
+                          }
                         </Col>
 
                       </>

@@ -1,14 +1,20 @@
 import {
+  ADD_RECOMMEND,
+  DELETE_RECOMMEND,
   GET_DEPT,
   GET_MEMBER_LIST,
   GET_RECOMMEND_LIST,
   GET_SEARCH,
+  GET_STICKER_LIST,
+  MSG_ADD,
+  MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
   RESP_GET_DEPT,
   RESP_GET_MEMBER_LIST,
   RESP_GET_RECOMMEND_LIST,
-  RESP_GET_SEARCH
+  RESP_GET_SEARCH,
+  RESP_GET_STICKER_LIST
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -16,7 +22,10 @@ const INIT_STATE = {
   respGetMemberList: {},
   respGetSearch: {},
   respGetRecommendList: {},
+  respGetStickerList: {},
+  msgAdd: '',
   msgEdit: '',
+  msgDelete: '',
 }
 
 const rekomendasiReducer = (state = INIT_STATE, action) => {
@@ -58,10 +67,37 @@ const rekomendasiReducer = (state = INIT_STATE, action) => {
         ...state,
         respGetRecommendList: action.payload,
       }
+    case GET_STICKER_LIST:
+      return {
+        ...state,
+      }
+    case RESP_GET_STICKER_LIST:
+      return {
+        ...state,
+        respGetStickerList: action.payload,
+      }
+    case ADD_RECOMMEND:
+      return {
+        ...state,
+      }
+    case DELETE_RECOMMEND:
+      return {
+        ...state,
+      }
+    case MSG_ADD:
+      return {
+        ...state,
+        msgAdd: action.payload,
+      }
     case MSG_EDIT:
       return {
         ...state,
         msgEdit: action.payload,
+      }
+    case MSG_DELETE:
+      return {
+        ...state,
+        msgDelete: action.payload,
       }
     case RESET_MESSAGE:
       return {
@@ -70,7 +106,10 @@ const rekomendasiReducer = (state = INIT_STATE, action) => {
         respGetMemberList: {},
         respGetSearch: {},
         respGetRecommendList: {},
+        respGetStickerList: {},
+        msgAdd: '',
         msgEdit: '',
+        msgDelete: '',
       }
     default:
       return state

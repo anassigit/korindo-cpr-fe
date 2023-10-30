@@ -87,6 +87,8 @@ const Rekomendasi = () => {
     if (appSearchData.status === '1' && searchVal) {
       setMemberList(appSearchData)
       setSearchEntered(true)
+      setSelectedDeptName(null)
+      ReactSession.set('searchVal', searchVal)
     }
   }, [appSearchData])
 
@@ -96,6 +98,7 @@ const Rekomendasi = () => {
       setSearchEntered(false)
       ReactSession.set('collapser', collapser)
       ReactSession.remove('selectedMemberData')
+      ReactSession.remove('searchVal')
     } else {
       setSelectedDeptData(ReactSession.get('selectedDeptData'))
     }

@@ -1,19 +1,27 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
+  ADD_RECOMMEND,
+  DELETE_RECOMMEND,
   GET_DEPT,
   GET_MEMBER_LIST,
   GET_RECOMMEND_LIST,
-  GET_SEARCH
+  GET_SEARCH,
+  GET_STICKER_LIST,
+  MSG_ADD
 } from "./actionTypes"
 import {
+  msgAdd,
+  msgDelete,
   respGetDept,
-  respGetMemberList, respGetRecommendList, respGetSearch
+  respGetMemberList, respGetRecommendList, respGetSearch, respGetStickerList
 } from "./actions"
 
 import {
+  addRecommendBE,
+  deleteRecommendBE,
   getDeptBE,
-  getMemberListBE, getRecommendListBE, getSearchBE
+  getMemberListBE, getRecommendListBE, getSearchBE, getStickerListBE
 } from "helpers/backend_helper"
 
 function* fetchGetDept({ payload: req }) {
@@ -29,6 +37,7 @@ function* fetchGetDept({ payload: req }) {
     yield put(respGetDept({ "status": 0, "message": "Error Get Data" }))
   }
 }
+
 function* fetchGetMemberList({ payload: req }) {
   try {
     const response = yield call(getMemberListBE, req)
@@ -42,6 +51,7 @@ function* fetchGetMemberList({ payload: req }) {
     yield put(respGetMemberList({ "status": 0, "message": "Error Get Data" }))
   }
 }
+
 function* fetchGetSearch({ payload: req }) {
   try {
     const response = yield call(getSearchBE, req)
@@ -55,6 +65,21 @@ function* fetchGetSearch({ payload: req }) {
     yield put(respGetSearch({ "status": 0, "message": "Error Get Data" }))
   }
 }
+
+function* fetchGetStickerList({ payload: req }) {
+  try {
+    const response = yield call(getStickerListBE, req)
+    if (response.status == 1) {
+      yield put(respGetStickerList(response))
+    } else {
+      yield put(respGetStickerList(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetStickerList({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
 function* fetchGetRecommendList({ payload: req }) {
   try {
     const response = yield call(getRecommendListBE, req)
@@ -69,12 +94,35 @@ function* fetchGetRecommendList({ payload: req }) {
   }
 }
 
+function* fetchAddRekomendasi({ payload: req }) {
+  try {
+    const response = yield call(addRecommendBE, req)
+    yield put(msgAdd(response))
+  } catch (error) {
+    console.log(error);
+    yield put(msgAdd({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
+function* fetchDeleteRekomendasi({ payload: req }) {
+  try {
+    const response = yield call(deleteRecommendBE, req)
+    yield put(msgDelete(response))
+  } catch (error) {
+    console.log(error);
+    yield put(msgDelete({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
 function* rekomendasiSaga() {
 
   yield takeEvery(GET_DEPT, fetchGetDept)
   yield takeEvery(GET_MEMBER_LIST, fetchGetMemberList)
   yield takeEvery(GET_SEARCH, fetchGetSearch)
+  yield takeEvery(GET_STICKER_LIST, fetchGetStickerList)
   yield takeEvery(GET_RECOMMEND_LIST, fetchGetRecommendList)
+  yield takeEvery(ADD_RECOMMEND, fetchAddRekomendasi)
+  yield takeEvery(DELETE_RECOMMEND, fetchDeleteRekomendasi)
 
 }
 

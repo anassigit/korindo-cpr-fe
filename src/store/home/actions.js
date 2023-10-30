@@ -1,14 +1,20 @@
 import {
+  ADD_RECOMMEND,
+  DELETE_RECOMMEND,
   GET_DEPT,
   GET_MEMBER_LIST,
   GET_RECOMMEND_LIST,
   GET_SEARCH,
+  GET_STICKER_LIST,
+  MSG_ADD,
+  MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
   RESP_GET_DEPT,
   RESP_GET_MEMBER_LIST,
   RESP_GET_RECOMMEND_LIST,
-  RESP_GET_SEARCH
+  RESP_GET_SEARCH,
+  RESP_GET_STICKER_LIST
 } from "./actionTypes"
 
 export const getDeptData = (req) => ({
@@ -51,8 +57,38 @@ export const respGetRecommendList = resp => ({
   payload: resp,
 })
 
+export const getStickerListData = (req) => ({
+  type: GET_STICKER_LIST,
+  payload: req,
+})
+
+export const respGetStickerList = resp => ({
+  type: RESP_GET_STICKER_LIST,
+  payload: resp,
+})
+
+export const addRecommend = resp => ({
+  type: ADD_RECOMMEND,
+  payload: resp,
+})
+
+export const deleteRecommend = resp => ({
+  type: DELETE_RECOMMEND,
+  payload: resp,
+})
+
+export const msgAdd = resp => ({
+  type: MSG_ADD,
+  payload: resp,
+})
+
 export const msgEdit = resp => ({
   type: MSG_EDIT,
+  payload: resp,
+})
+
+export const msgDelete = resp => ({
+  type: MSG_DELETE,
   payload: resp,
 })
 

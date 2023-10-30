@@ -10,3 +10,9 @@ export const getMemberListBE = req => post("rest/RecommendRest/getMemberList", r
 export const getSearchBE = req => post("rest/RecommendRest/searchMember", req)
 
 export const getRecommendListBE = req => post("rest/RecommendRest/getRecommendList", req)
+
+export const getStickerListBE = req => post("rest/RecommendRest/getStickerList", req)
+
+export const addRecommendBE = req => postWithParam("rest/RecommendRest/addRecommend", req)
+
+export const deleteRecommendBE = req => postWithParam("rest/RecommendRest/deleteRecommend", req)

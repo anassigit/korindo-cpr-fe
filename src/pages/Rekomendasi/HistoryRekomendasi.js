@@ -1,18 +1,67 @@
-import React, { useEffect } from 'react';
-import { Card, CardBody, Col, Row, UncontrolledTooltip } from 'reactstrap';
+import React, { useEffect, useState } from 'react';
+import { Card, CardBody, Col, Row, Spinner, UncontrolledTooltip } from 'reactstrap';
 import '../../assets/scss/custom.scss'; // Import your custom CSS
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecommendListData } from 'store/actions';
+import { deleteRecommend, getMemberListData, getRecommendListData } from 'store/actions';
+import { ReactSession } from 'react-client-session';
+import MsgModal from 'components/Common/MsgModal';
 
 const HistoryRekomendasi = () => {
+
+    let offset = ReactSession.get('offset')
+    let limit = ReactSession.get('limit')
+    let selectedDeptData = ReactSession.get('selectedDeptData')
 
     const dispatch = useDispatch()
 
     const maxStickersToShow = 2; // Maximum number of stickers to show
 
+    const [modal, setModal] = useState(false)
+    const [loadingSpinner, setLoadingSpinner] = useState(false)
+
+    const [recommendId, setRecommendId] = useState()
+
     const appRecommendList = useSelector((state) => {
         return state.rekomendasiReducer.respGetRecommendList
     })
+
+    const appMsgDelete = useSelector((state) => {
+        return state.rekomendasiReducer.msgDelete
+    })
+
+    useEffect(() => {
+        if (appMsgDelete.status === '1') {
+            setLoadingSpinner(false)
+            dispatch(getRecommendListData())
+            dispatch(getMemberListData({
+                "offset": offset,
+                "limit": limit,
+                "search": {
+                    "org_id": selectedDeptData
+                }
+            }));
+        } else if (appMsgDelete.status === '0') {
+            setLoadingSpinner(false)
+            dispatch(getRecommendListData())
+            dispatch(getMemberListData({
+                "offset": offset,
+                "limit": limit,
+                "search": {
+                    "org_id": selectedDeptData
+                }
+            }));
+        }
+    }, [appMsgDelete])
+
+    const toggleModal = () => {
+        setModal(!modal)
+    }
+
+    const toggleApply = () => {
+        dispatch(deleteRecommend({ recommend_id: recommendId }))
+        setModal(!modal)
+        setLoadingSpinner(true)
+    }
 
     useEffect(() => {
         dispatch(getRecommendListData())
@@ -20,13 +69,18 @@ const HistoryRekomendasi = () => {
 
     return (
         <React.Fragment>
+            <MsgModal
+                toggle={toggleModal}
+                toggleApply={toggleApply}
+                modal={modal}
+                message={'Apakah anda yakin untuk menghapus ini?'}
+            />
             <div
                 style={{
                     background: 'linear-gradient(25deg, rgba(255,255,255,1) 0%, rgba(37,150,190,0.2) 46%, rgba(37,150,190,0.19931722689075626) 100%)',
                     width: "100%",
                     height: "100%",
                     display: "flex",
-                    alignItems: "center",
                     alignContent: "space-between",
                     justifyContent: "space-between",
                     flexWrap: "wrap",
@@ -49,7 +103,7 @@ const HistoryRekomendasi = () => {
                                         height: "30vh",
                                     }}>
                                     <div
-                                        style={{ display: "flex", flexDirection: "row" }}
+                                        style={{ display: "flex", flexDirection: "row", justifyContent: 'center' }}
                                     >
                                         <img
                                             style={{
@@ -62,7 +116,7 @@ const HistoryRekomendasi = () => {
                                             src={item.profile_url}
                                         />
                                         <div
-                                            style={{ display: 'flex', flexDirection: "column", paddingTop: "7%", width: "50%" }}
+                                            style={{ display: 'flex', flexDirection: "column", justifyContent: "center", width: "50%" }}
                                         >
                                             <b id='name-recommendation' style={{ fontSize: "1.8vh" }}>
                                                 {item.name}
@@ -84,25 +138,40 @@ const HistoryRekomendasi = () => {
                                             }}
                                         >
 
-                                            {item.stickerList.slice(0, maxStickersToShow).map((sticker, stickerIndex) => {
+                                            {item.stickerList && Array.isArray(item.stickerList) && item.stickerList.slice(0, maxStickersToShow).map((sticker, stickerIndex) => {
                                                 return (
-                                                    <div
-                                                        xl="6"
-                                                        key={stickerIndex}
-                                                        style={{ fontSize: '1.2vh', textOverflow: "ellipsis" }}
-                                                    >
-                                                        {sticker.name}
-                                                    </div>
+                                                    <>
+                                                        <div
+                                                            key={stickerIndex}
+                                                            style={{ fontSize: '1.2vh', textOverflow: "ellipsis" }}
+                                                        >
+                                                            <img
+                                                                width='12px'
+                                                                height='12px'
+                                                                style={{
+                                                                    marginRight: "2px"
+                                                                }}
+                                                                src={sticker.url}
+                                                            />
+                                                            {sticker.name}
+                                                        </div>
+                                                    </>
                                                 );
                                             })}
 
-                                            {item.stickerList.length > maxStickersToShow && (
+                                            {item.stickerList && item.stickerList.length > maxStickersToShow && (
                                                 <React.Fragment>
                                                     <div id={`sticker-no-${index}`} style={{ fontSize: '1.2vh', textOverflow: "ellipsis" }}>
                                                         +{item.stickerList.length - maxStickersToShow} More...
                                                     </div>
                                                     <UncontrolledTooltip target={`sticker-no-${index}`} placement='top'>
-
+                                                        {item.stickerList.slice(maxStickersToShow).map((row, i) => {
+                                                            return (
+                                                                <div key={i}>
+                                                                    {row.name}
+                                                                </div>
+                                                            )
+                                                        })}
                                                     </UncontrolledTooltip>
                                                 </React.Fragment>
                                             )}
@@ -111,16 +180,26 @@ const HistoryRekomendasi = () => {
                                         <div id='comment-recommendation' style={{ fontSize: "1.5vh" }}>
                                             {item.comment}
                                         </div>
-                                        <span className='mdi mdi-pencil text-primary' style={{position:"absolute", bottom:0, right:"15%", paddingBottom:"2%", fontSize:"2.5vh"}}>
+                                        <span className='mdi mdi-pencil text-primary' style={{ position: "absolute", bottom: 0, right: "15%", paddingBottom: "2%", fontSize: "2.5vh" }}>
                                         </span>
-                                        <span className='mdi mdi-close text-danger' style={{position:"absolute", bottom:0, right:"0", paddingRight:"4%", fontSize:"3vh"}}>
-                                        </span>
+                                        <a
+                                            onClick={() => {
+                                                setRecommendId(item.id)
+                                                toggleModal()
+                                            }}
+                                            className='mdi mdi-close text-danger'
+                                            style={{ position: "absolute", bottom: 0, right: "0", paddingRight: "4%", fontSize: "3vh" }}
+                                        >
+                                        </a>
                                     </div>
                                 </CardBody>
                             </Card>
                         )
                     })
                 ) : null}
+                <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
+                    <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
+                </div>
             </div>
 
         </React.Fragment>

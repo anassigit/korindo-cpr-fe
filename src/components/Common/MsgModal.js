@@ -5,7 +5,7 @@ import '../../assets/scss/custom/modal/modal.css'
 const MsgModal = ({ modal, toggle, message, toggleApply }) => {
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
-            <ModalHeader toggle={toggle}>Mapping Service & Roles</ModalHeader>
+            <ModalHeader toggle={toggle}>Message</ModalHeader>
             <ModalBody>
                 {message === null ? (
                     <div className='d-flex justify-content-center'>
@@ -27,7 +27,7 @@ const MsgModal = ({ modal, toggle, message, toggleApply }) => {
             </ModalBody>
             <ModalFooter>
 
-                <Button style={{ backgroundColor: "#8C8C8C", border: 'none', color: "white" }} onClick={toggleApply}>
+                <Button className='btn btn-primary' style={{ border: 'none', color: "white" }} onClick={toggleApply}>
                     Apply
                 </Button>
                 <a className='p-2 unselectable' onClick={toggle}>
