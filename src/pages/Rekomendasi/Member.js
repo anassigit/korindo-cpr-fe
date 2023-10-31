@@ -166,7 +166,6 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    debugger
                                     setEmployeeId(item.id)
                                   }}
                                 >
@@ -224,7 +223,6 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    debugger
                                     setEmployeeId(item.id)
                                   }}
                                 >

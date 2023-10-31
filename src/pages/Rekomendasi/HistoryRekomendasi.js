@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteRecommend, getMemberListData, getRecommendListData } from 'store/actions';
 import { ReactSession } from 'react-client-session';
 import MsgModal from 'components/Common/MsgModal';
+import RekomendasiModal from './RekomendasiModal';
 
 const HistoryRekomendasi = () => {
 
@@ -18,8 +19,11 @@ const HistoryRekomendasi = () => {
 
     const [modal, setModal] = useState(false)
     const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [isAdd, setIsAdd] = useState(false)
+    const [modalRekomendasi, setModalRekomendasi] = useState(false)
 
     const [recommendId, setRecommendId] = useState()
+    const [employeeId, setEmployeeId] = useState()
 
     const appRecommendList = useSelector((state) => {
         return state.rekomendasiReducer.respGetRecommendList
@@ -53,7 +57,7 @@ const HistoryRekomendasi = () => {
         }
     }, [appMsgDelete])
 
-    const toggleModal = () => {
+    const toggleDeleteModal = () => {
         setModal(!modal)
     }
 
@@ -63,14 +67,27 @@ const HistoryRekomendasi = () => {
         setLoadingSpinner(true)
     }
 
+
+    const toggleModal = () => {
+        setModalRekomendasi(!modalRekomendasi)
+    }
+
+
     useEffect(() => {
         dispatch(getRecommendListData())
     }, [])
 
     return (
         <React.Fragment>
-            <MsgModal
+
+            <RekomendasiModal
                 toggle={toggleModal}
+                modal={modalRekomendasi}
+                isAdd={isAdd}
+                recommend_id={recommendId}
+            />
+            <MsgModal
+                toggle={toggleDeleteModal}
                 toggleApply={toggleApply}
                 modal={modal}
                 message={'Apakah anda yakin untuk menghapus ini?'}
@@ -180,12 +197,20 @@ const HistoryRekomendasi = () => {
                                         <div id='comment-recommendation' style={{ fontSize: "1.5vh" }}>
                                             {item.comment}
                                         </div>
-                                        <span className='mdi mdi-pencil text-primary' style={{ position: "absolute", bottom: 0, right: "15%", paddingBottom: "2%", fontSize: "2.5vh" }}>
-                                        </span>
+                                        <a
+                                            onClick={() => {
+                                                setIsAdd(false)
+                                                setModalRekomendasi(true)
+                                                setRecommendId(item.id)
+                                            }}
+                                            className='mdi mdi-pencil text-primary'
+                                            style={{ position: "absolute", bottom: 0, right: "15%", paddingBottom: "2%", fontSize: "2.5vh" }}
+                                        >
+                                        </a>
                                         <a
                                             onClick={() => {
                                                 setRecommendId(item.id)
-                                                toggleModal()
+                                                toggleDeleteModal()
                                             }}
                                             className='mdi mdi-close text-danger'
                                             style={{ position: "absolute", bottom: 0, right: "0", paddingRight: "4%", fontSize: "3vh" }}

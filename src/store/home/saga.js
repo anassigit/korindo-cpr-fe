@@ -3,8 +3,10 @@ import { call, put, takeEvery } from "redux-saga/effects"
 import {
   ADD_RECOMMEND,
   DELETE_RECOMMEND,
+  EDIT_RECOMMEND,
   GET_DEPT,
   GET_MEMBER_LIST,
+  GET_RECOMMEND,
   GET_RECOMMEND_LIST,
   GET_SEARCH,
   GET_STICKER_LIST,
@@ -13,15 +15,17 @@ import {
 import {
   msgAdd,
   msgDelete,
+  msgEdit,
   respGetDept,
-  respGetMemberList, respGetRecommendList, respGetSearch, respGetStickerList
+  respGetMemberList, respGetRecommend, respGetRecommendList, respGetSearch, respGetStickerList
 } from "./actions"
 
 import {
   addRecommendBE,
   deleteRecommendBE,
+  editRecommendBE,
   getDeptBE,
-  getMemberListBE, getRecommendListBE, getSearchBE, getStickerListBE
+  getMemberListBE, getRecommendBE, getRecommendListBE, getSearchBE, getStickerListBE
 } from "helpers/backend_helper"
 
 function* fetchGetDept({ payload: req }) {
@@ -94,6 +98,20 @@ function* fetchGetRecommendList({ payload: req }) {
   }
 }
 
+function* fetchGetRecommend({ payload: req }) {
+  try {
+    const response = yield call(getRecommendBE, req)
+    if (response.status == 1) {
+      yield put(respGetRecommend(response))
+    } else {
+      yield put(respGetRecommend(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetRecommend({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
 function* fetchAddRekomendasi({ payload: req }) {
   try {
     const response = yield call(addRecommendBE, req)
@@ -101,6 +119,16 @@ function* fetchAddRekomendasi({ payload: req }) {
   } catch (error) {
     console.log(error);
     yield put(msgAdd({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
+function* fetchEditRekomendasi({ payload: req }) {
+  try {
+    const response = yield call(editRecommendBE, req)
+    yield put(msgEdit(response))
+  } catch (error) {
+    console.log(error);
+    yield put(msgEdit({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
@@ -121,7 +149,9 @@ function* rekomendasiSaga() {
   yield takeEvery(GET_SEARCH, fetchGetSearch)
   yield takeEvery(GET_STICKER_LIST, fetchGetStickerList)
   yield takeEvery(GET_RECOMMEND_LIST, fetchGetRecommendList)
+  yield takeEvery(GET_RECOMMEND, fetchGetRecommend)
   yield takeEvery(ADD_RECOMMEND, fetchAddRekomendasi)
+  yield takeEvery(EDIT_RECOMMEND, fetchEditRekomendasi)
   yield takeEvery(DELETE_RECOMMEND, fetchDeleteRekomendasi)
 
 }

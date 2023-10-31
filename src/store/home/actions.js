@@ -1,8 +1,10 @@
 import {
   ADD_RECOMMEND,
   DELETE_RECOMMEND,
+  EDIT_RECOMMEND,
   GET_DEPT,
   GET_MEMBER_LIST,
+  GET_RECOMMEND,
   GET_RECOMMEND_LIST,
   GET_SEARCH,
   GET_STICKER_LIST,
@@ -12,6 +14,7 @@ import {
   RESET_MESSAGE,
   RESP_GET_DEPT,
   RESP_GET_MEMBER_LIST,
+  RESP_GET_RECOMMEND,
   RESP_GET_RECOMMEND_LIST,
   RESP_GET_SEARCH,
   RESP_GET_STICKER_LIST
@@ -57,6 +60,16 @@ export const respGetRecommendList = resp => ({
   payload: resp,
 })
 
+export const getRecommendData = (req) => ({
+  type: GET_RECOMMEND,
+  payload: req,
+})
+
+export const respGetRecommend = resp => ({
+  type: RESP_GET_RECOMMEND,
+  payload: resp,
+})
+
 export const getStickerListData = (req) => ({
   type: GET_STICKER_LIST,
   payload: req,
@@ -69,6 +82,11 @@ export const respGetStickerList = resp => ({
 
 export const addRecommend = resp => ({
   type: ADD_RECOMMEND,
+  payload: resp,
+})
+
+export const editRecommend = resp => ({
+  type: EDIT_RECOMMEND,
   payload: resp,
 })
 
