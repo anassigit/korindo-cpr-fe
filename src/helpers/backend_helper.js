@@ -3,6 +3,8 @@ import { get, post, getWithParam, postLogin, getWithXls, postUpload, getWithPdf,
 
 export const login = req => postLogin("/MemberRest/login", req)
 
+export const getBestListBE = req => post("rest/MainRest/getBestList", req)
+
 export const getDeptBE = req => postWithParam("rest/RecommendRest/getDept", req)
 
 export const getMemberListBE = req => post("rest/RecommendRest/getMemberList", req)

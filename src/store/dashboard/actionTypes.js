@@ -1,0 +1,2 @@
+export const GET_BEST_LIST = "GET_BEST_LIST"
+export const RESP_GET_BEST_LIST = "RESP_GET_BEST_LIST"

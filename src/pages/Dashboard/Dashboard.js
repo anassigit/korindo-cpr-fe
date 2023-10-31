@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     Button,
     Card,
@@ -10,7 +10,7 @@ import {
     Input,
     Row, Spinner, UncontrolledTooltip
 } from "reactstrap";
-import { getSearchData } from "store/actions";
+import { getBestListData, getSearchData } from "store/actions";
 import '../../assets/scss/custom.scss';
 import RootPageCustom from '../../common/RootPageCustom';
 import '../../config';
@@ -21,76 +21,30 @@ const Rekomendasi = () => {
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
-    const dummyData = [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-        'Item 5',
-        'Item 6',
-        'Item 7',
-        'Item 8',
-        'Item 9',
-        'Item 10',
-        'Item 11',
-        'Item 12',
-        'Item 13',
-        'Item 14',
-        'Item 15',
-        'Item 16',
-        'Item 17',
-        'Item 18',
-        'Item 19',
-        'Item 20',
-        'Item 21',
-        'Item 22',
-        'Item 23',
-        'Item 24',
-        'Item 25',
-        'Item 26',
-        'Item 27',
-        'Item 28',
-        'Item 29',
-        'Item 30',
-        'Item 31',
-        'Item 32',
-        'Item 33',
-        'Item 34',
-        'Item 35',
-        'Item 36',
-        'Item 37',
-        'Item 38',
-        'Item 39',
-        'Item 40',
-        'Item 41',
-        'Item 42',
-        'Item 43',
-        'Item 44',
-        'Item 45',
-        'Item 46',
-        'Item 47',
-        'Item 48',
-        'Item 49',
-        'Item 50',
-    ];
+    const appBestlistData = useSelector((state) => state.dashboardReducer.respGetBestList);
 
     const itemsPerPage = 6;
-
     const maxListItems = 3;
-
-    const [blinker, setBlinker] = useState(false)
-
+    const [blinker, setBlinker] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+    // Calculate the total number of pages based on the list in appBestlistData.data
+    const totalPages = Math.ceil(appBestlistData?.data?.list?.length / itemsPerPage);
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    // No need for startIndex, endIndex, and currentItems
 
-    const currentItems = dummyData.slice(startIndex, endIndex);
+    useEffect(() => {
+        // Dispatch the initial data retrieval
+        dispatch(getBestListData({
+            offset: 0,
+            limit: itemsPerPage,
+        }));
+    }, []);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
+        setBlinker(true);
+
     };
 
     useEffect(() => {
@@ -154,24 +108,11 @@ const Rekomendasi = () => {
                                     <span className="mdi mdi-star-circle"></span> Best Recommendation
                                 </CardHeader>
                                 <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
-                                    {/* <Row
-                                        className="py-2 m-2"
-                                    >
-                                        <div className="d-flex justify-content-between" style={{ width: "300px" }}>
-                                            <Input
-                                                style={{ marginRight: '10px' }}
-                                            />
-                                            <Button>
-                                                Cari
-                                            </Button>
-                                        </div>
-                                    </Row>
-                                    <hr /> */}
                                     <Row
                                         className="py-2 m-2 d-flex justify-content-center align-items-center"
                                         style={{ gap: "25px", height: "370px" }}
                                     >
-                                        {currentItems.map((item, index) => {
+                                        {appBestlistData?.data?.list.map((item, index) => {
 
                                             return (
 
@@ -200,7 +141,7 @@ const Rekomendasi = () => {
                                                                 height: "10em",
                                                                 borderRadius: "50%",
                                                                 marginRight: "5%",
-                                                                backgroundImage: 'url("https://dummyimage.com/600x600/000/fff")',
+                                                                backgroundImage: item?.profile_url,
                                                                 backgroundSize: "cover",
                                                             }}
                                                         ></div>
@@ -212,7 +153,7 @@ const Rekomendasi = () => {
                                                             maxWidth: "60%"
                                                         }}>
                                                             <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>Annas Sigit Adityo Mulyo</div>
-                                                            <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item}</div>
+                                                            <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.position}</div>
                                                             <div style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>Appreciation Name</div>
                                                         </Col>
                                                     </CardBody>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardBody, Col, Row, Spinner, UncontrolledTooltip } from 'reactstrap';
 import '../../assets/scss/custom.scss'; // Import your custom CSS
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRecommend, getMemberListData, getRecommendListData } from 'store/actions';
+import { deleteRecommend, getMemberListData, getRecommendListData, getSearchData } from 'store/actions';
 import { ReactSession } from 'react-client-session';
 import MsgModal from 'components/Common/MsgModal';
 import RekomendasiModal from './RekomendasiModal';
@@ -37,23 +37,52 @@ const HistoryRekomendasi = () => {
         if (appMsgDelete.status === '1') {
             setLoadingSpinner(false)
             dispatch(getRecommendListData())
-            dispatch(getMemberListData({
-                "offset": offset,
-                "limit": limit,
-                "search": {
-                    "org_id": selectedDeptData
-                }
-            }));
+            let offset = ReactSession.get('offset')
+            let limit = ReactSession.get('limit')
+            let selectedDeptData = ReactSession.get('selectedDeptData')
+            let searchVal = ReactSession.get('searchVal')
+            dispatch(getRecommendListData())
+            if (searchVal) {
+                dispatch(getSearchData({
+                    "offset": offset,
+                    "limit": limit,
+                    "search": {
+                        "search": searchVal
+                    }
+                }))
+            } else {
+                dispatch(getMemberListData({
+                    "offset": offset,
+                    "limit": limit,
+                    "search": {
+                        "org_id": selectedDeptData
+                    }
+                }));
+            }
         } else if (appMsgDelete.status === '0') {
             setLoadingSpinner(false)
             dispatch(getRecommendListData())
-            dispatch(getMemberListData({
-                "offset": offset,
-                "limit": limit,
-                "search": {
-                    "org_id": selectedDeptData
-                }
-            }));
+            let offset = ReactSession.get('offset')
+            let limit = ReactSession.get('limit')
+            let selectedDeptData = ReactSession.get('selectedDeptData')
+            let searchVal = ReactSession.get('searchVal')
+            if (searchVal) {
+                dispatch(getSearchData({
+                    "offset": offset,
+                    "limit": limit,
+                    "search": {
+                        "search": searchVal
+                    }
+                }))
+            } else {
+                dispatch(getMemberListData({
+                    "offset": offset,
+                    "limit": limit,
+                    "search": {
+                        "org_id": selectedDeptData
+                    }
+                }));
+            }
         }
     }, [appMsgDelete])
 
