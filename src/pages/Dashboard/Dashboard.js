@@ -113,7 +113,7 @@ const Rekomendasi = () => {
                                         style={{ gap: "25px", height: "370px" }}
                                     >
                                         {appBestlistData?.data?.list.map((item, index) => {
-
+                                            debugger
                                             return (
 
                                                 <Card
@@ -134,27 +134,30 @@ const Rekomendasi = () => {
                                                             height: "100%",
                                                         }}>
                                                         <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
-                                                        <div
+                                                        <img
                                                             style={{
                                                                 minWidth: "10em",
                                                                 maxWidth: "10em",
                                                                 height: "10em",
+                                                                objectFit: "cover",
                                                                 borderRadius: "50%",
                                                                 marginRight: "5%",
-                                                                backgroundImage: item?.profile_url,
-                                                                backgroundSize: "cover",
                                                             }}
-                                                        ></div>
+                                                            src={encodeURI(item?.profile_url)}
+                                                            alt="Profile Image"
+                                                        />
+
+                                                        {console.log(encodeURI(item?.profile_url))}
                                                         <Col style={{
                                                             display: 'flex',
                                                             flexDirection: 'column',
                                                             alignItems: 'flex-start',
-                                                            gap: '8px',
+                                                            gap: '3px',
                                                             maxWidth: "60%"
                                                         }}>
-                                                            <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>Annas Sigit Adityo Mulyo</div>
+                                                            <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.name}</div>
+                                                            <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.dept_name}</div>
                                                             <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.position}</div>
-                                                            <div style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>Appreciation Name</div>
                                                         </Col>
                                                     </CardBody>
                                                 </Card>
