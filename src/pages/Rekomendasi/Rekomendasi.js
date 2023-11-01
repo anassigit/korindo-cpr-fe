@@ -7,7 +7,7 @@ import {
   CardBody,
   CardHeader,
   Col,
-  Container, Input, Row, Spinner,
+  Container, Input, Row, Spinner, UncontrolledTooltip,
 } from "reactstrap"
 import { getDeptData, getSearchData, resetMessage } from "store/actions"
 import '../../assets/scss/custom.scss'
@@ -191,7 +191,7 @@ const Rekomendasi = () => {
                     <Col
                       xs={3}
                       className="bg-light py-2"
-                      style={{ border: "1px solid #BBB", width: "20%", height: "70vh", overflowX: "auto", overflowY: "auto", fontSize: "1.5vh" }}
+                      style={{ border: "1px solid #BBB", width: "20%", height: "70vh", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
                     >
 
                       {
@@ -201,11 +201,11 @@ const Rekomendasi = () => {
                               <React.Fragment key={index}>
                                 {item.parent_id === 'Top' ? (
                                   <Row style={{ marginBottom: "8px" }}>
-                                    <Col xs="12" style={{ color: "#3F4031" }}>
+                                    <div style={{ color: "#3F4031" }}>
                                       <span className="mdi mdi-plus-box"></span>
                                       &nbsp;
                                       <span className="mdi mdi-domain"></span>
-                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0"] || selectedDeptData === item.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0"] || selectedDeptData === item?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                         className="unselectable-two"
                                         onClick={(e) => {
                                           let org_id = ''
@@ -218,9 +218,14 @@ const Rekomendasi = () => {
                                         }
                                       >
                                         &nbsp;
-                                        {item.dept_name}
+                                        <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", }} id={item?.dept_id}>
+                                          {item?.dept_name}
+                                        </span>
+                                        <UncontrolledTooltip target={item?.dept_id} placement='top'>
+                                          {item?.dept_name}
+                                        </UncontrolledTooltip>
                                       </a>
-                                    </Col>
+                                    </div>
                                   </Row>
                                 ) : null}
                               </React.Fragment>
@@ -229,7 +234,7 @@ const Rekomendasi = () => {
                           : (
                             <>
                               <Row style={{ marginBottom: "8px" }}>
-                                <Col xs="12" style={{ color: "#3F4031" }}>
+                                <div style={{ color: "#3F4031" }}>
                                   <span
                                     className={collapser["0"] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                     onClick={() => {
@@ -255,9 +260,17 @@ const Rekomendasi = () => {
                                     }
                                   >
                                     &nbsp;
-                                    {appDeptData?.data?.result?.dept_name}
+                                    <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", }} id={appDeptData?.data?.result?.dept_id}>
+                                      {appDeptData?.data?.result?.dept_name}
+                                    </span>
+                                    {appDeptData?.data?.result?.dept_id && (
+                                      <UncontrolledTooltip target={() => document.getElementById(appDeptData?.data?.result?.dept_id)} placement='top'>
+                                        {appDeptData?.data?.result?.dept_name}
+                                      </UncontrolledTooltip>
+                                    )}
+
                                   </a>
-                                </Col>
+                                </div>
                               </Row>
                               {
                                 collapser["0"] === true &&
@@ -266,7 +279,7 @@ const Rekomendasi = () => {
                                     return (
                                       <React.Fragment key={childIndex}>
                                         <Row style={{ marginBottom: "8px" }}>
-                                          <Col xs="12" style={{ color: "#3F4031", paddingLeft: "2vw" }}>
+                                          <div style={{ color: "#3F4031", paddingLeft: "2vw" }}>
                                             {childItem.childList ? <span
                                               className={collapser["0-" + childIndex] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                               onClick={() => {
@@ -282,7 +295,7 @@ const Rekomendasi = () => {
                                             }
                                             &nbsp;
                                             <span className="mdi mdi-domain"></span>
-                                            <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex] || selectedDeptData === childItem.dept_id) ? "bold" : "normal", cursor: "pointer" }}
+                                            <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex] || selectedDeptData === childItem?.dept_id) ? "bold" : "normal", cursor: "pointer" }}
                                               className="unselectable-two"
                                               onClick={(e) => {
                                                 let org_id = ''
@@ -295,9 +308,16 @@ const Rekomendasi = () => {
                                               }
                                             >
                                               &nbsp;
-                                              {childItem.dept_name}
+                                              <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", }} id={childItem?.dept_id}>
+                                                {childItem.dept_name}
+                                              </span>
+                                              {childItem?.dept_id && (
+                                                <UncontrolledTooltip target={() => document.getElementById(childItem?.dept_id)} placement='top'>
+                                                  {childItem?.dept_name}
+                                                </UncontrolledTooltip>
+                                              )}
                                             </a>
-                                          </Col>
+                                          </div>
                                         </Row>
                                         {
                                           collapser["0-" + childIndex] === true &&
@@ -307,7 +327,7 @@ const Rekomendasi = () => {
                                               return (
                                                 <React.Fragment key={childIndex2}>
                                                   <Row style={{ marginBottom: "8px" }}>
-                                                    <Col xs="12" style={{ color: "#3F4031", paddingLeft: "3vw" }}>
+                                                    <div style={{ color: "#3F4031", paddingLeft: "3vw", display: "flex", flexDirection: "row", width: "100%", }}>
                                                       {childItem2.childList ? <span
                                                         className={collapser["0-" + childIndex + childIndex2] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                                         onClick={() => {
@@ -323,7 +343,16 @@ const Rekomendasi = () => {
                                                       }
                                                       &nbsp;
                                                       <span className="mdi mdi-domain"></span>
-                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.org_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                      <a
+                                                        style={{
+                                                          display: "flex",
+                                                          color: "#4c4c4c",
+                                                          overflow: "hidden",
+                                                          fontWeight: collapser["0-" + childIndex + childIndex2] || selectedDeptData === childItem2.org_id
+                                                            ? "bold"
+                                                            : "normal",
+                                                          cursor: "pointer",
+                                                        }}
                                                         className="unselectable-two"
                                                         onClick={(e) => {
                                                           let org_id = ''
@@ -336,9 +365,17 @@ const Rekomendasi = () => {
                                                         }
                                                       >
                                                         &nbsp;
-                                                        {childItem2.dept_name}
+                                                        <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%", }} id={childItem2?.dept_id}>
+                                                          {childItem2.dept_name}
+                                                        </span>
+
+                                                        {childItem2?.dept_id && (
+                                                          <UncontrolledTooltip target={() => document.getElementById(childItem2?.dept_id)} placement='top'>
+                                                            {childItem2?.dept_name}
+                                                          </UncontrolledTooltip>
+                                                        )}
                                                       </a>
-                                                    </Col>
+                                                    </div>
                                                   </Row>
 
                                                   {collapser["0-" + childIndex + childIndex2] === true && Array.isArray(childItem2?.childList)
@@ -346,7 +383,7 @@ const Rekomendasi = () => {
                                                       return (
                                                         <React.Fragment key={childIndex3}>
                                                           <Row style={{ marginBottom: "8px" }}>
-                                                            <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 3}vw` }}>
+                                                            <div style={{ color: "#3F4031", paddingLeft: `${viewWidth + 3}vw`, display: "flex", flexDirection: "row", width: "100%", }}>
                                                               {childItem3.childList ? <span
                                                                 className={collapser["0-" + childIndex + childIndex2 + childIndex3] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                                                 onClick={() => {
@@ -362,7 +399,13 @@ const Rekomendasi = () => {
                                                               }
                                                               &nbsp;
                                                               <span className="mdi mdi-domain"></span>
-                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.org_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                              <a
+                                                                style={{
+                                                                  display: "flex",
+                                                                  color: "#4c4c4c",
+                                                                  overflow: "hidden",
+                                                                  fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3] || selectedDeptData === childItem3.org_id) ? "bold" : "normal", cursor: "pointer"
+                                                                }}
                                                                 className="unselectable-two"
                                                                 onClick={(e) => {
                                                                   let org_id = ''
@@ -375,16 +418,24 @@ const Rekomendasi = () => {
                                                                 }
                                                               >
                                                                 &nbsp;
-                                                                {childItem3.dept_name}
+                                                                <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%", }} id={childItem3?.dept_id}>
+                                                                  {childItem3.dept_name}
+                                                                </span>
+
+                                                                {childItem3?.dept_id && (
+                                                                  <UncontrolledTooltip target={() => document.getElementById(childItem3?.dept_id)} placement='top'>
+                                                                    {childItem3?.dept_name}
+                                                                  </UncontrolledTooltip>
+                                                                )}
                                                               </a>
-                                                            </Col>
+                                                            </div>
                                                           </Row>
                                                           {collapser["0-" + childIndex + childIndex2 + childIndex3] === true && Array.isArray(childItem3?.childList)
                                                             ? childItem3?.childList.map((childItem4, childIndex4) => {
                                                               return (
                                                                 <React.Fragment key={childIndex4}>
                                                                   <Row style={{ marginBottom: "8px" }}>
-                                                                    <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 4}vw` }}>
+                                                                    <div style={{ color: "#3F4031", paddingLeft: `${viewWidth + 4}vw`, display: "flex", flexDirection: "row", width: "100%", }}>
                                                                       {childItem4.childList ? <span
                                                                         className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                                                         onClick={() => {
@@ -400,7 +451,16 @@ const Rekomendasi = () => {
                                                                       }
                                                                       &nbsp;
                                                                       <span className="mdi mdi-domain"></span>
-                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.org_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                      <a
+                                                                        style={{
+                                                                          display: "flex",
+                                                                          color: "#4c4c4c",
+                                                                          overflow: "hidden",
+                                                                          fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] || selectedDeptData === childItem4.org_id)
+                                                                            ? "bold"
+                                                                            : "normal",
+                                                                          cursor: "pointer"
+                                                                        }}
                                                                         className="unselectable-two"
                                                                         onClick={(e) => {
                                                                           let org_id = ''
@@ -413,16 +473,23 @@ const Rekomendasi = () => {
                                                                         }
                                                                       >
                                                                         &nbsp;
-                                                                        {childItem4.dept_name}
+                                                                        <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%", }} id={childItem4?.dept_id}>
+                                                                          {childItem4.dept_name}
+                                                                        </span>
+                                                                        {childItem4?.dept_id && (
+                                                                          <UncontrolledTooltip target={() => document.getElementById(childItem4?.dept_id)} placement='top'>
+                                                                            {childItem4?.dept_name}
+                                                                          </UncontrolledTooltip>
+                                                                        )}
                                                                       </a>
-                                                                    </Col>
+                                                                    </div>
                                                                   </Row>
                                                                   {collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4] === true && Array.isArray(childItem4?.childList)
                                                                     ? childItem4?.childList.map((childItem5, childIndex5) => {
                                                                       return (
                                                                         <React.Fragment key={childIndex5}>
                                                                           <Row style={{ marginBottom: "8px" }}>
-                                                                            <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 5}vw` }}>
+                                                                            <div style={{ color: "#3F4031", paddingLeft: `${viewWidth + 5}vw`, display: "flex", flexDirection: "row", width: "100%", }}>
                                                                               {childItem5.childList ? <span
                                                                                 className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                                                                 onClick={() => {
@@ -438,7 +505,16 @@ const Rekomendasi = () => {
                                                                               }
                                                                               &nbsp;
                                                                               <span className="mdi mdi-domain"></span>
-                                                                              <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.org_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                              <a
+                                                                                style={{
+                                                                                  display: "flex",
+                                                                                  color: "#4c4c4c",
+                                                                                  overflow: "hidden",
+                                                                                  fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] || selectedDeptData === childItem5.org_id)
+                                                                                    ? "bold" :
+                                                                                    "normal",
+                                                                                  cursor: "pointer"
+                                                                                }}
                                                                                 className="unselectable-two"
                                                                                 onClick={(e) => {
                                                                                   let org_id = ''
@@ -451,16 +527,23 @@ const Rekomendasi = () => {
                                                                                 }
                                                                               >
                                                                                 &nbsp;
-                                                                                {childItem5.dept_name}
+                                                                                <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%", }} id={childItem5?.dept_id}>
+                                                                                  {childItem5.dept_name}
+                                                                                </span>
+                                                                                {childItem5?.dept_id && (
+                                                                                  <UncontrolledTooltip target={() => document.getElementById(childItem5?.dept_id)} placement='top'>
+                                                                                    {childItem5?.dept_name}
+                                                                                  </UncontrolledTooltip>
+                                                                                )}
                                                                               </a>
-                                                                            </Col>
+                                                                            </div>
                                                                           </Row>
                                                                           {collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5] === true && Array.isArray(childItem5?.childList)
                                                                             ? childItem5?.childList.map((childItem6, childIndex6) => {
                                                                               return (
                                                                                 <React.Fragment key={childIndex6}>
                                                                                   <Row style={{ marginBottom: "8px" }}>
-                                                                                    <Col xs="12" style={{ color: "#3F4031", paddingLeft: `${viewWidth + 6}vw` }}>
+                                                                                    <div style={{ color: "#3F4031", paddingLeft: `${viewWidth + 6}vw`, display: "flex", flexDirection: "row", width: "100%", }}>
                                                                                       {childItem6.childList ? <span
                                                                                         className={collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                                                                         onClick={() => {
@@ -476,7 +559,16 @@ const Rekomendasi = () => {
                                                                                       }
                                                                                       &nbsp;
                                                                                       <span className="mdi mdi-domain"></span>
-                                                                                      <a style={{ color: "#4c4c4c", fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.org_id) ? "bold" : "normal", cursor: "pointer" }}
+                                                                                      <a
+                                                                                        style={{
+                                                                                          display: "flex",
+                                                                                          color: "#4c4c4c",
+                                                                                          overflow: "hidden",
+                                                                                          fontWeight: (collapser["0-" + childIndex + childIndex2 + childIndex3 + childIndex4 + childIndex5 + childIndex6] || selectedDeptData === childItem6.org_id)
+                                                                                            ? "bold"
+                                                                                            : "normal",
+                                                                                          cursor: "pointer"
+                                                                                        }}
                                                                                         className="unselectable-two"
                                                                                         onClick={(e) => {
                                                                                           let org_id = ''
@@ -489,9 +581,17 @@ const Rekomendasi = () => {
                                                                                         }
                                                                                       >
                                                                                         &nbsp;
-                                                                                        {childItem6.dept_name}
+                                                                                        <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%", }} id={childItem6?.dept_id}>
+                                                                                          {childItem6.dept_name}
+                                                                                        </span>
+
+                                                                                        {childItem6?.dept_id && (
+                                                                                          <UncontrolledTooltip target={() => document.getElementById(childItem6?.dept_id)} placement='top'>
+                                                                                            {childItem6?.dept_name}
+                                                                                          </UncontrolledTooltip>
+                                                                                        )}
                                                                                       </a>
-                                                                                    </Col>
+                                                                                    </div>
                                                                                   </Row>
                                                                                 </React.Fragment>
                                                                               )

@@ -223,8 +223,15 @@ const HistoryRekomendasi = () => {
                                             )}
 
                                         </div>
-                                        <div id='comment-recommendation' style={{ fontSize: "1.5vh" }}>
+                                        <div
+                                            className={`comment-recommendation`}
+                                            id={`comment-recommendation-${index}`}
+                                            style={{ fontSize: "1.5vh" }}
+                                        >
                                             {item.comment}
+                                            <UncontrolledTooltip target={`comment-recommendation-${index}`} placement='top'>
+                                                {item.comment}
+                                            </UncontrolledTooltip>
                                         </div>
                                         <a
                                             onClick={() => {

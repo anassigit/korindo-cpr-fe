@@ -1,14 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
-  GET_BEST_LIST
+  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST
 } from "./actionTypes"
 import {
-  respGetBestList
+  respGetBestList, respGetBestOfMonthList
 } from "./actions"
 
 import {
-  getBestListBE
+  getBestListBE, getBestOfMonthListBE
 } from "helpers/backend_helper"
 
 function* fetchGetBestList({ payload: req }) {
@@ -25,9 +25,24 @@ function* fetchGetBestList({ payload: req }) {
   }
 }
 
+function* fetchGetBestOfMonthList({ payload: req }) {
+  try {
+    const response = yield call(getBestOfMonthListBE, req)
+    if (response.status == 1) {
+      yield put(respGetBestOfMonthList(response))
+    } else {
+      yield put(respGetBestOfMonthList(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetBestOfMonthList({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
 function* dashboardSaga() {
 
   yield takeEvery(GET_BEST_LIST, fetchGetBestList)
+  yield takeEvery(GET_BEST_OF_MONTH_LIST, fetchGetBestOfMonthList)
 
 }
 

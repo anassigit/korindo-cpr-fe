@@ -24,10 +24,10 @@ const ProfileMenu = props => {
   const [username, setusername] = useState("Admin")
 
   useEffect(() => {
-    
+
     if (localStorage.getItem("user")) {
-        const u = localStorage.getItem("user")
-        setusername(u)
+      const u = localStorage.getItem("user")
+      setusername(u.replace(/"/g, ''));
     }
   }, [props.success])
 
@@ -41,7 +41,7 @@ const ProfileMenu = props => {
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"
-          style={{borderLeft : "2px solid #2596BE"}}
+          style={{ borderLeft: "2px solid #2596BE" }}
           tag="button"
         >
           <img
@@ -50,16 +50,16 @@ const ProfileMenu = props => {
             alt="Header Avatar"
           />
           <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
-          <i className="mdi mdi-chevron-down d-none d-xl-inline-block"/>
+          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <Link to="/app007" className="dropdown-item">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1"/>
+            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
             <span>{props.t("Change User Data")}</span>
           </Link>
-          <div className="dropdown-divider"/>
+          <div className="dropdown-divider" />
           <Link to="/logout" className="dropdown-item">
-            <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger"/>
+            <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
             <span>{props.t("Logout")}</span>
           </Link>
         </DropdownMenu>
