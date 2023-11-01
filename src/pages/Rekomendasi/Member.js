@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
 import { ReactSession } from 'react-client-session';
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Col, Row } from "reactstrap";
+import { Button, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { getMemberListData, getSearchData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
@@ -92,8 +92,8 @@ const Member = (props) => {
               <>
                 <Col xs='3'>Departement</Col>
                 <Col xs='3'>Name</Col>
-                <Col xs='2'>Position</Col>
-                <Col xs='4' style={{paddingLeft:"10%"}} className="text-center">Rekomendasikan</Col>
+                <Col xs='2' style={{ paddingLeft: "3%" }}>Position</Col>
+                <Col xs='4' style={{ paddingLeft: "10%" }} className="text-center">Rekomendasikan</Col>
               </>
               :
               <>
@@ -135,16 +135,19 @@ const Member = (props) => {
                             textOverflow: "ellipsis",
                             paddingRight: "1%"
                           }}
-                        >{item.name ? item.name : item.dept_name}</Col>
+                        >{item.dept_name ? item.dept_name : item.dept_name}</Col>
                         <Col xs='3'
+                          id={`index-${index}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
-
                             paddingRight: "1%"
                           }}
                         >{item.name ? item.name : item.member_name}</Col>
+                        <UncontrolledTooltip target={`index-${index}`} placement='top'>
+                          {item.name}
+                        </UncontrolledTooltip>
                         <Col xs='2' style={{}}>{item.position}</Col>
                         <Col
                           xs='4'
@@ -193,6 +196,7 @@ const Member = (props) => {
 
                       <>
                         <Col xs='4'
+                          id={`index-${index}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -200,6 +204,9 @@ const Member = (props) => {
 
                           }}
                         >{item.name ? item.name : item.member_name}</Col>
+                        <UncontrolledTooltip target={`index-${index}`} placement='top'>
+                          {item.name}
+                        </UncontrolledTooltip>
                         <Col xs='3' style={{}}>{item.position}</Col>
                         <Col
                           xs='4'
