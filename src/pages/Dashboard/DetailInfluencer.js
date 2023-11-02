@@ -6,10 +6,10 @@ import {
     CardBody,
     CardHeader,
     Container,
-    Spinner
+    Spinner,
+    UncontrolledTooltip
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
-import RootPageCustom from '../../common/RootPageCustom';
 import '../../config';
 import TableCustom from "common/TableCustom";
 import { getDetailInfluencerData } from "store/actions";
@@ -59,14 +59,35 @@ const DetailInfluencer = (props) => {
             text: "Komentar",
             sort: true,
             headerStyle: { textAlign: 'center' },
-            style: { maxWidth: "25vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" },
+            style: { minWidth: "30vw", maxWidth: "25vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" },
+            formatter: (row, rowData, rowIndex) => {
+                return (
+                    <React.Fragment>
+                        <span id={`viewtooltip-${rowIndex}`}>{row}</span>
+                        <UncontrolledTooltip placement="bottom-start" target={`viewtooltip-${rowIndex}`}>
+                            {row}
+                        </UncontrolledTooltip>
 
+                    </React.Fragment>
+                )
+            }
         },
         {
             dataField: "sticker",
             text: "Compliments",
             sort: true,
             headerStyle: { textAlign: 'center' },
+            formatter: (row, rowData, rowIndex) => {
+                return (
+                    <React.Fragment>
+                        <span id={`viewtooltip-sticker-${rowIndex}`}>{row}</span>
+                        <UncontrolledTooltip placement="bottom-start" target={`viewtooltip-sticker-${rowIndex}`}>
+                            {row}
+                        </UncontrolledTooltip>
+
+                    </React.Fragment>
+                )
+            }
         },
     ]
 
