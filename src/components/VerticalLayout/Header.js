@@ -295,7 +295,7 @@ const Header = props => {
               </DropdownMenu>
             </Dropdown> */}
 
-            <div className="dropdown d-none d-lg-inline-block ms-2">
+            {/* <div className="dropdown d-none d-lg-inline-block ms-2">
               <button
                 type="button"
                 onClick={() => {
@@ -320,7 +320,7 @@ const Header = props => {
               >
                 <i className="bx bx-fullscreen" />
               </button>
-            </div>
+            </div> */}
 
             {/* <NotificationDropdown /> */}
             <ProfileMenu />
