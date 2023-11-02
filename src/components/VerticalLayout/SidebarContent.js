@@ -113,9 +113,9 @@ const SidebarContent = props => {
               </Link>
               <ul className="sub-menu">
                 <li>
-                  <Link to="/home" className="">
+                  <a href="/home" className="">
                     <span>{props.t("Home")}</span>
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <Link to={'/rekomendasi'} className="">

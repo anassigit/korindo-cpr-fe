@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import {
+    Button,
     Card,
     CardBody,
     CardHeader,
@@ -13,10 +14,12 @@ import '../../assets/scss/custom.scss';
 import '../../config';
 import TableCustom from "common/TableCustom";
 import { getDetailInfluencerData } from "store/actions";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const DetailInfluencer = (props) => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
@@ -27,7 +30,7 @@ const DetailInfluencer = (props) => {
         limit: 10,
         offset: 0,
         sort: "write_time",
-        order: "asc",
+        order: "desc",
         search:
         {
             member_id: "",
@@ -39,6 +42,12 @@ const DetailInfluencer = (props) => {
             dataField: "id",
             text: "ID",
             hidden: true,
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "write_time",
+            text: "Tanggal",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -75,7 +84,6 @@ const DetailInfluencer = (props) => {
         {
             dataField: "sticker",
             text: "Compliments",
-            sort: true,
             headerStyle: { textAlign: 'center' },
             formatter: (row, rowData, rowIndex) => {
                 return (
@@ -129,7 +137,13 @@ const DetailInfluencer = (props) => {
                     />
                 </CardBody>
             </Card>
-
+            <Button
+                className="btn btn-danger my-3"
+                onClick={() => history.push('/')}
+            >
+                <span className="mdi mdi-arrow-left"/>
+                &nbsp;Kembali
+            </Button>
             <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                 <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
             </div>

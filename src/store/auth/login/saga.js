@@ -22,7 +22,7 @@ function* loginUser({ payload: { user, history } }) {
       history.push("/home");
       yield put(loginSuccess(response));
     } else {
-      yield put(apiError(response.listmessage))
+      yield put(apiError(response.message))
     }
   } catch (error) {
     yield put(apiError(error))
