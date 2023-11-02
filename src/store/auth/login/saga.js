@@ -30,6 +30,7 @@ function* loginUser({ payload: { user, history } }) {
 }
 
 function* reloginUser({ payload: { user, history } }) {
+  debugger
   try {
     const response = yield call(login, user);
     if (response.status == 1) {
