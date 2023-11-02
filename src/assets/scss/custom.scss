@@ -60,6 +60,16 @@
   animation: fadeIn 1s ease-in-out;
 }
 
+.fade-in.card:hover {
+  margin-bottom: 0;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.027);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
 .fade-in.card {
   margin-bottom: 0;
 }

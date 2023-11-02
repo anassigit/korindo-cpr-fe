@@ -1,13 +1,19 @@
 import {
   GET_BEST_LIST,
   GET_BEST_OF_MONTH_LIST,
+  GET_BEST_OF_YEAR_LIST,
+  GET_DETAIL_INFLUENCER,
   RESP_GET_BEST_LIST,
-  RESP_GET_BEST_OF_MONTH_LIST
+  RESP_GET_BEST_OF_MONTH_LIST,
+  RESP_GET_BEST_OF_YEAR_LIST,
+  RESP_GET_DETAIL_INFLUENCER
 } from "./actionTypes"
 
 const INIT_STATE = {
   respGetBestList: {},
   respGetBestOfMonthList: {},
+  respGetBestOfYearList:{},
+  respGetDetailInfluencer:{},
 }
 
 const dashboardReducer = (state = INIT_STATE, action) => {
@@ -30,6 +36,24 @@ const dashboardReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         respGetBestOfMonthList: action.payload,
+      }
+    case GET_BEST_OF_YEAR_LIST:
+      return {
+        ...state,
+      }
+    case RESP_GET_BEST_OF_YEAR_LIST:
+      return {
+        ...state,
+        respGetBestOfYearList: action.payload,
+      }
+    case GET_DETAIL_INFLUENCER:
+      return {
+        ...state,
+      }
+    case RESP_GET_DETAIL_INFLUENCER:
+      return {
+        ...state,
+        respGetDetailInfluencer: action.payload,
       }
     default:
       return state

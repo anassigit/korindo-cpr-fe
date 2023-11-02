@@ -7,6 +7,10 @@ export const getBestListBE = req => post("rest/MainRest/getBestList", req)
 
 export const getBestOfMonthListBE = req => post("rest/MainRest/getBestOfMonth", req)
 
+export const getBestOfYearListBE = req => post("rest/MainRest/getBestOfYear", req)
+
+export const getDetailInfluencerBE = req => post("rest/MainRest/getDetail", req)
+
 export const getDeptBE = req => postWithParam("rest/RecommendRest/getDept", req)
 
 export const getMemberListBE = req => post("rest/RecommendRest/getMemberList", req)

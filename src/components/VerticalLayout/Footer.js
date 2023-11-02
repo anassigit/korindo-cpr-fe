@@ -7,12 +7,16 @@ const Footer = () => {
       <footer className="footer">
         <Container fluid={true}>
           <Row>
-            <Col md={6}>
+            <Col md={7}>
               {/* ©Korindo {new Date().getFullYear()} */}
-            </Col> 
-            <Col md={6}>
+              <span className="mdi mdi-phone"></span> CPR Help Contact: &nbsp;
+              <b>
+                Venna (HRD & GA Division), ext. 214 &nbsp; Nalu (HRD & GA Division), ext. 217
+              </b>
+            </Col>
+            <Col md={5}>
               <div className="text-sm-end d-none d-sm-block">
-              ©Korindo {new Date().getFullYear()}
+                ©Korindo {new Date().getFullYear()}
               </div>
             </Col>
           </Row>
