@@ -180,7 +180,7 @@ const Rekomendasi = () => {
     const renderPageNumbers = () => {
         const pageNumbers = [];
 
-        if (totalPages <= 5) {
+        if (totalPages <= 3) {
             for (let i = 1; i <= totalPages; i++) {
                 pageNumbers.push(i);
             }
