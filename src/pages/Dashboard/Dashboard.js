@@ -68,11 +68,11 @@ const Rekomendasi = () => {
         }
     }, [blinker]);
 
-    let lengthArray = appBestlistOfMonthData?.data?.list.length ? appBestlistOfMonthData?.data?.list.length : ReactSession.get('lengthArray')
+    let lengthArray = appBestlistOfMonthData?.data?.list?.length ? appBestlistOfMonthData?.data?.list?.length : ReactSession.get('lengthArray') ? ReactSession.get('lengthArray') : []
 
     useEffect(() => {
-        if (appBestlistOfMonthData?.data?.list.length) {
-            ReactSession.set('lengthArray', appBestlistOfMonthData?.data?.list.length)
+        if (appBestlistOfMonthData?.data?.list?.length) {
+            ReactSession.set('lengthArray', appBestlistOfMonthData?.data?.list?.length)
         }
     }, [appBestlistData])
 
@@ -112,11 +112,11 @@ const Rekomendasi = () => {
         }
     };
 
-    let lengthArray2 = appBestlistOfYearData?.data?.list.length ? appBestlistOfYearData?.data?.list.length : ReactSession.get('lengthArray2')
+    let lengthArray2 = appBestlistOfYearData?.data?.list?.length ? appBestlistOfYearData?.data?.list?.length : ReactSession.get('lengthArray2') ? ReactSession.get('lengthArray2') : []
 
     useEffect(() => {
-        if (appBestlistOfYearData?.data?.list.length) {
-            ReactSession.set('lengthArray2', appBestlistOfYearData?.data?.list.length)
+        if (appBestlistOfYearData?.data?.list?.length) {
+            ReactSession.set('lengthArray2', appBestlistOfYearData?.data?.list?.length)
         }
     }, [appBestlistOfYearData])
 
