@@ -236,7 +236,7 @@ const Rekomendasi = () => {
                                     className="py-2 m-2 d-flex justify-content-center align-items-center"
                                     style={{ gap: "25px", height: "370px" }}
                                 >
-                                    {appBestlistData?.data?.list.map((item, index) => {
+                                    {appBestlistData?.data?.list?.map((item, index) => {
                                         return (
 
                                             <Card
