@@ -12,7 +12,7 @@ import Dashboard from "pages/Dashboard/Dashboard"
 const authProtectedRoutes = [
 
   { path: "/home", component: Dashboard},
-  { path: "/rekomendasi", component: Rekomendasi},
+  { path: "/korsoc000/forms/korsoc051", component: Rekomendasi},
   
   
   // this route should be at the end of all other routes

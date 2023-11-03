@@ -16,6 +16,7 @@ function* loginUser({ payload: { user, history } }) {
       const res = yield call(getMenuBE)
       if (res.status == 1) {
         ReactSession.set("menu", JSON.stringify(res.data.list));
+        localStorage.setItem("menu", JSON.stringify(res.data.list));
       }
 
       history.push("/home");
