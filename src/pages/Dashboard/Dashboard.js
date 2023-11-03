@@ -264,6 +264,7 @@ const Rekomendasi = () => {
                                                             maxWidth: "10em",
                                                             height: "10em",
                                                             objectFit: "cover",
+                                                            objectPosition: "center top",
                                                             borderRadius: "50%",
                                                             marginRight: "5%",
                                                         }}
