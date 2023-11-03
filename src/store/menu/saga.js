@@ -11,7 +11,7 @@ import {
   getMenuBE
 } from "helpers/backend_helper"
 
-function* fetchGetBestList({ payload: req }) {
+function* fetchGetMenu({ payload: req }) {
   try {
     const response = yield call(getMenuBE, req)
     if (response.status == 1) {
@@ -27,7 +27,7 @@ function* fetchGetBestList({ payload: req }) {
 
 function* dashboardSaga() {
 
-  yield takeEvery(GET_MENU, fetchGetBestList)
+  yield takeEvery(GET_MENU, fetchGetMenu)
 
 }
 

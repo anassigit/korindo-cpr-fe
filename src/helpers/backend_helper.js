@@ -3,7 +3,7 @@ import { get, post, getWithParam, postLogin, getWithXls, postUpload, getWithPdf,
 
 export const login = req => postLogin("/MemberRest/login", req)
 
-export const getMenuBE = req => post("/MainRest/getMenuList", req)
+export const getMenuBE = req => post("rest/MainRest/getMenuList", req)
 
 export const getBestListBE = req => post("rest/MainRest/getBestList", req)
 

@@ -5,7 +5,7 @@ import { ReactSession } from 'react-client-session';
 import { LOGIN_USER, LOGOUT_USER, RELOGIN_USER } from "./actionTypes"
 import { apiError, loginSuccess, reloginSuccess } from "./actions"
 
-import { login } from "helpers/backend_helper"
+import { getMenuBE, login } from "helpers/backend_helper"
 
 function* loginUser({ payload: { user, history } }) {
   try {
@@ -13,11 +13,10 @@ function* loginUser({ payload: { user, history } }) {
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      // const res = yield call(getMenu)
-
-      // if (res.status == 1) {
-      //   ReactSession.set("menu", JSON.stringify(res.data.menu));
-      // }
+      const res = yield call(getMenuBE)
+      if (res.status == 1) {
+        ReactSession.set("menu", JSON.stringify(res.data.list));
+      }
 
       history.push("/home");
       yield put(loginSuccess(response));
