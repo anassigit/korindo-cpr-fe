@@ -82,10 +82,10 @@ const SidebarContent = props => {
   function renderMenuItem(item) {
     return (
       <li key={item.id}>
-        <Link to={item.path} className={item.childList ? "has-arrow" : ""}>
+        <a href={"/" + item.path} className={item.childList ? "has-arrow" : ""}>
           {item.icon && <i className={props.t(item.icon)}></i>}
           <span>{props.t(item.title)}</span>
-        </Link>
+        </a>
         {item.childList && (
           <ul className="sub-menu">
             {item.childList.map((childItem) => renderMenuItem(childItem))}
@@ -104,8 +104,8 @@ const SidebarContent = props => {
               <Link to="/home">
                 <span>{props.t("Home")}</span>
               </Link>
+              {menu.map((item) => renderMenuItem(item))}
             </li>
-            {menu.map((item) => renderMenuItem(item))}
           </ul>
         </div>
       </SimpleBar>
