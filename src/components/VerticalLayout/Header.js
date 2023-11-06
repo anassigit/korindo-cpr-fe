@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import { connect, useSelector, useDispatch } from "react-redux";
 
 // Reactstrap
 import { Form, Label, Input, Alert, FormFeedback } from "reactstrap";
 
- import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
+import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 
 // actions
 import { reloginUser } from "../../store/actions";
@@ -54,16 +54,20 @@ const Header = props => {
       }
     }
   }
-
+  
+  document.body.classList.add("vertical-collpsed");
+  
   function tToggle() {
+
     var body = document.body;
     if (window.screen.width <= 998) {
-      body.classList.toggle("sidebar-enable");
+      body.classList.toggle("vertical-collpsed");
     } else {
       body.classList.toggle("vertical-collpsed");
       body.classList.toggle("sidebar-enable");
     }
   }
+  
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -83,7 +87,7 @@ const Header = props => {
   });
 
   const error = useSelector(state => {
-    return (typeof state.Login !== "undefined" && typeof state.Login.error !== "undefined" ? state.Login.error  : "");
+    return (typeof state.Login !== "undefined" && typeof state.Login.error !== "undefined" ? state.Login.error : "");
   });
 
   // handleValidSubmit
@@ -96,7 +100,7 @@ const Header = props => {
   return (
     <React.Fragment>
       <header id="page-topbar">
-        <div style={{boxShadow: "1px 3px 5px #918989", borderBottom: "4px solid #2596BE"}} className="navbar-header">
+        <div style={{ boxShadow: "1px 3px 5px #918989", borderBottom: "4px solid #2596BE" }} className="navbar-header">
           <div className="d-flex">
 
             <button
@@ -111,73 +115,73 @@ const Header = props => {
             </button>
 
             {/* <form id="reloginForm" className="form-horizontal" style={{display: "none", marginTop: '300px', marginLeft: '500px'}}> */}
-            <Form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  validation.handleSubmit();
-                  return false;
-                }} id="reloginForm" className="form-horizontal modal" style={{backgroundColor: 'rgb(159 159 159)',  border: '2px solid rgb(85 110 230)', margin:'auto', padding: '20px', marginLeft: '0%', width: '100%', height : '100%'}}> 
-                <div style={{backgroundColor: '#fefefe',  border: '2px solid rgb(0 0 0 / 22%)', margin:'auto', padding: '50px',  width: '450px', height : '480px'}}>
-                  <div className="modal-header">
-                          <h5 className="modal-title mt-0">
-                            Re - Login
-                          </h5>
-                  </div>
-                  <div className="modal-body">
-                        {error ? <Alert color="danger">{error}</Alert> : null}
-                        <div className="mb-3">
-                          <Label className="form-label">Nik</Label>
-                          <Input
-                            name="nik"
-                            className="form-control"
-                            placeholder="Enter Nik"
-                            type="text"
-                            onChange={validation.handleChange}
-                            onBlur={validation.handleBlur}
-                            value={validation.values.nik || ""}
-                            invalid={
-                              validation.touched.nik && validation.errors.nik ? true : false
-                            }
-                          />
-                          {validation.touched.nik && validation.errors.nik ? (
-                            <FormFeedback type="invalid">{validation.errors.nik}</FormFeedback>
-                          ) : null}
-                        </div>
-
-                        <div className="mb-3">
-                          <Label className="form-label">Password</Label>
-                          <Input
-                            name="password"
-                            value={validation.values.password || ""}
-                            type="password"
-                            placeholder="Enter Password"
-                            onChange={validation.handleChange}
-                            onBlur={validation.handleBlur}
-                            invalid={
-                              validation.touched.password && validation.errors.password ? true : false
-                            }
-                          />
-                          {validation.touched.password && validation.errors.password ? (
-                            <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                          ) : null}
-                        </div>
-                        <br/>
-                        <div className="mt-3 d-grid">
-                          <button
-                            className="btn btn-primary btn-block"
-                            type="submit"
-                          >
-                            Log In
-                          </button>
-                        </div>
-                    </div>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                validation.handleSubmit();
+                return false;
+              }} id="reloginForm" className="form-horizontal modal" style={{ backgroundColor: 'rgb(159 159 159)', border: '2px solid rgb(85 110 230)', margin: 'auto', padding: '20px', marginLeft: '0%', width: '100%', height: '100%' }}>
+              <div style={{ backgroundColor: '#fefefe', border: '2px solid rgb(0 0 0 / 22%)', margin: 'auto', padding: '50px', width: '450px', height: '480px' }}>
+                <div className="modal-header">
+                  <h5 className="modal-title mt-0">
+                    Re - Login
+                  </h5>
                 </div>
+                <div className="modal-body">
+                  {error ? <Alert color="danger">{error}</Alert> : null}
+                  <div className="mb-3">
+                    <Label className="form-label">Nik</Label>
+                    <Input
+                      name="nik"
+                      className="form-control"
+                      placeholder="Enter Nik"
+                      type="text"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.nik || ""}
+                      invalid={
+                        validation.touched.nik && validation.errors.nik ? true : false
+                      }
+                    />
+                    {validation.touched.nik && validation.errors.nik ? (
+                      <FormFeedback type="invalid">{validation.errors.nik}</FormFeedback>
+                    ) : null}
+                  </div>
+
+                  <div className="mb-3">
+                    <Label className="form-label">Password</Label>
+                    <Input
+                      name="password"
+                      value={validation.values.password || ""}
+                      type="password"
+                      placeholder="Enter Password"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      invalid={
+                        validation.touched.password && validation.errors.password ? true : false
+                      }
+                    />
+                    {validation.touched.password && validation.errors.password ? (
+                      <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
+                    ) : null}
+                  </div>
+                  <br />
+                  <div className="mt-3 d-grid">
+                    <button
+                      className="btn btn-primary btn-block"
+                      type="submit"
+                    >
+                      Log In
+                    </button>
+                  </div>
+                </div>
+              </div>
             </Form>
 
-          
+
           </div>
           <div className="d-flex">
-                {/* <form style={{boxShadow: '1px 1px 2px #fffefe'}} className="p-3">
+            {/* <form style={{boxShadow: '1px 1px 2px #fffefe'}} className="p-3">
                         <div className="form-group m-0">
                           <div className="input-group">
                             <input
@@ -325,7 +329,7 @@ const Header = props => {
             {/* <NotificationDropdown /> */}
             <ProfileMenu />
 
-            
+
           </div>
         </div>
       </header>

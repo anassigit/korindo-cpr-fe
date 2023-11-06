@@ -102,6 +102,7 @@ const SidebarContent = props => {
           <ul className="metismenu list-unstyled" id="side-menu">
             <li>
               <Link to="/home">
+                <i className="mdi mdi-home"/>
                 <span>{props.t("Home")}</span>
               </Link>
             </li>
