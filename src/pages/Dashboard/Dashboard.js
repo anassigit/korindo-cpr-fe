@@ -229,7 +229,7 @@ const Rekomendasi = () => {
                     <Container hidden={!appDashboardPage} fluid>
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-star-circle"></span> Best Recommendation
+                                <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
                             </CardHeader>
                             <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
                                 <Row

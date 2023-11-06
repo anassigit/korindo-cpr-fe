@@ -153,6 +153,7 @@ const HistoryRekomendasi = () => {
                                     >
                                         <img
                                             style={{
+                                                objectPosition: "center top",
                                                 objectFit: "cover",
                                                 borderRadius: "50%",
                                                 height: '80px',
