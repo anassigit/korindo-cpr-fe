@@ -291,28 +291,36 @@ const Rekomendasi = () => {
                                                     </Col>
                                                     {
                                                         item.stickerList &&
-                                                        item.stickerList.map((row, i) => {
-                                                            const tooltipTarget = `tooltip-${index}-${i}`; // Create a unique target
+                                                        item.stickerList
+                                                            .slice() // Create a shallow copy to avoid modifying the original array
+                                                            .sort((a, b) => {
+                                                                return (
+                                                                    b.id - a.id
+                                                                )
+                                                            }) // Sort in descending order based on the 'value' property
+                                                            .map((row, i) => {
+                                                                const tooltipTarget = `tooltip-${index}-${i}`;
 
-                                                            return (
-                                                                <React.Fragment key={i}>
-                                                                    <img
-                                                                        style={{
-                                                                            position: "absolute",
-                                                                            top: 8,
-                                                                            right: i * 32 + "px", // Adjust the horizontal position
-                                                                            width: "22px",
-                                                                        }}
-                                                                        src={row.url}
-                                                                        id={tooltipTarget} // Set the unique target as the ID
-                                                                    />
-                                                                    <UncontrolledTooltip target={tooltipTarget}>
-                                                                        {row.name}
-                                                                    </UncontrolledTooltip>
-                                                                </React.Fragment>
-                                                            );
-                                                        })
+                                                                return (
+                                                                    <React.Fragment key={i}>
+                                                                        <img
+                                                                            style={{
+                                                                                position: "absolute",
+                                                                                top: 8,
+                                                                                right: i * 32 + "px",
+                                                                                width: "22px",
+                                                                            }}
+                                                                            src={row.url}
+                                                                            id={tooltipTarget}
+                                                                        />
+                                                                        <UncontrolledTooltip target={tooltipTarget}>
+                                                                            {row.name}
+                                                                        </UncontrolledTooltip>
+                                                                    </React.Fragment>
+                                                                );
+                                                            })
                                                     }
+
                                                 </CardBody>
 
                                             </Card>
