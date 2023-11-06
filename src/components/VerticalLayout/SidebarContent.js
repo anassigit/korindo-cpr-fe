@@ -83,7 +83,7 @@ const SidebarContent = props => {
     return (
       <li key={item.id}>
         <a href={"/" + item.path} className={item.childList ? "has-arrow" : ""}>
-          {item.icon && <i className={props.t(item.icon)}></i>}
+          {item.icon && <i className={props.t("mdi " + item.icon)}></i>}
           <span>{props.t(item.title)}</span>
         </a>
         {item.childList && (

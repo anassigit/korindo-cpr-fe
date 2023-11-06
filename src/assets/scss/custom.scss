@@ -151,3 +151,11 @@
   padding-left: 2.5%;
   padding-right: 2.5%;
 }
+
+.berikan-recommend:hover img {
+  filter: brightness(0.7);
+}
+
+.berikan-recommend:hover div {
+  opacity: 1;
+}

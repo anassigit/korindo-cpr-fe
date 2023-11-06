@@ -18,6 +18,7 @@ import { ReactSession } from 'react-client-session';
 import DetailInfluencer from "./DetailInfluencer";
 import crown from "../../assets/images/crown.png"
 import tiara from "../../assets/images/tiara.png"
+import give from "../../assets/images/Give Mahkota.png"
 
 const Rekomendasi = () => {
 
@@ -32,8 +33,8 @@ const Rekomendasi = () => {
 
     const [appDetailRecommendationData, setAppDetailRecommendationData] = useState()
 
-    const [sliderMonth, setSliderMonth] = useState(2.5)
-    const [sliderYear, setSliderYear] = useState(2.8)
+    const [sliderMonth, setSliderMonth] = useState(4)
+    const [sliderYear, setSliderYear] = useState(4)
 
     const appBestlistData = useSelector((state) => state.dashboardReducer.respGetBestList);
     const appBestlistOfMonthData = useSelector((state) => state.dashboardReducer.respGetBestOfMonthList);
@@ -51,7 +52,7 @@ const Rekomendasi = () => {
         dispatch(getBestOfYearListData())
         const foundRow = menu.find((row) => row.id === 'KORTRN001');
         const temp = foundRow ? foundRow.path : null;
-        
+
         setLinkRekomendasi(temp);
     }, [])
 
@@ -85,39 +86,28 @@ const Rekomendasi = () => {
     }, [appBestlistData])
 
     const handleSliderChange = (e) => {
+        const step = 30;
+        let newSliderMonth = sliderMonth;
+
         if (e === 'back') {
             if (lengthArray === 3) {
-                if (sliderMonth >= 2.5) {
-                    setSliderMonth(-57.5);
-                } else {
-                    setSliderMonth(sliderMonth + 30);
-                }
+                newSliderMonth = sliderMonth >= 4 ? -56 : (sliderMonth + step);
             } else if (lengthArray === 2) {
-                if (sliderMonth >= 2.5) {
-                    setSliderMonth(-27.5);
-                } else {
-                    setSliderMonth(sliderMonth + 30);
-                }
+                newSliderMonth = sliderMonth >= 4 ? -26 : (sliderMonth + step);
             } else {
-                setSliderMonth(2.5);
+                newSliderMonth = 4;
             }
         } else {
             if (lengthArray === 3) {
-                if (sliderMonth <= -57.5) {
-                    setSliderMonth(2.5);
-                } else {
-                    setSliderMonth(sliderMonth - 30);
-                }
+                newSliderMonth = sliderMonth <= -56 ? 4 : (sliderMonth - step);
             } else if (lengthArray === 2) {
-                if (sliderMonth <= -27.5) {
-                    setSliderMonth(2.5);
-                } else {
-                    setSliderMonth(sliderMonth - 30);
-                }
+                newSliderMonth = sliderMonth <= -26 ? 4 : (sliderMonth - step);
             } else {
-                setSliderMonth(2.5);
+                newSliderMonth = 4;
             }
         }
+
+        setSliderMonth(newSliderMonth);
     };
 
     let lengthArray2 = appBestlistOfYearData?.data?.list?.length ? appBestlistOfYearData?.data?.list?.length : ReactSession.get('lengthArray2') ? ReactSession.get('lengthArray2') : []
@@ -134,19 +124,19 @@ const Rekomendasi = () => {
 
         if (e === 'back') {
             if (lengthArray2 === 3) {
-                newSliderYear = sliderYear >= 2.8 ? -57.2 : (sliderYear + step);
+                newSliderYear = sliderYear >= 2.6 ? -56 : (sliderYear + step);
             } else if (lengthArray2 === 2) {
-                newSliderYear = sliderYear >= 2.8 ? -27.2 : (sliderYear + step);
+                newSliderYear = sliderYear >= 2.6 ? -26 : (sliderYear + step);
             } else {
-                newSliderYear = 2.8;
+                newSliderYear = 4;
             }
         } else {
             if (lengthArray2 === 3) {
-                newSliderYear = sliderYear <= -57.2 ? 2.8 : (sliderYear - step);
+                newSliderYear = sliderYear <= -56 ? 4 : (sliderYear - step);
             } else if (lengthArray2 === 2) {
-                newSliderYear = sliderYear <= -27.2 ? 2.8 : (sliderYear - step);
+                newSliderYear = sliderYear <= -26 ? 2.6 : (sliderYear - step);
             } else {
-                newSliderYear = 2.8;
+                newSliderYear = 4;
             }
         }
 
@@ -228,8 +218,13 @@ const Rekomendasi = () => {
                 <React.Fragment>
                     <Container hidden={!appDashboardPage} fluid>
                         <Card style={{ marginBottom: 0 }}>
-                            <CardHeader>
-                                <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
+                            <CardHeader style={{ display: "flex", justifyContent: "space-between" }}>
+                                <div>
+                                    <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
+                                </div>
+                                <div>
+                                    Kamu Mempunyai {appBestlistData?.data?.crown} Rekomendasi
+                                </div>
                             </CardHeader>
                             <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
                                 <Row
@@ -256,8 +251,9 @@ const Rekomendasi = () => {
                                                         justifyContent: "center",
                                                         alignItems: "center",
                                                         height: "100%",
-                                                    }}>
-                                                    {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                        position: "relative", // Add relative positioning to the container
+                                                    }}
+                                                >
                                                     <img
                                                         style={{
                                                             minWidth: "10em",
@@ -272,17 +268,44 @@ const Rekomendasi = () => {
                                                         alt="Profile Image"
                                                     />
 
-                                                    <Col style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'flex-start',
-                                                        maxWidth: "60%"
-                                                    }}>
+                                                    <Col
+                                                        style={{
+                                                            display: 'flex',
+                                                            flexDirection: 'column',
+                                                            alignItems: 'flex-start',
+                                                            maxWidth: "60%"
+                                                        }}
+                                                    >
                                                         <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.name}</div>
                                                         <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.dept_name}</div>
                                                         <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", marginTop: "2vh" }}>{item.position}</div>
                                                     </Col>
+                                                    {
+                                                        item.stickerList &&
+                                                        item.stickerList.map((row, i) => {
+                                                            const tooltipTarget = `tooltip-${index}-${i}`; // Create a unique target
+
+                                                            return (
+                                                                <React.Fragment key={i}>
+                                                                    <img
+                                                                        style={{
+                                                                            position: "absolute",
+                                                                            top: 8,
+                                                                            right: i * 32 + "px", // Adjust the horizontal position
+                                                                            width: "22px",
+                                                                        }}
+                                                                        src={row.url}
+                                                                        id={tooltipTarget} // Set the unique target as the ID
+                                                                    />
+                                                                    <UncontrolledTooltip target={tooltipTarget}>
+                                                                        {row.name}
+                                                                    </UncontrolledTooltip>
+                                                                </React.Fragment>
+                                                            );
+                                                        })
+                                                    }
                                                 </CardBody>
+
                                             </Card>
                                         )
                                     })}
@@ -636,18 +659,39 @@ const Rekomendasi = () => {
                                     </Card>
                                     &nbsp;
                                     <a
-                                        className="btn btn-primary px-3"
+                                        className="berikan-recommend"
                                         style={{
-                                            borderRadius: "50%",
-                                            fontSize: "24px",
                                             display: "flex",
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
+                                            flexDirection: "column",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            fontSize: "24px",
+                                            position: "relative", // Added for stacking
                                         }}
                                         href={linkRekomendasi}
                                     >
-                                        Berikan Mahkota
+                                        <img
+                                            height={'180px'}
+                                            src={give}
+                                            style={{
+                                                transition: "filter 0.3s", // Add a transition for smooth hover effect
+                                            }}
+                                        />
+                                        <b>Berikan Mahkota</b>
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: 0,
+                                                left: 0,
+                                                width: "100%",
+                                                height: "100%",
+                                                background: "rgba(0, 0, 0, 0.5)", // Adjust the darkness here (0.5 means 50% dark)
+                                                opacity: 0, // Initially invisible
+                                                transition: "opacity 0.3s", // Add a transition for smooth hover effect
+                                            }}
+                                        ></div>
                                     </a>
+
                                     &nbsp;
                                 </div>
                             </CardBody>
