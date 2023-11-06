@@ -36,7 +36,10 @@ const Rekomendasi = () => {
   const [selectedMemberData, setSelectedMemberData] = useState()
 
   const [appDetailDeptDataState, setAppDetailDeptDataState] = useState()
-  const [collapser, setCollapser] = useState({})
+  const [collapser, setCollapser] = useState({
+    "0": true,
+    "0-0": true
+  })
 
   const [appMemberList, setMemberList] = useState()
 

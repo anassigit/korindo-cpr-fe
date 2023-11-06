@@ -104,8 +104,8 @@ const SidebarContent = props => {
               <Link to="/home">
                 <span>{props.t("Home")}</span>
               </Link>
-              {menu.map((item) => renderMenuItem(item))}
             </li>
+              {menu.map((item) => renderMenuItem(item))}
           </ul>
         </div>
       </SimpleBar>

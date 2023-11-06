@@ -16,11 +16,15 @@ import RootPageCustom from '../../common/RootPageCustom';
 import '../../config';
 import { ReactSession } from 'react-client-session';
 import DetailInfluencer from "./DetailInfluencer";
+import crown from "../../assets/images/crown.png"
+import tiara from "../../assets/images/tiara.png"
 
 const Rekomendasi = () => {
 
     const dispatch = useDispatch()
 
+    const menu = JSON.parse(ReactSession.get("menu"));
+    const [linkRekomendasi, setLinkRekomendasi] = useState();
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
     const [appDashboardPage, setAppDashboardPage] = useState(true)
@@ -29,7 +33,7 @@ const Rekomendasi = () => {
     const [appDetailRecommendationData, setAppDetailRecommendationData] = useState()
 
     const [sliderMonth, setSliderMonth] = useState(2.5)
-    const [sliderYear, setSliderYear] = useState(3.5)
+    const [sliderYear, setSliderYear] = useState(2.8)
 
     const appBestlistData = useSelector((state) => state.dashboardReducer.respGetBestList);
     const appBestlistOfMonthData = useSelector((state) => state.dashboardReducer.respGetBestOfMonthList);
@@ -45,6 +49,10 @@ const Rekomendasi = () => {
     useEffect(() => {
         dispatch(getBestOfMonthListData())
         dispatch(getBestOfYearListData())
+        const foundRow = menu.find((row) => row.id === 'KORTRN001');
+        const temp = foundRow ? foundRow.path : null;
+        
+        setLinkRekomendasi(temp);
     }, [])
 
     useEffect(() => {
@@ -63,7 +71,7 @@ const Rekomendasi = () => {
         if (blinker) {
             const timeout = setTimeout(() => {
                 setBlinker(false);
-            }, 300); // Adjust the delay as needed
+            }, 200); // Adjust the delay as needed
             return () => clearTimeout(timeout);
         }
     }, [blinker]);
@@ -121,45 +129,37 @@ const Rekomendasi = () => {
     }, [appBestlistOfYearData])
 
     const handleSliderChange2 = (e) => {
+        const step = 30;
+        let newSliderYear = sliderYear;
+
         if (e === 'back') {
             if (lengthArray2 === 3) {
-                if (sliderYear >= 3.5) {
-                    setSliderYear(-56.5);
-                } else {
-                    setSliderYear(sliderYear + 30);
-                }
+                newSliderYear = sliderYear >= 2.8 ? -57.2 : (sliderYear + step);
             } else if (lengthArray2 === 2) {
-                if (sliderYear >= 3.5) {
-                    setSliderYear(-26.5);
-                } else {
-                    setSliderYear(sliderYear + 30);
-                }
+                newSliderYear = sliderYear >= 2.8 ? -27.2 : (sliderYear + step);
             } else {
-                setSliderYear(3.5);
+                newSliderYear = 2.8;
             }
         } else {
             if (lengthArray2 === 3) {
-                if (sliderYear <= -56.5) {
-                    setSliderYear(3.5);
-                } else {
-                    setSliderYear(sliderYear - 30);
-                }
+                newSliderYear = sliderYear <= -57.2 ? 2.8 : (sliderYear - step);
             } else if (lengthArray2 === 2) {
-                if (sliderYear <= -26.5) {
-                    setSliderYear(3.5);
-                } else {
-                    setSliderYear(sliderYear - 30);
-                }
+                newSliderYear = sliderYear <= -27.2 ? 2.8 : (sliderYear - step);
             } else {
-                setSliderYear(3.5);
+                newSliderYear = 2.8;
             }
         }
+
+        newSliderYear = parseFloat(newSliderYear.toFixed(1));
+
+        setSliderYear(newSliderYear);
     };
+
 
     useEffect(() => {
         const interval = setInterval(() => {
             handleSliderChange("next"); // Change the direction as needed
-        }, 3000);
+        }, 4000);
 
         return () => {
             clearInterval(interval);
@@ -169,7 +169,7 @@ const Rekomendasi = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             handleSliderChange2("next"); // Change the direction as needed
-        }, 3000);
+        }, 4000);
 
         return () => {
             clearInterval(interval);
@@ -257,7 +257,7 @@ const Rekomendasi = () => {
                                                         alignItems: "center",
                                                         height: "100%",
                                                     }}>
-                                                    <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
+                                                    {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
                                                     <img
                                                         style={{
                                                             minWidth: "10em",
@@ -321,7 +321,7 @@ const Rekomendasi = () => {
                                     </div>
                                 </Row>
                                 <hr />
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <div style={{ display: "flex", justifyContent: "space-evenly", marginBottom: "12px" }}>
                                     <Card style={{
                                         padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%",
                                     }}>
@@ -373,12 +373,25 @@ const Rekomendasi = () => {
                                                                             alignItems: "center",
                                                                             height: "100%",
                                                                         }}>
-                                                                        <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
+                                                                        {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                                        <img
+                                                                            src={row.gender.toLowerCase() === 'male' ? crown : tiara}
+                                                                            style={{
+                                                                                position: "absolute",
+                                                                                right: 0,
+                                                                                top: 5,
+                                                                                color: "gold",
+                                                                                width: "64px",
+                                                                                fontSize: "32px"
+                                                                            }}
+                                                                            className="mdi mdi-crown px-3 py-1"
+                                                                        />
                                                                         <img
                                                                             style={{
                                                                                 minWidth: "10em",
                                                                                 maxWidth: "10em",
                                                                                 height: "10em",
+                                                                                objectPosition: "center top",
                                                                                 objectFit: "cover",
                                                                                 borderRadius: "50%",
                                                                                 marginRight: "5%",
@@ -419,7 +432,19 @@ const Rekomendasi = () => {
                                                                         alignItems: "center",
                                                                         height: "100%",
                                                                     }}>
-                                                                    <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
+                                                                    {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                                    <img
+                                                                        src={crown}
+                                                                        style={{
+                                                                            position: "absolute",
+                                                                            right: 0,
+                                                                            top: 5,
+                                                                            color: "gold",
+                                                                            width: "64px",
+                                                                            fontSize: "32px"
+                                                                        }}
+                                                                        className="mdi mdi-crown px-3 py-1"
+                                                                    />
                                                                     <img
                                                                         style={{
                                                                             minWidth: "10em",
@@ -508,12 +533,25 @@ const Rekomendasi = () => {
                                                                             alignItems: "center",
                                                                             height: "100%",
                                                                         }}>
-                                                                        <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
+                                                                        {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                                        <img
+                                                                            src={row.gender.toLowerCase() === 'male' ? crown : tiara}
+                                                                            style={{
+                                                                                position: "absolute",
+                                                                                right: 0,
+                                                                                top: 5,
+                                                                                color: "gold",
+                                                                                width: "64px",
+                                                                                fontSize: "32px"
+                                                                            }}
+                                                                            className="mdi mdi-crown px-3 py-1"
+                                                                        />
                                                                         <img
                                                                             style={{
                                                                                 minWidth: "10em",
                                                                                 maxWidth: "10em",
                                                                                 height: "10em",
+                                                                                objectPosition: "center top",
                                                                                 objectFit: "cover",
                                                                                 borderRadius: "50%",
                                                                                 marginRight: "5%",
@@ -596,6 +634,21 @@ const Rekomendasi = () => {
                                             </div>
                                         </CardBody>
                                     </Card>
+                                    &nbsp;
+                                    <a
+                                        className="btn btn-primary px-3"
+                                        style={{
+                                            borderRadius: "50%",
+                                            fontSize: "24px",
+                                            display: "flex",
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                        href={linkRekomendasi}
+                                    >
+                                        Berikan Mahkota
+                                    </a>
+                                    &nbsp;
                                 </div>
                             </CardBody>
                         </Card>
