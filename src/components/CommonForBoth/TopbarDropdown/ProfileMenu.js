@@ -16,20 +16,32 @@ import { withRouter, Link } from "react-router-dom"
 
 // users
 import user1 from "../../../assets/images/users/userprofil.png"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
+  const history = useHistory()
   const [menu, setMenu] = useState(false)
+  const [flagForDashboard, setFlagForDashboard] = useState(false)
 
   const [username, setusername] = useState("Admin")
+  const [member_id, setmember_id] = useState("")
 
   useEffect(() => {
 
     if (localStorage.getItem("user")) {
       const u = localStorage.getItem("user")
+      const m = localStorage.getItem("member_id")
       setusername(u.replace(/"/g, ''));
+      setmember_id(m.replace(/"/g, ''));
     }
   }, [props.success])
+
+  useEffect(() => {
+    if (flagForDashboard === false) {
+      setFlagForDashboard(false)
+    }
+  }, [flagForDashboard])
 
   return (
     <React.Fragment>
@@ -38,17 +50,18 @@ const ProfileMenu = props => {
         toggle={() => setMenu(!menu)}
         className="d-inline-block"
       >
+        <img
+          className="rounded-circle header-profile-user mx-3"
+          src={user1}
+          alt="Header Avatar"
+          onClick={() => appDetailHandler()}
+        />
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"
           style={{ borderLeft: "2px solid #2596BE" }}
           tag="button"
         >
-          <img
-            className="rounded-circle header-profile-user"
-            src={user1}
-            alt="Header Avatar"
-          />
           <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>

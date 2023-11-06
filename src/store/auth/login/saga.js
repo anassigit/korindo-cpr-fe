@@ -13,6 +13,7 @@ function* loginUser({ payload: { user, history } }) {
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("member_id", JSON.stringify(response.data.member_id));
       const res = yield call(getMenuBE)
       if (res.status == 1) {
         ReactSession.set("menu", JSON.stringify(res.data.list));
@@ -35,7 +36,8 @@ function* reloginUser({ payload: { user, history } }) {
     const response = yield call(login, user);
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
-      ReactSession.set("user", JSON.stringify(response.data.user));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("member_id", JSON.stringify(response.data.member_id));
       yield put(reloginSuccess(response));
       document.getElementById("reloginForm").style.display = "none";
       yield put(apiError(''))
@@ -50,7 +52,8 @@ function* reloginUser({ payload: { user, history } }) {
 function* logoutUser({ payload: { history } }) {
   try {
     localStorage.setItem("authUser", "");
-    ReactSession.set("user", "");
+    localStorage.setItem("user", "");
+    localStorage.setItem("member_id", "");
     history.push("/login")
     yield put(apiError(""))
   } catch (error) {

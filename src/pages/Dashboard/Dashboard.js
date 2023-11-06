@@ -223,7 +223,16 @@ const Rekomendasi = () => {
                                     <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
                                 </div>
                                 <div>
-                                    Kamu Mempunyai {appBestlistData?.data?.crown} Rekomendasi
+                                    <img
+                                        src={give}
+                                        style={{
+                                            color: "gold",
+                                            width: "18px",
+                                        }}
+                                        className="mdi mdi-crown mx-2"
+                                    />
+
+                                    {appBestlistData?.data?.crown}
                                 </div>
                             </CardHeader>
                             <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
