@@ -106,18 +106,8 @@ const EmployeeOfMonYea = (props) => {
         },
         {
             dataField: "periodFrom",
-            text: "Periode/Year",
-            headerStyle: { textAlign: 'center' },
-            style: { textAlign: 'center' },
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
-        },
-        {
-            dataField: "periodFrom",
             text: "Periode From",
+            sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
             events: {
@@ -129,6 +119,7 @@ const EmployeeOfMonYea = (props) => {
         {
             dataField: "periodTo",
             text: "Periode To",
+            sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
             events: {
@@ -140,6 +131,7 @@ const EmployeeOfMonYea = (props) => {
         {
             dataField: "star",
             text: "Jumlah",
+            sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
             events: {
