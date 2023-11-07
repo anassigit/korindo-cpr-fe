@@ -3,10 +3,12 @@ import {
   GET_BEST_OF_MONTH_LIST,
   GET_BEST_OF_YEAR_LIST,
   GET_DETAIL_INFLUENCER,
+  GET_REPORT_LIST,
   RESP_GET_BEST_LIST,
   RESP_GET_BEST_OF_MONTH_LIST,
   RESP_GET_BEST_OF_YEAR_LIST,
-  RESP_GET_DETAIL_INFLUENCER
+  RESP_GET_DETAIL_INFLUENCER,
+  RESP_GET_REPORT_LIST
 } from "./actionTypes"
 
 export const getBestListData = (req) => ({
@@ -46,5 +48,15 @@ export const getDetailInfluencerData = (req) => ({
 
 export const respGetDetailInfluencer = resp => ({
   type: RESP_GET_DETAIL_INFLUENCER,
+  payload: resp,
+})
+
+export const getReportListData = (req) => ({
+  type: GET_REPORT_LIST,
+  payload: req,
+})
+
+export const respGetReportList = resp => ({
+  type: RESP_GET_REPORT_LIST,
   payload: resp,
 })

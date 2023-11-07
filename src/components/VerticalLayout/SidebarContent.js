@@ -101,12 +101,15 @@ const SidebarContent = props => {
         <div id="sidebar-menu" style={{ marginTop: "40px" }}>
           <ul className="metismenu list-unstyled" id="side-menu">
             <li>
-              <Link to="/home" onClick={() => ReactSession.set('appDetailRecommendationData', "")}>
-                <i className="mdi mdi-home"/>
+              <Link to="/" onClick={() => {
+                ReactSession.remove('appDetailRecommendationData')
+                ReactSession.remove("currentPage")
+              }}>
+                <i className="mdi mdi-home" />
                 <span>{props.t("Home")}</span>
               </Link>
             </li>
-              {menu.map((item) => renderMenuItem(item))}
+            {menu.map((item) => renderMenuItem(item))}
           </ul>
         </div>
       </SimpleBar>

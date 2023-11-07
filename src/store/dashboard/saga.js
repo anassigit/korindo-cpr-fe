@@ -1,14 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
-  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER
+  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER, GET_REPORT_LIST
 } from "./actionTypes"
 import {
-  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer
+  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer, respGetReportList
 } from "./actions"
 
 import {
-  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE
+  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE, getReportListBE
 } from "helpers/backend_helper"
 
 function* fetchGetBestList({ payload: req }) {
@@ -65,6 +65,19 @@ function* fetchGetDetailInfluencer({ payload: req }) {
     yield put(respGetDetailInfluencer({ "status": 0, "message": "Error Get Data" }))
   }
 }
+function* fetchGetReportList({ payload: req }) {
+  try {
+    const response = yield call(getReportListBE, req)
+    if (response.status == 1) {
+      yield put(respGetReportList(response))
+    } else {
+      yield put(respGetReportList(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetReportList({ "status": 0, "message": "Error Get Data" }))
+  }
+}
 
 function* dashboardSaga() {
 
@@ -72,6 +85,7 @@ function* dashboardSaga() {
   yield takeEvery(GET_BEST_OF_MONTH_LIST, fetchGetBestOfMonthList)
   yield takeEvery(GET_BEST_OF_YEAR_LIST, fetchGetBestOfYearList)
   yield takeEvery(GET_DETAIL_INFLUENCER, fetchGetDetailInfluencer)
+  yield takeEvery(GET_REPORT_LIST, fetchGetReportList)
 
 }
 

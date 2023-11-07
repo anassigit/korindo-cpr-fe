@@ -17,16 +17,22 @@ import { getDetailInfluencerData } from "store/actions";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import RootPageCustom from "common/RootPageCustom";
 import { ReactSession } from 'react-client-session';
+import DetailReportModal from "./DetailReportModal";
 
 const DetailInfluencer = (props) => {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData'))
     const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [detailModal, setDetailModal] = useState(false)
+    const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData'))
 
     const appDetailInfluencerData = useSelector((state) => state.dashboardReducer.respGetDetailInfluencer);
+
+    useEffect(() => {
+        setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
+    }, [])
 
     const [appDetailInfluencerTabelSearch, setAppDetailInfluencerTabelSearch] = useState({
         page: 1,
@@ -46,30 +52,55 @@ const DetailInfluencer = (props) => {
             text: "ID",
             hidden: true,
             sort: true,
+            events: {
+                onClick: (e, column, columnIndex, data, rowIndex) => {
+                    toggleModal(data)
+                },
+            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "write_time",
             text: "Tanggal",
             sort: true,
+            events: {
+                onClick: (e, column, columnIndex, data, rowIndex) => {
+                    toggleModal(data)
+                },
+            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "dept_name",
             text: "Departemen",
             sort: true,
+            events: {
+                onClick: (e, column, columnIndex, data, rowIndex) => {
+                    toggleModal(data)
+                },
+            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "name",
             text: "Nama",
             sort: true,
+            events: {
+                onClick: (e, column, columnIndex, data, rowIndex) => {
+                    toggleModal(data)
+                },
+            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "comment",
             text: "Komentar",
             sort: true,
+            events: {
+                onClick: (e, column, columnIndex, data, rowIndex) => {
+                    toggleModal(data)
+                },
+            },
             headerStyle: { textAlign: 'center' },
             style: { minWidth: "30vw", maxWidth: "25vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" },
             formatter: (row, rowData, rowIndex) => {
@@ -88,6 +119,11 @@ const DetailInfluencer = (props) => {
             dataField: "sticker",
             text: "Compliments",
             headerStyle: { textAlign: 'center' },
+            events: {
+                onClick: (e, column, columnIndex, data, rowIndex) => {
+                    toggleModal(data)
+                },
+            },
             formatter: (row, rowData, rowIndex) => {
                 return (
                     <React.Fragment>
@@ -101,6 +137,10 @@ const DetailInfluencer = (props) => {
             }
         },
     ]
+
+    const toggleModal = (data) => {
+        setDetailModal(!detailModal)
+    }
 
     useEffect(() => {
         if (appDetailRecommendationData) {
@@ -154,6 +194,10 @@ const DetailInfluencer = (props) => {
                     <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                         <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                     </div>
+                    <DetailReportModal
+                        modal={detailModal}
+                        toggle={toggleModal}
+                    />
                 </Container>
             }
         />

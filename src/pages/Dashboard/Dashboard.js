@@ -257,7 +257,7 @@ const Rekomendasi = () => {
                                                     height: "150px",
                                                     overflow: "hidden",
                                                 }}>
-                                                <a href="/home/detail">
+                                                <a onContextMenu={(e) => { e.preventDefault(); }} href="/home/detail" draggable="false">
 
                                                     <CardBody
                                                         style={{
@@ -270,6 +270,7 @@ const Rekomendasi = () => {
                                                         }}
                                                     >
                                                         <img
+                                                            draggable="false"
                                                             style={{
                                                                 minWidth: "10em",
                                                                 maxWidth: "10em",
@@ -291,7 +292,7 @@ const Rekomendasi = () => {
                                                                 maxWidth: "60%"
                                                             }}
                                                         >
-                                                            <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.name}</div>
+                                                            <div style={{ color:'#495057', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.name}</div>
                                                             <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.dept_name}</div>
                                                             <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", marginTop: "2vh" }}>{item.position}</div>
                                                         </Col>

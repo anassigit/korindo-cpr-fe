@@ -9,13 +9,19 @@ import SidebarContent from "./SidebarContent";
 import { Link } from "react-router-dom";
 import logoKorindo from "../../assets/images/Korindo.png";
 import logoKorindo2 from "../../assets/images/logotitle.png";
+import { ReactSession } from 'react-client-session'
 
 const Sidebar = props => {
   return (
     <React.Fragment>
       <div style={{ boxShadow: "0 0 10px rgb(0 0 0 / 75%)" }} className="vertical-menu">
         <div style={{ borderRight: "2px solid #c5c5c5" }} className="navbar-brand-box">
-          <Link to="/" className="logo logo-dark">
+          <Link to="/" className="logo logo-dark"
+            onClick={() => {
+              ReactSession.remove('appDetailRecommendationData')
+              ReactSession.remove("currentPage")
+            }}
+          >
             <span className="logo-sm">
               <img src={logoKorindo2} alt="" height="22" />
             </span>
@@ -24,7 +30,12 @@ const Sidebar = props => {
             </span>
           </Link>
 
-          <Link to="/" className="logo logo-light">
+          <Link to="/" className="logo logo-light"
+            onClick={() => {
+              ReactSession.remove('appDetailRecommendationData')
+              ReactSession.remove("currentPage")
+            }}
+          >
             <span className="logo-sm">
               <img src={logoKorindo2} alt="" height="22" />
             </span>

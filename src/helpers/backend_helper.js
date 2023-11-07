@@ -13,6 +13,8 @@ export const getBestOfYearListBE = req => post("rest/MainRest/getBestOfYear", re
 
 export const getDetailInfluencerBE = req => post("rest/MainRest/getDetail", req)
 
+export const getReportListBE = req => getWithParam("rest/MainRest/getReportList", req)
+
 export const getDeptBE = req => postWithParam("rest/RecommendRest/getDept", req)
 
 export const getMemberListBE = req => post("rest/RecommendRest/getMemberList", req)
