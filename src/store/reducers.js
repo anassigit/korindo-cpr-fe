@@ -7,6 +7,7 @@ import Layout from "./layout/reducer"
 import Login from "./auth/login/reducer"
 import rekomendasiReducer from "./rekomendasi/reducer"
 import dashboardReducer from "./dashboard/reducer"
+import managementSystemReducer from "./managementsystem/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   Login,
   rekomendasiReducer,
   dashboardReducer,
+  managementSystemReducer,
 })
 
 export default rootReducer

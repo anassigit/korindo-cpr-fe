@@ -9,12 +9,14 @@ import Logout from "../pages/Authentication/Logout"
 import Rekomendasi from "pages/Rekomendasi/Rekomendasi"
 import Dashboard from "pages/Dashboard/Dashboard"
 import DetailInfluencer from "pages/Dashboard/DetailInfluencer"
+import EmployeeOfMonYea from "pages/ManagementSystem/EmployeeOfMonYea"
 
 const authProtectedRoutes = [
 
   { path: "/home", component: Dashboard},
   { path: "/home/detail", component: DetailInfluencer},
   { path: "/korsoc000/forms/korsoc051", component: Rekomendasi},
+  { path: "/korsoc000/forms/korsoc013", component: EmployeeOfMonYea},
   
   
   // this route should be at the end of all other routes
