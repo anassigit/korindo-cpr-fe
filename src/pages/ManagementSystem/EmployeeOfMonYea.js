@@ -10,12 +10,15 @@ import {
     CardBody,
     CardHeader,
     Container,
+    Input,
+    Label,
+    Row,
     Spinner,
     UncontrolledTooltip
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { getListData } from "store/actions";
+import { getListData, getYearListData } from "store/actions";
 
 const EmployeeOfMonYea = (props) => {
 
@@ -24,13 +27,13 @@ const EmployeeOfMonYea = (props) => {
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [detailModal, setDetailModal] = useState(false)
-    const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData'))
+
+    const [searchVal, setSearchVal] = useState("")
+    const [filterVal, setFilterVal] = useState("")
+    const [yearVal, setYearVal] = useState(parseInt(new Date().getFullYear()))
 
     const appEmployeeMonYeaData = useSelector((state) => state.managementSystemReducer.respGetList);
-
-    useEffect(() => {
-        setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
-    }, [])
+    const appYearListData = useSelector((state) => state.managementSystemReducer.respGetYearList);
 
     const [appEmployeeMonYeaTabelSearch, setAppEmployeeMonYeaTabelSearch] = useState({
         page: 1,
@@ -40,7 +43,7 @@ const EmployeeOfMonYea = (props) => {
         order: "",
         search:
         {
-            year: new Date().getFullYear(),
+            year: yearVal,
             filter: "",
             search: "",
         }
@@ -102,7 +105,7 @@ const EmployeeOfMonYea = (props) => {
                 },
             },
             headerStyle: { textAlign: 'center' },
-           
+
         },
         {
             dataField: "periodFrom",
@@ -157,10 +160,20 @@ const EmployeeOfMonYea = (props) => {
     }
 
     useEffect(() => {
-        if (appDetailRecommendationData) {
-            dispatch(getListData(appEmployeeMonYeaTabelSearch))
-        }
-    }, [appEmployeeMonYeaTabelSearch])
+        dispatch(getYearListData())
+    }, [])
+
+    useEffect(() => {
+        setAppEmployeeMonYeaTabelSearch((prevState) => ({
+            ...prevState,
+            search: {
+                ...prevState.search,
+                search: searchVal,
+                filter: filterVal,
+                year: parseInt(yearVal),
+            },
+        }));
+    }, [searchVal, filterVal, yearVal])
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -170,7 +183,117 @@ const EmployeeOfMonYea = (props) => {
                         <CardHeader>
                             <span className="mdi mdi-star-circle"></span> List Employee of Month/Year
                         </CardHeader>
-                        <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
+                        <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                            }}
+                            >
+                                <div
+                                    className="col-2 pb-2"
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        gap: "12px",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    Search
+                                    <Input
+                                        value={searchVal}
+                                        onChange={(e) => setSearchVal(e.target.value)}
+                                    />
+                                    {/* <Button
+                                        onClick={() => {
+                                            dispatch(getListData(appEmployeeMonYeaTabelSearch))
+                                        }}
+                                    >
+                                        Cari
+                                    </Button> */}
+                                </div>
+                                <div
+                                    className="col-2 pb-2"
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        gap: "12px",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    Tahun
+                                    <Input
+                                        type="select"
+                                        value={yearVal}
+                                        onChange={(e) => setYearVal(e.target.value)}
+                                    >
+                                        {
+                                            appYearListData?.data?.list
+                                                .sort((a, b) => {
+                                                    return b - a
+                                                })
+                                                .map((item, index) => {
+
+                                                    return (
+                                                        <option
+                                                            key={index}
+                                                            value={item}
+                                                        >
+                                                            {item}
+                                                        </option>
+                                                    )
+                                                })
+                                        }
+                                    </Input>
+                                </div>
+                            </div>
+                            <div
+                                className="col-3 pb-3"
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    gap: "12px",
+                                    justifyContent: "left",
+                                    alignItems: "center",
+                                }}
+                            >
+                                Search
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        gap: "12px",
+                                    }}
+                                >
+                                    <Label check>
+                                        <Input
+                                            type="radio"
+                                            name="searchOption"
+                                            value="all"
+                                            onClick={() => setFilterVal("all")}
+                                        /> All
+                                    </Label>
+                                    <Label check>
+                                        <Input
+                                            type="radio"
+                                            name="searchOption"
+                                            value="year"
+                                            onClick={() => setFilterVal("year")}
+                                        /> Year
+                                    </Label>
+                                    <Label check>
+                                        <Input
+                                            type="radio"
+                                            name="searchOption"
+                                            value="month"
+                                            onClick={() => setFilterVal("month")}
+                                        /> Month
+                                    </Label>
+                                </div>
+                            </div>
+
                             <TableCustom
                                 keyField={"id"}
                                 columns={appEmployeeMonYeaColumn}

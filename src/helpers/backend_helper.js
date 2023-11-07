@@ -34,3 +34,5 @@ export const editRecommendBE = req => postWithParam("rest/RecommendRest/modifyRe
 export const deleteRecommendBE = req => postWithParam("rest/RecommendRest/deleteRecommend", req)
 
 export const getListEmployeeOfMonthYearBE = req => post("rest/BestEmployeeMasterRest/getList", req)
+
+export const getYearListBE = req => post("rest/BestEmployeeMasterRest/getYearList", req)
