@@ -281,8 +281,9 @@ const Rekomendasi = () => {
                                                 >
                                                     <img
                                                         style={{
-                                                            width: "120px",
-                                                            height: "120px",
+                                                            minWidth: "10em",
+                                                            maxWidth: "10em",
+                                                            height: "10em",
                                                             objectFit: "cover",
                                                             objectPosition: "center top",
                                                             borderRadius: "50%",
@@ -443,8 +444,9 @@ const Rekomendasi = () => {
                                                                         />
                                                                         <img
                                                                             style={{
-                                                                                width: "120px",
-                                                                                height: "120px",
+                                                                                minWidth: "10em",
+                                                                                maxWidth: "10em",
+                                                                                height: "10em",
                                                                                 objectPosition: "center top",
                                                                                 objectFit: "cover",
                                                                                 borderRadius: "50%",
@@ -501,8 +503,9 @@ const Rekomendasi = () => {
                                                                     />
                                                                     <img
                                                                         style={{
-                                                                            width: "120px",
-                                                                            height: "120px",
+                                                                            minWidth: "10em",
+                                                                            maxWidth: "10em",
+                                                                            height: "10em",
                                                                             objectFit: "cover",
                                                                             borderRadius: "50%",
                                                                             marginRight: "5%",
@@ -601,8 +604,9 @@ const Rekomendasi = () => {
                                                                         />
                                                                         <img
                                                                             style={{
-                                                                                width: "120px",
-                                                                                height: "120px",
+                                                                                minWidth: "10em",
+                                                                                maxWidth: "10em",
+                                                                                height: "10em",
                                                                                 objectPosition: "center top",
                                                                                 objectFit: "cover",
                                                                                 borderRadius: "50%",
@@ -647,8 +651,9 @@ const Rekomendasi = () => {
                                                                     <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
                                                                     <img
                                                                         style={{
-                                                                            width: "120px",
-                                                                            height: "120px",
+                                                                            minWidth: "10em",
+                                                                            maxWidth: "10em",
+                                                                            height: "10em",
                                                                             objectFit: "cover",
                                                                             borderRadius: "50%",
                                                                             marginRight: "5%",
