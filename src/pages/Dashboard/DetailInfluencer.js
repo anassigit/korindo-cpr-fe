@@ -23,7 +23,7 @@ const DetailInfluencer = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData') || null)
+    const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData'))
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
     const appDetailInfluencerData = useSelector((state) => state.dashboardReducer.respGetDetailInfluencer);
@@ -36,7 +36,7 @@ const DetailInfluencer = (props) => {
         order: "desc",
         search:
         {
-            member_id: "",
+            member_id: appDetailRecommendationData,
         }
     });
 
@@ -143,7 +143,10 @@ const DetailInfluencer = (props) => {
                     </Card>
                     <Button
                         className="btn btn-danger my-3"
-                        onClick={() => history.go(-1)}
+                        onClick={() => {
+                            ReactSession.set('appDetailRecommendationData', "");
+                            history.go(-1)
+                        }}
                     >
                         <span className="mdi mdi-arrow-left" />
                         &nbsp;Kembali

@@ -27,12 +27,12 @@ const Rekomendasi = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+
     const menu = JSON.parse(ReactSession.get("menu"));
     const [linkRekomendasi, setLinkRekomendasi] = useState();
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
     const [appDashboardPage, setAppDashboardPage] = useState(true)
-    const [appDetailRecommendationPage, setAppDetailRecommendationPage] = useState(false)
 
     const [appDetailRecommendationData, setAppDetailRecommendationData] = useState()
 
@@ -45,7 +45,7 @@ const Rekomendasi = () => {
 
     const itemsPerPage = 6;
     const [blinker, setBlinker] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(ReactSession.get('currentPage') || 1);
 
     const totalItems = appBestlistData?.data?.count;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -60,6 +60,7 @@ const Rekomendasi = () => {
     }, [])
 
     useEffect(() => {
+        ReactSession.set("currentPage", currentPage)
         dispatch(getBestListData({
             offset: (currentPage - 1) * itemsPerPage,
             limit: itemsPerPage,
@@ -210,10 +211,8 @@ const Rekomendasi = () => {
     };
 
     const appDetailHandler = (e) => {
-
         setAppDetailRecommendationData(e)
         ReactSession.set('appDetailRecommendationData', e);
-        history.push('/home/detail')
     }
 
     return (
@@ -247,6 +246,7 @@ const Rekomendasi = () => {
                                     {appBestlistData?.data?.list?.map((item, index) => {
                                         return (
 
+
                                             <Card
                                                 key={index}
                                                 className="fade-in"
@@ -257,76 +257,78 @@ const Rekomendasi = () => {
                                                     height: "150px",
                                                     overflow: "hidden",
                                                 }}>
-                                                <CardBody
-                                                    style={{
-                                                        display: "flex",
-                                                        padding: "10px",
-                                                        justifyContent: "center",
-                                                        alignItems: "center",
-                                                        height: "100%",
-                                                        position: "relative", // Add relative positioning to the container
-                                                    }}
-                                                >
-                                                    <img
-                                                        style={{
-                                                            minWidth: "10em",
-                                                            maxWidth: "10em",
-                                                            height: "10em",
-                                                            objectFit: "cover",
-                                                            objectPosition: "center top",
-                                                            borderRadius: "50%",
-                                                            marginRight: "5%",
-                                                        }}
-                                                        src={encodeURI(item?.profile_url)}
-                                                        alt="Profile Image"
-                                                    />
+                                                <a href="/home/detail">
 
-                                                    <Col
+                                                    <CardBody
                                                         style={{
-                                                            display: 'flex',
-                                                            flexDirection: 'column',
-                                                            alignItems: 'flex-start',
-                                                            maxWidth: "60%"
+                                                            display: "flex",
+                                                            padding: "10px",
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                            height: "100%",
+                                                            position: "relative", // Add relative positioning to the container
                                                         }}
                                                     >
-                                                        <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.name}</div>
-                                                        <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.dept_name}</div>
-                                                        <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", marginTop: "2vh" }}>{item.position}</div>
-                                                    </Col>
-                                                    {
-                                                        item.stickerList &&
-                                                        item.stickerList
-                                                            .slice()
-                                                            .sort((a, b) => {
-                                                                return (
-                                                                    b.id - a.id
-                                                                )
-                                                            })
-                                                            .map((row, i) => {
-                                                                const tooltipTarget = `tooltip-${index}-${i}`;
+                                                        <img
+                                                            style={{
+                                                                minWidth: "10em",
+                                                                maxWidth: "10em",
+                                                                height: "10em",
+                                                                objectFit: "cover",
+                                                                objectPosition: "center top",
+                                                                borderRadius: "50%",
+                                                                marginRight: "5%",
+                                                            }}
+                                                            src={encodeURI(item?.profile_url)}
+                                                            alt="Profile Image"
+                                                        />
 
-                                                                return (
-                                                                    <React.Fragment key={i}>
-                                                                        <img
-                                                                            style={{
-                                                                                position: "absolute",
-                                                                                top: 8,
-                                                                                right: i * 32 + "px",
-                                                                                width: "22px",
-                                                                            }}
-                                                                            src={row.url}
-                                                                            id={tooltipTarget}
-                                                                        />
-                                                                        <UncontrolledTooltip target={tooltipTarget}>
-                                                                            {row.name}
-                                                                        </UncontrolledTooltip>
-                                                                    </React.Fragment>
-                                                                );
-                                                            })
-                                                    }
+                                                        <Col
+                                                            style={{
+                                                                display: 'flex',
+                                                                flexDirection: 'column',
+                                                                alignItems: 'flex-start',
+                                                                maxWidth: "60%"
+                                                            }}
+                                                        >
+                                                            <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.name}</div>
+                                                            <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.dept_name}</div>
+                                                            <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", marginTop: "2vh" }}>{item.position}</div>
+                                                        </Col>
+                                                        {
+                                                            item.stickerList &&
+                                                            item.stickerList
+                                                                .slice()
+                                                                .sort((a, b) => {
+                                                                    return (
+                                                                        b.id - a.id
+                                                                    )
+                                                                })
+                                                                .map((row, i) => {
+                                                                    const tooltipTarget = `tooltip-${index}-${i}`;
 
-                                                </CardBody>
+                                                                    return (
+                                                                        <React.Fragment key={i}>
+                                                                            <img
+                                                                                style={{
+                                                                                    position: "absolute",
+                                                                                    top: 8,
+                                                                                    right: i * 32 + "px",
+                                                                                    width: "22px",
+                                                                                }}
+                                                                                src={row.url}
+                                                                                id={tooltipTarget}
+                                                                            />
+                                                                            <UncontrolledTooltip target={tooltipTarget}>
+                                                                                {row.name}
+                                                                            </UncontrolledTooltip>
+                                                                        </React.Fragment>
+                                                                    );
+                                                                })
+                                                        }
 
+                                                    </CardBody>
+                                                </a>
                                             </Card>
                                         )
                                     })}
@@ -727,7 +729,7 @@ const Rekomendasi = () => {
                     <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                         <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                     </div>
-                </React.Fragment>
+                </React.Fragment >
             }
         />
     );
