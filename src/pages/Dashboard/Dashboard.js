@@ -19,6 +19,7 @@ import DetailInfluencer from "./DetailInfluencer";
 import crown from "../../assets/images/crown.png"
 import tiara from "../../assets/images/tiara.png"
 import give from "../../assets/images/Give Mahkota.png"
+import ProfileMenu from "components/CommonForBoth/TopbarDropdown/ProfileMenu";
 
 const Rekomendasi = () => {
 
@@ -209,8 +210,23 @@ const Rekomendasi = () => {
     const appDetailHandler = (e) => {
         setAppDetailRecommendationPage(true)
         setAppDashboardPage(false)
-        setAppDetailRecommendationData(e)
+        var m = localStorage.getItem("member_id")
+        m = m.replace(/"/g, '')
+        if (flagForDashboard === true) {
+            setAppDetailRecommendationData(m)
+        } else {
+            setAppDetailRecommendationData(e)
+        }
     }
+    
+    const temp = ReactSession.get('flagForDashboard') || false;
+    const [flagForDashboard, setFlagForDashboard] = useState(temp || false);
+
+    useEffect(() => {
+        if (appDetailRecommendationData) {
+            ReactSession.set('appDetailRecommendationData', appDetailRecommendationData);
+        }
+    }, [appDetailRecommendationData]);
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -265,9 +281,8 @@ const Rekomendasi = () => {
                                                 >
                                                     <img
                                                         style={{
-                                                            minWidth: "10em",
-                                                            maxWidth: "10em",
-                                                            height: "10em",
+                                                            width: "120px",
+                                                            height: "120px",
                                                             objectFit: "cover",
                                                             objectPosition: "center top",
                                                             borderRadius: "50%",
@@ -292,12 +307,12 @@ const Rekomendasi = () => {
                                                     {
                                                         item.stickerList &&
                                                         item.stickerList
-                                                            .slice() // Create a shallow copy to avoid modifying the original array
+                                                            .slice()
                                                             .sort((a, b) => {
                                                                 return (
                                                                     b.id - a.id
                                                                 )
-                                                            }) // Sort in descending order based on the 'value' property
+                                                            })
                                                             .map((row, i) => {
                                                                 const tooltipTarget = `tooltip-${index}-${i}`;
 
@@ -428,9 +443,8 @@ const Rekomendasi = () => {
                                                                         />
                                                                         <img
                                                                             style={{
-                                                                                minWidth: "10em",
-                                                                                maxWidth: "10em",
-                                                                                height: "10em",
+                                                                                width: "120px",
+                                                                                height: "120px",
                                                                                 objectPosition: "center top",
                                                                                 objectFit: "cover",
                                                                                 borderRadius: "50%",
@@ -487,9 +501,8 @@ const Rekomendasi = () => {
                                                                     />
                                                                     <img
                                                                         style={{
-                                                                            minWidth: "10em",
-                                                                            maxWidth: "10em",
-                                                                            height: "10em",
+                                                                            width: "120px",
+                                                                            height: "120px",
                                                                             objectFit: "cover",
                                                                             borderRadius: "50%",
                                                                             marginRight: "5%",
@@ -588,9 +601,8 @@ const Rekomendasi = () => {
                                                                         />
                                                                         <img
                                                                             style={{
-                                                                                minWidth: "10em",
-                                                                                maxWidth: "10em",
-                                                                                height: "10em",
+                                                                                width: "120px",
+                                                                                height: "120px",
                                                                                 objectPosition: "center top",
                                                                                 objectFit: "cover",
                                                                                 borderRadius: "50%",
@@ -635,9 +647,8 @@ const Rekomendasi = () => {
                                                                     <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
                                                                     <img
                                                                         style={{
-                                                                            minWidth: "10em",
-                                                                            maxWidth: "10em",
-                                                                            height: "10em",
+                                                                            width: "120px",
+                                                                            height: "120px",
                                                                             objectFit: "cover",
                                                                             borderRadius: "50%",
                                                                             marginRight: "5%",
@@ -714,11 +725,12 @@ const Rekomendasi = () => {
                             </CardBody>
                         </Card>
                     </Container>
-                    <DetailInfluencer
+                    {/* <DetailInfluencer
                         appDetailRecommendationPage={appDetailRecommendationPage}
                         setAppDetailRecommendationPage={setAppDetailRecommendationPage}
                         appDetailRecommendationData={appDetailRecommendationData}
-                    />
+                    /> */}
+
                     <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                         <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                     </div>
