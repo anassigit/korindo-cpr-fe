@@ -20,10 +20,12 @@ import crown from "../../assets/images/crown.png"
 import tiara from "../../assets/images/tiara.png"
 import give from "../../assets/images/Give Mahkota.png"
 import ProfileMenu from "components/CommonForBoth/TopbarDropdown/ProfileMenu";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const Rekomendasi = () => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const menu = JSON.parse(ReactSession.get("menu"));
     const [linkRekomendasi, setLinkRekomendasi] = useState();
@@ -208,25 +210,11 @@ const Rekomendasi = () => {
     };
 
     const appDetailHandler = (e) => {
-        setAppDetailRecommendationPage(true)
-        setAppDashboardPage(false)
-        var m = localStorage.getItem("member_id")
-        m = m.replace(/"/g, '')
-        if (flagForDashboard === true) {
-            setAppDetailRecommendationData(m)
-        } else {
-            setAppDetailRecommendationData(e)
-        }
-    }
-    
-    const temp = ReactSession.get('flagForDashboard') || false;
-    const [flagForDashboard, setFlagForDashboard] = useState(temp || false);
 
-    useEffect(() => {
-        if (appDetailRecommendationData) {
-            ReactSession.set('appDetailRecommendationData', appDetailRecommendationData);
-        }
-    }, [appDetailRecommendationData]);
+        setAppDetailRecommendationData(e)
+        ReactSession.set('appDetailRecommendationData', e);
+        history.push('/home/detail')
+    }
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}

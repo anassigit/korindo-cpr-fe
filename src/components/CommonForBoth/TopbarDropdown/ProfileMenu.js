@@ -22,7 +22,6 @@ const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const history = useHistory()
   const [menu, setMenu] = useState(false)
-  const [flagForDashboard, setFlagForDashboard] = useState(false)
 
   const [username, setusername] = useState("Admin")
   const [member_id, setmember_id] = useState("")
@@ -31,17 +30,12 @@ const ProfileMenu = props => {
 
     if (localStorage.getItem("user")) {
       const u = localStorage.getItem("user")
+
       const m = localStorage.getItem("member_id")
       setusername(u.replace(/"/g, ''));
       setmember_id(m.replace(/"/g, ''));
     }
   }, [props.success])
-
-  useEffect(() => {
-    if (flagForDashboard === false) {
-      setFlagForDashboard(false)
-    }
-  }, [flagForDashboard])
 
   return (
     <React.Fragment>
@@ -50,12 +44,17 @@ const ProfileMenu = props => {
         toggle={() => setMenu(!menu)}
         className="d-inline-block"
       >
-        <img
-          className="rounded-circle header-profile-user mx-3"
-          src={user1}
-          alt="Header Avatar"
-          onClick={() => appDetailHandler()}
-        />
+        <a
+          onClick={() => ReactSession.set('appDetailRecommendationData', member_id)}
+          href="/home/detail"
+        >
+          <img
+            className="rounded-circle header-profile-user mx-3"
+            src={user1}
+            alt="Header Avatar"
+            onClick={() => setFlagForDashboard(true)}
+          />
+        </a>
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"

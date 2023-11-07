@@ -15,12 +15,15 @@ import '../../config';
 import TableCustom from "common/TableCustom";
 import { getDetailInfluencerData } from "store/actions";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import RootPageCustom from "common/RootPageCustom";
+import { ReactSession } from 'react-client-session';
 
 const DetailInfluencer = (props) => {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData') || null)
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
     const appDetailInfluencerData = useSelector((state) => state.dashboardReducer.respGetDetailInfluencer);
@@ -100,61 +103,58 @@ const DetailInfluencer = (props) => {
     ]
 
     useEffect(() => {
-        if (props.appDetailRecommendationData) {
+        if (appDetailRecommendationData) {
             setAppDetailInfluencerTabelSearch(prevState => ({
                 ...prevState,
                 search: {
                     ...prevState.search,
-                    member_id: props.appDetailRecommendationData.id,
+                    member_id: appDetailRecommendationData.id ? appDetailRecommendationData.id : appDetailRecommendationData,
                 }
             }));
         }
-    }, [props.appDetailRecommendationData])
+    }, [appDetailRecommendationData])
 
     useEffect(() => {
-        if (props.appDetailRecommendationData) {
+        if (appDetailRecommendationData) {
             dispatch(getDetailInfluencerData(appDetailInfluencerTabelSearch))
         }
     }, [appDetailInfluencerTabelSearch])
 
     return (
-
-        <Container style={{ display: props.appDetailRecommendationPage ? "block" : "none" }} fluid>
-            <Card style={{ marginBottom: 0 }}>
-                <CardHeader>
-                    <span className="mdi mdi-star-circle"></span> History per Influencer
-                </CardHeader>
-                <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
-                    <TableCustom
-                        keyField={"id"}
-                        columns={appDetailInfluencerColumn}
-                        redukResponse={appDetailInfluencerData}
-                        appdata={appDetailInfluencerData.data != null && appDetailInfluencerData.data.list ? appDetailInfluencerData.data.list : []}
-                        appdataTotal={appDetailInfluencerData.data != null ? appDetailInfluencerData.data.count : 0}
-                        searchSet={setAppDetailInfluencerTabelSearch}
-                        searchGet={appDetailInfluencerTabelSearch}
-                        redukCall={getDetailInfluencerData}
-                    />
-                </CardBody>
-            </Card>
-            <Button
-                className="btn btn-danger my-3"
-                onClick={() => history.push('/')}
-            >
-                <span className="mdi mdi-arrow-left" />
-                &nbsp;Kembali
-            </Button>
-            <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
-                <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
-            </div>
-        </Container>
+        <RootPageCustom msgStateGet={null} msgStateSet={null}
+            componentJsx={
+                <Container fluid>
+                    <Card style={{ marginBottom: 0 }}>
+                        <CardHeader>
+                            <span className="mdi mdi-star-circle"></span> History per Influencer
+                        </CardHeader>
+                        <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
+                            <TableCustom
+                                keyField={"id"}
+                                columns={appDetailInfluencerColumn}
+                                redukResponse={appDetailInfluencerData}
+                                appdata={appDetailInfluencerData.data != null && appDetailInfluencerData.data.list ? appDetailInfluencerData.data.list : []}
+                                appdataTotal={appDetailInfluencerData.data != null ? appDetailInfluencerData.data.count : 0}
+                                searchSet={setAppDetailInfluencerTabelSearch}
+                                searchGet={appDetailInfluencerTabelSearch}
+                                redukCall={getDetailInfluencerData}
+                            />
+                        </CardBody>
+                    </Card>
+                    <Button
+                        className="btn btn-danger my-3"
+                        onClick={() => history.go(-1)}
+                    >
+                        <span className="mdi mdi-arrow-left" />
+                        &nbsp;Kembali
+                    </Button>
+                    <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
+                        <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
+                    </div>
+                </Container>
+            }
+        />
     );
-};
-
-DetailInfluencer.propTypes = {
-    appDetailRecommendationPage: PropTypes.any,
-    setAppDetailRecommendationPage: PropTypes.any,
-    appDetailRecommendationData: PropTypes.any,
 };
 
 export default DetailInfluencer;

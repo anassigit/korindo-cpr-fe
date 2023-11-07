@@ -8,10 +8,12 @@ import Logout from "../pages/Authentication/Logout"
 // Dashboard
 import Rekomendasi from "pages/Rekomendasi/Rekomendasi"
 import Dashboard from "pages/Dashboard/Dashboard"
+import DetailInfluencer from "pages/Dashboard/DetailInfluencer"
 
 const authProtectedRoutes = [
 
   { path: "/home", component: Dashboard},
+  { path: "/home/detail", component: DetailInfluencer},
   { path: "/korsoc000/forms/korsoc051", component: Rekomendasi},
   
   
