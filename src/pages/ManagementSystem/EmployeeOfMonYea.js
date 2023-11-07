@@ -259,7 +259,7 @@ const EmployeeOfMonYea = (props) => {
                                     alignItems: "center",
                                 }}
                             >
-                                Search
+                                Periode/Year
                                 <div
                                     style={{
                                         display: "flex",

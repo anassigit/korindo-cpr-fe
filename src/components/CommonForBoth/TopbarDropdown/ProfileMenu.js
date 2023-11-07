@@ -25,6 +25,7 @@ const ProfileMenu = props => {
 
   const [username, setusername] = useState("Admin")
   const [member_id, setmember_id] = useState("")
+  const [profile_url, setprofile_url] = useState("")
 
   useEffect(() => {
 
@@ -32,8 +33,10 @@ const ProfileMenu = props => {
       const u = localStorage.getItem("user")
 
       const m = localStorage.getItem("member_id")
-      setusername(u.replace(/"/g, ''));
-      setmember_id(m.replace(/"/g, ''));
+      const p = localStorage.getItem("profile_url")
+      setusername(u?.replace(/"/g, ''));
+      setmember_id(m?.replace(/"/g, ''));
+      setprofile_url(p?.replace(/"/g, ''));
     }
   }, [props.success])
 
@@ -50,7 +53,11 @@ const ProfileMenu = props => {
         >
           <img
             className="rounded-circle header-profile-user mx-3"
-            src={user1}
+            style={{
+              objectFit:"cover",
+              objectPosition:"center top"
+            }}
+            src={profile_url || user1}
             alt="Header Avatar"
             onClick={() => setFlagForDashboard(true)}
           />

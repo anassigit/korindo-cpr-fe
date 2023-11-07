@@ -14,6 +14,7 @@ function* loginUser({ payload: { user, history } }) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("member_id", JSON.stringify(response.data.member_id));
+      localStorage.setItem("profile_url", JSON.stringify(response.data.profile_url));
       const res = yield call(getMenuBE)
       if (res.status == 1) {
         ReactSession.set("menu", JSON.stringify(res.data.list));
@@ -31,13 +32,13 @@ function* loginUser({ payload: { user, history } }) {
 }
 
 function* reloginUser({ payload: { user, history } }) {
-  debugger
   try {
     const response = yield call(login, user);
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("member_id", JSON.stringify(response.data.member_id));
+      localStorage.setItem("profile_url", JSON.stringify(response.data.profile_url));
       yield put(reloginSuccess(response));
       document.getElementById("reloginForm").style.display = "none";
       yield put(apiError(''))
