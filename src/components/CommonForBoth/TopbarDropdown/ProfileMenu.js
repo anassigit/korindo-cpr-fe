@@ -23,6 +23,7 @@ const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const history = useHistory()
   const [menu, setMenu] = useState(false)
+  const [bintang, setBintang] = useState(false)
 
   const [username, setusername] = useState("Admin")
   const [member_id, setmember_id] = useState("")
@@ -44,8 +45,8 @@ const ProfileMenu = props => {
   return (
     <React.Fragment>
       <Dropdown
-        isOpen={menu}
-        toggle={() => setMenu(!menu)}
+        isOpen={bintang}
+        toggle={() => setBintang(!bintang)}
         className="d-inline-block"
       >
         <DropdownToggle
@@ -57,7 +58,38 @@ const ProfileMenu = props => {
           <i className="mdi mdi-star-circle text-warning opacity-0" style={{ position: "absolute" }} />
           <i className="mdi mdi-star-circle text-warning" style={{ position: "absolute", fontSize: "18px", top: 12 }} />
         </DropdownToggle>
-        <DropdownMenu className="dropdown-star-detail"></DropdownMenu>
+        <DropdownMenu className="dropdown-star-detail">
+          <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
+            <span>Sisa Bintang</span>
+            <div>
+              <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
+              150
+            </div>
+          </a>
+          <div className="dropdown-divider" />
+          <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
+            <span>Bintang yang diberikan</span>
+            <div>
+              <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
+              150
+            </div>
+          </a>
+          <div className="dropdown-divider" />
+          <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
+            <span>Bintang yang diterima</span>
+            <div>
+              <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
+              150
+            </div>
+          </a>
+        </DropdownMenu>
+
+      </Dropdown>
+      <Dropdown
+        isOpen={menu}
+        toggle={() => setMenu(!menu)}
+        className="d-inline-block"
+      >
         <a
           onClick={() => ReactSession.set('appDetailRecommendationData', member_id)}
           href="/home/detail"
