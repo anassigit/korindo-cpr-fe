@@ -93,13 +93,13 @@ const Member = (props) => {
                 <Col xs='3'>Departement</Col>
                 <Col xs='3'>Name</Col>
                 <Col xs='2' style={{ paddingLeft: "3%" }}>Position</Col>
-                <Col xs='4' style={{ paddingLeft: "10%" }} className="text-center">Rekomendasikan</Col>
+                <Col xs='4' style={{ paddingLeft: "10%" }} className="text-center">Apresiasi</Col>
               </>
               :
               <>
                 <Col xs='4'>Name</Col>
                 <Col xs='3'>Position</Col>
-                <Col xs='5' className="text-center">Rekomendasikan</Col>
+                <Col xs='5' className="text-center">Apresiasi</Col>
               </>
             }
           </Row>
@@ -172,8 +172,8 @@ const Member = (props) => {
                                     setEmployeeId(item.id)
                                   }}
                                 >
-                                  Rekomendasi
-                                  <span className="mdi mdi-thumb-up" style={{ marginLeft: '2px' }}></span>
+                                  Beri Bintang
+                                  <span className="mdi mdi-star" style={{ marginLeft: '2px' }}></span>
                                 </Button>
                               )
                               :
@@ -233,8 +233,8 @@ const Member = (props) => {
                                     setEmployeeId(item.id)
                                   }}
                                 >
-                                  Rekomendasi
-                                  <span className="mdi mdi-thumb-up" style={{ marginLeft: '2px' }}></span>
+                                  Beri Bintang
+                                  <span className="mdi mdi-star" style={{ marginLeft: '2px' }}></span>
                                 </Button>
                               )
                               :

@@ -18,7 +18,8 @@ import { ReactSession } from 'react-client-session';
 import DetailInfluencer from "./DetailInfluencer";
 import crown from "../../assets/images/crown.png"
 import tiara from "../../assets/images/tiara.png"
-import give from "../../assets/images/Give Mahkota.png"
+import give from "../../assets/images/berikan bintang.png"
+import star from "../../assets/images/star.png"
 import ProfileMenu from "components/CommonForBoth/TopbarDropdown/ProfileMenu";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -230,15 +231,42 @@ const Rekomendasi = () => {
                                 justifyContent: "space-between",
                             }}
                         >
-                            <Card style={{ marginBottom: 0, width: "33%" }}>
+                            <Card style={{ marginBottom: 0, width: "20%" }}>
                                 <CardHeader>
-                                    <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
+                                    <span className="mdi mdi-star-circle"></span> Top Rekomendasi
                                 </CardHeader>
-                                <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
-
+                                <CardBody
+                                    className="bg-light"
+                                    style={{
+                                        padding: "24px 0 24px 0",
+                                        margin: 0,
+                                        border: "1px solid #BBB",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        justifyContent: "start",
+                                        gap: "24px",
+                                    }}
+                                >
+                                    <div
+                                        className="col-10"
+                                        style={{
+                                            backgroundColor: 'white',
+                                        }}
+                                    >
+                                        test
+                                    </div>
+                                    <div
+                                        className="col-10"
+                                        style={{
+                                            backgroundColor: 'white',
+                                        }}
+                                    >
+                                        test
+                                    </div>
                                 </CardBody>
                             </Card>
-                            <Card style={{ marginBottom: 0, width: "65%" }}>
+                            <Card style={{ marginBottom: 0, width: "79%" }}>
                                 <CardHeader style={{ display: "flex", justifyContent: "space-between" }}>
                                     <div>
                                         <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
@@ -250,7 +278,6 @@ const Rekomendasi = () => {
                                                 color: "gold",
                                                 width: "18px",
                                             }}
-                                            className="mdi mdi-crown mx-2"
                                         />
 
                                         {appBestlistData?.data?.crown}
@@ -440,7 +467,7 @@ const Rekomendasi = () => {
                                                                     height: "100%",
                                                                 }}>
                                                                 {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
-                                                                <img
+                                                                {/* <img
                                                                     src={row.gender.toLowerCase() === 'male' ? crown : tiara}
                                                                     style={{
                                                                         position: "absolute",
@@ -451,7 +478,218 @@ const Rekomendasi = () => {
                                                                         fontSize: "32px"
                                                                     }}
                                                                     className="mdi mdi-crown px-3 py-1"
+                                                                /> */}
+                                                                <img
+                                                                    style={{
+                                                                        minWidth: "10em",
+                                                                        maxWidth: "10em",
+                                                                        height: "10em",
+                                                                        objectPosition: "center top",
+                                                                        objectFit: "cover",
+                                                                        borderRadius: "50%",
+                                                                        marginRight: "5%",
+                                                                    }}
+                                                                    src={encodeURI(row?.profile_url)}
+                                                                    alt="Profile Image"
                                                                 />
+                                                                <Col style={{
+                                                                    display: 'flex',
+                                                                    flexDirection: 'column',
+                                                                    alignItems: 'flex-start',
+                                                                    maxWidth: "60%"
+                                                                }}>
+                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.name}</div>
+                                                                    <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
+                                                                    <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
+                                                                </Col>
+                                                            </CardBody>
+                                                        </Card>
+                                                    )
+                                                })
+                                                : (
+                                                    <Card
+                                                        className="slideshow-content"
+                                                        style={{
+                                                            opacity: "0",
+                                                            width: "25vw",
+                                                            height: "150px",
+                                                            position: "relative",
+                                                            left: `0vw`,
+                                                            transition: "left 0.5s ease",
+                                                        }}>
+                                                        <CardBody
+                                                            style={{
+                                                                display: "flex",
+                                                                padding: "10px",
+                                                                justifyContent: "center",
+                                                                alignItems: "center",
+                                                                height: "100%",
+                                                            }}>
+                                                            {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                            {/* <img
+                                                                src={crown}
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    right: 0,
+                                                                    top: 5,
+                                                                    color: "gold",
+                                                                    width: "64px",
+                                                                    fontSize: "32px"
+                                                                }}
+                                                                className="mdi mdi-crown px-3 py-1"
+                                                            /> */}
+                                                            <img
+                                                                style={{
+                                                                    minWidth: "10em",
+                                                                    maxWidth: "10em",
+                                                                    height: "10em",
+                                                                    objectFit: "cover",
+                                                                    borderRadius: "50%",
+                                                                    marginRight: "5%",
+                                                                }}
+                                                                alt="Profile Image"
+                                                            />
+                                                            <Col style={{
+                                                                display: 'flex',
+                                                                flexDirection: 'column',
+                                                                alignItems: 'flex-start',
+                                                                maxWidth: "60%"
+                                                            }}>
+                                                                <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
+                                                                <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
+                                                                <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
+                                                            </Col>
+                                                        </CardBody>
+                                                    </Card>
+                                                )
+                                        }
+                                        <a
+                                            className="arrow-right"
+                                            onClick={() => handleSliderChange('next')}
+                                            style={{
+                                                position: "absolute",
+                                                right: 0,
+                                                top: '19.2%',
+                                                height: "80.6%",
+                                                width: "12%",
+                                                zIndex: 2
+                                            }}>
+                                            <span className="mdi mdi-chevron-right" style={{ position: "absolute", right: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
+                                        </a>
+                                    </div>
+                                </CardBody>
+                            </Card>
+
+                            <a
+                                className="berikan-recommend"
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    fontSize: "24px",
+                                    position: "relative", // Added for stacking
+                                }}
+                                href={linkRekomendasi}
+                            >
+                                <img
+                                    height={'180px'}
+                                    src={give}
+                                    style={{
+                                        transition: "filter 0.3s", // Add a transition for smooth hover effect
+                                    }}
+                                />
+                                <b>Berikan Bintang</b>
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        width: "100%",
+                                        height: "100%",
+                                        background: "rgba(0, 0, 0, 0.5)", // Adjust the darkness here (0.5 means 50% dark)
+                                        opacity: 0, // Initially invisible
+                                        transition: "opacity 0.3s", // Add a transition for smooth hover effect
+                                    }}
+                                ></div>
+                            </a>
+                            <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%" }}>
+                                <CardHeader>
+                                    <span className="mdi mdi-star-circle"></span> Employee of the Year
+                                </CardHeader>
+                                <CardBody style={{
+                                    padding: 0, margin: 0, backgroundColor: "transparent", display: "flex",
+                                    overflow: "hidden"
+                                }}>
+                                    <div
+                                        className="d-flex justify-content-between py-2"
+                                        style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
+                                    >
+                                        <a
+                                            className="arrow-left"
+                                            onClick={() => handleSliderChange2('back')}
+                                            style={{
+                                                position: "absolute",
+                                                left: 0,
+                                                top: '19.2%',
+                                                height: "80.6%",
+                                                width: "12%",
+                                                zIndex: 2
+                                            }}>
+                                            <span className="mdi mdi-chevron-left" style={{ position: "absolute", left: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
+                                        </a>
+                                        {
+                                            appBestlistOfYearData?.data?.list ?
+                                                appBestlistOfYearData?.data?.list.map((row, key) => {
+                                                    return (
+                                                        <Card
+                                                            key={key}
+                                                            className="slideshow-content"
+                                                            style={{
+                                                                width: "25vw",
+                                                                height: "150px",
+                                                                position: "relative",
+                                                                left: `${(key * 5) + sliderYear}vw`,
+                                                                transition: "left 0.5s ease",
+                                                            }}>
+                                                            <CardBody
+                                                                style={{
+                                                                    display: "flex",
+                                                                    padding: "10px",
+                                                                    justifyContent: "center",
+                                                                    alignItems: "center",
+                                                                    height: "100%",
+                                                                }}>
+                                                                <div
+                                                                    style={{
+                                                                        position: 'absolute',
+                                                                        top: 5,
+                                                                        left: '18.5%',
+                                                                        transform: 'translateX(-50%)', // Center the container horizontally
+                                                                        display: 'flex',
+                                                                        flexDirection: 'row',
+                                                                        justifyContent: 'center',
+                                                                        alignItems: 'center',
+                                                                    }}
+                                                                >
+                                                                    <img width={'20px'} src={star} />
+                                                                    <img width={'20px'} src={star} />
+                                                                    <img width={'20px'} src={star} />
+                                                                </div>
+
+                                                                {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                                {/* <img
+                                                                    src={row.gender.toLowerCase() === 'male' ? crown : tiara}
+                                                                    style={{
+                                                                        position: "absolute",
+                                                                        right: 0,
+                                                                        top: 5,
+                                                                        color: "gold",
+                                                                        width: "64px",
+                                                                        fontSize: "32px"
+                                                                    }}
+                                                                    className="mdi mdi-crown px-3 py-1"
+                                                                /> */}
                                                                 <img
                                                                     style={{
                                                                         minWidth: "10em",
@@ -500,166 +738,6 @@ const Rekomendasi = () => {
                                                             }}>
                                                             {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
                                                             <img
-                                                                src={crown}
-                                                                style={{
-                                                                    position: "absolute",
-                                                                    right: 0,
-                                                                    top: 5,
-                                                                    color: "gold",
-                                                                    width: "64px",
-                                                                    fontSize: "32px"
-                                                                }}
-                                                                className="mdi mdi-crown px-3 py-1"
-                                                            />
-                                                            <img
-                                                                style={{
-                                                                    minWidth: "10em",
-                                                                    maxWidth: "10em",
-                                                                    height: "10em",
-                                                                    objectFit: "cover",
-                                                                    borderRadius: "50%",
-                                                                    marginRight: "5%",
-                                                                }}
-                                                                alt="Profile Image"
-                                                            />
-                                                            <Col style={{
-                                                                display: 'flex',
-                                                                flexDirection: 'column',
-                                                                alignItems: 'flex-start',
-                                                                maxWidth: "60%"
-                                                            }}>
-                                                                <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
-                                                                <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                                <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
-                                                            </Col>
-                                                        </CardBody>
-                                                    </Card>
-                                                )
-                                        }
-                                        <a
-                                            className="arrow-right"
-                                            onClick={() => handleSliderChange('next')}
-                                            style={{
-                                                position: "absolute",
-                                                right: 0,
-                                                top: '19.2%',
-                                                height: "80.6%",
-                                                width: "12%",
-                                                zIndex: 2
-                                            }}>
-                                            <span className="mdi mdi-chevron-right" style={{ position: "absolute", right: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
-                                        </a>
-                                    </div>
-                                </CardBody>
-                            </Card>
-                            <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%" }}>
-                                <CardHeader>
-                                    <span className="mdi mdi-star-circle"></span> Employee of the Year
-                                </CardHeader>
-                                <CardBody style={{
-                                    padding: 0, margin: 0, backgroundColor: "transparent", display: "flex",
-                                    overflow: "hidden"
-                                }}>
-                                    <div
-                                        className="d-flex justify-content-between py-2"
-                                        style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
-                                    >
-                                        <a
-                                            className="arrow-left"
-                                            onClick={() => handleSliderChange2('back')}
-                                            style={{
-                                                position: "absolute",
-                                                left: 0,
-                                                top: '19.2%',
-                                                height: "80.6%",
-                                                width: "12%",
-                                                zIndex: 2
-                                            }}>
-                                            <span className="mdi mdi-chevron-left" style={{ position: "absolute", left: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
-                                        </a>
-                                        {
-                                            appBestlistOfYearData?.data?.list ?
-                                                appBestlistOfYearData?.data?.list.map((row, key) => {
-                                                    return (
-                                                        <Card
-                                                            key={key}
-                                                            className="slideshow-content"
-                                                            style={{
-                                                                width: "25vw",
-                                                                height: "150px",
-                                                                position: "relative",
-                                                                left: `${(key * 5) + sliderYear}vw`,
-                                                                transition: "left 0.5s ease",
-                                                            }}>
-                                                            <CardBody
-                                                                style={{
-                                                                    display: "flex",
-                                                                    padding: "10px",
-                                                                    justifyContent: "center",
-                                                                    alignItems: "center",
-                                                                    height: "100%",
-                                                                }}>
-                                                                {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
-                                                                <img
-                                                                    src={row.gender.toLowerCase() === 'male' ? crown : tiara}
-                                                                    style={{
-                                                                        position: "absolute",
-                                                                        right: 0,
-                                                                        top: 5,
-                                                                        color: "gold",
-                                                                        width: "64px",
-                                                                        fontSize: "32px"
-                                                                    }}
-                                                                    className="mdi mdi-crown px-3 py-1"
-                                                                />
-                                                                <img
-                                                                    style={{
-                                                                        minWidth: "10em",
-                                                                        maxWidth: "10em",
-                                                                        height: "10em",
-                                                                        objectPosition: "center top",
-                                                                        objectFit: "cover",
-                                                                        borderRadius: "50%",
-                                                                        marginRight: "5%",
-                                                                    }}
-                                                                    src={encodeURI(row?.profile_url)}
-                                                                    alt="Profile Image"
-                                                                />
-                                                                <Col style={{
-                                                                    display: 'flex',
-                                                                    flexDirection: 'column',
-                                                                    alignItems: 'flex-start',
-                                                                    maxWidth: "60%"
-                                                                }}>
-                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.name}</div>
-                                                                    <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
-                                                                    <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
-                                                                </Col>
-                                                            </CardBody>
-                                                        </Card>
-                                                    )
-                                                })
-                                                : (
-                                                    <Card
-                                                        className="slideshow-content"
-                                                        style={{
-                                                            opacity: "0",
-                                                            width: "25vw",
-                                                            height: "150px",
-                                                            position: "relative",
-                                                            left: `0vw`,
-                                                            transition: "left 0.5s ease",
-                                                        }}>
-                                                        <CardBody
-                                                            style={{
-                                                                display: "flex",
-                                                                padding: "10px",
-                                                                justifyContent: "center",
-                                                                alignItems: "center",
-                                                                height: "100%",
-                                                            }}>
-                                                            <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span>
-                                                            <img
                                                                 style={{
                                                                     minWidth: "10em",
                                                                     maxWidth: "10em",
@@ -700,42 +778,6 @@ const Rekomendasi = () => {
                                     </div>
                                 </CardBody>
                             </Card>
-                            &nbsp;
-                            <a
-                                className="berikan-recommend"
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    fontSize: "24px",
-                                    position: "relative", // Added for stacking
-                                }}
-                                href={linkRekomendasi}
-                            >
-                                <img
-                                    height={'180px'}
-                                    src={give}
-                                    style={{
-                                        transition: "filter 0.3s", // Add a transition for smooth hover effect
-                                    }}
-                                />
-                                <b>Berikan Mahkota</b>
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        top: 0,
-                                        left: 0,
-                                        width: "100%",
-                                        height: "100%",
-                                        background: "rgba(0, 0, 0, 0.5)", // Adjust the darkness here (0.5 means 50% dark)
-                                        opacity: 0, // Initially invisible
-                                        transition: "opacity 0.3s", // Add a transition for smooth hover effect
-                                    }}
-                                ></div>
-                            </a>
-
-                            &nbsp;
                         </div>
                     </Container>
                     {/* <DetailInfluencer

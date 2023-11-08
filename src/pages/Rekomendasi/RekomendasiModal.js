@@ -107,7 +107,7 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
 
     return (
         <Modal size='lg' isOpen={modal} toggle={toggle} backdrop="static">
-            <ModalHeader className='px-4' toggle={toggle}>Berikan Rekomendasi</ModalHeader>
+            <ModalHeader className='px-4' toggle={toggle}>Berikan Bintang</ModalHeader>
             <ModalBody className='px-4'>
                 <Form
                     onSubmit={(e) => {

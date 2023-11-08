@@ -6,6 +6,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Input,
 } from "reactstrap"
 
 //i18n
@@ -47,6 +48,16 @@ const ProfileMenu = props => {
         toggle={() => setMenu(!menu)}
         className="d-inline-block"
       >
+        <DropdownToggle
+          className="btn header-item"
+          id="page-dropdown"
+          tag="button"
+        >
+          <span className="d-none d-xl-inline-block ms-2 me-1">Bintang Saya</span>
+          <i className="mdi mdi-star-circle text-warning opacity-0" style={{ position: "absolute" }} />
+          <i className="mdi mdi-star-circle text-warning" style={{ position: "absolute", fontSize: "18px", top: 12 }} />
+        </DropdownToggle>
+        <DropdownMenu className="dropdown-star-detail"></DropdownMenu>
         <a
           onClick={() => ReactSession.set('appDetailRecommendationData', member_id)}
           href="/home/detail"
@@ -54,8 +65,8 @@ const ProfileMenu = props => {
           <img
             className="rounded-circle header-profile-user mx-3"
             style={{
-              objectFit:"cover",
-              objectPosition:"center top"
+              objectFit: "cover",
+              objectPosition: "center top"
             }}
             src={profile_url || user1}
             alt="Header Avatar"
