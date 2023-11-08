@@ -9,6 +9,7 @@ import {
     Card,
     CardBody,
     CardHeader,
+    Col,
     Container,
     Input,
     Label,
@@ -19,6 +20,7 @@ import {
 import '../../assets/scss/custom.scss';
 import '../../config';
 import { getListData, getYearListData } from "store/actions";
+import TableCustom2 from "common/TableCustom2";
 
 const EmployeeOfMonYea = (props) => {
 
@@ -43,7 +45,7 @@ const EmployeeOfMonYea = (props) => {
         order: "",
         search:
         {
-            year: yearVal,
+            year: "",
             filter: "",
             search: "",
         }
@@ -144,14 +146,18 @@ const EmployeeOfMonYea = (props) => {
             },
         },
         {
-            dataField: "sticker",
             text: "Actions",
             headerStyle: { textAlign: 'center' },
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
+            style: { justifyContent: 'center', display: 'flex', gap: '12px' },
+            formatter: (cellContent, cellData) => {
+
+                return (
+                    <React.Fragment>
+                        <a className="mdi mdi-pencil text-primary" />
+                        <a className="mdi mdi-delete text-danger" />
+                    </React.Fragment>
+                )
+            }
         },
     ]
 
@@ -173,7 +179,27 @@ const EmployeeOfMonYea = (props) => {
                 year: parseInt(yearVal),
             },
         }));
-    }, [searchVal, filterVal, yearVal])
+    }, [filterVal, yearVal])
+
+    const handleEnterKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleClick();
+        }
+    };
+
+    const handleClick = () => {
+        setAppEmployeeMonYeaTabelSearch((prevState) => ({
+            ...prevState,
+            search: {
+                ...prevState.search,
+                search: searchVal,
+                filter: filterVal,
+                year: parseInt(yearVal),
+            },
+        }));
+    };
+
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -191,30 +217,36 @@ const EmployeeOfMonYea = (props) => {
                             }}
                             >
                                 <div
-                                    className="col-2 pb-2"
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        gap: "12px",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                    }}
+                                    className="col-6 pb-2"
                                 >
-                                    Search
-                                    <Input
-                                        value={searchVal}
-                                        onChange={(e) => setSearchVal(e.target.value)}
-                                    />
-                                    {/* <Button
-                                        onClick={() => {
-                                            dispatch(getListData(appEmployeeMonYeaTabelSearch))
+                                    <div
+                                        className="col-5"
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            gap: "12px",
+                                            justifyContent: "center",
+                                            alignItems: "center",
                                         }}
                                     >
-                                        Cari
-                                    </Button> */}
+                                        Search
+                                        <Input
+                                            type="search"
+                                            value={searchVal}
+                                            onChange={(e) => setSearchVal(e.target.value)}
+                                            onKeyPress={handleEnterKeyPress}
+                                        />
+                                        <Button
+                                            onClick={() => {
+                                                handleClick()
+                                            }}
+                                        >
+                                            Cari
+                                        </Button>
+                                    </div>
                                 </div>
                                 <div
-                                    className="col-2 pb-2"
+                                    className="pb-2"
                                     style={{
                                         display: "flex",
                                         flexDirection: "row",
@@ -267,12 +299,13 @@ const EmployeeOfMonYea = (props) => {
                                         gap: "12px",
                                     }}
                                 >
-                                    <Label check>
+                                    <Label check={true}>
                                         <Input
                                             type="radio"
                                             name="searchOption"
                                             value="all"
                                             onClick={() => setFilterVal("all")}
+                                            defaultChecked
                                         /> All
                                     </Label>
                                     <Label check>
@@ -294,7 +327,22 @@ const EmployeeOfMonYea = (props) => {
                                 </div>
                             </div>
 
-                            <TableCustom
+                            <div
+                                className="col-12 pb-3"
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    gap: "12px",
+                                    justifyContent: "right",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Button>
+                                    <span className="mdi mdi-plus" /> Tambah
+                                </Button>
+                            </div>
+
+                            <TableCustom2
                                 keyField={"id"}
                                 columns={appEmployeeMonYeaColumn}
                                 redukResponse={appEmployeeMonYeaData}
@@ -319,7 +367,7 @@ const EmployeeOfMonYea = (props) => {
                     <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                         <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                     </div>
-                </Container>
+                </Container >
             }
         />
     );
