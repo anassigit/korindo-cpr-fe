@@ -232,7 +232,7 @@ const Rekomendasi = () => {
                             }}
                         >
                             <Card style={{ marginBottom: 0, width: "20%" }}>
-                                <CardHeader>
+                                <CardHeader  style={{ fontSize: "14px" }}>
                                     <span className="mdi mdi-star-circle"></span> Top Rekomendasi
                                 </CardHeader>
                                 <CardBody
@@ -267,7 +267,7 @@ const Rekomendasi = () => {
                                 </CardBody>
                             </Card>
                             <Card style={{ marginBottom: 0, width: "79%" }}>
-                                <CardHeader style={{ display: "flex", justifyContent: "space-between" }}>
+                                <CardHeader style={{ display: "flex", justifyContent: "space-between", fontSize:"14px" }}>
                                     <div>
                                         <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
                                     </div>
@@ -407,7 +407,7 @@ const Rekomendasi = () => {
                             <Card style={{
                                 padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%",
                             }}>
-                                <CardHeader>
+                                <CardHeader  style={{ fontSize: "14px" }}>
                                     <span className="mdi mdi-star-circle"></span> Employee of the Month
                                 </CardHeader>
                                 <CardBody style={{
@@ -603,7 +603,7 @@ const Rekomendasi = () => {
                                 ></div>
                             </a>
                             <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%" }}>
-                                <CardHeader>
+                                <CardHeader  style={{ fontSize: "14px" }}>
                                     <span className="mdi mdi-star-circle"></span> Employee of the Year
                                 </CardHeader>
                                 <CardBody style={{
