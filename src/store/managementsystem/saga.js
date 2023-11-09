@@ -12,6 +12,7 @@ import {
 } from "helpers/backend_helper"
 
 function* fetchGetList({ payload: req }) {
+  debugger
   try {
     const response = yield call(getListEmployeeOfMonthYearBE, req)
     if (response.status == 1) {

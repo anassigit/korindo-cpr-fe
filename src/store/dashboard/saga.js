@@ -1,15 +1,33 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
-  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER, GET_REPORT_LIST
+  ADD_REPORT,
+  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER, GET_LIST1, GET_REPORT_LIST
 } from "./actionTypes"
 import {
-  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer, respGetReportList
+  msgAdd,
+  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer, respGetList1, respGetReportList
 } from "./actions"
 
 import {
-  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE, getReportListBE
+  addReportBE,
+  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE, getListMainRestBE, getReportListBE
 } from "helpers/backend_helper"
+
+function* fetchGetList({ payload: req }) {
+  debugger
+  try {
+    const response = yield call(getListMainRestBE, req)
+    if (response.status == 1) {
+      yield put(respGetList1(response))
+    } else {
+      yield put(respGetList1(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetList1({ "status": 0, "message": "Error Get Data" }))
+  }
+}
 
 function* fetchGetBestList({ payload: req }) {
   try {
@@ -52,6 +70,7 @@ function* fetchGetBestOfYearList({ payload: req }) {
     yield put(respGetBestOfYearList({ "status": 0, "message": "Error Get Data" }))
   }
 }
+
 function* fetchGetDetailInfluencer({ payload: req }) {
   try {
     const response = yield call(getDetailInfluencerBE, req)
@@ -65,6 +84,7 @@ function* fetchGetDetailInfluencer({ payload: req }) {
     yield put(respGetDetailInfluencer({ "status": 0, "message": "Error Get Data" }))
   }
 }
+
 function* fetchGetReportList({ payload: req }) {
   try {
     const response = yield call(getReportListBE, req)
@@ -79,13 +99,31 @@ function* fetchGetReportList({ payload: req }) {
   }
 }
 
+function* fetchAddReport({ payload: req }) {
+  debugger
+  try {
+    const response = yield call(addReportBE, req)
+    if (response.status == 1) {
+      yield put(msgAdd(response))
+    } else {
+      yield put(msgAdd(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgAdd({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
 function* dashboardSaga() {
 
+  yield takeEvery(GET_LIST1, fetchGetList)
   yield takeEvery(GET_BEST_LIST, fetchGetBestList)
   yield takeEvery(GET_BEST_OF_MONTH_LIST, fetchGetBestOfMonthList)
   yield takeEvery(GET_BEST_OF_YEAR_LIST, fetchGetBestOfYearList)
   yield takeEvery(GET_DETAIL_INFLUENCER, fetchGetDetailInfluencer)
   yield takeEvery(GET_REPORT_LIST, fetchGetReportList)
+
+  yield takeEvery(ADD_REPORT, fetchAddReport)
 
 }
 

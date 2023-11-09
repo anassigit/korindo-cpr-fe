@@ -5,6 +5,8 @@ export const login = req => postLogin("/MemberRest/login", req)
 
 export const getMenuBE = req => post("rest/MainRest/getMenuList", req)
 
+export const getListMainRestBE = req => post("rest/MainRest/getList", req)
+
 export const getBestListBE = req => post("rest/MainRest/getBestList", req)
 
 export const getBestOfMonthListBE = req => post("rest/MainRest/getBestOfMonth", req)
@@ -13,7 +15,9 @@ export const getBestOfYearListBE = req => post("rest/MainRest/getBestOfYear", re
 
 export const getDetailInfluencerBE = req => post("rest/MainRest/getDetail", req)
 
-export const getReportListBE = req => getWithParam("rest/MainRest/getReportList", req)
+export const getReportListBE = req => post("rest/MainRest/getReportList", req)
+
+export const addReportBE = req => postWithParam("rest/MainRest/addReport", req)
 
 export const getDeptBE = req => postWithParam("rest/RecommendRest/getDept", req)
 

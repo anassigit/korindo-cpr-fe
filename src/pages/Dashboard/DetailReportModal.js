@@ -1,51 +1,64 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Spinner, Input } from 'reactstrap';
-import '../../assets/scss/custom/modal/modal.css'
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getReportListData } from 'store/actions';
-const DetailReportModal = ({ modal, toggle, message, toggleApply }) => {
+import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { addReport, getReportListData } from 'store/actions';
+import '../../assets/scss/custom/modal/modal.css';
+const DetailReportModal = ({ modal, toggle, recommendId }) => {
 
     const dispatch = useDispatch()
+    const [jenisLapor, setJenisLapor] = useState('')
 
     const appReportListData = useSelector((state) => {
         return state.dashboardReducer.respGetReportList
     })
 
-    const tempReport = [
-        {
-            id: '1',
-            content: '[][][][][][]]]',
-        },
-        {
-            id: '2',
-            content: 'awdawdwad',
-        },
-    ]
+    const msgAdd = useSelector((state) => state.dashboardReducer.msgAdd);
 
     useEffect(() => {
         dispatch(getReportListData())
     }, [])
 
+    const saveHandler = () => {
+        dispatch(addReport({
+            recommend_id: recommendId,
+            jenis_lapor: jenisLapor,
+        }))
+        toggle()
+    }
+
+    
+    useEffect(() => {
+        debugger
+        if (msgAdd.status === '1') {
+            console.log(msgAdd)
+        }
+    }, [msgAdd])
+    
+    console.log(msgAdd)
+
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
             <ModalHeader toggle={toggle}>Lapor</ModalHeader>
             <ModalBody>
-                <div className='mb-2'>
+                <div className='mb-2' style={{ fontWeight: "bold" }}>
                     Jenis Laporan
                 </div>
                 <Input
                     type='select'
+                    value={jenisLapor}
+                    onChange={(e) => setJenisLapor(e.target.value)}
                 >
+                    <option value="">Pilih Jenis Laporan</option>
                     {
-                        tempReport.map((item, index) => {
+                        appReportListData?.data?.list.map((item, index) => {
 
                             return (
                                 <option
                                     key={index}
-                                    value={item.id}
+                                    value={item.jenis_lapor}
                                 >
-                                    {item.content}
+                                    {item.description}
                                 </option>
                             )
                         })
@@ -54,7 +67,7 @@ const DetailReportModal = ({ modal, toggle, message, toggleApply }) => {
             </ModalBody>
             <ModalFooter>
 
-                <Button className='btn btn-danger' style={{ border: 'none', color: "white" }} onClick={toggleApply}>
+                <Button className='btn btn-danger' style={{ border: 'none', color: "white" }} onClick={saveHandler}>
                     Lapor
                 </Button>
                 <a className='p-2 unselectable text-danger' onClick={toggle}>
@@ -68,9 +81,7 @@ const DetailReportModal = ({ modal, toggle, message, toggleApply }) => {
 DetailReportModal.propTypes = {
     modal: PropTypes.any,
     toggle: PropTypes.any,
-    toggleApply: PropTypes.any,
-    message: PropTypes.any,
-    successClose: PropTypes.any,
+    recommendId: PropTypes.any,
 };
 
 export default DetailReportModal;

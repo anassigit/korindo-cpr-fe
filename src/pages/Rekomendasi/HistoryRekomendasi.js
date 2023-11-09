@@ -263,6 +263,7 @@ const HistoryRekomendasi = () => {
                     style={{
                         position: "absolute",
                         bottom: "4%",
+                        right: "4%",
                     }}>
                     Submit
                 </Button>

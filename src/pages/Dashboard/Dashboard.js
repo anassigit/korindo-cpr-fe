@@ -10,7 +10,7 @@ import {
     Input,
     Row, Spinner, UncontrolledTooltip
 } from "reactstrap";
-import { getBestListData, getBestOfMonthListData, getBestOfYearListData, getSearchData } from "store/actions";
+import { getBestListData, getBestOfMonthListData, getBestOfYearListData, getListData, getSearchData } from "store/actions";
 import '../../assets/scss/custom.scss';
 import RootPageCustom from '../../common/RootPageCustom';
 import '../../config';
@@ -40,6 +40,7 @@ const Rekomendasi = () => {
     const [sliderMonth, setSliderMonth] = useState(4)
     const [sliderYear, setSliderYear] = useState(4)
 
+    const appListData = useSelector((state) => state.dashboardReducer.respGetList1);
     const appBestlistData = useSelector((state) => state.dashboardReducer.respGetBestList);
     const appBestlistOfMonthData = useSelector((state) => state.dashboardReducer.respGetBestOfMonthList);
     const appBestlistOfYearData = useSelector((state) => state.dashboardReducer.respGetBestOfYearList);
@@ -48,10 +49,11 @@ const Rekomendasi = () => {
     const [blinker, setBlinker] = useState(false);
     const [currentPage, setCurrentPage] = useState(ReactSession.get('currentPage') || 1);
 
-    const totalItems = appBestlistData?.data?.count;
+    const totalItems = appListData?.data?.count;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     useEffect(() => {
+        dispatch(getBestListData())
         dispatch(getBestOfMonthListData())
         dispatch(getBestOfYearListData())
         const foundRow = menu.find((row) => row.id === 'KORTRN001');
@@ -62,7 +64,7 @@ const Rekomendasi = () => {
 
     useEffect(() => {
         ReactSession.set("currentPage", currentPage)
-        dispatch(getBestListData({
+        dispatch(getListData({
             offset: (currentPage - 1) * itemsPerPage,
             limit: itemsPerPage,
         }));
@@ -88,7 +90,7 @@ const Rekomendasi = () => {
         if (appBestlistOfMonthData?.data?.list?.length) {
             ReactSession.set('lengthArray', appBestlistOfMonthData?.data?.list?.length)
         }
-    }, [appBestlistData])
+    }, [appListData])
 
     const handleSliderChange = (e) => {
         const step = 30;
@@ -232,7 +234,7 @@ const Rekomendasi = () => {
                             }}
                         >
                             <Card style={{ marginBottom: 0, width: "20%" }}>
-                                <CardHeader  style={{ fontSize: "14px" }}>
+                                <CardHeader style={{ fontSize: "14px" }}>
                                     <span className="mdi mdi-star-circle"></span> Top Rekomendasi
                                 </CardHeader>
                                 <CardBody
@@ -248,28 +250,47 @@ const Rekomendasi = () => {
                                         gap: "24px",
                                     }}
                                 >
-                                    <div
-                                        className="col-10"
-                                        style={{
-                                            backgroundColor: 'white',
-                                        }}
-                                    >
-                                        test
-                                    </div>
-                                    <div
-                                        className="col-10"
-                                        style={{
-                                            backgroundColor: 'white',
-                                        }}
-                                    >
-                                        test
-                                    </div>
+                                    {
+                                        appBestlistData?.data?.list.map((item, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className="col-10"
+                                                    style={{
+                                                        backgroundColor: 'white',
+                                                        padding: "12px",
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        border:"0.5px solid #bbb",
+                                                    }}
+                                                >
+                                                    <div
+                                                        style={{
+                                                            fontSize: "16px",
+                                                            fontWeight: "bold",
+                                                        }}
+                                                    >
+                                                        {item.member_name}
+                                                    </div>
+                                                    <h5
+                                                        className="text-primary"
+                                                        style={{
+                                                            fontSize: "14px",
+                                                            marginBottom: 0,
+                                                        }}
+                                                    >
+                                                        {item.dept_name}
+                                                    </h5>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </CardBody>
                             </Card>
                             <Card style={{ marginBottom: 0, width: "79%" }}>
-                                <CardHeader style={{ display: "flex", justifyContent: "space-between", fontSize:"14px" }}>
+                                <CardHeader style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
                                     <div>
-                                        <span className="mdi mdi-star-circle"></span> {appBestlistData?.data?.title}
+                                        <span className="mdi mdi-star-circle"></span> {appListData?.data?.title}
                                     </div>
                                 </CardHeader>
                                 <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
@@ -277,7 +298,7 @@ const Rekomendasi = () => {
                                         className="py-2 m-2 d-flex justify-content-center align-items-center"
                                         style={{ gap: "25px", height: "370px" }}
                                     >
-                                        {appBestlistData?.data?.list?.map((item, index) => {
+                                        {appListData?.data?.list?.map((item, index) => {
                                             return (
 
 
@@ -303,6 +324,22 @@ const Rekomendasi = () => {
                                                                 position: "relative", // Add relative positioning to the container
                                                             }}
                                                         >
+                                                            <div
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    top: 5,
+                                                                    left: '18.5%',
+                                                                    transform: 'translateX(-50%)',
+                                                                    display: 'flex',
+                                                                    flexDirection: 'row',
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                }}
+                                                            >
+                                                                <img width={'20px'} src={star} />
+                                                                <img width={'20px'} src={star} />
+                                                                <img width={'20px'} src={star} />
+                                                            </div>
                                                             <img
                                                                 draggable="false"
                                                                 style={{
@@ -314,7 +351,7 @@ const Rekomendasi = () => {
                                                                     borderRadius: "50%",
                                                                     marginRight: "5%",
                                                                 }}
-                                                                src={encodeURI(item?.profile_url)}
+                                                                src={encodeURI(item.profile_url)}
                                                                 alt="Profile Image"
                                                             />
 
@@ -407,7 +444,7 @@ const Rekomendasi = () => {
                             <Card style={{
                                 padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%",
                             }}>
-                                <CardHeader  style={{ fontSize: "14px" }}>
+                                <CardHeader style={{ fontSize: "14px" }}>
                                     <span className="mdi mdi-star-circle"></span> Employee of the Month
                                 </CardHeader>
                                 <CardBody style={{
@@ -468,6 +505,22 @@ const Rekomendasi = () => {
                                                                     }}
                                                                     className="mdi mdi-crown px-3 py-1"
                                                                 /> */}
+                                                                <div
+                                                                    style={{
+                                                                        position: 'absolute',
+                                                                        top: 5,
+                                                                        left: '18.5%',
+                                                                        transform: 'translateX(-50%)', // Center the container horizontally
+                                                                        display: 'flex',
+                                                                        flexDirection: 'row',
+                                                                        justifyContent: 'center',
+                                                                        alignItems: 'center',
+                                                                    }}
+                                                                >
+                                                                    <img width={'20px'} src={star} />
+                                                                    <img width={'20px'} src={star} />
+                                                                    <img width={'20px'} src={star} />
+                                                                </div>
                                                                 <img
                                                                     style={{
                                                                         minWidth: "10em",
@@ -478,7 +531,7 @@ const Rekomendasi = () => {
                                                                         borderRadius: "50%",
                                                                         marginRight: "5%",
                                                                     }}
-                                                                    src={encodeURI(row?.profile_url)}
+                                                                    src={encodeURI(row.profile_url)}
                                                                     alt="Profile Image"
                                                                 />
                                                                 <Col style={{
@@ -603,7 +656,7 @@ const Rekomendasi = () => {
                                 ></div>
                             </a>
                             <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%" }}>
-                                <CardHeader  style={{ fontSize: "14px" }}>
+                                <CardHeader style={{ fontSize: "14px" }}>
                                     <span className="mdi mdi-star-circle"></span> Employee of the Year
                                 </CardHeader>
                                 <CardBody style={{
@@ -654,7 +707,7 @@ const Rekomendasi = () => {
                                                                         position: 'absolute',
                                                                         top: 5,
                                                                         left: '18.5%',
-                                                                        transform: 'translateX(-50%)', // Center the container horizontally
+                                                                        transform: 'translateX(-50%)',
                                                                         display: 'flex',
                                                                         flexDirection: 'row',
                                                                         justifyContent: 'center',
@@ -689,7 +742,7 @@ const Rekomendasi = () => {
                                                                         borderRadius: "50%",
                                                                         marginRight: "5%",
                                                                     }}
-                                                                    src={encodeURI(row?.profile_url)}
+                                                                    src={encodeURI(row.profile_url)}
                                                                     alt="Profile Image"
                                                                 />
                                                                 <Col style={{

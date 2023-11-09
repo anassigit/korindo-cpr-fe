@@ -13,7 +13,7 @@ import {
 import '../../assets/scss/custom.scss';
 import '../../config';
 import TableCustom from "common/TableCustom";
-import { getDetailInfluencerData } from "store/actions";
+import { getDetailInfluencerData, resetMessage } from "store/actions";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import RootPageCustom from "common/RootPageCustom";
 import { ReactSession } from 'react-client-session';
@@ -26,13 +26,20 @@ const DetailInfluencer = (props) => {
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [detailModal, setDetailModal] = useState(false)
+
+    const [msgAddState, setMsgAddState] = useState('')
+
+    const [recommendId, setRecommendId] = useState(null)
     const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData'))
 
     const appDetailInfluencerData = useSelector((state) => state.dashboardReducer.respGetDetailInfluencer);
-
     useEffect(() => {
         setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
     }, [])
+
+    useEffect(() => {
+        dispatch(resetMessage())
+    }, [dispatch])
 
     const [appDetailInfluencerTabelSearch, setAppDetailInfluencerTabelSearch] = useState({
         page: 1,
@@ -139,6 +146,9 @@ const DetailInfluencer = (props) => {
     ]
 
     const toggleModal = (data) => {
+        if (data?.id) {
+            setRecommendId(data.id)
+        }
         setDetailModal(!detailModal)
     }
 
@@ -197,6 +207,7 @@ const DetailInfluencer = (props) => {
                     <DetailReportModal
                         modal={detailModal}
                         toggle={toggleModal}
+                        recommendId={recommendId}
                     />
                 </Container>
             }

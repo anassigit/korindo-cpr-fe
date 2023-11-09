@@ -134,7 +134,7 @@ const EmployeeOfMonYea = (props) => {
             },
         },
         {
-            dataField: "star",
+            dataField: "crown",
             text: "Jumlah",
             sort: true,
             headerStyle: { textAlign: 'center' },
