@@ -274,15 +274,22 @@ const Rekomendasi = () => {
                                                         justifyContent: "space-between",
                                                         alignItems: "center",
                                                         border: "0.5px solid #bbb",
+                                                        width: "85%", // Define a width for the container
+                                                        textOverflow: "ellipsis" 
                                                     }}
                                                 >
-                                                    <div>
+                                                    <div style={{ width: "80%" }}>
                                                         <div
                                                             style={{
                                                                 fontSize: "16px",
                                                                 fontWeight: "bold",
                                                                 color: 'white',
+                                                                whiteSpace: "nowrap",
+                                                                overflow: "hidden", 
+                                                                textOverflow: "ellipsis",
+
                                                             }}
+                                                            id={`index_member_${index}`}
                                                         >
                                                             {item.member_name}
                                                         </div>
@@ -302,6 +309,9 @@ const Rekomendasi = () => {
                                                         src={imageUrls[index % imageUrls.length]} // Cycling through image URLs
                                                         alt={`Image ${index}`}
                                                     />
+                                                    <UncontrolledTooltip target={`index_member_${index}`} placement='top'>
+                                                        {item.member_name}
+                                                    </UncontrolledTooltip>
                                                 </div>
                                             )
                                         })

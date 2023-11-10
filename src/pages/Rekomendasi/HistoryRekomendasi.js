@@ -39,7 +39,7 @@ const HistoryRekomendasi = (props) => {
     const appMsgAdd = useSelector((state) => {
         return state.rekomendasiReducer.msgAdd
     })
-    
+
     useEffect(() => {
         dispatch(getRecommendListData())
     }, [])
@@ -118,7 +118,7 @@ const HistoryRekomendasi = (props) => {
     const toggleModal = () => {
         setModalRekomendasi(!modalRekomendasi)
     }
-    
+
     useEffect(() => {
         if (appRecommendList?.data?.list) {
             const shouldSetSubmitEnable = appRecommendList?.data?.list.some(item => item.submit === false);
@@ -164,12 +164,15 @@ const HistoryRekomendasi = (props) => {
                                 style={{
                                     width: "47%",
                                     marginBottom: "0",
+                                    backgroundColor: 'transparent',
+                                    borderColor: 'transparent',
                                 }}
                             >
                                 <CardBody
                                     className='glass-card'
                                     style={{
                                         padding: "5%",
+                                        backgroundColor: item.submit ? '#F0F0F0' : 'white',
                                         height: "30vh",
                                         opacity: item.submit === true ? "75%" : "100%",
                                     }}>
@@ -325,8 +328,11 @@ const HistoryRekomendasi = (props) => {
                     disabled={!submitEnable}
                     onClick={() => {
                         dispatch(submitRecommend())
+                        dispatch(getRecommendListData())
                     }}
                     style={{
+                        backgroundColor: submitEnable ? '' : "#A9A9A9",
+                        borderColor: submitEnable ? '' : "#A9A9A9",
                         position: "absolute",
                         bottom: "4%",
                         right: "4%",
