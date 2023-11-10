@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, CardBody, Col, Row, Spinner, UncontrolledTooltip } from 'reactstrap';
 import '../../assets/scss/custom.scss'; // Import your custom CSS
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRecommend, getMemberListData, getRecommendListData, getSearchData, submitRecommend } from 'store/actions';
+import { deleteRecommend, getMemberListData, getRecommendListData, getSearchData, resetMessage, submitRecommend } from 'store/actions';
 import { ReactSession } from 'react-client-session';
 import MsgModal from 'components/Common/MsgModal';
 import RekomendasiModal from './RekomendasiModal';
 import star from "../../assets/images/star.png"
+import PropTypes from "prop-types"
 
-const HistoryRekomendasi = () => {
+const HistoryRekomendasi = (props) => {
 
     let offset = ReactSession.get('offset')
     let limit = ReactSession.get('limit')
@@ -34,6 +35,22 @@ const HistoryRekomendasi = () => {
     const appMsgDelete = useSelector((state) => {
         return state.rekomendasiReducer.msgDelete
     })
+
+    const appMsgAdd = useSelector((state) => {
+        return state.rekomendasiReducer.msgAdd
+    })
+    
+    useEffect(() => {
+        dispatch(getRecommendListData())
+    }, [])
+
+    useEffect(() => {
+        dispatch(resetMessage())
+    }, [dispatch])
+
+    useEffect(() => {
+        props.setAppRekomendasiMsg(appMsgAdd)
+    }, [appMsgAdd])
 
     useEffect(() => {
         if (appMsgDelete.status === '1') {
@@ -98,15 +115,9 @@ const HistoryRekomendasi = () => {
         setLoadingSpinner(true)
     }
 
-
     const toggleModal = () => {
         setModalRekomendasi(!modalRekomendasi)
     }
-
-
-    useEffect(() => {
-        dispatch(getRecommendListData())
-    }, [])
     
     useEffect(() => {
         if (appRecommendList?.data?.list) {
@@ -329,6 +340,11 @@ const HistoryRekomendasi = () => {
 
         </React.Fragment>
     );
+}
+
+HistoryRekomendasi.propTypes = {
+    appRekomendasiMsg: PropTypes.any,
+    setAppRekomendasiMsg: PropTypes.any,
 }
 
 export default HistoryRekomendasi;

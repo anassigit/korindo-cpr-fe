@@ -181,9 +181,9 @@ const DetailInfluencer = (props) => {
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
-                     {msgAddState !== "" ? <UncontrolledAlert toggle={() => { setMsgAddState("") }} color={msgAddState?.status == "1" ? "success" : "danger"}>
+                    {msgAddState !== "" ? <UncontrolledAlert toggle={() => { setMsgAddState("") }} color={msgAddState?.status == "1" ? "success" : "danger"}>
                         {typeof msgAddState == 'string' ? null : msgAddState?.message}</UncontrolledAlert> : null}
-                                            <Container fluid>
+                    <Container fluid>
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
                                 <span className="mdi mdi-star-circle"></span> History per Influencer
