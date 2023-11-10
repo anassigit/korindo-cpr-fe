@@ -7,6 +7,8 @@ export const getMenuBE = req => post("rest/MainRest/getMenuList", req)
 
 export const getListMainRestBE = req => post("rest/MainRest/getList", req)
 
+export const getInfoMainRestBE = req => post("rest/MainRest/getInfo", req)
+
 export const getBestListBE = req => post("rest/MainRest/getBestList", req)
 
 export const getBestOfMonthListBE = req => post("rest/MainRest/getBestOfMonth", req)
@@ -32,6 +34,8 @@ export const getRecommendBE = req => postWithParam("rest/RecommendRest/getRecomm
 export const getStickerListBE = req => post("rest/RecommendRest/getStickerList", req)
 
 export const addRecommendBE = req => postWithParam("rest/RecommendRest/addRecommend", req)
+
+export const submitRecommendBE = req => post("rest/RecommendRest/submit", req)
 
 export const editRecommendBE = req => postWithParam("rest/RecommendRest/modifyRecommend", req)
 

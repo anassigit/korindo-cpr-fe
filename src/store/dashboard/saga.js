@@ -2,20 +2,19 @@ import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
   ADD_REPORT,
-  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER, GET_LIST1, GET_REPORT_LIST
+  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER, GET_INFO, GET_LIST1, GET_REPORT_LIST
 } from "./actionTypes"
 import {
   msgAdd,
-  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer, respGetList1, respGetReportList
+  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer, respGetInfo, respGetList1, respGetReportList
 } from "./actions"
 
 import {
   addReportBE,
-  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE, getListMainRestBE, getReportListBE
+  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE, getInfoMainRestBE, getListMainRestBE, getReportListBE
 } from "helpers/backend_helper"
 
 function* fetchGetList({ payload: req }) {
-  debugger
   try {
     const response = yield call(getListMainRestBE, req)
     if (response.status == 1) {
@@ -26,6 +25,20 @@ function* fetchGetList({ payload: req }) {
   } catch (error) {
     console.log(error);
     yield put(respGetList1({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
+function* fetchGetInfo({ payload: req }) {
+  try {
+    const response = yield call(getInfoMainRestBE, req)
+    if (response.status == 1) {
+      yield put(respGetInfo(response))
+    } else {
+      yield put(respGetInfo(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetInfo({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
@@ -100,7 +113,6 @@ function* fetchGetReportList({ payload: req }) {
 }
 
 function* fetchAddReport({ payload: req }) {
-  debugger
   try {
     const response = yield call(addReportBE, req)
     if (response.status == 1) {
@@ -117,6 +129,7 @@ function* fetchAddReport({ payload: req }) {
 function* dashboardSaga() {
 
   yield takeEvery(GET_LIST1, fetchGetList)
+  yield takeEvery(GET_INFO, fetchGetInfo)
   yield takeEvery(GET_BEST_LIST, fetchGetBestList)
   yield takeEvery(GET_BEST_OF_MONTH_LIST, fetchGetBestOfMonthList)
   yield takeEvery(GET_BEST_OF_YEAR_LIST, fetchGetBestOfYearList)

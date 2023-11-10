@@ -8,6 +8,7 @@ import {
     CardHeader,
     Container,
     Spinner,
+    UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
@@ -27,12 +28,14 @@ const DetailInfluencer = (props) => {
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [detailModal, setDetailModal] = useState(false)
 
-    const [msgAddState, setMsgAddState] = useState('')
+    const [msgAddState, setMsgAddState] = useState()
 
     const [recommendId, setRecommendId] = useState(null)
     const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData'))
 
+    const msgAdd = useSelector((state) => state.dashboardReducer.msgAdd);
     const appDetailInfluencerData = useSelector((state) => state.dashboardReducer.respGetDetailInfluencer);
+
     useEffect(() => {
         setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
     }, [])
@@ -170,46 +173,54 @@ const DetailInfluencer = (props) => {
         }
     }, [appDetailInfluencerTabelSearch])
 
+    useEffect(() => {
+        setMsgAddState(msgAdd)
+    }, [msgAdd])
+
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
-                <Container fluid>
-                    <Card style={{ marginBottom: 0 }}>
-                        <CardHeader>
-                            <span className="mdi mdi-star-circle"></span> History per Influencer
-                        </CardHeader>
-                        <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
-                            <TableCustom
-                                keyField={"id"}
-                                columns={appDetailInfluencerColumn}
-                                redukResponse={appDetailInfluencerData}
-                                appdata={appDetailInfluencerData.data != null && appDetailInfluencerData.data.list ? appDetailInfluencerData.data.list : []}
-                                appdataTotal={appDetailInfluencerData.data != null ? appDetailInfluencerData.data.count : 0}
-                                searchSet={setAppDetailInfluencerTabelSearch}
-                                searchGet={appDetailInfluencerTabelSearch}
-                                redukCall={getDetailInfluencerData}
-                            />
-                        </CardBody>
-                    </Card>
-                    <Button
-                        className="btn btn-danger my-3"
-                        onClick={() => {
-                            ReactSession.set('appDetailRecommendationData', "");
-                            history.go(-1)
-                        }}
-                    >
-                        <span className="mdi mdi-arrow-left" />
-                        &nbsp;Kembali
-                    </Button>
-                    <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
-                        <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
-                    </div>
-                    <DetailReportModal
-                        modal={detailModal}
-                        toggle={toggleModal}
-                        recommendId={recommendId}
-                    />
-                </Container>
+                <React.Fragment>
+                     {msgAddState !== "" ? <UncontrolledAlert toggle={() => { setMsgAddState("") }} color={msgAddState?.status == "1" ? "success" : "danger"}>
+                        {typeof msgAddState == 'string' ? null : msgAddState?.message}</UncontrolledAlert> : null}
+                                            <Container fluid>
+                        <Card style={{ marginBottom: 0 }}>
+                            <CardHeader>
+                                <span className="mdi mdi-star-circle"></span> History per Influencer
+                            </CardHeader>
+                            <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
+                                <TableCustom
+                                    keyField={"id"}
+                                    columns={appDetailInfluencerColumn}
+                                    redukResponse={appDetailInfluencerData}
+                                    appdata={appDetailInfluencerData.data != null && appDetailInfluencerData.data.list ? appDetailInfluencerData.data.list : []}
+                                    appdataTotal={appDetailInfluencerData.data != null ? appDetailInfluencerData.data.count : 0}
+                                    searchSet={setAppDetailInfluencerTabelSearch}
+                                    searchGet={appDetailInfluencerTabelSearch}
+                                    redukCall={getDetailInfluencerData}
+                                />
+                            </CardBody>
+                        </Card>
+                        <Button
+                            className="btn btn-danger my-3"
+                            onClick={() => {
+                                ReactSession.set('appDetailRecommendationData', "");
+                                history.go(-1)
+                            }}
+                        >
+                            <span className="mdi mdi-arrow-left" />
+                            &nbsp;Kembali
+                        </Button>
+                        <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
+                            <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
+                        </div>
+                        <DetailReportModal
+                            modal={detailModal}
+                            toggle={toggleModal}
+                            recommendId={recommendId}
+                        />
+                    </Container>
+                </React.Fragment>
             }
         />
     );

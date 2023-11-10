@@ -1,6 +1,9 @@
 export const GET_LIST1 = "GET_LIST1"
 export const RESP_GET_LIST = "RESP_GET_LIST"
 
+export const GET_INFO = "GET_INFO"
+export const RESP_GET_INFO = "RESP_GET_INFO"
+
 export const GET_BEST_LIST = "GET_BEST_LIST"
 export const RESP_GET_BEST_LIST = "RESP_GET_BEST_LIST"
 
@@ -18,6 +21,6 @@ export const RESP_GET_REPORT_LIST = "RESP_GET_REPORT_LIST"
 
 export const ADD_REPORT = "ADD_REPORT"
 
-export const MSG_ADD = "GET_REPORT_LIST"
+export const MSG_ADD = "MSG_ADD"
 
 export const RESET_MESSAGE = "RESET_MESSAGE"

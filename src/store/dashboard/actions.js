@@ -4,6 +4,7 @@ import {
   GET_BEST_OF_MONTH_LIST,
   GET_BEST_OF_YEAR_LIST,
   GET_DETAIL_INFLUENCER,
+  GET_INFO,
   GET_LIST1,
   GET_REPORT_LIST,
   MSG_ADD,
@@ -12,17 +13,28 @@ import {
   RESP_GET_BEST_OF_MONTH_LIST,
   RESP_GET_BEST_OF_YEAR_LIST,
   RESP_GET_DETAIL_INFLUENCER,
+  RESP_GET_INFO,
   RESP_GET_LIST,
   RESP_GET_REPORT_LIST
 } from "./actionTypes"
 
-export const getListData = (req) => ({
+export const getListData1 = (req) => ({
   type: GET_LIST1,
   payload: req,
 })
 
 export const respGetList1 = resp => ({
   type: RESP_GET_LIST,
+  payload: resp,
+})
+
+export const getInfoData = (req) => ({
+  type: GET_INFO,
+  payload: req,
+})
+
+export const respGetInfo = resp => ({
+  type: RESP_GET_INFO,
   payload: resp,
 })
 

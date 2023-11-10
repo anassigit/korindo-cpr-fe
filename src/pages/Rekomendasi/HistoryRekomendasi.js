@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, CardBody, Col, Row, Spinner, UncontrolledTooltip } from 'reactstrap';
 import '../../assets/scss/custom.scss'; // Import your custom CSS
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRecommend, getMemberListData, getRecommendListData, getSearchData } from 'store/actions';
+import { deleteRecommend, getMemberListData, getRecommendListData, getSearchData, submitRecommend } from 'store/actions';
 import { ReactSession } from 'react-client-session';
 import MsgModal from 'components/Common/MsgModal';
 import RekomendasiModal from './RekomendasiModal';
+import star from "../../assets/images/star.png"
 
 const HistoryRekomendasi = () => {
 
@@ -21,6 +22,7 @@ const HistoryRekomendasi = () => {
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [isAdd, setIsAdd] = useState(false)
     const [modalRekomendasi, setModalRekomendasi] = useState(false)
+    const [submitEnable, setSubmitEnable] = useState(false)
 
     const [recommendId, setRecommendId] = useState()
     const [employeeId, setEmployeeId] = useState()
@@ -105,6 +107,15 @@ const HistoryRekomendasi = () => {
     useEffect(() => {
         dispatch(getRecommendListData())
     }, [])
+    
+    useEffect(() => {
+        if (appRecommendList?.data?.list) {
+            const shouldSetSubmitEnable = appRecommendList?.data?.list.some(item => item.submit === false);
+            if (shouldSetSubmitEnable) {
+                setSubmitEnable(true);
+            }
+        }
+    }, [appRecommendList])
 
     return (
         <React.Fragment>
@@ -136,42 +147,76 @@ const HistoryRekomendasi = () => {
             >
                 {appRecommendList?.data?.list ? (
                     appRecommendList?.data?.list.map((item, index) => {
-
                         return (
                             <Card
                                 key={index}
-                                style={{ width: "47%", marginBottom: "0" }}
+                                style={{
+                                    width: "47%",
+                                    marginBottom: "0",
+                                }}
                             >
                                 <CardBody
                                     className='glass-card'
                                     style={{
                                         padding: "5%",
                                         height: "30vh",
+                                        opacity: item.submit === true ? "75%" : "100%",
                                     }}>
                                     <div
                                         style={{ display: "flex", flexDirection: "row", justifyContent: 'center' }}
                                     >
-                                        <img
-                                            style={{
-                                                objectPosition: "center top",
-                                                objectFit: "cover",
-                                                borderRadius: "50%",
-                                                height: '80px',
-                                                width: '80px',
-                                                marginRight: "25px",
-                                            }}
-                                            src={item.profile_url}
-                                        />
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <img
+                                                style={{
+                                                    objectPosition: 'center top',
+                                                    objectFit: 'cover',
+                                                    borderRadius: '50%',
+                                                    height: '80px',
+                                                    width: '80px',
+                                                    marginRight: '25px',
+                                                }}
+                                                src={item.profile_url}
+                                            />
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                    position: 'relative',
+                                                    left: '-75px',
+                                                    top: "-50%",
+                                                }}
+                                            >
+                                                {
+                                                    item.bestEmployeeCount > 0 ? (
+                                                        Array.from({ length: item.bestEmployeeCount }, (_, i) => (
+                                                            <img key={i} width={'20px'} src={star} />
+                                                        ))
+                                                    ) : (
+                                                        <img className='opacity-0' width={'20px'} src={star} />
+                                                    )
+                                                }
+
+                                            </div>
+                                        </div>
                                         <div
-                                            style={{ display: 'flex', flexDirection: "column", justifyContent: "center", width: "50%" }}
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                justifyContent: 'center',
+                                                position: 'relative',
+                                                width: '50%',
+                                                left: '-1em',
+                                            }}
                                         >
-                                            <b id='name-recommendation' style={{ fontSize: "1.8vh" }}>
+                                            <b id="name-recommendation" style={{ fontSize: '1.8vh' }}>
                                                 {item.name}
                                             </b>
-                                            <div className='text-primary' style={{ fontSize: "1.3vh" }}>
+                                            <div className="text-primary" style={{ fontSize: '1.3vh', marginLeft: '0' }}>
                                                 {item.dept_name}
                                             </div>
                                         </div>
+
                                     </div>
                                     <div>
                                         <div
@@ -234,25 +279,31 @@ const HistoryRekomendasi = () => {
                                                 {item.comment}
                                             </UncontrolledTooltip>
                                         </div>
-                                        <a
-                                            onClick={() => {
-                                                setIsAdd(false)
-                                                setModalRekomendasi(true)
-                                                setRecommendId(item.id)
-                                            }}
-                                            className='mdi mdi-pencil text-primary'
-                                            style={{ position: "absolute", bottom: 0, right: "15%", paddingBottom: "2%", fontSize: "2.5vh" }}
-                                        >
-                                        </a>
-                                        <a
-                                            onClick={() => {
-                                                setRecommendId(item.id)
-                                                toggleDeleteModal()
-                                            }}
-                                            className='mdi mdi-close text-danger'
-                                            style={{ position: "absolute", bottom: 0, right: "0", paddingRight: "4%", fontSize: "3vh" }}
-                                        >
-                                        </a>
+                                        {
+                                            !item.submit && (
+                                                <React.Fragment>
+                                                    <a
+                                                        onClick={() => {
+                                                            setIsAdd(false)
+                                                            setModalRekomendasi(true)
+                                                            setRecommendId(item.id)
+                                                        }}
+                                                        className='mdi mdi-pencil text-primary'
+                                                        style={{ position: "absolute", bottom: 0, right: "15%", paddingBottom: "2%", fontSize: "2.5vh" }}
+                                                    >
+                                                    </a>
+                                                    <a
+                                                        onClick={() => {
+                                                            setRecommendId(item.id)
+                                                            toggleDeleteModal()
+                                                        }}
+                                                        className='mdi mdi-close text-danger'
+                                                        style={{ position: "absolute", bottom: 0, right: "0", paddingRight: "4%", fontSize: "3vh" }}
+                                                    >
+                                                    </a>
+                                                </React.Fragment>
+                                            )
+                                        }
                                     </div>
                                 </CardBody>
                             </Card>
@@ -260,6 +311,10 @@ const HistoryRekomendasi = () => {
                     })
                 ) : null}
                 <Button
+                    disabled={!submitEnable}
+                    onClick={() => {
+                        dispatch(submitRecommend())
+                    }}
                     style={{
                         position: "absolute",
                         bottom: "4%",

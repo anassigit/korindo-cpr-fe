@@ -13,8 +13,6 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
         return state.dashboardReducer.respGetReportList
     })
 
-    const msgAdd = useSelector((state) => state.dashboardReducer.msgAdd);
-
     useEffect(() => {
         dispatch(getReportListData())
     }, [])
@@ -28,15 +26,6 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
     }
 
     
-    useEffect(() => {
-        debugger
-        if (msgAdd.status === '1') {
-            console.log(msgAdd)
-        }
-    }, [msgAdd])
-    
-    console.log(msgAdd)
-
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
             <ModalHeader toggle={toggle}>Lapor</ModalHeader>

@@ -10,24 +10,30 @@ import {
     Input,
     Row, Spinner, UncontrolledTooltip
 } from "reactstrap";
-import { getBestListData, getBestOfMonthListData, getBestOfYearListData, getListData, getSearchData } from "store/actions";
+import { getBestListData, getBestOfMonthListData, getBestOfYearListData, getListData1, getSearchData } from "store/actions";
 import '../../assets/scss/custom.scss';
 import RootPageCustom from '../../common/RootPageCustom';
 import '../../config';
 import { ReactSession } from 'react-client-session';
 import DetailInfluencer from "./DetailInfluencer";
+import ProfileMenu from "components/CommonForBoth/TopbarDropdown/ProfileMenu";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import crown from "../../assets/images/crown.png"
 import tiara from "../../assets/images/tiara.png"
 import give from "../../assets/images/berikan bintang.png"
 import star from "../../assets/images/star.png"
-import ProfileMenu from "components/CommonForBoth/TopbarDropdown/ProfileMenu";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+import satu from "../../assets/images/numbers/circle-1 2.png"
+import dua from "../../assets/images/numbers/circle-2 2.png"
+import tiga from "../../assets/images/numbers/circle-3 2.png"
+import empat from "../../assets/images/numbers/circle-4 2.png"
+import lima from "../../assets/images/numbers/circle-5 2.png"
 
 const Rekomendasi = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
-
 
     const menu = JSON.parse(ReactSession.get("menu"));
     const [linkRekomendasi, setLinkRekomendasi] = useState();
@@ -64,7 +70,7 @@ const Rekomendasi = () => {
 
     useEffect(() => {
         ReactSession.set("currentPage", currentPage)
-        dispatch(getListData({
+        dispatch(getListData1({
             offset: (currentPage - 1) * itemsPerPage,
             limit: itemsPerPage,
         }));
@@ -235,7 +241,7 @@ const Rekomendasi = () => {
                         >
                             <Card style={{ marginBottom: 0, width: "20%" }}>
                                 <CardHeader style={{ fontSize: "14px" }}>
-                                    <span className="mdi mdi-star-circle"></span> Top Rekomendasi
+                                    <span className="mdi mdi-star-circle"></span> Peringkat 5 Calon Pemenang
                                 </CardHeader>
                                 <CardBody
                                     className="bg-light"
@@ -252,35 +258,50 @@ const Rekomendasi = () => {
                                 >
                                     {
                                         appBestlistData?.data?.list.map((item, index) => {
+
+                                            const imageUrls = [satu, dua, tiga, empat, lima];
+                                            const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#176B87']; // Replace with desired colors
+
                                             return (
                                                 <div
                                                     key={index}
-                                                    className="col-10"
+                                                    className="col-10 rounded-3"
                                                     style={{
-                                                        backgroundColor: 'white',
+                                                        background: `linear-gradient(-45deg, ${colors[index % colors.length]}a6, ${colors[index % colors.length]})`, // Applying gradient with 20% opacity of white
                                                         padding: "12px",
                                                         display: "flex",
-                                                        flexDirection: "column",
-                                                        border:"0.5px solid #bbb",
+                                                        flexDirection: "row",
+                                                        justifyContent: "space-between",
+                                                        alignItems: "center",
+                                                        border: "0.5px solid #bbb",
                                                     }}
                                                 >
-                                                    <div
-                                                        style={{
-                                                            fontSize: "16px",
-                                                            fontWeight: "bold",
-                                                        }}
-                                                    >
-                                                        {item.member_name}
+                                                    <div>
+                                                        <div
+                                                            style={{
+                                                                fontSize: "16px",
+                                                                fontWeight: "bold",
+                                                                color: 'white',
+                                                            }}
+                                                        >
+                                                            {item.member_name}
+                                                        </div>
+                                                        <h5
+                                                            className="text-white"
+                                                            style={{
+                                                                fontSize: "14px",
+                                                                marginBottom: 0,
+                                                                color: "white",
+                                                            }}
+                                                        >
+                                                            {item.dept_name}
+                                                        </h5>
                                                     </div>
-                                                    <h5
-                                                        className="text-primary"
-                                                        style={{
-                                                            fontSize: "14px",
-                                                            marginBottom: 0,
-                                                        }}
-                                                    >
-                                                        {item.dept_name}
-                                                    </h5>
+                                                    <img
+                                                        width={"20%"}
+                                                        src={imageUrls[index % imageUrls.length]} // Cycling through image URLs
+                                                        alt={`Image ${index}`}
+                                                    />
                                                 </div>
                                             )
                                         })
@@ -336,9 +357,11 @@ const Rekomendasi = () => {
                                                                     alignItems: 'center',
                                                                 }}
                                                             >
-                                                                <img width={'20px'} src={star} />
-                                                                <img width={'20px'} src={star} />
-                                                                <img width={'20px'} src={star} />
+                                                                {
+                                                                    Array.from({ length: item.bestEmployeeCount }, (_, i) => (
+                                                                        <img key={i} width={'20px'} src={star} />
+                                                                    ))
+                                                                }
                                                             </div>
                                                             <img
                                                                 draggable="false"
@@ -517,9 +540,11 @@ const Rekomendasi = () => {
                                                                         alignItems: 'center',
                                                                     }}
                                                                 >
-                                                                    <img width={'20px'} src={star} />
-                                                                    <img width={'20px'} src={star} />
-                                                                    <img width={'20px'} src={star} />
+                                                                    {
+                                                                        Array.from({ length: row.bestEmployeeCount }, (_, i) => (
+                                                                            <img key={i} width={'20px'} src={star} />
+                                                                        ))
+                                                                    }
                                                                 </div>
                                                                 <img
                                                                     style={{
@@ -714,9 +739,11 @@ const Rekomendasi = () => {
                                                                         alignItems: 'center',
                                                                     }}
                                                                 >
-                                                                    <img width={'20px'} src={star} />
-                                                                    <img width={'20px'} src={star} />
-                                                                    <img width={'20px'} src={star} />
+                                                                    {
+                                                                        Array.from({ length: row.bestEmployeeCount }, (_, i) => (
+                                                                            <img key={i} width={'20px'} src={star} />
+                                                                        ))
+                                                                    }
                                                                 </div>
 
                                                                 {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}

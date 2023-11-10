@@ -10,7 +10,8 @@ import {
   GET_RECOMMEND_LIST,
   GET_SEARCH,
   GET_STICKER_LIST,
-  MSG_ADD
+  MSG_ADD,
+  SUBMIT_RECOMMEND
 } from "./actionTypes"
 import {
   msgAdd,
@@ -25,7 +26,7 @@ import {
   deleteRecommendBE,
   editRecommendBE,
   getDeptBE,
-  getMemberListBE, getRecommendBE, getRecommendListBE, getSearchBE, getStickerListBE
+  getMemberListBE, getRecommendBE, getRecommendListBE, getSearchBE, getStickerListBE, submitRecommendBE
 } from "helpers/backend_helper"
 
 function* fetchGetDept({ payload: req }) {
@@ -142,8 +143,18 @@ function* fetchDeleteRekomendasi({ payload: req }) {
   }
 }
 
-function* rekomendasiSaga() {
+function* fetchSubmitRekomendasi({ payload: req }) {
+  try {
+    const response = yield call(submitRecommendBE, req)
+    yield put(msgAdd(response))
+  } catch (error) {
+    console.log(error);
+    yield put(msgAdd({ "status": 0, "message": "Error Get Data" }))
+  }
+}
 
+function* rekomendasiSaga() {
+  
   yield takeEvery(GET_DEPT, fetchGetDept)
   yield takeEvery(GET_MEMBER_LIST, fetchGetMemberList)
   yield takeEvery(GET_SEARCH, fetchGetSearch)
@@ -153,7 +164,8 @@ function* rekomendasiSaga() {
   yield takeEvery(ADD_RECOMMEND, fetchAddRekomendasi)
   yield takeEvery(EDIT_RECOMMEND, fetchEditRekomendasi)
   yield takeEvery(DELETE_RECOMMEND, fetchDeleteRekomendasi)
-
+  yield takeEvery(SUBMIT_RECOMMEND, fetchSubmitRekomendasi)
+  
 }
 
 export default rekomendasiSaga

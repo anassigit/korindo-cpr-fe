@@ -17,7 +17,8 @@ import {
   RESP_GET_RECOMMEND,
   RESP_GET_RECOMMEND_LIST,
   RESP_GET_SEARCH,
-  RESP_GET_STICKER_LIST
+  RESP_GET_STICKER_LIST,
+  SUBMIT_RECOMMEND
 } from "./actionTypes"
 
 export const getDeptData = (req) => ({
@@ -92,6 +93,11 @@ export const editRecommend = resp => ({
 
 export const deleteRecommend = resp => ({
   type: DELETE_RECOMMEND,
+  payload: resp,
+})
+
+export const submitRecommend = resp => ({
+  type: SUBMIT_RECOMMEND,
   payload: resp,
 })
 

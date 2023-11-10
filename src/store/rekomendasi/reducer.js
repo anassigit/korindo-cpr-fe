@@ -17,7 +17,8 @@ import {
   RESP_GET_RECOMMEND,
   RESP_GET_RECOMMEND_LIST,
   RESP_GET_SEARCH,
-  RESP_GET_STICKER_LIST
+  RESP_GET_STICKER_LIST,
+  SUBMIT_RECOMMEND
 } from "./actionTypes"
 
 const INIT_STATE = {
@@ -98,6 +99,10 @@ const rekomendasiReducer = (state = INIT_STATE, action) => {
         ...state,
       }
     case DELETE_RECOMMEND:
+      return {
+        ...state,
+      }
+    case SUBMIT_RECOMMEND:
       return {
         ...state,
       }

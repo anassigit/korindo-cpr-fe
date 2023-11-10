@@ -12,22 +12,30 @@ import {
 //i18n
 import { withTranslation } from "react-i18next"
 // Redux
-import { connect } from "react-redux"
+import { connect, useDispatch, useSelector } from "react-redux"
 import { withRouter, Link } from "react-router-dom"
 
 // users
 import user1 from "../../../assets/images/users/userprofil.png"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { getInfoData } from "store/actions";
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const history = useHistory()
+  const dispatch = useDispatch()
   const [menu, setMenu] = useState(false)
   const [bintang, setBintang] = useState(false)
+
+  const appGetInfo = useSelector((state) => state.dashboardReducer.respGetInfo);
 
   const [username, setusername] = useState("Admin")
   const [member_id, setmember_id] = useState("")
   const [profile_url, setprofile_url] = useState("")
+
+  useEffect(() => {
+    dispatch(getInfoData())
+  }, [])
 
   useEffect(() => {
 
@@ -63,7 +71,7 @@ const ProfileMenu = props => {
             <span>Sisa Bintang</span>
             <div>
               <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
-              150
+              {appGetInfo?.data?.UsedCount}
             </div>
           </a>
           <div className="dropdown-divider" />
@@ -71,7 +79,7 @@ const ProfileMenu = props => {
             <span>Bintang yang diberikan</span>
             <div>
               <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
-              150
+              {appGetInfo?.data?.sent}
             </div>
           </a>
           <div className="dropdown-divider" />
@@ -79,7 +87,7 @@ const ProfileMenu = props => {
             <span>Bintang yang diterima</span>
             <div>
               <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
-              150
+              {appGetInfo?.data?.received}
             </div>
           </a>
         </DropdownMenu>
