@@ -57,17 +57,40 @@
 }
 
 .fade-in {
+  /* Other styles */
+  transition: background 0.5s, box-shadow 0.5s;
+  /* Add transitions to the properties */
   animation: fadeIn 1s ease-in-out;
 }
 
 .fade-in.card:hover {
   margin-bottom: 0;
-  /* From https://css.glass */
   background: rgba(255, 255, 255, 0.027);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   cursor: pointer;
+}
+
+
+.peringkat {
+  /* Other styles */
+  transition: opacity 0.5s, box-shadow 0.5s, background 0.5s;
+  /* Define transitions for all properties */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0);
+  background: rgba(255, 255, 255, 0);
+  /* Initial background */
+  opacity: 1;
+  /* Initial opacity */
+}
+
+.peringkat:hover {
+  opacity: 0.75;
+  /* Opacity on hover */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  /* Shadow on hover */
+  background: rgba(255, 255, 255, 0.027);
+  /* Background on hover */
 }
 
 .fade-in.card {
@@ -147,7 +170,7 @@
   margin: 0;
 }
 
-.react-bootstrap-table-pagination{
+.react-bootstrap-table-pagination {
   padding-left: 2.5%;
   padding-right: 2.5%;
 }
@@ -160,6 +183,6 @@
   opacity: 1;
 }
 
-.text-nowrap.secondary{
+.text-nowrap.secondary {
   cursor: auto !important;
 }

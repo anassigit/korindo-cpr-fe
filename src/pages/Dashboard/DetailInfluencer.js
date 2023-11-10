@@ -149,8 +149,8 @@ const DetailInfluencer = (props) => {
     ]
 
     const toggleModal = (data) => {
-        if (data?.id) {
-            setRecommendId(data.id)
+        if (data?.member_id) {
+            setRecommendId(data.member_id)
         }
         setDetailModal(!detailModal)
     }
@@ -161,7 +161,7 @@ const DetailInfluencer = (props) => {
                 ...prevState,
                 search: {
                     ...prevState.search,
-                    member_id: appDetailRecommendationData.id ? appDetailRecommendationData.id : appDetailRecommendationData,
+                    member_id: appDetailRecommendationData.member_id ? appDetailRecommendationData.member_id : appDetailRecommendationData,
                 }
             }));
         }

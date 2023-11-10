@@ -62,7 +62,7 @@ const Rekomendasi = () => {
         dispatch(getBestListData())
         dispatch(getBestOfMonthListData())
         dispatch(getBestOfYearListData())
-        const foundRow = menu.find((row) => row.id === 'KORTRN001');
+        const foundRow = menu.find((row) => row.member_id === 'KORTRN001');
         const temp = foundRow ? foundRow.path : null;
 
         setLinkRekomendasi(temp);
@@ -220,6 +220,7 @@ const Rekomendasi = () => {
     };
 
     const appDetailHandler = (e) => {
+        debugger
         setAppDetailRecommendationData(e)
         ReactSession.set('appDetailRecommendationData', e);
     }
@@ -263,9 +264,11 @@ const Rekomendasi = () => {
                                             const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#176B87']; // Replace with desired colors
 
                                             return (
-                                                <div
+                                                <a
+                                                    href="/home/detail"
+                                                    draggable="false"
                                                     key={index}
-                                                    className="col-10 rounded-3"
+                                                    className="col-10 rounded-3 peringkat"
                                                     style={{
                                                         background: `linear-gradient(-45deg, ${colors[index % colors.length]}a6, ${colors[index % colors.length]})`, // Applying gradient with 20% opacity of white
                                                         padding: "12px",
@@ -273,10 +276,11 @@ const Rekomendasi = () => {
                                                         flexDirection: "row",
                                                         justifyContent: "space-between",
                                                         alignItems: "center",
-                                                        border: "0.5px solid #bbb",
                                                         width: "85%", // Define a width for the container
-                                                        textOverflow: "ellipsis" 
+                                                        textOverflow: "ellipsis"
                                                     }}
+                                                    onClick={() => appDetailHandler(item)}
+                                                    onContextMenu={(e) => { e.preventDefault(); }}
                                                 >
                                                     <div style={{ width: "80%" }}>
                                                         <div
@@ -285,7 +289,7 @@ const Rekomendasi = () => {
                                                                 fontWeight: "bold",
                                                                 color: 'white',
                                                                 whiteSpace: "nowrap",
-                                                                overflow: "hidden", 
+                                                                overflow: "hidden",
                                                                 textOverflow: "ellipsis",
 
                                                             }}
@@ -312,7 +316,7 @@ const Rekomendasi = () => {
                                                     <UncontrolledTooltip target={`index_member_${index}`} placement='top'>
                                                         {item.member_name}
                                                     </UncontrolledTooltip>
-                                                </div>
+                                                </a>
                                             )
                                         })
                                     }
@@ -396,7 +400,7 @@ const Rekomendasi = () => {
                                                                     maxWidth: "60%"
                                                                 }}
                                                             >
-                                                                <div style={{ color: '#495057', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.name}</div>
+                                                                <div style={{ color: '#495057', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.member_name}</div>
                                                                 <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.dept_name}</div>
                                                             </Col>
                                                             {
@@ -405,7 +409,7 @@ const Rekomendasi = () => {
                                                                     .slice()
                                                                     .sort((a, b) => {
                                                                         return (
-                                                                            b.id - a.id
+                                                                            b.member_id - a.member_id
                                                                         )
                                                                     })
                                                                     .map((row, i) => {
@@ -424,7 +428,7 @@ const Rekomendasi = () => {
                                                                                     id={tooltipTarget}
                                                                                 />
                                                                                 <UncontrolledTooltip target={tooltipTarget}>
-                                                                                    {row.name}
+                                                                                    {row.member_name}
                                                                                 </UncontrolledTooltip>
                                                                             </React.Fragment>
                                                                         );
@@ -575,7 +579,7 @@ const Rekomendasi = () => {
                                                                     alignItems: 'flex-start',
                                                                     maxWidth: "60%"
                                                                 }}>
-                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.name}</div>
+                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.member_name}</div>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
                                                                     <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
@@ -788,7 +792,7 @@ const Rekomendasi = () => {
                                                                     alignItems: 'flex-start',
                                                                     maxWidth: "60%"
                                                                 }}>
-                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.name}</div>
+                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.member_name}</div>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
                                                                     <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
