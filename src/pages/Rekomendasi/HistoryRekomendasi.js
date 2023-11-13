@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, CardBody, Col, Row, Spinner, UncontrolledTooltip } from 'reactstrap';
 import '../../assets/scss/custom.scss'; // Import your custom CSS
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteRecommend, getMemberListData, getRecommendListData, getSearchData, resetMessage, submitRecommend } from 'store/actions';
+import { deleteRecommend, getInfoData, getMemberListData, getRecommendListData, getSearchData, resetMessage, submitRecommend } from 'store/actions';
 import { ReactSession } from 'react-client-session';
 import MsgModal from 'components/Common/MsgModal';
 import RekomendasiModal from './RekomendasiModal';
@@ -50,6 +50,9 @@ const HistoryRekomendasi = (props) => {
 
     useEffect(() => {
         dispatch(getRecommendListData())
+        
+        dispatch(getInfoData())
+
         props.setAppRekomendasiMsg(appMsgAdd)
     }, [appMsgAdd])
 
@@ -105,6 +108,7 @@ const HistoryRekomendasi = (props) => {
             }
         }
         
+        dispatch(getRecommendListData())
         props.setAppRekomendasiMsg(appMsgDelete)
     }, [appMsgDelete])
 
@@ -127,6 +131,8 @@ const HistoryRekomendasi = (props) => {
             const shouldSetSubmitEnable = appRecommendList?.data?.list.some(item => item.submit === false);
             if (shouldSetSubmitEnable) {
                 setSubmitEnable(true);
+            } else {
+                setSubmitEnable(false);
             }
         }
     }, [appRecommendList, appMsgDelete, appMsgAdd])
@@ -331,7 +337,6 @@ const HistoryRekomendasi = (props) => {
                     disabled={!submitEnable}
                     onClick={() => {
                         dispatch(submitRecommend())
-                        dispatch(getInfoData())
                         props.setAppRekomendasiMsg('')
                     }}
                     style={{
