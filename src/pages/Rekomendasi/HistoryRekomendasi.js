@@ -49,9 +49,6 @@ const HistoryRekomendasi = (props) => {
     }, [dispatch])
 
     useEffect(() => {
-        if (appMsgAdd.status === '1') {
-            setSubmitEnable(false)
-        }
         dispatch(getRecommendListData())
         props.setAppRekomendasiMsg(appMsgAdd)
     }, [appMsgAdd])
@@ -132,7 +129,7 @@ const HistoryRekomendasi = (props) => {
                 setSubmitEnable(true);
             }
         }
-    }, [appRecommendList])
+    }, [appRecommendList, appMsgDelete, appMsgAdd])
 
     return (
         <React.Fragment>
