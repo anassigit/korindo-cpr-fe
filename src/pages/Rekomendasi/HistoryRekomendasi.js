@@ -49,6 +49,10 @@ const HistoryRekomendasi = (props) => {
     }, [dispatch])
 
     useEffect(() => {
+        if (appMsgAdd.status === '1') {
+            setSubmitEnable(false)
+        }
+        dispatch(getRecommendListData())
         props.setAppRekomendasiMsg(appMsgAdd)
     }, [appMsgAdd])
 
@@ -103,6 +107,8 @@ const HistoryRekomendasi = (props) => {
                 }));
             }
         }
+        
+        props.setAppRekomendasiMsg(appMsgDelete)
     }, [appMsgDelete])
 
     const toggleDeleteModal = () => {
@@ -328,7 +334,8 @@ const HistoryRekomendasi = (props) => {
                     disabled={!submitEnable}
                     onClick={() => {
                         dispatch(submitRecommend())
-                        dispatch(getRecommendListData())
+                        dispatch(getInfoData())
+                        props.setAppRekomendasiMsg('')
                     }}
                     style={{
                         backgroundColor: submitEnable ? '' : "#A9A9A9",

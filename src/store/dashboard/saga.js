@@ -122,7 +122,7 @@ function* fetchAddReport({ payload: req }) {
     }
   } catch (error) {
     console.log(error);
-    yield put(msgAdd({ "status": 0, "message": "Error Get Data" }))
+    yield put(msgAdd({ "status": 0, "message": "Error Save Data" }))
   }
 }
 

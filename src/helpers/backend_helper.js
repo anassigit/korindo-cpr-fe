@@ -44,3 +44,7 @@ export const deleteRecommendBE = req => postWithParam("rest/RecommendRest/delete
 export const getListEmployeeOfMonthYearBE = req => post("rest/BestEmployeeMasterRest/getList", req)
 
 export const getYearListBE = req => post("rest/BestEmployeeMasterRest/getYearList", req)
+
+export const getCandidateListBE = req => post("rest/BestEmployeeMasterRest/getCandidateList", req)
+
+export const addEmployeeOfBE = req => post("rest/BestEmployeeMasterRest/insert", req)

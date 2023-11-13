@@ -247,21 +247,21 @@ const Rekomendasi = () => {
                                 <CardBody
                                     className="bg-light"
                                     style={{
-                                        padding: "24px 0 24px 0",
+                                        padding: "16px 0 16px 0",
                                         margin: 0,
                                         border: "1px solid #BBB",
                                         display: "flex",
                                         flexDirection: "column",
                                         alignItems: "center",
                                         justifyContent: "start",
-                                        gap: "24px",
+                                        gap: "16px",
                                     }}
                                 >
                                     {
                                         appBestlistData?.data?.list.map((item, index) => {
 
                                             const imageUrls = [satu, dua, tiga, empat, lima];
-                                            const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#176B87']; // Replace with desired colors
+                                            const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#2596BE']; // Replace with desired colors
 
                                             return (
                                                 <a

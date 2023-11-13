@@ -21,14 +21,20 @@ import '../../assets/scss/custom.scss';
 import '../../config';
 import { getListData, getYearListData } from "store/actions";
 import TableCustom2 from "common/TableCustom2";
+import AddEmployeeOf from "./AddEmployeeOf";
 
-const EmployeeOfMonYea = (props) => {
+const EmployeeOfMonYea = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [detailModal, setDetailModal] = useState(false)
+
+    const [appEmployeeOfMonYea, setAppEmployeeOfMonYea] = useState(true)
+    const [appAddEmployeeOfMonYea, setAppAddEmployeeOfMonYea] = useState(false)
+
+    const [appEmployeeMsg, setAppEmployeeMsg] = useState('')
 
     const [searchVal, setSearchVal] = useState("")
     const [filterVal, setFilterVal] = useState("")
@@ -204,23 +210,53 @@ const EmployeeOfMonYea = (props) => {
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
-                <Container fluid>
-                    <Card style={{ marginBottom: 0 }}>
-                        <CardHeader>
-                            <span className="mdi mdi-star-circle"></span> List Employee of Month/Year
-                        </CardHeader>
-                        <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
-                            <div style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                            }}
-                            >
-                                <div
-                                    className="col-6 pb-2"
+                <React.Fragment>
+                    <Container
+                        style={{ display: appEmployeeOfMonYea ? 'block' : "none" }}
+                        fluid
+                    >
+                        <Card style={{ marginBottom: 0 }}>
+                            <CardHeader>
+                                <span className="mdi mdi-star-circle"></span> List Employee of Month/Year
+                            </CardHeader>
+                            <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
+                                <div style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                }}
                                 >
                                     <div
-                                        className="col-5"
+                                        className="col-6 pb-2"
+                                    >
+                                        <div
+                                            className="col-5"
+                                            style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                gap: "12px",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            Search
+                                            <Input
+                                                type="search"
+                                                value={searchVal}
+                                                onChange={(e) => setSearchVal(e.target.value)}
+                                                onKeyPress={handleEnterKeyPress}
+                                            />
+                                            <Button
+                                                onClick={() => {
+                                                    handleClick()
+                                                }}
+                                            >
+                                                Cari
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="pb-2"
                                         style={{
                                             display: "flex",
                                             flexDirection: "row",
@@ -229,145 +265,133 @@ const EmployeeOfMonYea = (props) => {
                                             alignItems: "center",
                                         }}
                                     >
-                                        Search
+                                        Tahun
                                         <Input
-                                            type="search"
-                                            value={searchVal}
-                                            onChange={(e) => setSearchVal(e.target.value)}
-                                            onKeyPress={handleEnterKeyPress}
-                                        />
-                                        <Button
-                                            onClick={() => {
-                                                handleClick()
-                                            }}
+                                            type="select"
+                                            value={yearVal}
+                                            onChange={(e) => setYearVal(e.target.value)}
                                         >
-                                            Cari
-                                        </Button>
+                                            {
+                                                appYearListData?.data?.list
+                                                    .sort((a, b) => {
+                                                        return b - a
+                                                    })
+                                                    .map((item, index) => {
+
+                                                        return (
+                                                            <option
+                                                                key={index}
+                                                                value={item}
+                                                            >
+                                                                {item}
+                                                            </option>
+                                                        )
+                                                    })
+                                            }
+                                        </Input>
                                     </div>
                                 </div>
                                 <div
-                                    className="pb-2"
+                                    className="col-3 pb-3"
                                     style={{
                                         display: "flex",
                                         flexDirection: "row",
                                         gap: "12px",
-                                        justifyContent: "center",
+                                        justifyContent: "left",
                                         alignItems: "center",
                                     }}
                                 >
-                                    Tahun
-                                    <Input
-                                        type="select"
-                                        value={yearVal}
-                                        onChange={(e) => setYearVal(e.target.value)}
+                                    Periode/Year
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            gap: "12px",
+                                        }}
                                     >
-                                        {
-                                            appYearListData?.data?.list
-                                                .sort((a, b) => {
-                                                    return b - a
-                                                })
-                                                .map((item, index) => {
-
-                                                    return (
-                                                        <option
-                                                            key={index}
-                                                            value={item}
-                                                        >
-                                                            {item}
-                                                        </option>
-                                                    )
-                                                })
-                                        }
-                                    </Input>
+                                        <Label check={true}>
+                                            <Input
+                                                type="radio"
+                                                name="searchOption"
+                                                value="all"
+                                                onClick={() => setFilterVal("all")}
+                                                defaultChecked
+                                            /> All
+                                        </Label>
+                                        <Label check>
+                                            <Input
+                                                type="radio"
+                                                name="searchOption"
+                                                value="year"
+                                                onClick={() => setFilterVal("year")}
+                                            /> Year
+                                        </Label>
+                                        <Label check>
+                                            <Input
+                                                type="radio"
+                                                name="searchOption"
+                                                value="month"
+                                                onClick={() => setFilterVal("month")}
+                                            /> Month
+                                        </Label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div
-                                className="col-3 pb-3"
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    gap: "12px",
-                                    justifyContent: "left",
-                                    alignItems: "center",
-                                }}
-                            >
-                                Periode/Year
+
                                 <div
+                                    className="col-12 pb-3"
                                     style={{
                                         display: "flex",
                                         flexDirection: "row",
                                         gap: "12px",
+                                        justifyContent: "right",
+                                        alignItems: "center",
                                     }}
                                 >
-                                    <Label check={true}>
-                                        <Input
-                                            type="radio"
-                                            name="searchOption"
-                                            value="all"
-                                            onClick={() => setFilterVal("all")}
-                                            defaultChecked
-                                        /> All
-                                    </Label>
-                                    <Label check>
-                                        <Input
-                                            type="radio"
-                                            name="searchOption"
-                                            value="year"
-                                            onClick={() => setFilterVal("year")}
-                                        /> Year
-                                    </Label>
-                                    <Label check>
-                                        <Input
-                                            type="radio"
-                                            name="searchOption"
-                                            value="month"
-                                            onClick={() => setFilterVal("month")}
-                                        /> Month
-                                    </Label>
+                                    <Button
+                                        onClick={() => {
+                                            setAppAddEmployeeOfMonYea(true)
+                                            setAppEmployeeOfMonYea(false)
+                                        }}
+                                    >
+                                        <span className="mdi mdi-plus" /> Tambah
+                                    </Button>
                                 </div>
-                            </div>
 
-                            <div
-                                className="col-12 pb-3"
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    gap: "12px",
-                                    justifyContent: "right",
-                                    alignItems: "center",
-                                }}
-                            >
-                                <Button>
-                                    <span className="mdi mdi-plus" /> Tambah
-                                </Button>
-                            </div>
+                                <TableCustom2
+                                    keyField={"id"}
+                                    columns={appEmployeeMonYeaColumn}
+                                    redukResponse={appEmployeeMonYeaData}
+                                    appdata={appEmployeeMonYeaData.data != null && appEmployeeMonYeaData.data.list ? appEmployeeMonYeaData.data.list : []}
+                                    appdataTotal={appEmployeeMonYeaData.data != null ? appEmployeeMonYeaData.data.count : 0}
+                                    searchSet={setAppEmployeeMonYeaTabelSearch}
+                                    searchGet={appEmployeeMonYeaTabelSearch}
+                                    redukCall={getListData}
+                                />
+                            </CardBody>
+                        </Card>
+                        <Button
+                            className="btn btn-danger my-3"
+                            onClick={() => {
+                                ReactSession.set('appDetailRecommendationData', "");
+                                history.go(-1)
+                            }}
+                        >
+                            <span className="mdi mdi-arrow-left" />
+                            &nbsp;Kembali
+                        </Button>
+                        <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
+                            <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
+                        </div>
+                    </Container >
+                    <AddEmployeeOf
+                        setAppEmployeeOfMonYea={setAppEmployeeOfMonYea}
+                        appAddEmployeeOfMonYea={appAddEmployeeOfMonYea}
+                        setAppAddEmployeeOfMonYea={setAppAddEmployeeOfMonYea}
+                        setAppEmployeeMsg={setAppEmployeeMsg}
+                        appYearListData={appYearListData}
+                    />
+                </React.Fragment>
 
-                            <TableCustom2
-                                keyField={"id"}
-                                columns={appEmployeeMonYeaColumn}
-                                redukResponse={appEmployeeMonYeaData}
-                                appdata={appEmployeeMonYeaData.data != null && appEmployeeMonYeaData.data.list ? appEmployeeMonYeaData.data.list : []}
-                                appdataTotal={appEmployeeMonYeaData.data != null ? appEmployeeMonYeaData.data.count : 0}
-                                searchSet={setAppEmployeeMonYeaTabelSearch}
-                                searchGet={appEmployeeMonYeaTabelSearch}
-                                redukCall={getListData}
-                            />
-                        </CardBody>
-                    </Card>
-                    <Button
-                        className="btn btn-danger my-3"
-                        onClick={() => {
-                            ReactSession.set('appDetailRecommendationData', "");
-                            history.go(-1)
-                        }}
-                    >
-                        <span className="mdi mdi-arrow-left" />
-                        &nbsp;Kembali
-                    </Button>
-                    <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
-                        <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
-                    </div>
-                </Container >
             }
         />
     );

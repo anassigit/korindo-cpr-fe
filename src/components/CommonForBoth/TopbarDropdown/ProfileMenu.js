@@ -70,10 +70,24 @@ const ProfileMenu = props => {
           <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
             <span>Sisa Bintang</span>
             <div>
-              <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
-              {appGetInfo?.data?.UsedCount}
+              {appGetInfo?.data?.UsedCount >= 3 ? (
+                <i className="bx bx-star font-size-16 align-middle me-1 text-warning" />
+                ) : (
+                <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
+              )}
+              {appGetInfo?.data?.UsedCount >= 2 ? (
+                <i className="bx bx-star font-size-16 align-middle me-1 text-warning" />
+                ) : (
+                <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
+              )}
+              {appGetInfo?.data?.UsedCount >= 1 ? (
+                <i className="bx bx-star font-size-16 align-middle me-1 text-warning" />
+                ) : (
+                <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
+              )}
             </div>
           </a>
+
           <div className="dropdown-divider" />
           <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
             <span>Bintang yang diberikan</span>

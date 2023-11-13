@@ -149,7 +149,7 @@ function* fetchSubmitRekomendasi({ payload: req }) {
     yield put(msgAdd(response))
   } catch (error) {
     console.log(error);
-    yield put(msgAdd({ "status": 0, "message": "Error Get Data" }))
+    yield put(msgAdd({ "status": 0, "message": "Error Save Data" }))
   }
 }
 
