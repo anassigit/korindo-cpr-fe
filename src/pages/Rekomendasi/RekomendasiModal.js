@@ -31,7 +31,6 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
 
 
         onSubmit: (values) => {
-            debugger
             const selectedStickers = Object.entries(values.sticker)
                 .filter(([key, value]) => value)
                 .map(([key]) => parseInt(key));

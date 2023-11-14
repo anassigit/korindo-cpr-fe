@@ -51,7 +51,6 @@ function* reloginUser({ payload: { user, history } }) {
   }
 }
 function* logoutUser({ payload: { history } }) {
-  debugger
   try {
     localStorage.removeItem("authUser");
     localStorage.removeItem("user");

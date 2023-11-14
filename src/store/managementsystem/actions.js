@@ -1,11 +1,13 @@
 import {
   ADD_EMPLOYEE_OF,
   GET_CANDIDATE_LIST,
+  GET_KEYWORD_LIST,
   GET_LIST,
   GET_YEAR_LIST,
   MSG_ADD,
   RESET_MESSAGE,
   RESP_GET_CANDIDATE_LIST,
+  RESP_GET_KEYWORD_LIST,
   RESP_GET_LIST,
   RESP_GET_YEAR_LIST
 } from "./actionTypes"
@@ -37,6 +39,16 @@ export const getCandidateListData = (req) => ({
 
 export const respGetCandidateList = resp => ({
   type: RESP_GET_CANDIDATE_LIST,
+  payload: resp,
+})
+
+export const getKeywordListData = (req) => ({
+  type: GET_KEYWORD_LIST,
+  payload: req,
+})
+
+export const respGetKeywordList = resp => ({
+  type: RESP_GET_KEYWORD_LIST,
   payload: resp,
 })
 

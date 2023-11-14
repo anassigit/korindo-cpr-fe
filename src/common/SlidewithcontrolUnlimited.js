@@ -24,7 +24,6 @@ const SlidewithcontrolUnlimited = (props) => {
       }, [props.appKeterangan,props.foto])
 
       useEffect(() => {
-        debugger
         if(props.appMap){
             setActiveSlidePos(props.mapIdx)
             slideChangeHandler

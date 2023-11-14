@@ -57,7 +57,6 @@ const ProfileMenu = props => {
 
 
   useEffect(() => {
-    debugger;
   
     const storedUser = localStorage.getItem("user");
     const storedMemberId = localStorage.getItem("member_id");
@@ -82,9 +81,6 @@ const ProfileMenu = props => {
       setprofile_url(storedProfileUrl);
     }
   }, [props.success, profile]);
-  
-
-  console.log(profile_url)
 
   return (
     <React.Fragment>

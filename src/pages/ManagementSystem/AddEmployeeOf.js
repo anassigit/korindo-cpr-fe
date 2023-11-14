@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     Button,
     Card,
@@ -18,7 +18,10 @@ import '../../config';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Lovv2 from "common/Lovv2";
-import { getCandidateListData } from "store/actions";
+import { getCandidateListData, getKeywordListData } from "store/actions";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+import { format } from 'date-fns';
 
 const AddEmployeeOf = (props) => {
 
@@ -27,6 +30,9 @@ const AddEmployeeOf = (props) => {
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
 
+    const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
+
+    const today = format(new Date(), 'yyyy-MM-dd');
 
     const appAddEmployeeValidInput = useFormik({
         enableReinitialize: true,
@@ -34,9 +40,9 @@ const AddEmployeeOf = (props) => {
         initialValues: {
             member_id: '',
             keyword_id: '',
-            filter: '',
-            period_from: '',
-            period_to: '',
+            filter: 'month',
+            period_from: today,
+            period_to: today,
             description: '',
         },
         validationSchema: Yup.object().shape({
@@ -64,19 +70,10 @@ const AddEmployeeOf = (props) => {
             period_to: appAddEmployeeValidInput.values.period_to,
         }
     });
-    
-    // useEffect(() => {
-    //     dispatch(getCandidateListData({
-    //         limit: 5,
-    //         offset: 0,
-    //         sort: "",
-    //         order: "desc",
-    //         search: {
-    //             period_from: appAddEmployeeValidInput.values.period_from,
-    //             period_to: appAddEmployeeValidInput.values.period_to,
-    //         }
-    //     }))
-    // }, [])
+
+    useEffect(() => {
+        dispatch(getKeywordListData())
+    }, [])
 
     // useEffect(() => {
     //     dispatch(getCandidateListData({
@@ -116,6 +113,16 @@ const AddEmployeeOf = (props) => {
             headerStyle: { textAlign: 'center' },
         },
     ]
+
+    const dateChanger = (name, selectedDate) => {
+
+        if (name === 'from') {
+            appAddEmployeeValidInput.setFieldValue(period_from, selectedDate);
+
+        } else if (name === 'to') {
+            appAddEmployeeValidInput.setFieldValue(period_to, selectedDate);
+        }
+    };
 
     return (
         <Container
@@ -165,19 +172,25 @@ const AddEmployeeOf = (props) => {
                                                 <Input
                                                     id="monthRadio"
                                                     type="radio"
+                                                    checked={appAddEmployeeValidInput.values.filter === "month"}
                                                     name="searchOption"
                                                     value="month"
-                                                    onClick={() => appAddEmployeeValidInput.setFieldValue('searchOption', 'month')}
-                                                /> Month
+                                                    onChange={() =>
+                                                        appAddEmployeeValidInput.setFieldValue("filter", "month")
+                                                    }
+                                                />{" "}
+                                                Month
                                             </label>
                                             <label htmlFor="yearRadio">
                                                 <Input
                                                     id="yearRadio"
                                                     type="radio"
+                                                    checked={appAddEmployeeValidInput.values.filter === "year"}
                                                     name="searchOption"
                                                     value="year"
-                                                    onClick={() => appAddEmployeeValidInput.setFieldValue('searchOption', 'year')}
-                                                /> Year
+                                                    onChange={() => appAddEmployeeValidInput.setFieldValue("filter", "year")}
+                                                />{" "}
+                                                Year
                                             </label>
                                         </div>
                                     </div>
@@ -199,7 +212,24 @@ const AddEmployeeOf = (props) => {
                                         <Input
                                             type="select"
                                             value={appAddEmployeeValidInput.values.keyword_id}
-                                        />
+                                            onChange={(e) =>
+                                                appAddEmployeeValidInput.setFieldValue("keyword_id", e.target.value)
+                                            }
+                                        >
+                                            {appAddEmployeeValidInput.values.filter === "month" ? (
+                                                appKeywordListData?.data?.month.map((item, index) => (
+                                                    <option key={index} value={item.keyword_id}>
+                                                        {item.keyword_Name}
+                                                    </option>
+                                                ))
+                                            ) : (
+                                                appKeywordListData?.data?.year.map((item, index) => (
+                                                    <option key={index} value={item.keyword_id}>
+                                                        {item.keyword_Name}
+                                                    </option>
+                                                ))
+                                            )}
+                                        </Input>
                                     </div>
                                 </div>
 
@@ -219,9 +249,24 @@ const AddEmployeeOf = (props) => {
                                     </div>
                                     <div className="col-8">
                                         <div className="col-6">
-                                            <Input
+                                            {/* <Input
                                                 type="date"
                                                 onChange={(e) => appAddEmployeeValidInput.setFieldValue('period_from', e.target.value)}
+                                            /> */}
+                                            <DatePicker
+                                                className="form-control"
+                                                wrapperClassName="customDatePicker"
+                                                showMonthYearPicker
+                                                dateFormat="yyyy-MM"
+                                                minDate={new Date(appAddEmployeeValidInput.values.period_from)}
+                                                selected={appAddEmployeeValidInput.values.period_to ? moment(appAddEmployeeValidInput.values.period_to, 'yyyy-MM').toDate() : null}
+                                                onChange={(tglMulai) =>
+                                                    dateChanger('from', tglMulai ? moment(tglMulai).format('yyyy-MM') : null)
+                                                }
+                                                onKeyDown={(e) => {
+                                                    e.preventDefault();
+                                                }}
+                                                isClearable
                                             />
                                         </div>
                                     </div>
@@ -242,9 +287,25 @@ const AddEmployeeOf = (props) => {
                                     </div>
                                     <div className="col-8">
                                         <div className="col-6">
-                                            <Input
+                                            {/* <Input
                                                 type="date"
                                                 onChange={(e) => appAddEmployeeValidInput.setFieldValue('period_to', e.target.value)}
+                                            /> */}
+                                            <DatePicker
+                                                className="form-control"
+                                                wrapperClassName="customDatePicker"
+                                                showMonthYearPicker
+                                                dateFormat="yyyy-MM"
+                                                minDate={new Date(appAddEmployeeValidInput.values.from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : '')}
+                                                selected={appAddEmployeeValidInput.values.period_to ? moment(appAddEmployeeValidInput.values.period_to, 'yyyy-MM').toDate() : null}
+                                                onChange={(tglSelesai) =>
+                                                    dateChanger('to', tglSelesai ? moment(tglSelesai).format('yyyy-MM') : null)
+                                                }
+                                                onKeyDown={(e) => {
+                                                    e.preventDefault();
+                                                }}
+                                                isClearable
+
                                             />
                                         </div>
                                     </div>

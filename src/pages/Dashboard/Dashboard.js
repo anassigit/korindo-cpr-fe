@@ -62,7 +62,7 @@ const Rekomendasi = () => {
         dispatch(getBestListData())
         dispatch(getBestOfMonthListData())
         dispatch(getBestOfYearListData())
-        const foundRow = menu.find((row) => row.id === 'KORTRN001');
+        const foundRow = menu?.find((row) => row.id === 'KORTRN001');
         const temp = foundRow ? foundRow.path : null;
 
         setLinkRekomendasi(temp);
@@ -220,7 +220,6 @@ const Rekomendasi = () => {
     };
 
     const appDetailHandler = (e) => {
-        debugger
         setAppDetailRecommendationData(e)
         ReactSession.set('appDetailRecommendationData', e);
     }

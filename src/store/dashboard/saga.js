@@ -17,7 +17,6 @@ import {
 } from "helpers/backend_helper"
 
 function* fetchGetInfoProfile({ payload: req }) {
-  debugger
   try {
     const response = yield call(getInfoProfileBE, req)
     localStorage.setItem("user", response?.data?.user);

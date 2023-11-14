@@ -1,10 +1,12 @@
 import {
   ADD_EMPLOYEE_OF,
   GET_CANDIDATE_LIST,
+  GET_KEYWORD_LIST,
   GET_LIST,
   GET_YEAR_LIST,
   MSG_ADD,
   RESP_GET_CANDIDATE_LIST,
+  RESP_GET_KEYWORD_LIST,
   RESP_GET_LIST,
   RESP_GET_YEAR_LIST
 } from "./actionTypes"
@@ -13,6 +15,7 @@ const INIT_STATE = {
   respGetList: {},
   respGetYearList: {},
   respGetCandidateList: {},
+  respGetKeywordList: {},
   msgAdd: '',
 }
 
@@ -46,6 +49,15 @@ const managementSystemReducer = (state = INIT_STATE, action) => {
         ...state,
         respGetCandidateList: action.payload,
       }
+    case GET_KEYWORD_LIST:
+      return {
+        ...state,
+      }
+    case RESP_GET_KEYWORD_LIST:
+      return {
+        ...state,
+        respGetKeywordList: action.payload,
+      }
     case ADD_EMPLOYEE_OF:
       return {
         ...state,
@@ -61,6 +73,7 @@ const managementSystemReducer = (state = INIT_STATE, action) => {
         respGetList: {},
         respGetYearList: {},
         respGetCandidateList: {},
+        respGetKeywordList: {},
         msgAdd: '',
       }
     default:

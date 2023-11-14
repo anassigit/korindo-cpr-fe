@@ -27,7 +27,6 @@ export async function postLogin(url, data, config = {}) {
 }
 
 export async function get(url, data, config ={}) {
-  debugger
   axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");
   return await axiosApi.get(url, data, { ...config })
   .then(function (response) {

@@ -357,7 +357,7 @@ const EmployeeOfMonYea = () => {
                                     </Button>
                                 </div>
 
-                                <TableCustom2
+                                <TableCustom
                                     keyField={"id"}
                                     columns={appEmployeeMonYeaColumn}
                                     redukResponse={appEmployeeMonYeaData}
