@@ -35,7 +35,7 @@ const Rekomendasi = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const menu = JSON.parse(ReactSession.get("menu"));
+    const menu = JSON.parse(ReactSession.get("menu") || '[]');
     const [linkRekomendasi, setLinkRekomendasi] = useState();
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
