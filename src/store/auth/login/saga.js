@@ -2,10 +2,11 @@ import { call, put, takeEvery } from "redux-saga/effects"
 import { ReactSession } from 'react-client-session';
 
 // Login Redux States
-import { LOGIN_USER, LOGOUT_USER, RELOGIN_USER } from "./actionTypes"
-import { apiError, loginSuccess, reloginSuccess } from "./actions"
+import { GET_INFO_PROFILE, LOGIN_USER, LOGOUT_USER, RELOGIN_USER } from "./actionTypes"
+import { apiError, loginSuccess, reloginSuccess, respGetInfoProfile } from "./actions"
 
-import { getMenuBE, login } from "helpers/backend_helper"
+import { getInfoProfileBE, getMenuBE, login } from "helpers/backend_helper"
+
 
 function* loginUser({ payload: { user, history } }) {
   try {
@@ -49,12 +50,17 @@ function* reloginUser({ payload: { user, history } }) {
     yield put(apiError(error))
   }
 }
-
 function* logoutUser({ payload: { history } }) {
+  debugger
   try {
-    localStorage.setItem("authUser", "");
-    localStorage.setItem("user", "");
-    localStorage.setItem("member_id", "");
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("user");
+    localStorage.removeItem("member_id");
+    ReactSession.remove("menu");
+    localStorage.removeItem("menu");
+    
+    ReactSession.remove('profileData')
+
     history.push("/login")
     yield put(apiError(""))
   } catch (error) {

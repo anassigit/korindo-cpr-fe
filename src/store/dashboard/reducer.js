@@ -5,6 +5,7 @@ import {
   GET_BEST_OF_YEAR_LIST,
   GET_DETAIL_INFLUENCER,
   GET_INFO,
+  GET_INFO_PROFILE,
   GET_LIST1,
   GET_REPORT_LIST,
   MSG_ADD,
@@ -14,11 +15,13 @@ import {
   RESP_GET_BEST_OF_YEAR_LIST,
   RESP_GET_DETAIL_INFLUENCER,
   RESP_GET_INFO,
+  RESP_GET_INFO_PROFILE,
   RESP_GET_LIST,
   RESP_GET_REPORT_LIST
 } from "./actionTypes"
 
 const INIT_STATE = {
+  respGetInfoProfile: {},
   respGetList1: {},
   respGetBestList: {},
   respGetBestOfMonthList: {},
@@ -31,6 +34,17 @@ const INIT_STATE = {
 const dashboardReducer = (state = INIT_STATE, action) => {
 
   switch (action.type) {
+    
+    case GET_INFO_PROFILE:
+      return {
+        ...state,
+      }
+    case RESP_GET_INFO_PROFILE:
+      return {
+        ...state,
+        respGetInfoProfile: action.payload,
+      }
+
     case GET_LIST1:
       return {
         ...state,

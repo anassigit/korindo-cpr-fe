@@ -14,7 +14,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 // actions
-import { loginUser } from "../../store/actions";
+import { getInfoData, getInfoProfileData, loginUser } from "../../store/actions";
 
 // import images
 import profile from "assets/images/profile-img.png";
@@ -27,16 +27,6 @@ const Login = props => {
   const dispatch = useDispatch();
 
   const history = useHistory()
-
-  const reloadOnce = ReactSession.get('isAuth');
-
-  useEffect(() => {
-    if (localStorage.getItem("authUser") && reloadOnce) {
-      ReactSession.remove('isAuth')
-      history.replace('/home');
-      window.location.reload();
-    }
-  }, [history, reloadOnce]);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -58,6 +48,11 @@ const Login = props => {
   const { error } = useSelector(state => ({
     error: state.Login.error,
   }));
+
+
+  // if (localStorage.getItem("authUser")) {
+  //   window.location.replace('/home')
+  // }
 
   // handleValidSubmit
   const handleValidSubmit = (event, values) => {
@@ -227,7 +222,7 @@ const Login = props => {
                     </Form>
                   </div>
                 </CardBody>
-              
+
                 <div className="mt-5 text-center">
                   {/* <p>
                     Don&#39;t have an account ?{" "}
@@ -237,7 +232,7 @@ const Login = props => {
                     </Link>{" "}
                   </p> */}
                   <p>
-                    ©Korindo {new Date().getFullYear()}. 
+                    ©Korindo {new Date().getFullYear()}.
                   </p>
                 </div>
               </Card>

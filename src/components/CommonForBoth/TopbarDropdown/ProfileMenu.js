@@ -18,7 +18,7 @@ import { withRouter, Link } from "react-router-dom"
 // users
 import user1 from "../../../assets/images/users/userprofil.png"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getInfoData } from "store/actions";
+import { getInfoData, getInfoProfileData } from "store/actions";
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
@@ -37,18 +37,54 @@ const ProfileMenu = props => {
     dispatch(getInfoData())
   }, [])
 
+
+  // useEffect(() => {
+  //   debugger
+  //   if (localStorage.getItem("user")) {
+  //     const u = localStorage.getItem("user")
+
+  //     const m = localStorage.getItem("member_id")
+  //     const p = localStorage.getItem("profile_url")
+  //     setusername(u?.replace(/"/g, ''));
+  //     setmember_id(m?.replace(/"/g, ''));
+  //     setprofile_url(p?.replace(/"/g, ''));
+  //   }
+  // }, [appGetInfo])
+
+  const profile = useSelector(state => (
+    state.dashboardReducer.respGetInfoProfile
+  ));
+
+
   useEffect(() => {
-
-    if (localStorage.getItem("user")) {
-      const u = localStorage.getItem("user")
-
-      const m = localStorage.getItem("member_id")
-      const p = localStorage.getItem("profile_url")
-      setusername(u?.replace(/"/g, ''));
-      setmember_id(m?.replace(/"/g, ''));
-      setprofile_url(p?.replace(/"/g, ''));
+    debugger;
+  
+    const storedUser = localStorage.getItem("user");
+    const storedMemberId = localStorage.getItem("member_id");
+    const storedProfileUrl = localStorage.getItem("profile_url");
+  
+    // Check if the stored values are wrapped in double quotes before updating the state
+    const isWrappedInQuotes = (value) => /^".*"$/.test(value);
+  
+    if (isWrappedInQuotes(storedUser)) {
+      setusername(storedUser.replace(/"/g, ''));
+    } else {
+      setusername(storedUser);
     }
-  }, [props.success])
+    if (isWrappedInQuotes(storedMemberId)) {
+      setmember_id(storedMemberId.replace(/"/g, ''));
+    } else {
+      setmember_id(storedMemberId);
+    }
+    if (isWrappedInQuotes(storedProfileUrl)) {
+      setprofile_url(storedProfileUrl.replace(/"/g, ''));
+    } else {
+      setprofile_url(storedProfileUrl);
+    }
+  }, [props.success, profile]);
+  
+
+  console.log(profile_url)
 
   return (
     <React.Fragment>
@@ -72,17 +108,17 @@ const ProfileMenu = props => {
             <div>
               {appGetInfo?.data?.UsedCount >= 3 ? (
                 <i className="bx bx-star font-size-16 align-middle me-1 text-warning" />
-                ) : (
+              ) : (
                 <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
               )}
               {appGetInfo?.data?.UsedCount >= 2 ? (
                 <i className="bx bx-star font-size-16 align-middle me-1 text-warning" />
-                ) : (
+              ) : (
                 <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
               )}
               {appGetInfo?.data?.UsedCount >= 1 ? (
                 <i className="bx bx-star font-size-16 align-middle me-1 text-warning" />
-                ) : (
+              ) : (
                 <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
               )}
             </div>

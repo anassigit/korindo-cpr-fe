@@ -1,15 +1,36 @@
-import React, { useEffect, useRef } from "react";
-import { withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
-import SimpleBar from "simplebar-react";
 import MetisMenu from "metismenujs";
-import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import { ReactSession } from 'react-client-session'
+import React, { useEffect, useRef, useState } from "react";
+import { ReactSession } from 'react-client-session';
+import { withTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
+import SimpleBar from "simplebar-react";
+import { getInfoProfileData } from "store/actions";
 
 const SidebarContent = props => {
-  const menu = JSON.parse(ReactSession.get("menu"));
+
+  const dispatch = useDispatch()
+
+  const profile = useSelector(state => (
+    state.dashboardReducer.respGetInfoProfile
+  ));
+
+  let menu = JSON.parse(ReactSession.get("menu") || '[]');
+
+  useEffect(() => {
+    if (!profile?.data && !ReactSession.get('profileData')) {
+      dispatch(getInfoProfileData())
+      ReactSession.set('profileData', profile.data)
+    } else {
+      window.location.reload()
+    }
+  }, [])
+
+  // const [menu, setMenu] = useState([]);
+
   const ref = useRef();
+
 
   useEffect(() => {
     const pathName = props.location.pathname;
@@ -109,7 +130,8 @@ const SidebarContent = props => {
                 <span>{props.t("Home")}</span>
               </Link>
             </li>
-            {menu.map((item) => renderMenuItem(item))}
+            {Array.isArray(menu) && menu.map((item) => renderMenuItem(item))}
+
           </ul>
         </div>
       </SimpleBar>

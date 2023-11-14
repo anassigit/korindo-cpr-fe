@@ -1,3 +1,6 @@
+export const GET_INFO_PROFILE = "GET_INFO_PROFILE"
+export const RESP_GET_INFO_PROFILE = "RESP_GET_INFO_PROFILE"
+
 export const GET_LIST1 = "GET_LIST1"
 export const RESP_GET_LIST = "RESP_GET_LIST"
 

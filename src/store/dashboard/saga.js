@@ -1,19 +1,45 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 
+import { ReactSession } from 'react-client-session';
+
 import {
   ADD_REPORT,
-  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER, GET_INFO, GET_LIST1, GET_REPORT_LIST
+  GET_BEST_LIST, GET_BEST_OF_MONTH_LIST, GET_BEST_OF_YEAR_LIST, GET_DETAIL_INFLUENCER, GET_INFO, GET_INFO_PROFILE, GET_LIST1, GET_REPORT_LIST
 } from "./actionTypes"
 import {
   msgAdd,
-  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer, respGetInfo, respGetList1, respGetReportList
+  respGetBestList, respGetBestOfMonthList, respGetBestOfYearList, respGetDetailInfluencer, respGetInfo, respGetInfoProfile, respGetList1, respGetReportList
 } from "./actions"
 
 import {
   addReportBE,
-  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE, getInfoMainRestBE, getListMainRestBE, getReportListBE
+  getBestListBE, getBestOfMonthListBE, getBestOfYearListBE, getDetailInfluencerBE, getInfoMainRestBE, getInfoProfileBE, getListMainRestBE, getMenuBE, getReportListBE
 } from "helpers/backend_helper"
 
+function* fetchGetInfoProfile({ payload: req }) {
+  debugger
+  try {
+    const response = yield call(getInfoProfileBE, req)
+    localStorage.setItem("user", response?.data?.user);
+    localStorage.setItem("member_id", response?.data?.member_id);
+    localStorage.setItem("profile_url", response?.data?.profile_url);
+    
+    const res = yield call(getMenuBE)
+    if (res.status == 1) {
+      ReactSession.set("menu", JSON.stringify(res.data.list));
+      localStorage.setItem("menu", JSON.stringify(res.data.list));
+    }
+
+    if (response.status == 1) {
+      yield put(respGetInfoProfile(response))
+    } else {
+      yield put(respGetInfoProfile(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetInfoProfile({ "status": 0, "message": "Error Get Data" }))
+  }
+}
 function* fetchGetList({ payload: req }) {
   try {
     const response = yield call(getListMainRestBE, req)
@@ -127,6 +153,8 @@ function* fetchAddReport({ payload: req }) {
 }
 
 function* dashboardSaga() {
+
+  yield takeEvery(GET_INFO_PROFILE, fetchGetInfoProfile)
 
   yield takeEvery(GET_LIST1, fetchGetList)
   yield takeEvery(GET_INFO, fetchGetInfo)

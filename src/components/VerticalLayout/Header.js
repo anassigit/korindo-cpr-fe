@@ -9,7 +9,7 @@ import { Form, Label, Input, Alert, FormFeedback } from "reactstrap";
 import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 
 // actions
-import { reloginUser } from "../../store/actions";
+import { getInfoProfileData, reloginUser } from "../../store/actions";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -28,6 +28,8 @@ import {
 const Header = props => {
   const dispatch = useDispatch();
   // const [search, setsearch] = useState(false);
+
+
   function toggleFullscreen() {
     if (
       !document.fullscreenElement &&
@@ -54,9 +56,9 @@ const Header = props => {
       }
     }
   }
-  
+
   document.body.classList.add("vertical-collpsed");
-  
+
   function tToggle() {
 
     var body = document.body;
@@ -67,7 +69,7 @@ const Header = props => {
       body.classList.toggle("sidebar-enable");
     }
   }
-  
+
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed

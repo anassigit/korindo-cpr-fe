@@ -6,6 +6,8 @@ import {
   API_ERROR,
   RELOGIN_USER,
   RELOGIN_SUCCESS,
+  GET_INFO_PROFILE,
+  RESP_GET_INFO_PROFILE,
 } from "./actionTypes"
 
 const initialState = {
