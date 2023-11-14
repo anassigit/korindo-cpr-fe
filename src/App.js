@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from "react"
+import React, { useEffect } from "react"
 
 import { Switch, BrowserRouter as Router } from "react-router-dom"
 import { connect } from "react-redux"
@@ -18,24 +18,25 @@ import NonAuthLayout from "./components/NonAuthLayout"
 import "./assets/scss/theme.scss"
 
 import { ReactSession } from 'react-client-session';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 const App = props => {
   ReactSession.setStoreType("localStorage");
-
-//   window.onunload = () => {
-//     ReactSession.set("authUser", "");
-//     ReactSession.set("user", "");
-//  }
+  
+  //   window.onunload = () => {
+  //     ReactSession.set("authUser", "");
+  //     ReactSession.set("user", "");
+  //  }
 
   function getLayout() {
-  
+
     return VerticalLayout
   }
 
   const Layout = getLayout()
   return (
     <React.Fragment>
-      
+
       <Router>
         <Switch>
           {publicRoutes.map((route, idx) => (

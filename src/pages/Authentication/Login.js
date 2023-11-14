@@ -19,10 +19,24 @@ import { loginUser } from "../../store/actions";
 // import images
 import profile from "assets/images/profile-img.png";
 import logo from "assets/images/logotitle.png";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
+import { ReactSession } from 'react-client-session';
 
 const Login = props => {
   const dispatch = useDispatch();
+
+  const history = useHistory()
+
+  const reloadOnce = ReactSession.get('isAuth');
+
+  useEffect(() => {
+    if (localStorage.getItem("authUser") && reloadOnce) {
+      ReactSession.remove('isAuth')
+      history.replace('/home');
+      window.location.reload();
+    }
+  }, [history, reloadOnce]);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed

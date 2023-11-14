@@ -19,6 +19,8 @@ const Authmiddleware = ({
 
       if (korToken && !localStorage.getItem("authUser")) {
         localStorage.setItem('authUser', korToken)
+        debugger
+        ReactSession.set('isAuth', true)
         window.location.reload()
       }
       if (isAuthProtected && !localStorage.getItem("authUser")) {
