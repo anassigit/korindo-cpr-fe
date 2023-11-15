@@ -35,7 +35,7 @@ const Member = (props) => {
 
   useEffect(() => {
     debugger
-    if (history.location.state.member_id) {
+    if (history.location.state && history.location.state.member_id) {
       setEmployeeId(history.location.state.member_id)
       setIsAdd(true)
       setModalRekomendasi(true)
