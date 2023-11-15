@@ -232,13 +232,17 @@ const HistoryRekomendasi = (props) => {
                                                 left: '-1em',
                                             }}
                                         >
-                                            <b id="name-recommendation" style={{ fontSize: '1.8vh' }}>
+                                            <b id={`name-recommendation-${index}`} style={{ fontSize: '1.8vh' }}>
                                                 {item.name}
                                             </b>
+
                                             <div className="text-primary" style={{ fontSize: '1.3vh', marginLeft: '0' }}>
                                                 {item.dept_name}
                                             </div>
                                         </div>
+                                        <UncontrolledTooltip target={`name-recommendation-${index}`} placement='top'>
+                                            {item.name}
+                                        </UncontrolledTooltip>
 
                                     </div>
                                     <div>
@@ -341,7 +345,7 @@ const HistoryRekomendasi = (props) => {
                             marginRight: "12px", // Adjust the spacing between the buttons
                         }}
                     >
-                        <span className='mdi mdi-home'/>
+                        <span className='mdi mdi-home' />
                         &nbsp;Home
                     </a>
                     <Button
