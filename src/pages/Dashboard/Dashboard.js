@@ -240,7 +240,7 @@ const Rekomendasi = () => {
                             }}
                         >
                             <Card style={{ marginBottom: 0, width: "20%" }}>
-                                <CardHeader style={{ fontSize: "14px" }}>
+                                <CardHeader style={{ fontSize: "16px" }}>
                                     <span className="mdi mdi-star-circle"></span> Peringkat 5 Calon Pemenang
                                 </CardHeader>
                                 <CardBody
@@ -299,7 +299,7 @@ const Rekomendasi = () => {
                                                         <h5
                                                             className="text-white"
                                                             style={{
-                                                                fontSize: "14px",
+                                                                fontSize: "16px",
                                                                 marginBottom: 0,
                                                                 color: "white",
                                                             }}
@@ -322,7 +322,7 @@ const Rekomendasi = () => {
                                 </CardBody>
                             </Card>
                             <Card style={{ marginBottom: 0, width: "79%" }}>
-                                <CardHeader style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
+                                <CardHeader style={{ display: "flex", justifyContent: "space-between", fontSize: "16px" }}>
                                     <div>
                                         <span className="mdi mdi-star-circle"></span> {appListData?.data?.title}
                                     </div>
@@ -360,21 +360,30 @@ const Rekomendasi = () => {
                                                         >
                                                             <div
                                                                 style={{
-                                                                    position: 'absolute',
-                                                                    top: 5,
-                                                                    left: '18.5%',
-                                                                    transform: 'translateX(-50%)',
-                                                                    display: 'flex',
-                                                                    flexDirection: 'row',
-                                                                    justifyContent: 'center',
-                                                                    alignItems: 'center',
+                                                                    position: 'relative',
+                                                                    margin: '0',
                                                                 }}
                                                             >
-                                                                {
-                                                                    Array.from({ length: item.bestEmployeeCount }, (_, i) => (
-                                                                        <img key={i} width={'20px'} src={star} />
-                                                                    ))
-                                                                }
+                                                                <div
+                                                                    style={{
+                                                                        position: 'absolute',
+                                                                        bottom: 45,
+                                                                        left: 65,
+                                                                        transform: 'translateX(-50%)',
+                                                                        display: 'flex',
+                                                                        flexDirection: 'row',
+                                                                        justifyContent: 'center',
+                                                                        alignItems: 'center',
+                                                                    }}
+                                                                >
+                                                                    {
+                                                                        Array.from({ length: item.bestEmployeeCount }, (_, i) => (
+                                                                            <React.Fragment key={i}>
+                                                                                <img width={'20px'} src={star} />
+                                                                            </React.Fragment>
+                                                                        ))
+                                                                    }
+                                                                </div>
                                                             </div>
                                                             <img
                                                                 draggable="false"
@@ -505,7 +514,7 @@ const Rekomendasi = () => {
                             <Card style={{
                                 padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%",
                             }}>
-                                <CardHeader style={{ fontSize: "14px" }}>
+                                <CardHeader style={{ fontSize: "16px" }}>
                                     <span className="mdi mdi-star-circle"></span> Employee of the Month
                                 </CardHeader>
                                 <CardBody style={{
@@ -517,7 +526,7 @@ const Rekomendasi = () => {
                                 }}>
                                     <div
                                         className="d-flex justify-content-between py-2"
-                                        style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
+                                        style={{ fontSize: "16px", marginRight: 1, marginLeft: 1 }}
                                     >
                                         <a
                                             className="arrow-left"
@@ -555,29 +564,39 @@ const Rekomendasi = () => {
                                                                 }}>
                                                                 <div
                                                                     style={{
-                                                                        position: 'absolute',
-                                                                        top: 5,
-                                                                        left: '18.5%',
-                                                                        transform: 'translateX(-50%)', // Center the container horizontally
-                                                                        display: 'flex',
-                                                                        flexDirection: 'row',
-                                                                        justifyContent: 'center',
-                                                                        alignItems: 'center',
+                                                                        position: 'relative',
+                                                                        margin: '0',
                                                                     }}
                                                                 >
-                                                                    {
-                                                                        Array.from({ length: row.bestEmployeeCount }, (_, i) => (
-                                                                            <img key={i} width={'20px'} src={star} />
-                                                                        ))
-                                                                    }
+                                                                    <div
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            bottom: 50,
+                                                                            left: 73,
+                                                                            transform: 'translateX(-50%)',
+                                                                            display: 'flex',
+                                                                            flexDirection: 'row',
+                                                                            justifyContent: 'center',
+                                                                            alignItems: 'center',
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            Array.from({ length: row.bestEmployeeCount }, (_, i) => (
+                                                                                <React.Fragment key={i}>
+                                                                                    <img width={'20px'} src={star} />
+                                                                                </React.Fragment>
+                                                                            ))
+                                                                        }
+                                                                    </div>
                                                                 </div>
                                                                 <img
+                                                                    draggable="false"
                                                                     style={{
                                                                         minWidth: "10em",
                                                                         maxWidth: "10em",
                                                                         height: "10em",
-                                                                        objectPosition: "center top",
                                                                         objectFit: "cover",
+                                                                        objectPosition: "center top",
                                                                         borderRadius: "50%",
                                                                         marginRight: "5%",
                                                                     }}
@@ -607,7 +626,7 @@ const Rekomendasi = () => {
                                                                         {row.member_name}
                                                                     </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
-                                                                    <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
+                                                                    <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
                                                             </CardBody>
                                                         </Card>
@@ -664,7 +683,7 @@ const Rekomendasi = () => {
                                                             }}>
                                                                 <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
                                                                 <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                                <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
+                                                                <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
                                                             </Col>
                                                         </CardBody>
                                                     </Card>
@@ -721,7 +740,7 @@ const Rekomendasi = () => {
                                 ></div>
                             </a>
                             <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%" }}>
-                                <CardHeader style={{ fontSize: "14px" }}>
+                                <CardHeader style={{ fontSize: "16px" }}>
                                     <span className="mdi mdi-star-circle"></span> Employee of the Year
                                 </CardHeader>
                                 <CardBody style={{
@@ -730,7 +749,7 @@ const Rekomendasi = () => {
                                 }}>
                                     <div
                                         className="d-flex justify-content-between py-2"
-                                        style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
+                                        style={{ fontSize: "16px", marginRight: 1, marginLeft: 1 }}
                                     >
                                         <a
                                             className="arrow-left"
@@ -769,23 +788,31 @@ const Rekomendasi = () => {
                                                                 }}>
                                                                 <div
                                                                     style={{
-                                                                        position: 'absolute',
-                                                                        top: 5,
-                                                                        left: '18.5%',
-                                                                        transform: 'translateX(-50%)',
-                                                                        display: 'flex',
-                                                                        flexDirection: 'row',
-                                                                        justifyContent: 'center',
-                                                                        alignItems: 'center',
+                                                                        position: 'relative',
+                                                                        margin: '0',
                                                                     }}
                                                                 >
-                                                                    {
-                                                                        Array.from({ length: row.bestEmployeeCount }, (_, i) => (
-                                                                            <img key={i} width={'20px'} src={star} />
-                                                                        ))
-                                                                    }
+                                                                    <div
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            bottom: 50,
+                                                                            left: 73,
+                                                                            transform: 'translateX(-50%)',
+                                                                            display: 'flex',
+                                                                            flexDirection: 'row',
+                                                                            justifyContent: 'center',
+                                                                            alignItems: 'center',
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            Array.from({ length: row.bestEmployeeCount }, (_, i) => (
+                                                                                <React.Fragment key={i}>
+                                                                                    <img width={'20px'} src={star} />
+                                                                                </React.Fragment>
+                                                                            ))
+                                                                        }
+                                                                    </div>
                                                                 </div>
-
                                                                 {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
                                                                 {/* <img
                                                                     src={row.gender.toLowerCase() === 'male' ? crown : tiara}
@@ -800,12 +827,13 @@ const Rekomendasi = () => {
                                                                     className="mdi mdi-crown px-3 py-1"
                                                                 /> */}
                                                                 <img
+                                                                    draggable="false"
                                                                     style={{
                                                                         minWidth: "10em",
                                                                         maxWidth: "10em",
                                                                         height: "10em",
-                                                                        objectPosition: "center top",
                                                                         objectFit: "cover",
+                                                                        objectPosition: "center top",
                                                                         borderRadius: "50%",
                                                                         marginRight: "5%",
                                                                     }}
@@ -831,12 +859,12 @@ const Rekomendasi = () => {
                                                                     >
                                                                         {row.member_name}
                                                                     </div>
-                                                                    
+
                                                                     <UncontrolledTooltip target={`tooltip-name-${key}-${row.member_id}`}>
                                                                         {row.member_name}
                                                                     </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
-                                                                    <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
+                                                                    <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
                                                             </CardBody>
                                                         </Card>
@@ -881,7 +909,7 @@ const Rekomendasi = () => {
                                                             }}>
                                                                 <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
                                                                 <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                                <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
+                                                                <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
                                                             </Col>
                                                         </CardBody>
                                                     </Card>

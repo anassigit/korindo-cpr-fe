@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Spinner, Input, Form, FormGroup } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Spinner, Input, Form, FormGroup, FormFeedback } from 'reactstrap';
 import '../../assets/scss/custom/modal/modal.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { addRecommend, editRecommend, getMemberListData, getRecommendData, getRecommendListData, getSearchData, getStickerListData, resetMessage } from 'store/actions';
 import { useFormik } from 'formik';
 import { ReactSession } from 'react-client-session';
 import * as Yup from "yup";
+import '../../assets/scss/custom.scss';
 
 const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) => {
 
@@ -26,7 +27,13 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
             sticker: {},
         },
         validationSchema: Yup.object().shape({
-            // comment: Yup.string().required("Wajib diisi"),
+            sticker: Yup.object().test(
+                'atLeastOneSticker',
+                'Wajib dipilih minimal satu',
+                (value) => {
+                    return Object.values(value).some((selected) => selected);
+                }
+            ),
         }),
 
 
@@ -48,8 +55,8 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                     sticker: selectedStickers,
                 }));
             }
-            appRekomendasiValidInput.resetForm()
-            toggle()
+            appRekomendasiValidInput.resetForm();
+            toggle();
         }
     });
 
@@ -118,9 +125,16 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
 
                         {isAdd === true ? (
                             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                                <b>
-                                    Penghargaan
-                                </b>
+                                <span>
+                                    <b>
+                                        Penghargaan
+                                        <span className='text-danger'>*</span>
+                                        &nbsp;
+                                    </b>
+                                    <span className='opacity-50 unselectable'>
+                                        (Pilih satu atau lebih)
+                                    </span>
+                                </span>
                                 <div>
                                     {
                                         appStickerListData?.data?.list.map((item, index) => {
@@ -139,16 +153,23 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                                             }
                                                         }}
                                                         checked={appRekomendasiValidInput.values.sticker[item.id] || false}
+                                                        invalid={
+                                                            appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? true : false
+                                                        }
                                                     />
                                                     <label htmlFor={item.id} style={{ marginRight: "12px" }}>
                                                         &nbsp;{item.name}
                                                         <img width={'18px'} style={{ position: "relative", top: "-2px", marginLeft: "2px" }} src={item.url} alt={item.name} />
                                                     </label>
+
                                                 </React.Fragment>
 
                                             )
                                         })
                                     }
+                                    {appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? (
+                                        <FormFeedback type="invalid">{appRekomendasiValidInput.errors.sticker}</FormFeedback>
+                                    ) : null}
                                     <div style={{ fontWeight: 'bold' }}>
                                         Keterangan
                                     </div>

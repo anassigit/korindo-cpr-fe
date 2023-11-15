@@ -57,14 +57,14 @@ const ProfileMenu = props => {
 
 
   useEffect(() => {
-  
+
     const storedUser = localStorage.getItem("user");
     const storedMemberId = localStorage.getItem("member_id");
     const storedProfileUrl = localStorage.getItem("profile_url");
-  
+
     // Check if the stored values are wrapped in double quotes before updating the state
     const isWrappedInQuotes = (value) => /^".*"$/.test(value);
-  
+
     if (isWrappedInQuotes(storedUser)) {
       setusername(storedUser.replace(/"/g, ''));
     } else {
@@ -94,13 +94,13 @@ const ProfileMenu = props => {
           id="page-dropdown"
           tag="button"
         >
-          <span className="d-none d-xl-inline-block ms-2 me-1">Bintang Saya</span>
+          <span style={{ fontSize: "14px" }} className="d-none d-xl-inline-block ms-2 me-1">Bintang Saya</span>
           <i className="mdi mdi-star-circle text-warning opacity-0" style={{ position: "absolute" }} />
           <i className="mdi mdi-star-circle text-warning" style={{ position: "absolute", fontSize: "18px", top: 12 }} />
         </DropdownToggle>
         <DropdownMenu className="dropdown-star-detail">
-          <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
-            <span>Sisa Bintang</span>
+          <a className="dropdown-item d-flex justify-content-between" style={{ width: "20rem" }}>
+            <span style={{ fontSize: "14px" }}>Sisa Bintang Hari Ini</span>
             <div>
               {appGetInfo?.data?.UsedCount >= 3 ? (
                 <i className="bx bx-star font-size-16 align-middle me-1 text-warning" />
@@ -121,16 +121,16 @@ const ProfileMenu = props => {
           </a>
 
           <div className="dropdown-divider" />
-          <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
-            <span>Bintang yang diberikan</span>
+          <a className="dropdown-item d-flex justify-content-between" style={{ width: "20rem" }}>
+            <span style={{ fontSize: "14px" }}>Bintang yang diberikan</span>
             <div>
               <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
               {appGetInfo?.data?.sent}
             </div>
           </a>
           <div className="dropdown-divider" />
-          <a className="dropdown-item d-flex justify-content-between" style={{ width: "16rem" }}>
-            <span>Bintang yang diterima</span>
+          <a className="dropdown-item d-flex justify-content-between" style={{ width: "20rem" }}>
+            <span style={{ fontSize: "14px" }}>Bintang yang diterima</span>
             <div>
               <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
               {appGetInfo?.data?.received}
@@ -165,7 +165,7 @@ const ProfileMenu = props => {
           style={{ borderLeft: "2px solid #2596BE" }}
           tag="button"
         >
-          <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
+          <span style={{ fontSize: "14px" }} className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
@@ -176,7 +176,7 @@ const ProfileMenu = props => {
           <div className="dropdown-divider" /> */}
           <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
-            <span>{props.t("Logout")}</span>
+            <span style={{ fontSize: "14px" }}>{props.t("Logout")}</span>
           </Link>
         </DropdownMenu>
       </Dropdown>

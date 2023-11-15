@@ -50,7 +50,7 @@ const HistoryRekomendasi = (props) => {
 
     useEffect(() => {
         dispatch(getRecommendListData())
-        
+
         dispatch(getInfoData())
 
         props.setAppRekomendasiMsg(appMsgAdd)
@@ -107,7 +107,7 @@ const HistoryRekomendasi = (props) => {
                 }));
             }
         }
-        
+
         dispatch(getRecommendListData())
         props.setAppRekomendasiMsg(appMsgDelete)
     }, [appMsgDelete])
@@ -333,21 +333,33 @@ const HistoryRekomendasi = (props) => {
                         )
                     })
                 ) : null}
-                <Button
-                    disabled={!submitEnable}
-                    onClick={() => {
-                        dispatch(submitRecommend())
-                        props.setAppRekomendasiMsg('')
-                    }}
-                    style={{
-                        backgroundColor: submitEnable ? '' : "#A9A9A9",
-                        borderColor: submitEnable ? '' : "#A9A9A9",
-                        position: "absolute",
-                        bottom: "4%",
-                        right: "4%",
-                    }}>
-                    Submit
-                </Button>
+                <div style={{ display: "flex", justifyContent: "flex-end", position: "absolute", bottom: "4%", right: "4%" }}>
+                    <Button
+                        className="btn btn-danger"
+                        onClick={() => {
+                            history.go(-1)
+                        }}
+                        style={{
+                            marginRight: "8px", // Adjust the spacing between the buttons
+                        }}
+                    >
+                        Kembali
+                    </Button>
+                    <Button
+                        disabled={!submitEnable}
+                        onClick={() => {
+                            dispatch(submitRecommend());
+                            props.setAppRekomendasiMsg('');
+                        }}
+                        style={{
+                            backgroundColor: submitEnable ? '' : "#A9A9A9",
+                            borderColor: submitEnable ? '' : "#A9A9A9",
+                        }}
+                    >
+                        Submit
+                    </Button>
+                </div>
+
                 <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                     <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                 </div>
