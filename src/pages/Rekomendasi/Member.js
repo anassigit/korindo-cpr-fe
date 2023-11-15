@@ -34,13 +34,22 @@ const Member = (props) => {
   }, [appMemberList2])
 
   useEffect(() => {
-    debugger
     if (history.location.state && history.location.state.member_id) {
       setEmployeeId(history.location.state.member_id)
       setIsAdd(true)
       setModalRekomendasi(true)
     }
   }, [history.location.state])
+
+  useEffect(() => {
+    if (modalRekomendasi && isAdd) {
+      const timeoutId = setTimeout(() => {
+        history.replace({ state: { member_id: null } });
+      }, 200);
+  
+      return () => clearTimeout(timeoutId);
+    }
+  }, [modalRekomendasi, isAdd, history]);
 
   useEffect(() => {
     props.setCurrentPage(1);
