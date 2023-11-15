@@ -408,7 +408,7 @@ const Rekomendasi = () => {
                                                                     .slice()
                                                                     .sort((a, b) => {
                                                                         return (
-                                                                            b.member_id - a.member_id
+                                                                            b.id - a.id
                                                                         )
                                                                     })
                                                                     .map((row, i) => {
@@ -427,7 +427,7 @@ const Rekomendasi = () => {
                                                                                     id={tooltipTarget}
                                                                                 />
                                                                                 <UncontrolledTooltip target={tooltipTarget}>
-                                                                                    {row.member_name}
+                                                                                    {row.name}
                                                                                 </UncontrolledTooltip>
                                                                             </React.Fragment>
                                                                         );
