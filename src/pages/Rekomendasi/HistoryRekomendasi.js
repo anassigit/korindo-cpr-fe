@@ -334,17 +334,16 @@ const HistoryRekomendasi = (props) => {
                     })
                 ) : null}
                 <div style={{ display: "flex", justifyContent: "flex-end", position: "absolute", bottom: "4%", right: "4%" }}>
-                    <Button
+                    <a
                         className="btn btn-danger"
-                        onClick={() => {
-                            history.go(-1)
-                        }}
+                        href='/home'
                         style={{
-                            marginRight: "8px", // Adjust the spacing between the buttons
+                            marginRight: "12px", // Adjust the spacing between the buttons
                         }}
                     >
-                        Kembali
-                    </Button>
+                        <span className='mdi mdi-home'/>
+                        &nbsp;Home
+                    </a>
                     <Button
                         disabled={!submitEnable}
                         onClick={() => {

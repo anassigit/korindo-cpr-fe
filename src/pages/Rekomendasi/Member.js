@@ -7,9 +7,12 @@ import { getMemberListData, getSearchData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
 import RekomendasiModal from './RekomendasiModal';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Member = (props) => {
+
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [modalRekomendasi, setModalRekomendasi] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
@@ -31,7 +34,15 @@ const Member = (props) => {
   }, [appMemberList2])
 
   useEffect(() => {
+    debugger
+    if (history.location.state.member_id) {
+      setEmployeeId(history.location.state.member_id)
+      setIsAdd(true)
+      setModalRekomendasi(true)
+    }
+  }, [history.location.state])
 
+  useEffect(() => {
     props.setCurrentPage(1);
     props.setOffset(0);
   }, [selectedDeptData]);
@@ -170,6 +181,7 @@ const Member = (props) => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
                                     setEmployeeId(item.id)
+                                    history.push({ state: { member_id: undefined } })
                                   }}
                                 >
                                   Beri Bintang

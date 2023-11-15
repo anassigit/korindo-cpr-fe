@@ -25,6 +25,9 @@ const DetailInfluencer = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const menu = JSON.parse(ReactSession.get("menu") || '[]');
+    const [linkRekomendasi, setLinkRekomendasi] = useState();
+
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [detailModal, setDetailModal] = useState(false)
 
@@ -38,6 +41,10 @@ const DetailInfluencer = (props) => {
 
     useEffect(() => {
         setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
+        const foundRow = menu?.find((row) => row.id === 'KORTRN001');
+        const temp = foundRow ? foundRow.path : null;
+
+        setLinkRekomendasi(temp);
     }, [])
 
     useEffect(() => {
@@ -210,6 +217,18 @@ const DetailInfluencer = (props) => {
                         >
                             <span className="mdi mdi-arrow-left" />
                             &nbsp;Kembali
+                        </Button>
+                        <Button
+                            className="btn btn-warning my-3 mx-2"
+                            onClick={() => {
+                                debugger
+                                ReactSession.set('appDetailRecommendationData', "");
+                                const newMemberId = appDetailRecommendationData.member_id;
+                                history.push({ pathname: '/' + linkRekomendasi, state: { member_id: newMemberId } })
+                            }}
+                        >
+                            <span className="mdi mdi-star" />
+                            &nbsp;Berikan Bintang
                         </Button>
                         <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                             <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
