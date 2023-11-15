@@ -52,3 +52,5 @@ export const getCandidateListBE = req => post("rest/BestEmployeeMasterRest/getCa
 export const getKeywordListBE = req => post("rest/BestEmployeeMasterRest/getKeywordList", req)
 
 export const addEmployeeOfBE = req => post("rest/BestEmployeeMasterRest/insert", req)
+
+export const getLovCandidateBE = req => post("rest/BestEmployeeMasterRest/getCandidateList", req)

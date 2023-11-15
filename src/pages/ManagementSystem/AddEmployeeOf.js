@@ -23,6 +23,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import { format } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
+import { getCandidateLov } from "store/lov/actions";
 
 const AddEmployeeOf = (props) => {
 
@@ -42,8 +43,8 @@ const AddEmployeeOf = (props) => {
             member_id: '',
             keyword_id: '',
             filter: 'month',
-            period_from: today,
-            period_to: today,
+            period_from: '',
+            period_to: '',
             description: '',
         },
         validationSchema: Yup.object().shape({
@@ -59,35 +60,23 @@ const AddEmployeeOf = (props) => {
         }
     });
 
-    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState({
-        page: 1,
-        limit: 10,
-        offset: 0,
-        sort: "",
-        order: "",
-        search:
-        {
-            period_from: appAddEmployeeValidInput.values.period_from,
-            period_to: appAddEmployeeValidInput.values.period_to,
-        }
-    });
+    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
 
     useEffect(() => {
-        dispatch(getKeywordListData())
-    }, [])
+        const formattedDateFrom = appAddEmployeeValidInput.values.period_from
+            ? new Date(appAddEmployeeValidInput.values.period_from).toLocaleDateString('en-GB').replace(/\//g, '-')
+            : '';
+        const formattedDateTo = appAddEmployeeValidInput.values.period_to
+            ? new Date(appAddEmployeeValidInput.values.period_to).toLocaleDateString('en-GB').replace(/\//g, '-')
+            : '';
 
-    // useEffect(() => {
-    //     dispatch(getCandidateListData({
-    //         limit: 5,
-    //         offset: 0,
-    //         sort: "",
-    //         order: "desc",
-    //         search: {
-    //             period_from: appAddEmployeeValidInput.values.period_from,
-    //             period_to: appAddEmployeeValidInput.values.period_to,
-    //         }
-    //     }))
-    // }, [appAddEmployeeValidInput.values])
+        setAppCandidateSearchLov({
+            period_from: formattedDateFrom,
+            period_to: formattedDateTo,
+        });
+    }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
+
+    console.log('appCandidateSearchLov', appCandidateSearchLov)
 
     const appLovCandidateListColumns = [
         {
@@ -124,6 +113,10 @@ const AddEmployeeOf = (props) => {
             appAddEmployeeValidInput.setFieldValue('period_to', selectedDate);
         }
     };
+
+    const appCallBackEmployee = (row) => {
+        appAddEmployeeValidInput.setFieldValue("member_id", row.member_id)
+    }
 
     return (
         <Container
@@ -257,10 +250,10 @@ const AddEmployeeOf = (props) => {
                                             <DatePicker
                                                 className="form-control"
                                                 wrapperClassName="customDatePicker"
-                                                minDate={appAddEmployeeValidInput.values.period_from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : null}
-                                                selected={appAddEmployeeValidInput.values.period_from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : null}
+                                                maxDate={appAddEmployeeValidInput.values.period_to && new Date(appAddEmployeeValidInput.values.period_to)}
+                                                selected={appAddEmployeeValidInput.values.period_from && new Date(appAddEmployeeValidInput.values.period_from)}
                                                 onChange={(tglMulai) =>
-                                                    dateChanger('from', tglMulai ? moment(tglMulai).format('yyyy-MM') : null)
+                                                    dateChanger('from', tglMulai ? tglMulai : null)
                                                 }
                                                 onKeyDown={(e) => {
                                                     e.preventDefault();
@@ -293,10 +286,10 @@ const AddEmployeeOf = (props) => {
                                             <DatePicker
                                                 className="form-control"
                                                 wrapperClassName="customDatePicker"
-                                                maxDate={appAddEmployeeValidInput.values.period_from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : null}
-                                                selected={appAddEmployeeValidInput.values.period_to ? moment(appAddEmployeeValidInput.values.period_to, 'yyyy-MM').toDate() : null}
+                                                minDate={appAddEmployeeValidInput.values.period_from && new Date(appAddEmployeeValidInput.values.period_from)}
+                                                selected={appAddEmployeeValidInput.values.period_to && new Date(appAddEmployeeValidInput.values.period_to)}
                                                 onChange={(tglSelesai) =>
-                                                    dateChanger('to', tglSelesai ? moment(tglSelesai).format('yyyy-MM') : null)
+                                                    dateChanger('to', tglSelesai ? tglSelesai : null)
                                                 }
                                                 onKeyDown={(e) => {
                                                     e.preventDefault();
@@ -321,13 +314,13 @@ const AddEmployeeOf = (props) => {
                                         </Label>
                                     </div>
                                     <div className="col-8">
-                                        {/* <Lovv2
+                                        <Lovv2
                                             title="Karyawan"
                                             keyFieldData="member_id"
                                             columns={appLovCandidateListColumns}
-                                            getData={getCandidateListData}
+                                            getData={getCandidateLov}
                                             pageSize={10}
-                                            //callbackFunc={app038p02callBackLovWilayah}
+                                            callbackFunc={appCallBackEmployee}
                                             defaultSetInput="member_id"
                                             invalidData={appAddEmployeeValidInput}
                                             fieldValue="member_id"
@@ -335,7 +328,7 @@ const AddEmployeeOf = (props) => {
                                             stateSearchInputSet={setAppCandidateSearchLov}
                                             touchedLovField={appAddEmployeeValidInput.touched.member_id}
                                             errorLovField={appAddEmployeeValidInput.errors.member_id}
-                                        /> */}
+                                        />
                                     </div>
                                 </div>
                                 <div
