@@ -22,6 +22,7 @@ import { getCandidateListData, getKeywordListData } from "store/actions";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { format } from 'date-fns';
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddEmployeeOf = (props) => {
 
@@ -117,10 +118,10 @@ const AddEmployeeOf = (props) => {
     const dateChanger = (name, selectedDate) => {
 
         if (name === 'from') {
-            appAddEmployeeValidInput.setFieldValue(period_from, selectedDate);
+            appAddEmployeeValidInput.setFieldValue('period_from', selectedDate);
 
         } else if (name === 'to') {
-            appAddEmployeeValidInput.setFieldValue(period_to, selectedDate);
+            appAddEmployeeValidInput.setFieldValue('period_to', selectedDate);
         }
     };
 
@@ -256,10 +257,8 @@ const AddEmployeeOf = (props) => {
                                             <DatePicker
                                                 className="form-control"
                                                 wrapperClassName="customDatePicker"
-                                                showMonthYearPicker
-                                                dateFormat="yyyy-MM"
-                                                minDate={new Date(appAddEmployeeValidInput.values.period_from)}
-                                                selected={appAddEmployeeValidInput.values.period_to ? moment(appAddEmployeeValidInput.values.period_to, 'yyyy-MM').toDate() : null}
+                                                minDate={appAddEmployeeValidInput.values.period_from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : null}
+                                                selected={appAddEmployeeValidInput.values.period_from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : null}
                                                 onChange={(tglMulai) =>
                                                     dateChanger('from', tglMulai ? moment(tglMulai).format('yyyy-MM') : null)
                                                 }
@@ -294,9 +293,7 @@ const AddEmployeeOf = (props) => {
                                             <DatePicker
                                                 className="form-control"
                                                 wrapperClassName="customDatePicker"
-                                                showMonthYearPicker
-                                                dateFormat="yyyy-MM"
-                                                minDate={new Date(appAddEmployeeValidInput.values.from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : '')}
+                                                maxDate={appAddEmployeeValidInput.values.period_from ? moment(appAddEmployeeValidInput.values.period_from, 'yyyy-MM').toDate() : null}
                                                 selected={appAddEmployeeValidInput.values.period_to ? moment(appAddEmployeeValidInput.values.period_to, 'yyyy-MM').toDate() : null}
                                                 onChange={(tglSelesai) =>
                                                     dateChanger('to', tglSelesai ? moment(tglSelesai).format('yyyy-MM') : null)
@@ -305,7 +302,6 @@ const AddEmployeeOf = (props) => {
                                                     e.preventDefault();
                                                 }}
                                                 isClearable
-
                                             />
                                         </div>
                                     </div>

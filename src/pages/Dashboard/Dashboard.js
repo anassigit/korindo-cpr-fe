@@ -399,8 +399,34 @@ const Rekomendasi = () => {
                                                                     maxWidth: "60%"
                                                                 }}
                                                             >
-                                                                <div style={{ color: '#495057', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{item?.member_name}</div>
-                                                                <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{item.dept_name}</div>
+                                                                <div
+                                                                    style={{
+                                                                        color: '#495057',
+                                                                        fontSize: "20px",
+                                                                        fontWeight: "bold",
+                                                                        textOverflow: "ellipsis",
+                                                                        whiteSpace: "nowrap",
+                                                                        overflow: "hidden",
+                                                                        width: "95%"
+                                                                    }}
+                                                                    id={`tooltip-name-${index}-${item.member_id}`}
+                                                                >
+                                                                    {item?.member_name}
+                                                                </div>
+                                                                <UncontrolledTooltip target={`tooltip-name-${index}-${item.member_id}`}>
+                                                                    {item.member_name}
+                                                                </UncontrolledTooltip>
+                                                                <div
+                                                                    className="text-primary"
+                                                                    style={{
+                                                                        fontSize: "16px",
+                                                                        textOverflow: "ellipsis",
+                                                                        whiteSpace: "nowrap",
+                                                                        overflow: "hidden",
+                                                                        width: "100%"
+                                                                    }}>
+                                                                    {item.dept_name}
+                                                                </div>
                                                             </Col>
                                                             {
                                                                 item.stickerList &&
@@ -433,7 +459,6 @@ const Rekomendasi = () => {
                                                                         );
                                                                     })
                                                             }
-
                                                         </CardBody>
                                                     </a>
                                                 </Card>
@@ -528,19 +553,6 @@ const Rekomendasi = () => {
                                                                     alignItems: "center",
                                                                     height: "100%",
                                                                 }}>
-                                                                {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
-                                                                {/* <img
-                                                                    src={row.gender.toLowerCase() === 'male' ? crown : tiara}
-                                                                    style={{
-                                                                        position: "absolute",
-                                                                        right: 0,
-                                                                        top: 5,
-                                                                        color: "gold",
-                                                                        width: "64px",
-                                                                        fontSize: "32px"
-                                                                    }}
-                                                                    className="mdi mdi-crown px-3 py-1"
-                                                                /> */}
                                                                 <div
                                                                     style={{
                                                                         position: 'absolute',
@@ -578,7 +590,22 @@ const Rekomendasi = () => {
                                                                     alignItems: 'flex-start',
                                                                     maxWidth: "60%"
                                                                 }}>
-                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.member_name}</div>
+                                                                    <div
+                                                                        style={{
+                                                                            fontSize: "20px",
+                                                                            fontWeight: "bold",
+                                                                            textOverflow: "ellipsis",
+                                                                            whiteSpace: "nowrap",
+                                                                            overflow: "hidden",
+                                                                            width: "95%"
+                                                                        }}
+                                                                        id={`tooltip-name-${key}-${row.member_id}`}
+                                                                    >
+                                                                        {row.member_name}
+                                                                    </div>
+                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.member_id}`}>
+                                                                        {row.member_name}
+                                                                    </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
                                                                     <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
@@ -791,7 +818,23 @@ const Rekomendasi = () => {
                                                                     alignItems: 'flex-start',
                                                                     maxWidth: "60%"
                                                                 }}>
-                                                                    <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>{row.member_name}</div>
+                                                                    <div
+                                                                        style={{
+                                                                            fontSize: "20px",
+                                                                            fontWeight: "bold",
+                                                                            textOverflow: "ellipsis",
+                                                                            whiteSpace: "nowrap",
+                                                                            overflow: "hidden",
+                                                                            width: "95%"
+                                                                        }}
+                                                                        id={`tooltip-name-${key}-${row.member_id}`}
+                                                                    >
+                                                                        {row.member_name}
+                                                                    </div>
+                                                                    
+                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.member_id}`}>
+                                                                        {row.member_name}
+                                                                    </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
                                                                     <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
