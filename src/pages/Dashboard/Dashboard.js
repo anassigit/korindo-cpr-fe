@@ -526,15 +526,15 @@ const Rekomendasi = () => {
                                 }}>
                                     <div
                                         className="d-flex justify-content-between py-2"
-                                        style={{ fontSize: "16px", marginRight: 1, marginLeft: 1 }}
+                                        style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
                                     >
                                         <a
                                             className="arrow-left"
                                             onClick={() => handleSliderChange('back')}
                                             style={{
                                                 position: "absolute",
-                                                left: 0, top: '19.2%',
-                                                height: "80.6%",
+                                                left: 0, top: '20.5%',
+                                                height: "80%",
                                                 width: "12%",
                                                 zIndex: 2
                                             }}>
@@ -626,7 +626,7 @@ const Rekomendasi = () => {
                                                                         {row.member_name}
                                                                     </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
-                                                                    <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
+                                                                    <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
                                                             </CardBody>
                                                         </Card>
@@ -683,7 +683,7 @@ const Rekomendasi = () => {
                                                             }}>
                                                                 <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
                                                                 <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                                <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
+                                                                <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
                                                             </Col>
                                                         </CardBody>
                                                     </Card>
@@ -695,8 +695,8 @@ const Rekomendasi = () => {
                                             style={{
                                                 position: "absolute",
                                                 right: 0,
-                                                top: '19.2%',
-                                                height: "80.6%",
+                                                top: '20.5%',
+                                                height: "80%",
                                                 width: "12%",
                                                 zIndex: 2
                                             }}>
@@ -749,7 +749,7 @@ const Rekomendasi = () => {
                                 }}>
                                     <div
                                         className="d-flex justify-content-between py-2"
-                                        style={{ fontSize: "16px", marginRight: 1, marginLeft: 1 }}
+                                        style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
                                     >
                                         <a
                                             className="arrow-left"
@@ -757,8 +757,8 @@ const Rekomendasi = () => {
                                             style={{
                                                 position: "absolute",
                                                 left: 0,
-                                                top: '19.2%',
-                                                height: "80.6%",
+                                                top: '20.5%',
+                                                height: "80%",
                                                 width: "12%",
                                                 zIndex: 2
                                             }}>
@@ -864,7 +864,7 @@ const Rekomendasi = () => {
                                                                         {row.member_name}
                                                                     </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
-                                                                    <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
+                                                                    <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
                                                             </CardBody>
                                                         </Card>
@@ -921,8 +921,8 @@ const Rekomendasi = () => {
                                             style={{
                                                 position: "absolute",
                                                 right: 0,
-                                                top: '19.2%',
-                                                height: "80.6%",
+                                                top: '20.5%',
+                                                height: "80%",
                                                 width: "12%",
                                                 zIndex: 2
                                             }}>
