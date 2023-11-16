@@ -5,6 +5,7 @@ import {
   GET_LIST,
   GET_YEAR_LIST,
   MSG_ADD,
+  RESET_MESSAGE,
   RESP_GET_CANDIDATE_LIST,
   RESP_GET_KEYWORD_LIST,
   RESP_GET_LIST,
@@ -67,7 +68,7 @@ const managementSystemReducer = (state = INIT_STATE, action) => {
         ...state,
         msgAdd: action.payload,
       }
-    case MSG_ADD:
+    case RESET_MESSAGE:
       return {
         ...state,
         respGetList: {},

@@ -21,7 +21,7 @@ const Authmiddleware = ({
         localStorage.setItem('authUser', korToken);
         ReactSession.set('isAuth', true);
         // Use history.push('/') instead of window.location.replace('/') to keep React Router in control
-        props.history.replace('/home');
+        // props.history.replace('/home');
       }
 
 
@@ -35,12 +35,6 @@ const Authmiddleware = ({
         return (
           <Redirect
             to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        );
-      } else if (currentURL.endsWith('/login') && localStorage.getItem("authUser")) {
-        return (
-          <Redirect
-            to={{ pathname: "/home", state: { from: props.location } }}
           />
         );
       }

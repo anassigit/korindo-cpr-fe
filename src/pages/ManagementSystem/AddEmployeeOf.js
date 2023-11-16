@@ -18,7 +18,7 @@ import '../../config';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Lovv2 from "common/Lovv2";
-import { getCandidateListData, getKeywordListData } from "store/actions";
+import { getCandidateListData, getKeywordListData, resetMessage } from "store/actions";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { format } from 'date-fns';
@@ -34,6 +34,14 @@ const AddEmployeeOf = (props) => {
 
     const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
 
+    useEffect(() => {
+        dispatch(getKeywordListData())
+    }, [])
+
+    useEffect(() => {
+        dispatch(resetMessage())
+    }, [dispatch])
+
     const today = format(new Date(), 'yyyy-MM-dd');
 
     const appAddEmployeeValidInput = useFormik({
@@ -43,8 +51,8 @@ const AddEmployeeOf = (props) => {
             member_id: '',
             keyword_id: '',
             filter: 'month',
-            period_from: '',
-            period_to: '',
+            period_from: null,
+            period_to: null,
             description: '',
         },
         validationSchema: Yup.object().shape({
@@ -75,8 +83,6 @@ const AddEmployeeOf = (props) => {
             period_to: formattedDateTo,
         });
     }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
-
-    console.log('appCandidateSearchLov', appCandidateSearchLov)
 
     const appLovCandidateListColumns = [
         {
@@ -255,9 +261,6 @@ const AddEmployeeOf = (props) => {
                                                 onChange={(tglMulai) =>
                                                     dateChanger('from', tglMulai ? tglMulai : null)
                                                 }
-                                                onKeyDown={(e) => {
-                                                    e.preventDefault();
-                                                }}
                                                 isClearable
                                             />
                                         </div>
@@ -291,9 +294,6 @@ const AddEmployeeOf = (props) => {
                                                 onChange={(tglSelesai) =>
                                                     dateChanger('to', tglSelesai ? tglSelesai : null)
                                                 }
-                                                onKeyDown={(e) => {
-                                                    e.preventDefault();
-                                                }}
                                                 isClearable
                                             />
                                         </div>
@@ -320,7 +320,7 @@ const AddEmployeeOf = (props) => {
                                             columns={appLovCandidateListColumns}
                                             getData={getCandidateLov}
                                             pageSize={10}
-                                            callbackFunc={appCallBackEmployee}
+                                            // callbackFunc={appCallBackEmployee}
                                             defaultSetInput="member_id"
                                             invalidData={appAddEmployeeValidInput}
                                             fieldValue="member_id"

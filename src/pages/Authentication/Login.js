@@ -45,6 +45,16 @@ const Login = props => {
     }
   });
 
+  useEffect(() => {
+    const checkAuthUser = () => {
+      if (localStorage.getItem("authUser")) {
+        history.push("/home");
+      }
+    };
+
+    checkAuthUser();
+  }, [history]);
+
   const { error } = useSelector(state => ({
     error: state.Login.error,
   }));

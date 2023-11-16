@@ -221,7 +221,6 @@ const DetailInfluencer = (props) => {
                         <Button
                             className="btn btn-warning my-3 mx-2"
                             onClick={() => {
-                                debugger
                                 ReactSession.set('appDetailRecommendationData', "");
                                 const newMemberId = appDetailRecommendationData.member_id;
                                 history.push({ pathname: '/' + linkRekomendasi, state: { member_id: newMemberId } })
