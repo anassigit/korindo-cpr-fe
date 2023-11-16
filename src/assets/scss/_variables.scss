@@ -10,7 +10,7 @@ $sidebar-menu-item-color: #494f5f;
 $sidebar-menu-sub-item-color: #545a6d;
 $sidebar-menu-item-icon-color: #7f8387;
 $sidebar-menu-item-hover-color: #383c40;
-$sidebar-menu-item-active-color: #2596BE;
+$sidebar-menu-item-active-color: #A084DC;
 $sidebar-width: 210px;
 $sidebar-collapsed-width: 70px;
 $sidebar-width-sm: 160px;
@@ -39,13 +39,13 @@ $topbar-search-bg: #f3f3f9;
 // Footer
 $footer-height: 60px;
 $footer-bg: #f2f2f5;
-$footer-color: #2596BE;
+$footer-color: #A084DC;
 
 // Horizontal nav
 $topnav-bg: #fff;
 
 $menu-item-color: #545a6d;
-$menu-item-active-color: #2596BE;
+$menu-item-active-color: #A084DC;
 
 // Right Sidebar
 $rightbar-width: 280px;
@@ -86,7 +86,7 @@ $gray-200: #eff2f7;
 $gray-300: #f6f6f6;
 $gray-400: #ced4da;
 $gray-500: #adb5bd;
-$gray-600: #2596BE;
+$gray-600: #A084DC;
 $gray-700: #495057;
 $gray-800: #343a40;
 $gray-900: #212529;
@@ -110,9 +110,9 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-$blue: #2596BE;
+$blue: #A084DC;
 $indigo: #564ab1;
-$purple: #6f42c1;
+$purple: #A084DC;
 $pink: #e83e8c;
 $red: #f46a6a;
 $orange: #f1734f;
@@ -141,7 +141,7 @@ $colors: (
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
-$primary: $blue;
+$primary: $purple;
 $secondary: $gray-600;
 $success: $green;
 $info: $cyan;

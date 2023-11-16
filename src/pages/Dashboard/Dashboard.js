@@ -260,7 +260,7 @@ const Rekomendasi = () => {
                                         appBestlistData?.data?.list.map((item, index) => {
 
                                             const imageUrls = [satu, dua, tiga, empat, lima];
-                                            const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#2596BE']; // Replace with desired colors
+                                            const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#A084DC']; // Replace with desired colors
 
                                             return (
                                                 <a

@@ -102,7 +102,7 @@ const Header = props => {
   return (
     <React.Fragment>
       <header id="page-topbar">
-        <div style={{ boxShadow: "1px 3px 5px #918989", borderBottom: "4px solid #2596BE" }} className="navbar-header">
+        <div style={{ boxShadow: "1px 3px 5px #918989", borderBottom: "4px solid #A084DC" }} className="navbar-header">
           <div className="d-flex">
 
             <button

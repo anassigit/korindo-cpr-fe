@@ -11,7 +11,6 @@ import {
 
 
 function* fetchGetCandidate({ payload: req }) {
-  debugger
   try {
     const response = yield call(getLovCandidateBE, req)
     if(response.status == 1){

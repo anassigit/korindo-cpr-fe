@@ -44,7 +44,7 @@ $footer-color: #a6b0cf;
 // Horizontal nav
 $topnav-bg: #282e3f;
 $menu-item-color: #a6b0cf;
-$menu-item-active-color: #2596BE;
+$menu-item-active-color: #A084DC;
 
 // Right Sidebar
 $rightbar-width: 280px;
@@ -111,7 +111,7 @@ $grays: (
 // scss-docs-start color-variables
 $blue: #2596BE;
 $indigo: #564ab1;
-$purple: #6f42c1;
+$purple: #A084DC;
 $pink: #e83e8c;
 $red: #f46a6a;
 $orange: #f1734f;
@@ -140,7 +140,7 @@ $colors: (
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
-$primary: $blue;
+$primary: $purple;
 $secondary: $gray-600;
 $success: $green;
 $info: $cyan;

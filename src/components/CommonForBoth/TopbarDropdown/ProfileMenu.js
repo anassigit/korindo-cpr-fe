@@ -162,7 +162,7 @@ const ProfileMenu = props => {
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"
-          style={{ borderLeft: "2px solid #2596BE" }}
+          style={{ borderLeft: "2px solid #A084DC" }}
           tag="button"
         >
           <span style={{ fontSize: "14px" }} className="d-none d-xl-inline-block ms-2 me-1">{username}</span>

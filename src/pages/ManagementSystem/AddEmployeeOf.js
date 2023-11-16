@@ -29,12 +29,15 @@ const AddEmployeeOf = (props) => {
 
     const dispatch = useDispatch()
 
+    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
+
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
 
     const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
 
     useEffect(() => {
+        setAppCandidateSearchLov("")
         dispatch(getKeywordListData())
     }, [])
 
@@ -53,6 +56,7 @@ const AddEmployeeOf = (props) => {
             filter: 'month',
             period_from: null,
             period_to: null,
+            star: '',
             description: '',
         },
         validationSchema: Yup.object().shape({
@@ -68,15 +72,25 @@ const AddEmployeeOf = (props) => {
         }
     });
 
-    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
-
     useEffect(() => {
-        const formattedDateFrom = appAddEmployeeValidInput.values.period_from
-            ? new Date(appAddEmployeeValidInput.values.period_from).toLocaleDateString('en-GB').replace(/\//g, '-')
-            : '';
-        const formattedDateTo = appAddEmployeeValidInput.values.period_to
-            ? new Date(appAddEmployeeValidInput.values.period_to).toLocaleDateString('en-GB').replace(/\//g, '-')
-            : '';
+        if (props.appAddEmployeeOfMonYea || !appAddEmployeeValidInput.values.period_to || !appAddEmployeeValidInput.values.period_from) {
+            setAppCandidateSearchLov("");
+        }
+    }, [props.appAddEmployeeOfMonYea, appAddEmployeeValidInput.values.period_to, appAddEmployeeValidInput.values.period_from]);
+    
+    useEffect(() => {
+        const formatDate = (date) => {
+            if (date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            return '';
+        };
+
+        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
+        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
 
         setAppCandidateSearchLov({
             period_from: formattedDateFrom,
@@ -86,7 +100,7 @@ const AddEmployeeOf = (props) => {
 
     const appLovCandidateListColumns = [
         {
-            dataField: "member_id",
+            dataField: "iidnrp",
             text: "Employee No",
             sort: true,
             // events: {
@@ -97,8 +111,14 @@ const AddEmployeeOf = (props) => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "member_name",
+            dataField: "vfullname",
             text: "Employee Name",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "dept_nm",
+            text: "Departement Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -121,7 +141,8 @@ const AddEmployeeOf = (props) => {
     };
 
     const appCallBackEmployee = (row) => {
-        appAddEmployeeValidInput.setFieldValue("member_id", row.member_id)
+        appAddEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
+        appAddEmployeeValidInput.setFieldValue("star", row.star)
     }
 
     return (
@@ -262,6 +283,7 @@ const AddEmployeeOf = (props) => {
                                                     dateChanger('from', tglMulai ? tglMulai : null)
                                                 }
                                                 isClearable
+                                                dateFormat="yyyy-MM-dd" // Set the desired date format here
                                             />
                                         </div>
                                     </div>
@@ -295,6 +317,7 @@ const AddEmployeeOf = (props) => {
                                                     dateChanger('to', tglSelesai ? tglSelesai : null)
                                                 }
                                                 isClearable
+                                                dateFormat="yyyy-MM-dd" // Set the desired date format here
                                             />
                                         </div>
                                     </div>
@@ -316,14 +339,14 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Lovv2
                                             title="Karyawan"
-                                            keyFieldData="member_id"
+                                            keyFieldData="iidnrp"
                                             columns={appLovCandidateListColumns}
                                             getData={getCandidateLov}
                                             pageSize={10}
-                                            // callbackFunc={appCallBackEmployee}
-                                            defaultSetInput="member_id"
+                                            callbackFunc={appCallBackEmployee}
+                                            defaultSetInput="vfullname"
                                             invalidData={appAddEmployeeValidInput}
-                                            fieldValue="member_id"
+                                            fieldValue="vfullname"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
                                             touchedLovField={appAddEmployeeValidInput.touched.member_id}
@@ -342,12 +365,13 @@ const AddEmployeeOf = (props) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Jumlah <span className="text-danger"> *</span>
+                                            Jumlah Bintang <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             disabled
+                                            value={appAddEmployeeValidInput.values.star}
                                         />
                                     </div>
                                 </div>
@@ -362,12 +386,13 @@ const AddEmployeeOf = (props) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Deskripsi <span className="text-danger"> *</span>
+                                            Deskripsi
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             type="textarea"
+                                            onChange={(e) => appAddEmployeeValidInput.setFieldValue('description', e.target.value)}
                                         />
                                     </div>
                                 </div>
