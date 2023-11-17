@@ -149,6 +149,7 @@ const Lov = props => {
       </InputGroup>
       <Modal
         isOpen={modal_standard}
+        size="lg"
         toggle={() => {
           setmodal_standard(!modal_standard);
         }}

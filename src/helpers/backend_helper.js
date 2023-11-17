@@ -49,8 +49,14 @@ export const getYearListBE = req => post("rest/BestEmployeeMasterRest/getYearLis
 
 export const getCandidateListBE = req => post("rest/BestEmployeeMasterRest/getCandidateList", req)
 
+export const getCandidateBE = req => postWithParam("rest/BestEmployeeMasterRest/select", req)
+
 export const getKeywordListBE = req => post("rest/BestEmployeeMasterRest/getKeywordList", req)
 
-export const addEmployeeOfBE = req => post("rest/BestEmployeeMasterRest/insert", req)
+export const addEmployeeOfBE = req => postWithParam("rest/BestEmployeeMasterRest/insert", req)
+
+export const editEmployeeOfBE = req => postWithParam("rest/BestEmployeeMasterRest/update", req)
+
+export const deleteEmployeeOfBE = req => postWithParam("rest/BestEmployeeMasterRest/delete", req)
 
 export const getLovCandidateBE = req => post("rest/BestEmployeeMasterRest/getCandidateList", req)

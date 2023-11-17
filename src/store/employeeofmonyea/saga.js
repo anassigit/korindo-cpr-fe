@@ -2,11 +2,15 @@ import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
   ADD_EMPLOYEE_OF,
+  DELETE_EMPLOYEE_OF,
+  EDIT_EMPLOYEE_OF,
+  GET_CANDIDATE,
   GET_CANDIDATE_LIST,
   GET_KEYWORD_LIST,
   GET_LIST, GET_YEAR_LIST
 } from "./actionTypes"
 import {
+  respGetCandidate,
   respGetCandidateList,
   respGetKeywordList,
   respGetList, respGetYearList
@@ -14,11 +18,14 @@ import {
 
 import {
   addEmployeeOfBE,
+  deleteEmployeeOfBE,
+  editEmployeeOfBE,
+  getCandidateBE,
   getCandidateListBE,
   getKeywordListBE,
   getListEmployeeOfMonthYearBE, getYearListBE
 } from "helpers/backend_helper"
-import { msgAdd } from "store/actions"
+import { msgAdd, msgDelete, msgEdit } from "store/actions"
 
 function* fetchGetList({ payload: req }) {
   try {
@@ -59,6 +66,19 @@ function* fetchGetCandidateList({ payload: req }) {
     yield put(respGetCandidateList({ "status": 0, "message": "Error Get Data" }))
   }
 }
+function* fetchGetCandidate({ payload: req }) {
+  try {
+    const response = yield call(getCandidateBE, req)
+    if (response.status == 1) {
+      yield put(respGetCandidate(response))
+    } else {
+      yield put(respGetCandidate(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetCandidate({ "status": 0, "message": "Error Get Data" }))
+  }
+}
 function* fetchGetKeywordList({ payload: req }) {
   try {
     const response = yield call(getKeywordListBE, req)
@@ -85,14 +105,43 @@ function* fetchAddEmployeeOf({ payload: req }) {
     yield put(msgAdd({ "status": 0, "message": "Error Save Data" }))
   }
 }
+function* fetchEditEmployeeOf({ payload: req }) {
+  try {
+    const response = yield call(editEmployeeOfBE, req)
+    if (response.status == 1) {
+      yield put(msgEdit(response))
+    } else {
+      yield put(msgEdit(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgEdit({ "status": 0, "message": "Error Edit Data" }))
+  }
+}
+function* fetchDeleteEmployeeOf({ payload: req }) {
+  try {
+    const response = yield call(deleteEmployeeOfBE, req)
+    if (response.status == 1) {
+      yield put(msgDelete(response))
+    } else {
+      yield put(msgDelete(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgDelete({ "status": 0, "message": "Error Delete Data" }))
+  }
+}
 
 function* managementSystemSaga() {
 
   yield takeEvery(GET_LIST, fetchGetList)
   yield takeEvery(GET_YEAR_LIST, fetchGetYearList)
   yield takeEvery(GET_CANDIDATE_LIST, fetchGetCandidateList)
+  yield takeEvery(GET_CANDIDATE, fetchGetCandidate)
   yield takeEvery(GET_KEYWORD_LIST, fetchGetKeywordList)
   yield takeEvery(ADD_EMPLOYEE_OF, fetchAddEmployeeOf)
+  yield takeEvery(EDIT_EMPLOYEE_OF, fetchEditEmployeeOf)
+  yield takeEvery(DELETE_EMPLOYEE_OF, fetchDeleteEmployeeOf)
 
 }
 

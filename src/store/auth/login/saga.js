@@ -59,6 +59,8 @@ function* logoutUser({ payload: { history } }) {
     localStorage.removeItem("menu");
     ReactSession.remove('profileData')
 
+    ReactSession.remove("currentPage")
+
     ReactSession.remove('selectedMemberData')
     ReactSession.remove('selectedDeptData')
     ReactSession.remove('selectedDeptName')

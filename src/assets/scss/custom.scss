@@ -198,3 +198,18 @@
   // pointer-events: none;
   cursor: default;
 }
+
+.was-validated .input-group>.form-control:not(:focus):invalid,
+.input-group>.form-control:not(:focus).is-invalid,
+.was-validated .input-group>.form-select:not(:focus):invalid,
+.input-group>.form-select:not(:focus).is-invalid,
+.was-validated .input-group>.form-floating:not(:focus-within):invalid,
+.input-group>.form-floating:not(:focus-within).is-invalid {
+  z-index: 0 !important;
+}
+
+#date-invalid {
+  width: 100%;
+  font-size: 80%;
+  color: #f46a6a;
+}

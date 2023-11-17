@@ -19,20 +19,28 @@ import {
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { getListData, getYearListData } from "store/actions";
+import { deleteEmployeeOf, getListData, getYearListData } from "store/actions";
 import TableCustom2 from "common/TableCustom2";
 import AddEmployeeOf from "./AddEmployeeOf";
+import EditEmployeeOf from "./EditEmployeeOf";
+import MsgModal from "components/Common/MsgModal";
 
 const EmployeeOfMonYea = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const [modal, setModal] = useState(false)
+
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-    const [detailModal, setDetailModal] = useState(false)
 
     const [appEmployeeOfMonYea, setAppEmployeeOfMonYea] = useState(true)
     const [appAddEmployeeOfMonYea, setAppAddEmployeeOfMonYea] = useState(false)
+    const [appEditEmployeeOfMonYea, setAppEditEmployeeOfMonYea] = useState(false)
+
+    const [appEmployeeOfMonYeaData, setAppEmployeeOfMonYeaData] = useState({})
+
+    const [awardId, setAwardId] = useState('')
 
     const [appEmployeeMsg, setAppEmployeeMsg] = useState('')
 
@@ -42,6 +50,8 @@ const EmployeeOfMonYea = () => {
 
     const appEmployeeMonYeaData = useSelector((state) => state.managementSystemReducer.respGetList);
     const appYearListData = useSelector((state) => state.managementSystemReducer.respGetYearList);
+
+    const appMessageDelete = useSelector((state) => state.managementSystemReducer.msgDelete);
 
     const [appEmployeeMonYeaTabelSearch, setAppEmployeeMonYeaTabelSearch] = useState({
         page: 1,
@@ -63,55 +73,30 @@ const EmployeeOfMonYea = () => {
             text: "ID",
             hidden: true,
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "member_id",
             text: "NIK",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "member_name",
             text: "Nama Karyawan",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "dept_name",
             text: "Divisi",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "keyword",
             text: "Keyword",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
 
         },
@@ -121,11 +106,6 @@ const EmployeeOfMonYea = () => {
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
         },
         {
             dataField: "periodTo",
@@ -133,11 +113,6 @@ const EmployeeOfMonYea = () => {
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
         },
         {
             dataField: "crown",
@@ -145,31 +120,23 @@ const EmployeeOfMonYea = () => {
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
         },
         {
             text: "Actions",
             headerStyle: { textAlign: 'center' },
             style: { justifyContent: 'center', display: 'flex', gap: '12px' },
             formatter: (cellContent, cellData) => {
-
                 return (
                     <React.Fragment>
-                        <a className="mdi mdi-pencil text-primary" />
-                        <a className="mdi mdi-delete text-danger" />
+                        <a id={`edit-${cellData.id}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${cellData.id}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.id}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.id}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
         },
     ]
-
-    const toggleModal = (data) => {
-        setDetailModal(!detailModal)
-    }
 
     useEffect(() => {
         dispatch(getYearListData())
@@ -206,6 +173,42 @@ const EmployeeOfMonYea = () => {
         }));
     };
 
+    const preAddEmployeeOf = () => {
+        setAppAddEmployeeOfMonYea(true)
+        setAppEmployeeOfMonYea(false)
+    }
+
+    const preEditEmployeeOf = (data) => {
+        setAppEditEmployeeOfMonYea(true)
+        setAppEmployeeOfMonYea(false)
+        setAppEmployeeOfMonYeaData(data)
+    }
+
+    const toggleDeleteModal = (data) => {
+        setModal(!modal)
+        if (data.id) {
+            setAwardId(data.id)
+        }
+    }
+
+    const toggleApply = () => {
+        dispatch(deleteEmployeeOf({ award_id: awardId }))
+        setModal(!modal)
+        setLoadingSpinner(true)
+    }
+
+    useEffect(() => {
+        if (appMessageDelete.status === '1') {
+            setLoadingSpinner(false)
+            dispatch(getListData(appEmployeeMonYeaTabelSearch))
+        }
+    }, [appMessageDelete])
+
+    useEffect(() => {
+        if (appEmployeeOfMonYea) {
+            dispatch(getListData(appEmployeeMonYeaTabelSearch))
+        }
+    }, [appEmployeeOfMonYea])
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -348,10 +351,7 @@ const EmployeeOfMonYea = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => {
-                                            setAppAddEmployeeOfMonYea(true)
-                                            setAppEmployeeOfMonYea(false)
-                                        }}
+                                        onClick={() => preAddEmployeeOf()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>
@@ -388,7 +388,19 @@ const EmployeeOfMonYea = () => {
                         appAddEmployeeOfMonYea={appAddEmployeeOfMonYea}
                         setAppAddEmployeeOfMonYea={setAppAddEmployeeOfMonYea}
                         setAppEmployeeMsg={setAppEmployeeMsg}
-                        appYearListData={appYearListData}
+                    />
+                    <EditEmployeeOf
+                        setAppEmployeeOfMonYea={setAppEmployeeOfMonYea}
+                        appEditEmployeeOfMonYea={appEditEmployeeOfMonYea}
+                        setAppEditEmployeeOfMonYea={setAppEditEmployeeOfMonYea}
+                        setAppEmployeeMsg={setAppEmployeeMsg}
+                        appEmployeeOfMonYeaData={appEmployeeOfMonYeaData}
+                    />
+                    <MsgModal
+                        toggle={toggleDeleteModal}
+                        toggleApply={toggleApply}
+                        modal={modal}
+                        message={'Apakah anda yakin untuk menghapus ini?'}
                     />
                 </React.Fragment>
 

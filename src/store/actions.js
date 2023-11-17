@@ -6,4 +6,4 @@ export * from "./lov/actions"
 
 export * from "./rekomendasi/actions"
 export * from "./dashboard/actions"
-export * from "./managementsystem/actions"
+export * from "./employeeofmonyea/actions"

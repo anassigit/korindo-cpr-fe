@@ -8,6 +8,7 @@ import {
     CardHeader,
     Container,
     Form,
+    FormFeedback,
     FormGroup,
     Input,
     Label,
@@ -15,17 +16,17 @@ import {
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { useFormik } from "formik";
+import { ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import Lovv2 from "common/Lovv2";
-import { getCandidateListData, getKeywordListData, resetMessage } from "store/actions";
+import { deleteEmployeeOf, editEmployeeOf, getCandidateData, getCandidateListData, getKeywordListData, resetMessage } from "store/actions";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { format } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import { getCandidateLov } from "store/lov/actions";
 
-const AddEmployeeOf = (props) => {
+const EditEmployeeOf = (props) => {
 
     const dispatch = useDispatch()
 
@@ -36,70 +37,105 @@ const AddEmployeeOf = (props) => {
     const [filterVal, setFilterVal] = useState("")
 
     const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
-
-    useEffect(() => {
-        setAppCandidateSearchLov("")
-        dispatch(getKeywordListData())
-    }, [])
+    const appCandidateData = useSelector((state) => state.managementSystemReducer.respGetCandidate);
 
     useEffect(() => {
         dispatch(resetMessage())
     }, [dispatch])
 
-    const today = format(new Date(), 'yyyy-MM-dd');
+    const formatDate = (date) => {
+        if (date) {
+            // Check if the input date is already in "yyyy-mm-dd" format
+            const isAlreadyFormatted = /^\d{4}-\d{2}-\d{2}$/.test(date);
 
-    const appAddEmployeeValidInput = useFormik({
+            if (!isAlreadyFormatted) {
+                // If not, proceed with formatting
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+        }
+        return date; // Return the input date if already formatted or if it's falsy
+    };
+
+
+    const appEditEmployeeValidInput = useFormik({
         enableReinitialize: true,
 
         initialValues: {
             member_id: '',
             keyword_id: '',
             filter: 'month',
-            period_from: null,
-            period_to: null,
+            period_from: '',
+            period_to: '',
             star: '',
             description: '',
         },
         validationSchema: Yup.object().shape({
             member_id: Yup.string().required("Wajib diisi"),
-            keyword_id: Yup.string().required("Wajib diisi"),
             filter: Yup.string().required("Wajib diisi"),
             period_from: Yup.string().required("Wajib diisi"),
             period_to: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
-            // console.log('temptableDetail : ', temptableDetail);
+            let dateFrom = formatDate(values.period_from)
+            let dateTo = formatDate(values.period_to)
+
+            dispatch(editEmployeeOf({
+                filter: values.filter,
+                keyword_id: values.keyword_id,
+                period_from: dateFrom,
+                period_to: dateTo,
+                member_id: values.member_id,
+                description: values.description,
+            }))
+
+            props.setAppEmployeeOfMonYea(true)
+            props.setAppEditEmployeeOfMonYea(false)
         }
     });
 
-
     useEffect(() => {
-        if (props.appAddEmployeeOfMonYea === true) {
+        if (props.appEditEmployeeOfMonYea) {
             setAppCandidateSearchLov("")
+            dispatch(getKeywordListData())
+            dispatch(getCandidateData({ award_id: props.appEmployeeOfMonYeaData.id }))
+        } else {
+            appEditEmployeeValidInput.resetForm()
         }
-    }, [props.appAddEmployeeOfMonYea])
+    }, [props.appEditEmployeeOfMonYea])
+
+    useEffect(() => {
+        appEditEmployeeValidInput.setFieldValue('member_id', appCandidateData?.data?.result.member_id)
+        appEditEmployeeValidInput.setFieldValue('keyword_id', appCandidateData?.data?.result.keyword_id)
+        appEditEmployeeValidInput.setFieldValue('filter', appCandidateData?.data?.result.keyword_id)
+        appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.periodFrom)
+        appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.periodTo)
+        appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.crown)
+        appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
+    }, [appCandidateData])
 
 
     useEffect(() => {
-        const formatDate = (date) => {
-            if (date) {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-            return '';
-        };
 
-        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
-        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
+        if (appEditEmployeeValidInput.values.period_from === null) {
+            appEditEmployeeValidInput.setFieldValue('period_from', '')
+        }
+        if (appEditEmployeeValidInput.values.period_to === null) {
+            appEditEmployeeValidInput.setFieldValue('period_to', '')
+        }
+
+        const formattedDateFrom = formatDate(appEditEmployeeValidInput.values.period_from);
+        const formattedDateTo = formatDate(appEditEmployeeValidInput.values.period_to);
 
         setAppLovParam({
             period_from: formattedDateFrom,
             period_to: formattedDateTo,
         });
-    }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
+
+    }, [appEditEmployeeValidInput.values.period_from, appEditEmployeeValidInput.values.period_to]);
 
     const appLovCandidateListColumns = [
         {
@@ -130,36 +166,34 @@ const AddEmployeeOf = (props) => {
 
     const dateChanger = (name, selectedDate) => {
 
-        let tempDateTo = ''
         if (name === 'from') {
-            appAddEmployeeValidInput.setFieldValue('period_from', selectedDate);
+            appEditEmployeeValidInput.setFieldValue('period_from', selectedDate);
 
         } else if (name === 'to') {
-            appAddEmployeeValidInput.setFieldValue('period_to', selectedDate);
-            tempDateTo = selectedDate
+            appEditEmployeeValidInput.setFieldValue('period_to', selectedDate);
         }
 
     };
 
     const appCallBackEmployee = (row) => {
-        appAddEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
-        appAddEmployeeValidInput.setFieldValue("star", row.star)
+        appEditEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
+        appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
 
     return (
         <Container
-            style={{ display: props.appAddEmployeeOfMonYea ? 'block' : "none" }}
+            style={{ display: props.appEditEmployeeOfMonYea ? 'block' : "none" }}
             fluid
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-account-plus"></span> Tambah Penghargaan Karyawan
+                    <span className="mdi mdi-account-plus"></span> Ubah Penghargaan Karyawan
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            appAddEmployeeValidInput.handleSubmit();
+                            appEditEmployeeValidInput.handleSubmit();
                             return false
                         }}
                     >
@@ -194,11 +228,11 @@ const AddEmployeeOf = (props) => {
                                                 <Input
                                                     id="monthRadio"
                                                     type="radio"
-                                                    checked={appAddEmployeeValidInput.values.filter === "month"}
+                                                    checked={appEditEmployeeValidInput.values.filter === "month"}
                                                     name="searchOption"
                                                     value="month"
                                                     onChange={() =>
-                                                        appAddEmployeeValidInput.setFieldValue("filter", "month")
+                                                        appEditEmployeeValidInput.setFieldValue("filter", "month")
                                                     }
                                                 />{" "}
                                                 Month
@@ -207,10 +241,10 @@ const AddEmployeeOf = (props) => {
                                                 <Input
                                                     id="yearRadio"
                                                     type="radio"
-                                                    checked={appAddEmployeeValidInput.values.filter === "year"}
+                                                    checked={appEditEmployeeValidInput.values.filter === "year"}
                                                     name="searchOption"
                                                     value="year"
-                                                    onChange={() => appAddEmployeeValidInput.setFieldValue("filter", "year")}
+                                                    onChange={() => appEditEmployeeValidInput.setFieldValue("filter", "year")}
                                                 />{" "}
                                                 Year
                                             </label>
@@ -233,12 +267,16 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="select"
-                                            value={appAddEmployeeValidInput.values.keyword_id}
+                                            value={appEditEmployeeValidInput.values.keyword_id}
                                             onChange={(e) =>
-                                                appAddEmployeeValidInput.setFieldValue("keyword_id", e.target.value)
+                                                appEditEmployeeValidInput.setFieldValue("keyword_id", e.target.value)
+                                            }
+                                            invalid={
+                                                appEditEmployeeValidInput.touched.keyword_id && appEditEmployeeValidInput.errors.keyword_id
+                                                    ? true : false
                                             }
                                         >
-                                            {appAddEmployeeValidInput.values.filter === "month" ? (
+                                            {appEditEmployeeValidInput.values.filter === "month" ? (
                                                 appKeywordListData?.data?.month.map((item, index) => (
                                                     <option key={index} value={item.keyword_id}>
                                                         {item.keyword_Name}
@@ -252,6 +290,7 @@ const AddEmployeeOf = (props) => {
                                                 ))
                                             )}
                                         </Input>
+                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.keyword_id}</FormFeedback>
                                     </div>
                                 </div>
 
@@ -271,21 +310,24 @@ const AddEmployeeOf = (props) => {
                                     </div>
                                     <div className="col-8">
                                         <div className="col-6">
-                                            {/* <Input
-                                                type="date"
-                                                onChange={(e) => appAddEmployeeValidInput.setFieldValue('period_from', e.target.value)}
-                                            /> */}
                                             <DatePicker
-                                                className="form-control"
+                                                className={`form-control ${appEditEmployeeValidInput.touched.period_from && appEditEmployeeValidInput.errors.period_from ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                maxDate={appAddEmployeeValidInput.values.period_to && new Date(appAddEmployeeValidInput.values.period_to)}
-                                                selected={appAddEmployeeValidInput.values.period_from && new Date(appAddEmployeeValidInput.values.period_from)}
+                                                maxDate={appEditEmployeeValidInput.values.period_to && new Date(appEditEmployeeValidInput.values.period_to)}
+                                                selected={appEditEmployeeValidInput.values.period_from ? new Date(appEditEmployeeValidInput.values.period_from) : ''}
                                                 onChange={(tglMulai) =>
                                                     dateChanger('from', tglMulai ? tglMulai : null)
                                                 }
-                                                isClearable
-                                                dateFormat="yyyy-MM-dd" // Set the desired date format here
+                                                isClearable={appEditEmployeeValidInput.values.period_from === '' ? false : true}
+                                                dateFormat="yyyy-MM-dd"
+                                                ariaInvalid={
+                                                    appEditEmployeeValidInput.touched.period_from && appEditEmployeeValidInput.errors.period_from
+                                                        ? true : false
+                                                }
                                             />
+                                            {appEditEmployeeValidInput.touched.period_from && appEditEmployeeValidInput.errors.period_from && (
+                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.period_from}</div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -305,21 +347,24 @@ const AddEmployeeOf = (props) => {
                                     </div>
                                     <div className="col-8">
                                         <div className="col-6">
-                                            {/* <Input
-                                                type="date"
-                                                onChange={(e) => appAddEmployeeValidInput.setFieldValue('period_to', e.target.value)}
-                                            /> */}
                                             <DatePicker
-                                                className="form-control"
+                                                className={`form-control ${appEditEmployeeValidInput.touched.period_to && appEditEmployeeValidInput.errors.period_to ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                minDate={appAddEmployeeValidInput.values.period_from && new Date(appAddEmployeeValidInput.values.period_from)}
-                                                selected={appAddEmployeeValidInput.values.period_to && new Date(appAddEmployeeValidInput.values.period_to)}
+                                                minDate={appEditEmployeeValidInput.values.period_from && new Date(appEditEmployeeValidInput.values.period_from)}
+                                                selected={appEditEmployeeValidInput.values.period_to ? new Date(appEditEmployeeValidInput.values.period_to) : ''}
                                                 onChange={(tglSelesai) =>
                                                     dateChanger('to', tglSelesai ? tglSelesai : null)
                                                 }
-                                                isClearable
-                                                dateFormat="yyyy-MM-dd" // Set the desired date format here
+                                                isClearable={appEditEmployeeValidInput.values.period_to === '' ? false : true}
+                                                dateFormat="yyyy-MM-dd"
+                                                ariaInvalid={
+                                                    appEditEmployeeValidInput.touched.period_to && appEditEmployeeValidInput.errors.period_to
+                                                        ? true : false
+                                                }
                                             />
+                                            {appEditEmployeeValidInput.touched.period_to && appEditEmployeeValidInput.errors.period_to && (
+                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.period_to}</div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -346,12 +391,12 @@ const AddEmployeeOf = (props) => {
                                             pageSize={10}
                                             callbackFunc={appCallBackEmployee}
                                             defaultSetInput="vfullname"
-                                            invalidData={appAddEmployeeValidInput}
+                                            invalidData={appEditEmployeeValidInput}
                                             fieldValue="vfullname"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
-                                            touchedLovField={appAddEmployeeValidInput.touched.member_id}
-                                            errorLovField={appAddEmployeeValidInput.errors.member_id}
+                                            touchedLovField={appEditEmployeeValidInput.touched.member_id}
+                                            errorLovField={appEditEmployeeValidInput.errors.member_id}
                                             pParam={appLovParam}
                                         />
                                     </div>
@@ -373,7 +418,7 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             disabled
-                                            value={appAddEmployeeValidInput.values.star}
+                                            value={appEditEmployeeValidInput.values.star}
                                         />
                                     </div>
                                 </div>
@@ -394,7 +439,7 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="textarea"
-                                            onChange={(e) => appAddEmployeeValidInput.setFieldValue('description', e.target.value)}
+                                            onChange={(e) => appEditEmployeeValidInput.setFieldValue('description', e.target.value)}
                                         />
                                     </div>
                                 </div>
@@ -428,7 +473,8 @@ const AddEmployeeOf = (props) => {
                 className="btn btn-danger my-3"
                 onClick={() => {
                     props.setAppEmployeeOfMonYea(true)
-                    props.setAppAddEmployeeOfMonYea(false)
+                    props.setAppEditEmployeeOfMonYea(false)
+
                 }}
             >
                 <span className="mdi mdi-arrow-left" />
@@ -441,12 +487,12 @@ const AddEmployeeOf = (props) => {
     );
 };
 
-AddEmployeeOf.propTypes = {
-    appAddEmployeeOfMonYea: PropTypes.any,
+EditEmployeeOf.propTypes = {
+    appEditEmployeeOfMonYea: PropTypes.any,
     setAppEmployeeOfMonYea: PropTypes.any,
-    setAppAddEmployeeOfMonYea: PropTypes.any,
+    setAppEditEmployeeOfMonYea: PropTypes.any,
     setAppEmployeeMsg: PropTypes.any,
-    appYearListData: PropTypes.any,
+    appEmployeeOfMonYeaData: PropTypes.any,
 }
 
-export default AddEmployeeOf;
+export default EditEmployeeOf;

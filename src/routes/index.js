@@ -9,7 +9,7 @@ import Logout from "../pages/Authentication/Logout"
 import Rekomendasi from "pages/Rekomendasi/Rekomendasi"
 import Dashboard from "pages/Dashboard/Dashboard"
 import DetailInfluencer from "pages/Dashboard/DetailInfluencer"
-import EmployeeOfMonYea from "pages/ManagementSystem/EmployeeOfMonYea"
+import EmployeeOfMonYea from "pages/EmployeeOfMonYea/EmployeeOfMonYea"
 
 const authProtectedRoutes = [
 

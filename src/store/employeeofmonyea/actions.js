@@ -1,11 +1,17 @@
 import {
   ADD_EMPLOYEE_OF,
+  DELETE_EMPLOYEE_OF,
+  EDIT_EMPLOYEE_OF,
+  GET_CANDIDATE,
   GET_CANDIDATE_LIST,
   GET_KEYWORD_LIST,
   GET_LIST,
   GET_YEAR_LIST,
   MSG_ADD,
+  MSG_DELETE,
+  MSG_EDIT,
   RESET_MESSAGE,
+  RESP_GET_CANDIDATE,
   RESP_GET_CANDIDATE_LIST,
   RESP_GET_KEYWORD_LIST,
   RESP_GET_LIST,
@@ -42,6 +48,16 @@ export const respGetCandidateList = resp => ({
   payload: resp,
 })
 
+export const getCandidateData = (req) => ({
+  type: GET_CANDIDATE,
+  payload: req,
+})
+
+export const respGetCandidate = resp => ({
+  type: RESP_GET_CANDIDATE,
+  payload: resp,
+})
+
 export const getKeywordListData = (req) => ({
   type: GET_KEYWORD_LIST,
   payload: req,
@@ -57,8 +73,28 @@ export const addEmployeeOf = (req) => ({
   payload: req,
 })
 
+export const editEmployeeOf = (req) => ({
+  type: EDIT_EMPLOYEE_OF,
+  payload: req,
+})
+
+export const deleteEmployeeOf = (req) => ({
+  type: DELETE_EMPLOYEE_OF,
+  payload: req,
+})
+
 export const msgAdd = resp => ({
   type: MSG_ADD,
+  payload: resp,
+})
+
+export const msgEdit = resp => ({
+  type: MSG_EDIT,
+  payload: resp,
+})
+
+export const msgDelete = resp => ({
+  type: MSG_DELETE,
   payload: resp,
 })
 

@@ -6,7 +6,7 @@ import LovSaga from "./lov/saga"
 import rekomendasiSaga from "./rekomendasi/saga"
 import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga"
-import managementSystemSaga from "./managementsystem/saga"
+import managementSystemSaga from "./employeeofmonyea/saga"
 
 export default function* rootSaga() {
   yield all([
