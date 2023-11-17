@@ -46,7 +46,7 @@ const Member = (props) => {
       const timeoutId = setTimeout(() => {
         history.replace({ state: { member_id: null } });
       }, 200);
-  
+
       return () => clearTimeout(timeoutId);
     }
   }, [modalRekomendasi, isAdd, history]);
@@ -190,7 +190,6 @@ const Member = (props) => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
                                     setEmployeeId(item.id)
-                                    history.push({ state: { member_id: undefined } })
                                   }}
                                 >
                                   Beri Bintang
@@ -199,7 +198,19 @@ const Member = (props) => {
                               )
                               :
                               item.recommend_type.toUpperCase() === "CANNOT" ?
-                                null
+                                <Button
+                                  disabled
+                                  className="btn btn-warning text-center text-light opacity-0"
+                                  style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: ".8rem", gap: "2px" }}
+                                  onClick={() => {
+                                    setIsAdd(true)
+                                    setModalRekomendasi(true)
+                                    setEmployeeId(item.id)
+                                  }}
+                                >
+                                  Beri Bintang
+                                  <span className="mdi mdi-star" style={{ marginLeft: '2px' }}></span>
+                                </Button>
                                 :
                                 <span
                                   className="mdi mdi-check-circle text-success"
@@ -260,7 +271,19 @@ const Member = (props) => {
                               )
                               :
                               item.recommend_type.toUpperCase() === "CANNOT" ?
-                                null
+                                <Button
+                                  disabled
+                                  className="btn btn-warning text-center text-light opacity-0"
+                                  style={{ border: "none", paddingTop: ".5vh", paddingBottom: ".5vh", fontSize: ".8rem", gap: "2px" }}
+                                  onClick={() => {
+                                    setIsAdd(true)
+                                    setModalRekomendasi(true)
+                                    setEmployeeId(item.id)
+                                  }}
+                                >
+                                  Beri Bintang
+                                  <span className="mdi mdi-star" style={{ marginLeft: '2px' }}></span>
+                                </Button>
                                 :
                                 <span
                                   className="mdi mdi-check-circle text-success"

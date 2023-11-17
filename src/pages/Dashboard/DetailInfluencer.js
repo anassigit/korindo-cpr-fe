@@ -220,6 +220,11 @@ const DetailInfluencer = (props) => {
                         </Button>
                         <Button
                             className="btn btn-warning my-3 mx-2"
+                            style={{
+                                backgroundColor: appDetailInfluencerData?.data?.recommend_type === "CAN" ? null : "#A9A9A9",
+                                borderColor: appDetailInfluencerData?.data?.recommend_type === "CAN" ? null : "#A9A9A9",
+                            }}
+                            disabled={appDetailInfluencerData?.data?.recommend_type === "CANNOT" ? true : false}
                             onClick={() => {
                                 ReactSession.set('appDetailRecommendationData', "");
                                 const newMemberId = appDetailRecommendationData.member_id;

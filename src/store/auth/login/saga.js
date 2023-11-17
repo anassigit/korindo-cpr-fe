@@ -57,8 +57,14 @@ function* logoutUser({ payload: { history } }) {
     localStorage.removeItem("member_id");
     ReactSession.remove("menu");
     localStorage.removeItem("menu");
-    
     ReactSession.remove('profileData')
+
+    ReactSession.remove('selectedMemberData')
+    ReactSession.remove('selectedDeptData')
+    ReactSession.remove('selectedDeptName')
+    ReactSession.remove('collapser')
+    ReactSession.remove('offset')
+    ReactSession.remove('limit')
 
     history.push("/login")
     yield put(apiError(""))

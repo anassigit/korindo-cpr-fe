@@ -30,6 +30,7 @@ const AddEmployeeOf = (props) => {
     const dispatch = useDispatch()
 
     const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
+    const [appCandidateSearchLov2, setAppCandidateSearchLov2] = useState("");
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
@@ -72,31 +73,33 @@ const AddEmployeeOf = (props) => {
         }
     });
 
+
     useEffect(() => {
-        if (props.appAddEmployeeOfMonYea || !appAddEmployeeValidInput.values.period_to || !appAddEmployeeValidInput.values.period_from) {
-            setAppCandidateSearchLov("");
+        if (props.appAddEmployeeOfMonYea === true) {
+            setAppCandidateSearchLov("")
         }
-    }, [props.appAddEmployeeOfMonYea, appAddEmployeeValidInput.values.period_to, appAddEmployeeValidInput.values.period_from]);
-    
-    useEffect(() => {
-        const formatDate = (date) => {
-            if (date) {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-            return '';
-        };
+    }, [props.appAddEmployeeOfMonYea])
 
-        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
-        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
 
-        setAppCandidateSearchLov({
-            period_from: formattedDateFrom,
-            period_to: formattedDateTo,
-        });
-    }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
+    // useEffect(() => {
+    //     const formatDate = (date) => {
+    //         if (date) {
+    //             const year = date.getFullYear();
+    //             const month = String(date.getMonth() + 1).padStart(2, '0');
+    //             const day = String(date.getDate()).padStart(2, '0');
+    //             return `${year}-${month}-${day}`;
+    //         }
+    //         return '';
+    //     };
+
+    //     const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
+    //     const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
+
+    //     setAppCandidateSearchLov({
+    //         period_from: formattedDateFrom,
+    //         period_to: formattedDateTo,
+    //     });
+    // }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
 
     const appLovCandidateListColumns = [
         {
@@ -132,12 +135,39 @@ const AddEmployeeOf = (props) => {
 
     const dateChanger = (name, selectedDate) => {
 
+        let tempDateTo = ''
         if (name === 'from') {
             appAddEmployeeValidInput.setFieldValue('period_from', selectedDate);
 
         } else if (name === 'to') {
             appAddEmployeeValidInput.setFieldValue('period_to', selectedDate);
+            tempDateTo = selectedDate
         }
+
+        const formatDate = (date) => {
+            if (date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            return '';
+        };
+
+        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
+        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
+
+        debugger
+        if(appAddEmployeeValidInput.values.period_from != null && appAddEmployeeValidInput.values.period_to != null ){
+            setAppCandidateSearchLov2({
+                period_from: formattedDateFrom,
+                period_to: formattedDateTo,
+            });
+    
+        }else{
+            setAppCandidateSearchLov("")
+        }
+        
     };
 
     const appCallBackEmployee = (row) => {
