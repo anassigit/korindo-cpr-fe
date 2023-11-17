@@ -30,7 +30,7 @@ const AddEmployeeOf = (props) => {
     const dispatch = useDispatch()
 
     const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
-    const [appCandidateSearchLov2, setAppCandidateSearchLov2] = useState("");
+    const [appLovParam, setAppLovParam] = useState({});
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
@@ -81,36 +81,31 @@ const AddEmployeeOf = (props) => {
     }, [props.appAddEmployeeOfMonYea])
 
 
-    // useEffect(() => {
-    //     const formatDate = (date) => {
-    //         if (date) {
-    //             const year = date.getFullYear();
-    //             const month = String(date.getMonth() + 1).padStart(2, '0');
-    //             const day = String(date.getDate()).padStart(2, '0');
-    //             return `${year}-${month}-${day}`;
-    //         }
-    //         return '';
-    //     };
+    useEffect(() => {
+        const formatDate = (date) => {
+            if (date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            return '';
+        };
 
-    //     const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
-    //     const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
+        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
+        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
 
-    //     setAppCandidateSearchLov({
-    //         period_from: formattedDateFrom,
-    //         period_to: formattedDateTo,
-    //     });
-    // }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
+        setAppLovParam({
+            period_from: formattedDateFrom,
+            period_to: formattedDateTo,
+        });
+    }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
 
     const appLovCandidateListColumns = [
         {
             dataField: "iidnrp",
             text: "Employee No",
             sort: true,
-            // events: {
-            //     onClick: (e, column, columnIndex, data, rowIndex) => {
-            //         toggleModal(data)
-            //     },
-            // },
             headerStyle: { textAlign: 'center' },
         },
         {
@@ -144,30 +139,6 @@ const AddEmployeeOf = (props) => {
             tempDateTo = selectedDate
         }
 
-        const formatDate = (date) => {
-            if (date) {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-            return '';
-        };
-
-        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
-        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
-
-        debugger
-        if(appAddEmployeeValidInput.values.period_from != null && appAddEmployeeValidInput.values.period_to != null ){
-            setAppCandidateSearchLov2({
-                period_from: formattedDateFrom,
-                period_to: formattedDateTo,
-            });
-    
-        }else{
-            setAppCandidateSearchLov("")
-        }
-        
     };
 
     const appCallBackEmployee = (row) => {
@@ -381,6 +352,7 @@ const AddEmployeeOf = (props) => {
                                             stateSearchInputSet={setAppCandidateSearchLov}
                                             touchedLovField={appAddEmployeeValidInput.touched.member_id}
                                             errorLovField={appAddEmployeeValidInput.errors.member_id}
+                                            pParam={appLovParam}
                                         />
                                     </div>
                                 </div>
