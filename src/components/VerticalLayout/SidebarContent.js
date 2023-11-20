@@ -122,13 +122,13 @@ const SidebarContent = props => {
         <div id="sidebar-menu" style={{ marginTop: "40px" }}>
           <ul className="metismenu list-unstyled" id="side-menu">
             <li>
-              <Link to="/" onClick={() => {
+              <a href="/" onClick={() => {
                 ReactSession.remove('appDetailRecommendationData')
                 ReactSession.remove("currentPage")
               }}>
                 <i className="mdi mdi-home" />
                 <span>{props.t("Home")}</span>
-              </Link>
+              </a>
             </li>
             {Array.isArray(menu) && menu.map((item) => renderMenuItem(item))}
 

@@ -10,6 +10,7 @@ import Rekomendasi from "pages/Rekomendasi/Rekomendasi"
 import Dashboard from "pages/Dashboard/Dashboard"
 import DetailInfluencer from "pages/Dashboard/DetailInfluencer"
 import EmployeeOfMonYea from "pages/EmployeeOfMonYea/EmployeeOfMonYea"
+import Manual from "pages/Manual/Manual"
 
 const authProtectedRoutes = [
 
@@ -18,6 +19,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc051", component: Rekomendasi},
   { path: "/korsoc000/forms/korsoc013", component: EmployeeOfMonYea},
   
+  { path: "/korsoc000/forms/korsoc400", component: Manual},
   
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
