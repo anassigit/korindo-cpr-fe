@@ -62,6 +62,7 @@ const Rekomendasi = () => {
         dispatch(getBestListData())
         dispatch(getBestOfMonthListData())
         dispatch(getBestOfYearListData())
+        setLoadingSpinner(true)
         const foundRow = menu?.find((row) => row.id === 'KORTRN001');
         const temp = foundRow ? foundRow.path : null;
 
@@ -95,6 +96,9 @@ const Rekomendasi = () => {
     useEffect(() => {
         if (appBestlistOfMonthData?.data?.list?.length) {
             ReactSession.set('lengthArray', appBestlistOfMonthData?.data?.list?.length)
+        }
+        if (appListData.status === '1') {
+            setLoadingSpinner(false)
         }
     }, [appListData])
 

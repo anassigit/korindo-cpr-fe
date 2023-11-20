@@ -429,6 +429,7 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="textarea"
+                                            value={appAddEmployeeValidInput.values.description}
                                             onChange={(e) => appAddEmployeeValidInput.setFieldValue('description', e.target.value)}
                                         />
                                     </div>

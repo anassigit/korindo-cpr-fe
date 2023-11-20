@@ -30,6 +30,8 @@ const EditEmployeeOf = (props) => {
 
     const dispatch = useDispatch()
 
+    const [lovOneRender, setLovOneRender] = useState(0)
+
     const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
     const [appLovParam, setAppLovParam] = useState({});
 
@@ -38,6 +40,10 @@ const EditEmployeeOf = (props) => {
 
     const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
     const appCandidateData = useSelector((state) => state.managementSystemReducer.respGetCandidate);
+
+    const lovData = useSelector(state => {
+        return state.LovReducer.resp;
+    });
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -65,8 +71,8 @@ const EditEmployeeOf = (props) => {
 
         initialValues: {
             member_id: '',
-            keyword_id: '',
-            filter: 'month',
+            keyword: '',
+            flag: '',
             period_from: '',
             period_to: '',
             star: '',
@@ -74,7 +80,7 @@ const EditEmployeeOf = (props) => {
         },
         validationSchema: Yup.object().shape({
             member_id: Yup.string().required("Wajib diisi"),
-            filter: Yup.string().required("Wajib diisi"),
+            flag: Yup.string().required("Wajib diisi"),
             period_from: Yup.string().required("Wajib diisi"),
             period_to: Yup.string().required("Wajib diisi"),
         }),
@@ -84,8 +90,7 @@ const EditEmployeeOf = (props) => {
             let dateTo = formatDate(values.period_to)
 
             dispatch(editEmployeeOf({
-                filter: values.filter,
-                keyword_id: values.keyword_id,
+                award_id: props.appEmployeeOfMonYeaData.id,
                 period_from: dateFrom,
                 period_to: dateTo,
                 member_id: values.member_id,
@@ -102,18 +107,19 @@ const EditEmployeeOf = (props) => {
             setAppCandidateSearchLov("")
             dispatch(getKeywordListData())
             dispatch(getCandidateData({ award_id: props.appEmployeeOfMonYeaData.id }))
+            setLovOneRender(0)
         } else {
             appEditEmployeeValidInput.resetForm()
+            setLovOneRender(0)
         }
     }, [props.appEditEmployeeOfMonYea])
 
     useEffect(() => {
-        appEditEmployeeValidInput.setFieldValue('member_id', appCandidateData?.data?.result.member_id)
-        appEditEmployeeValidInput.setFieldValue('keyword_id', appCandidateData?.data?.result.keyword_id)
-        appEditEmployeeValidInput.setFieldValue('filter', appCandidateData?.data?.result.keyword_id)
+        appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
+        appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
         appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.periodFrom)
         appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.periodTo)
-        appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.crown)
+        appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
         appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
     }, [appCandidateData])
 
@@ -134,8 +140,18 @@ const EditEmployeeOf = (props) => {
             period_from: formattedDateFrom,
             period_to: formattedDateTo,
         });
+        setAppCandidateSearchLov(appCandidateData?.data?.result.member_id)
+
 
     }, [appEditEmployeeValidInput.values.period_from, appEditEmployeeValidInput.values.period_to]);
+
+    useEffect(() => {
+        if (lovData.status === '1' && lovOneRender === 0 && lovData?.data?.lov.length === 1) {
+            appEditEmployeeValidInput.setFieldValue('member_id', lovData?.data?.lov[0].iidnrp)
+            setAppCandidateSearchLov(lovData?.data?.lov[0].vfullname)
+            setLovOneRender(1)
+        }
+    }, [lovData])
 
     const appLovCandidateListColumns = [
         {
@@ -176,7 +192,6 @@ const EditEmployeeOf = (props) => {
     };
 
     const appCallBackEmployee = (row) => {
-        appEditEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
         appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
 
@@ -224,27 +239,29 @@ const EditEmployeeOf = (props) => {
                                                 gap: "12px",
                                             }}
                                         >
-                                            <label htmlFor="monthRadio">
+                                            <label htmlFor="monthRadio1">
                                                 <Input
-                                                    id="monthRadio"
+                                                    disabled
+                                                    id="monthRadio1"
                                                     type="radio"
-                                                    checked={appEditEmployeeValidInput.values.filter === "month"}
+                                                    checked={appEditEmployeeValidInput.values.flag === "month"}
                                                     name="searchOption"
                                                     value="month"
                                                     onChange={() =>
-                                                        appEditEmployeeValidInput.setFieldValue("filter", "month")
+                                                        appEditEmployeeValidInput.setFieldValue("flag", "month")
                                                     }
                                                 />{" "}
                                                 Month
                                             </label>
-                                            <label htmlFor="yearRadio">
+                                            <label htmlFor="yearRadio1">
                                                 <Input
-                                                    id="yearRadio"
+                                                    disabled
+                                                    id="yearRadio1"
                                                     type="radio"
-                                                    checked={appEditEmployeeValidInput.values.filter === "year"}
+                                                    checked={appEditEmployeeValidInput.values.flag === "year"}
                                                     name="searchOption"
                                                     value="year"
-                                                    onChange={() => appEditEmployeeValidInput.setFieldValue("filter", "year")}
+                                                    onChange={() => appEditEmployeeValidInput.setFieldValue("flag", "year")}
                                                 />{" "}
                                                 Year
                                             </label>
@@ -266,31 +283,23 @@ const EditEmployeeOf = (props) => {
                                     </div>
                                     <div className="col-8">
                                         <Input
+                                            disabled
                                             type="select"
-                                            value={appEditEmployeeValidInput.values.keyword_id}
+                                            style={{ color: '#495057' }}
+                                            value={appEditEmployeeValidInput.values.keyword}
                                             onChange={(e) =>
-                                                appEditEmployeeValidInput.setFieldValue("keyword_id", e.target.value)
+                                                appEditEmployeeValidInput.setFieldValue("keyword", e.target.value)
                                             }
                                             invalid={
-                                                appEditEmployeeValidInput.touched.keyword_id && appEditEmployeeValidInput.errors.keyword_id
+                                                appEditEmployeeValidInput.touched.keyword && appEditEmployeeValidInput.errors.keyword
                                                     ? true : false
                                             }
                                         >
-                                            {appEditEmployeeValidInput.values.filter === "month" ? (
-                                                appKeywordListData?.data?.month.map((item, index) => (
-                                                    <option key={index} value={item.keyword_id}>
-                                                        {item.keyword_Name}
-                                                    </option>
-                                                ))
-                                            ) : (
-                                                appKeywordListData?.data?.year.map((item, index) => (
-                                                    <option key={index} value={item.keyword_id}>
-                                                        {item.keyword_Name}
-                                                    </option>
-                                                ))
-                                            )}
+                                            <option value={appEditEmployeeValidInput.values.keyword}>
+                                                {appEditEmployeeValidInput.values.keyword}
+                                            </option>
                                         </Input>
-                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.keyword_id}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.keyword}</FormFeedback>
                                     </div>
                                 </div>
 
@@ -439,6 +448,7 @@ const EditEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="textarea"
+                                            value={appEditEmployeeValidInput.values.description}
                                             onChange={(e) => appEditEmployeeValidInput.setFieldValue('description', e.target.value)}
                                         />
                                     </div>
