@@ -7,13 +7,13 @@ import {
   GET_CANDIDATE,
   GET_CANDIDATE_LIST,
   GET_KEYWORD_LIST,
-  GET_LIST, GET_YEAR_LIST
+  GET_LIST, GET_LOCATION_LIST, GET_YEAR_LIST
 } from "./actionTypes"
 import {
   respGetCandidate,
   respGetCandidateList,
   respGetKeywordList,
-  respGetList, respGetYearList
+  respGetList, respGetLocationList, respGetYearList
 } from "./actions"
 
 import {
@@ -23,7 +23,7 @@ import {
   getCandidateBE,
   getCandidateListBE,
   getKeywordListBE,
-  getListEmployeeOfMonthYearBE, getYearListBE
+  getListEmployeeOfMonthYearBE, getLocationListBE, getYearListBE
 } from "helpers/backend_helper"
 import { msgAdd, msgDelete, msgEdit } from "store/actions"
 
@@ -92,6 +92,19 @@ function* fetchGetKeywordList({ payload: req }) {
     yield put(respGetKeywordList({ "status": 0, "message": "Error Get Data" }))
   }
 }
+function* fetchGetLocationList({ payload: req }) {
+  try {
+    const response = yield call(getLocationListBE, req)
+    if (response.status == 1) {
+      yield put(respGetLocationList(response))
+    } else {
+      yield put(respGetLocationList(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetLocationList({ "status": 0, "message": "Error Get Data" }))
+  }
+}
 function* fetchAddEmployeeOf({ payload: req }) {
   try {
     const response = yield call(addEmployeeOfBE, req)
@@ -139,6 +152,7 @@ function* managementSystemSaga() {
   yield takeEvery(GET_CANDIDATE_LIST, fetchGetCandidateList)
   yield takeEvery(GET_CANDIDATE, fetchGetCandidate)
   yield takeEvery(GET_KEYWORD_LIST, fetchGetKeywordList)
+  yield takeEvery(GET_LOCATION_LIST, fetchGetLocationList)
   yield takeEvery(ADD_EMPLOYEE_OF, fetchAddEmployeeOf)
   yield takeEvery(EDIT_EMPLOYEE_OF, fetchEditEmployeeOf)
   yield takeEvery(DELETE_EMPLOYEE_OF, fetchDeleteEmployeeOf)

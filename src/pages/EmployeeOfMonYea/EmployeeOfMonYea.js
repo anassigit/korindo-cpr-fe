@@ -15,11 +15,12 @@ import {
     Label,
     Row,
     Spinner,
+    UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { deleteEmployeeOf, getListData, getYearListData } from "store/actions";
+import { deleteEmployeeOf, getListData, getYearListData, resetMessage } from "store/actions";
 import TableCustom2 from "common/TableCustom2";
 import AddEmployeeOf from "./AddEmployeeOf";
 import EditEmployeeOf from "./EditEmployeeOf";
@@ -33,6 +34,7 @@ const EmployeeOfMonYea = () => {
     const [modal, setModal] = useState(false)
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [appEmployeeOfMonYeaMsg, setAppEmployeeOfMonYeaMsg] = useState("")
 
     const [appEmployeeOfMonYea, setAppEmployeeOfMonYea] = useState(true)
     const [appAddEmployeeOfMonYea, setAppAddEmployeeOfMonYea] = useState(false)
@@ -52,6 +54,10 @@ const EmployeeOfMonYea = () => {
     const appYearListData = useSelector((state) => state.managementSystemReducer.respGetYearList);
 
     const appMessageDelete = useSelector((state) => state.managementSystemReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.managementSystemReducer.msgAdd);
+    const appMessageEdit = useSelector((state) => {
+        return state.managementSystemReducer.msgEdit
+    });
 
     const [appEmployeeMonYeaTabelSearch, setAppEmployeeMonYeaTabelSearch] = useState({
         page: 1,
@@ -94,6 +100,13 @@ const EmployeeOfMonYea = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
+            dataField: "location_name",
+            text: "Lokasi",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+
+        },
+        {
             dataField: "keyword",
             text: "Keyword",
             sort: true,
@@ -115,7 +128,7 @@ const EmployeeOfMonYea = () => {
             style: { textAlign: 'center' },
         },
         {
-            dataField: "crown",
+            dataField: "star",
             text: "Jumlah",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -141,6 +154,10 @@ const EmployeeOfMonYea = () => {
     useEffect(() => {
         dispatch(getYearListData())
     }, [])
+
+    useEffect(() => {
+        dispatch(resetMessage())
+    }, [dispatch])
 
     useEffect(() => {
         setAppEmployeeMonYeaTabelSearch((prevState) => ({
@@ -198,22 +215,29 @@ const EmployeeOfMonYea = () => {
     }
 
     useEffect(() => {
+        let messageToUpdate;
+    
         if (appMessageDelete.status === '1') {
-            setLoadingSpinner(false)
-            dispatch(getListData(appEmployeeMonYeaTabelSearch))
+            messageToUpdate = appMessageDelete;
+        } else if (appMessageAdd.status === '1') {
+            messageToUpdate = appMessageAdd;
+        } else if (appMessageEdit.status === '1') {
+            messageToUpdate = appMessageEdit;
         }
-    }, [appMessageDelete])
-
-    useEffect(() => {
-        if (appEmployeeOfMonYea) {
-            dispatch(getListData(appEmployeeMonYeaTabelSearch))
+    
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getListData(appEmployeeMonYeaTabelSearch));
+            setAppEmployeeOfMonYeaMsg(messageToUpdate);
         }
-    }, [appEmployeeOfMonYea])
-
+    }, [appMessageDelete, appMessageAdd, appMessageEdit]);
+    
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
+                    {appEmployeeOfMonYeaMsg !== "" ? <UncontrolledAlert toggle={() => { setAppEmployeeOfMonYeaMsg("") }} color={appEmployeeOfMonYeaMsg?.status == "1" ? "success" : "danger"}>
+                        {typeof appEmployeeOfMonYeaMsg == 'string' ? null : appEmployeeOfMonYeaMsg?.message}</UncontrolledAlert> : null}
                     <Container
                         style={{ display: appEmployeeOfMonYea ? 'block' : "none" }}
                         fluid

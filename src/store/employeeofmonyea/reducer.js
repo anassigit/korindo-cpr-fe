@@ -6,6 +6,7 @@ import {
   GET_CANDIDATE_LIST,
   GET_KEYWORD_LIST,
   GET_LIST,
+  GET_LOCATION_LIST,
   GET_YEAR_LIST,
   MSG_ADD,
   MSG_DELETE,
@@ -15,6 +16,7 @@ import {
   RESP_GET_CANDIDATE_LIST,
   RESP_GET_KEYWORD_LIST,
   RESP_GET_LIST,
+  RESP_GET_LOCATION_LIST,
   RESP_GET_YEAR_LIST
 } from "./actionTypes"
 
@@ -23,6 +25,7 @@ const INIT_STATE = {
   respGetYearList: {},
   respGetCandidateList: {},
   respGetCandidate: {},
+  respGetLocationList: {},
   respGetKeywordList: {},
   msgAdd: '',
   msgEdit: '',
@@ -77,6 +80,15 @@ const managementSystemReducer = (state = INIT_STATE, action) => {
         ...state,
         respGetKeywordList: action.payload,
       }
+    case GET_LOCATION_LIST:
+      return {
+        ...state,
+      }
+    case RESP_GET_LOCATION_LIST:
+      return {
+        ...state,
+        respGetLocationList: action.payload,
+      }
     case ADD_EMPLOYEE_OF:
       return {
         ...state,
@@ -111,6 +123,7 @@ const managementSystemReducer = (state = INIT_STATE, action) => {
         respGetYearList: {},
         respGetCandidateList: {},
         respGetCandidate: {},
+        respGetLocationList: {},
         respGetKeywordList: {},
         msgAdd: '',
         msgEdit: '',

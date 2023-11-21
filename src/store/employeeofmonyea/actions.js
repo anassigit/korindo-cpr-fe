@@ -6,6 +6,7 @@ import {
   GET_CANDIDATE_LIST,
   GET_KEYWORD_LIST,
   GET_LIST,
+  GET_LOCATION_LIST,
   GET_YEAR_LIST,
   MSG_ADD,
   MSG_DELETE,
@@ -15,6 +16,7 @@ import {
   RESP_GET_CANDIDATE_LIST,
   RESP_GET_KEYWORD_LIST,
   RESP_GET_LIST,
+  RESP_GET_LOCATION_LIST,
   RESP_GET_YEAR_LIST
 } from "./actionTypes"
 
@@ -65,6 +67,16 @@ export const getKeywordListData = (req) => ({
 
 export const respGetKeywordList = resp => ({
   type: RESP_GET_KEYWORD_LIST,
+  payload: resp,
+})
+
+export const getLocationListData = (req) => ({
+  type: GET_LOCATION_LIST,
+  payload: req,
+})
+
+export const respGetLocationList = resp => ({
+  type: RESP_GET_LOCATION_LIST,
   payload: resp,
 })
 

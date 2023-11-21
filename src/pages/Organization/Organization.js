@@ -11,18 +11,16 @@ import {
 } from "reactstrap"
 import { getDeptData, getSearchData, resetMessage } from "store/actions"
 import '../../assets/scss/custom.scss'
+import PropTypes from 'prop-types'
 import RootPageCustom from '../../common/RootPageCustom'
 import '../../config'
-import PropTypes from 'prop-types'
-import HistoryRekomendasi from "./HistoryRekomendasi"
-import Member from "./Member"
 
-const Rekomendasi = () => {
+const Organization = () => {
 
   const dispatch = useDispatch()
 
   const [loadingSpinner, setLoadingSpinner] = useState(false)
-  const [appRekomendasiMsg, setAppRekomendasiMsg] = useState('')
+  const [appOrganizationMsg, setAppOrganizationMsg] = useState('')
 
   const [searchBy, setSearchBy] = useState(false)
   const [searchVal, setSearchVal] = useState('')
@@ -134,8 +132,10 @@ const Rekomendasi = () => {
     }
   }
 
+
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 
+    debugger
     const currentDepth = depth + 1;
     const paddingLeft = `${currentDepth * 0.5}vw`;
     return (
@@ -234,8 +234,8 @@ const Rekomendasi = () => {
     <RootPageCustom msgStateGet={null} msgStateSet={null}
       componentJsx={
         <React.Fragment>
-          {appRekomendasiMsg !== "" ? <UncontrolledAlert toggle={() => { setAppRekomendasiMsg("") }} color={appRekomendasiMsg?.status == "1" ? "success" : "danger"}>
-            {typeof appRekomendasiMsg == 'string' ? null : appRekomendasiMsg?.message}</UncontrolledAlert> : null}
+          {appOrganizationMsg !== "" ? <UncontrolledAlert toggle={() => { setAppOrganizationMsg("") }} color={appOrganizationMsg?.status == "1" ? "success" : "danger"}>
+            {typeof appOrganizationMsg == 'string' ? null : appOrganizationMsg?.message}</UncontrolledAlert> : null}
           <Container fluid>
             <Card style={{ marginBottom: 0 }}>
               <CardHeader>
@@ -303,7 +303,6 @@ const Rekomendasi = () => {
                       setSelectedDeptData={setSelectedDeptData}
                       setSelectedDeptName={setSelectedDeptName}
                     />
-
                   </Col>
 
 
@@ -312,33 +311,12 @@ const Rekomendasi = () => {
                     className="bg-light py-2"
                     style={{ border: "1px solid #BBB", width: "37%", paddingRight: 0, paddingLeft: 0, height: "70vh" }}
                   >
-                    <Member
-                      appDeptData={appDeptData}
-                      selectedDeptData={selectedDeptData}
-                      selectedDeptName={selectedDeptName}
-                      setSelectedDeptData={setSelectedDeptData}
-                      setSelectedMemberData={setSelectedMemberData}
-                      offset={offset}
-                      limit={limit}
-                      setOffset={setOffset}
-                      setLimit={setLimit}
-                      setMemberList={setMemberList}
-                      appMemberList={appMemberList}
-                      searchVal={searchVal}
-                      setCurrentPage={setCurrentPage}
-                      currentPage={currentPage}
-                      searchEntered={searchEntered}
-                    />
                   </Col>
                   <Col
                     xs={5}
                     className="bg-light"
                     style={{ border: "1px solid #BBB", padding: 0, margin: 0 }}
                   >
-                    <HistoryRekomendasi
-                      appRekomendasiMsg={appRekomendasiMsg}
-                      setAppRekomendasiMsg={setAppRekomendasiMsg}
-                    />
                   </Col>
                 </Row>
               </CardBody>
@@ -353,4 +331,4 @@ const Rekomendasi = () => {
   )
 }
 
-export default Rekomendasi
+export default Organization

@@ -24,7 +24,7 @@ const Manual = () => {
                                 <span className="mdi mdi-information-outline"></span> Ketentuan CPR
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
-                                <Table style={{ borderCollapse: "collapse", width: "100%" }}>
+                                <Table className="table-ketentuan" style={{ borderCollapse: "collapse", width: "100%" }}>
                                     <tbody>
                                         <tr>
                                             <th style={{ backgroundColor: "#A084DC", color: "white" }} scope="row" colSpan={2}>

@@ -11,6 +11,7 @@ import Dashboard from "pages/Dashboard/Dashboard"
 import DetailInfluencer from "pages/Dashboard/DetailInfluencer"
 import EmployeeOfMonYea from "pages/EmployeeOfMonYea/EmployeeOfMonYea"
 import Manual from "pages/Manual/Manual"
+import Organization from "pages/Organization/Organization"
 
 const authProtectedRoutes = [
 
@@ -18,6 +19,7 @@ const authProtectedRoutes = [
   { path: "/home/detail", component: DetailInfluencer},
   { path: "/korsoc000/forms/korsoc051", component: Rekomendasi},
   { path: "/korsoc000/forms/korsoc013", component: EmployeeOfMonYea},
+  { path: "/korsoc000/forms/korsoc008", component: Organization},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},
   

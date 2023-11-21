@@ -19,7 +19,7 @@ import '../../config';
 import { ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import Lovv2 from "common/Lovv2";
-import { addEmployeeOf, getCandidateListData, getKeywordListData, resetMessage } from "store/actions";
+import { addEmployeeOf, getCandidateListData, getKeywordListData, getLocationListData, resetMessage } from "store/actions";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { format } from 'date-fns';
@@ -37,6 +37,7 @@ const AddEmployeeOf = (props) => {
     const [filterVal, setFilterVal] = useState("")
 
     const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
+    const appLocationListData = useSelector((state) => state.managementSystemReducer.respGetLocationList);
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -58,6 +59,7 @@ const AddEmployeeOf = (props) => {
         initialValues: {
             member_id: '',
             keyword_id: '',
+            location_id: '',
             filter: 'month',
             period_from: '',
             period_to: '',
@@ -67,6 +69,7 @@ const AddEmployeeOf = (props) => {
         validationSchema: Yup.object().shape({
             member_id: Yup.string().required("Wajib diisi"),
             filter: Yup.string().required("Wajib diisi"),
+            location_id: Yup.string().required("Wajib diisi"),
             period_from: Yup.string().required("Wajib diisi"),
             period_to: Yup.string().required("Wajib diisi"),
         }),
@@ -78,6 +81,7 @@ const AddEmployeeOf = (props) => {
             dispatch(addEmployeeOf({
                 filter: values.filter,
                 keyword_id: values.keyword_id,
+                locationId: values.location_id,
                 period_from: dateFrom,
                 period_to: dateTo,
                 member_id: values.member_id,
@@ -93,6 +97,7 @@ const AddEmployeeOf = (props) => {
         if (props.appAddEmployeeOfMonYea) {
             setAppCandidateSearchLov("")
             dispatch(getKeywordListData())
+            dispatch(getLocationListData())
             appAddEmployeeValidInput.resetForm()
         }
     }, [props.appAddEmployeeOfMonYea])
@@ -100,6 +105,10 @@ const AddEmployeeOf = (props) => {
     useEffect(() => {
         appAddEmployeeValidInput.setFieldValue('keyword_id', appKeywordListData?.data?.month[0].keyword_Id)
     }, [appKeywordListData])
+
+    useEffect(() => {
+        appAddEmployeeValidInput.setFieldValue('location_id', appLocationListData?.data?.list[0].locationId)
+    }, [appLocationListData])
 
     useEffect(() => {
         if (props.appAddEmployeeOfMonYea === true) {
@@ -118,14 +127,15 @@ const AddEmployeeOf = (props) => {
         }
 
         const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
-        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to);
+        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to)
 
         setAppLovParam({
             period_from: formattedDateFrom,
             period_to: formattedDateTo,
+            locationId: appAddEmployeeValidInput.values.location_id,
         });
 
-    }, [appAddEmployeeValidInput.values.period_from, appAddEmployeeValidInput.values.period_to]);
+    }, [appAddEmployeeValidInput.values]);
 
     const appLovCandidateListColumns = [
         {
@@ -281,6 +291,42 @@ const AddEmployeeOf = (props) => {
                                             )}
                                         </Input>
                                         <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.keyword_id}</FormFeedback>
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            Lokasi <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        <Input
+                                            type="select"
+                                            value={appAddEmployeeValidInput.values.location_id}
+                                            onChange={(e) =>
+                                                appAddEmployeeValidInput.setFieldValue("location_id", e.target.value)
+                                            }
+                                            invalid={
+                                                appAddEmployeeValidInput.touched.location_id && appAddEmployeeValidInput.errors.location_id
+                                                    ? true : false
+                                            }
+                                        >
+                                            {
+                                                appLocationListData?.data?.list.map((item, index) => (
+                                                    <option key={index} value={item.locationId}>
+                                                        {item.locationName}
+                                                    </option>
+                                                ))
+                                            }
+                                        </Input>
+                                        <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.location_id}</FormFeedback>
                                     </div>
                                 </div>
 

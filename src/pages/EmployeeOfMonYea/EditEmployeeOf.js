@@ -19,7 +19,7 @@ import '../../config';
 import { ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import Lovv2 from "common/Lovv2";
-import { deleteEmployeeOf, editEmployeeOf, getCandidateData, getCandidateListData, getKeywordListData, resetMessage } from "store/actions";
+import { deleteEmployeeOf, editEmployeeOf, getCandidateData, getCandidateListData, getKeywordListData, getLocationListData, resetMessage } from "store/actions";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { format } from 'date-fns';
@@ -40,6 +40,7 @@ const EditEmployeeOf = (props) => {
 
     const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
     const appCandidateData = useSelector((state) => state.managementSystemReducer.respGetCandidate);
+    const appLocationListData = useSelector((state) => state.managementSystemReducer.respGetLocationList);
 
     const lovData = useSelector(state => {
         return state.LovReducer.resp;
@@ -72,6 +73,7 @@ const EditEmployeeOf = (props) => {
         initialValues: {
             member_id: '',
             keyword: '',
+            location_id: '',
             flag: '',
             period_from: '',
             period_to: '',
@@ -80,6 +82,7 @@ const EditEmployeeOf = (props) => {
         },
         validationSchema: Yup.object().shape({
             member_id: Yup.string().required("Wajib diisi"),
+            keyword: Yup.string().required("Wajib diisi"),
             flag: Yup.string().required("Wajib diisi"),
             period_from: Yup.string().required("Wajib diisi"),
             period_to: Yup.string().required("Wajib diisi"),
@@ -91,6 +94,7 @@ const EditEmployeeOf = (props) => {
 
             dispatch(editEmployeeOf({
                 award_id: props.appEmployeeOfMonYeaData.id,
+                locationId: values.location_id,
                 period_from: dateFrom,
                 period_to: dateTo,
                 member_id: values.member_id,
@@ -106,8 +110,10 @@ const EditEmployeeOf = (props) => {
         if (props.appEditEmployeeOfMonYea) {
             setAppCandidateSearchLov("")
             dispatch(getKeywordListData())
+            dispatch(getLocationListData())
             dispatch(getCandidateData({ award_id: props.appEmployeeOfMonYeaData.id }))
             setLovOneRender(0)
+            setLoadingSpinner(true)
         } else {
             appEditEmployeeValidInput.resetForm()
             setLovOneRender(0)
@@ -117,6 +123,7 @@ const EditEmployeeOf = (props) => {
     useEffect(() => {
         appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
         appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
+        appEditEmployeeValidInput.setFieldValue('location_id', appCandidateData?.data?.result.locationId)
         appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.periodFrom)
         appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.periodTo)
         appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
@@ -139,17 +146,25 @@ const EditEmployeeOf = (props) => {
         setAppLovParam({
             period_from: formattedDateFrom,
             period_to: formattedDateTo,
+            locationId: appEditEmployeeValidInput.values.location_id,
         });
-        setAppCandidateSearchLov(appCandidateData?.data?.result.member_id)
+
+        if (formattedDateFrom && formattedDateTo && appEditEmployeeValidInput.values.location_id && !appEditEmployeeValidInput.values.member_id) {
+            setAppCandidateSearchLov(appCandidateData?.data?.result.member_id)
+            setLovOneRender(0)
+        } else {
+            setAppCandidateSearchLov("")
+        }
 
 
-    }, [appEditEmployeeValidInput.values.period_from, appEditEmployeeValidInput.values.period_to]);
+    }, [appEditEmployeeValidInput.values.period_from, appEditEmployeeValidInput.values.period_to, appEditEmployeeValidInput.values.location_id]);
 
     useEffect(() => {
         if (lovData.status === '1' && lovOneRender === 0 && lovData?.data?.lov.length === 1) {
             appEditEmployeeValidInput.setFieldValue('member_id', lovData?.data?.lov[0].iidnrp)
             setAppCandidateSearchLov(lovData?.data?.lov[0].vfullname)
             setLovOneRender(1)
+            setLoadingSpinner(false)
         }
     }, [lovData])
 
@@ -300,6 +315,42 @@ const EditEmployeeOf = (props) => {
                                             </option>
                                         </Input>
                                         <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.keyword}</FormFeedback>
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            Lokasi <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        <Input
+                                            type="select"
+                                            value={appEditEmployeeValidInput.values.location_id}
+                                            onChange={(e) =>
+                                                appEditEmployeeValidInput.setFieldValue("location_id", e.target.value)
+                                            }
+                                            invalid={
+                                                appEditEmployeeValidInput.touched.location_id && appEditEmployeeValidInput.errors.location_id
+                                                    ? true : false
+                                            }
+                                        >
+                                            {
+                                                appLocationListData?.data?.list.map((item, index) => (
+                                                    <option key={index} value={item.locationId}>
+                                                        {item.locationName}
+                                                    </option>
+                                                ))
+                                            }
+                                        </Input>
+                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.location_id}</FormFeedback>
                                     </div>
                                 </div>
 

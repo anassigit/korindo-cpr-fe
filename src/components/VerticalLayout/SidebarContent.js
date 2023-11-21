@@ -122,7 +122,7 @@ const SidebarContent = props => {
         <div id="sidebar-menu" style={{ marginTop: "40px" }}>
           <ul className="metismenu list-unstyled" id="side-menu">
             <li>
-              <a href="/" onClick={() => {
+              <a href="/home" onClick={() => {
                 ReactSession.remove('appDetailRecommendationData')
                 ReactSession.remove("currentPage")
               }}>
