@@ -75,6 +75,8 @@ const AddEmployeeOf = (props) => {
         }),
 
         onSubmit: (values) => {
+            props.setAppEmployeeOfMonYeaMsg('')
+
             let dateFrom = formatDate(values.period_from)
             let dateTo = formatDate(values.period_to)
 
@@ -111,11 +113,16 @@ const AddEmployeeOf = (props) => {
     }, [appLocationListData])
 
     useEffect(() => {
+        if (appCandidateSearchLov === '') {
+            appAddEmployeeValidInput.setFieldValue("member_id", '')
+        }
+    }, [appCandidateSearchLov])
+
+    useEffect(() => {
         if (props.appAddEmployeeOfMonYea === true) {
             setAppCandidateSearchLov("")
         }
     }, [props.appAddEmployeeOfMonYea])
-
 
     useEffect(() => {
 
@@ -134,6 +141,11 @@ const AddEmployeeOf = (props) => {
             period_to: formattedDateTo,
             locationId: appAddEmployeeValidInput.values.location_id,
         });
+        
+        if (!formattedDateFrom && !formattedDateTo && !appAddEmployeeValidInput.values.location_id) {
+            appAddEmployeeValidInput.setFieldValue('member_id', '')
+            setAppCandidateSearchLov("")
+        }
 
     }, [appAddEmployeeValidInput.values]);
 
@@ -418,6 +430,7 @@ const AddEmployeeOf = (props) => {
                                             Nama Karyawan <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
+
                                     <div className="col-8">
                                         <Lovv2
                                             title="Karyawan"
@@ -528,7 +541,7 @@ AddEmployeeOf.propTypes = {
     appAddEmployeeOfMonYea: PropTypes.any,
     setAppEmployeeOfMonYea: PropTypes.any,
     setAppAddEmployeeOfMonYea: PropTypes.any,
-    setAppEmployeeMsg: PropTypes.any,
+    setAppEmployeeOfMonYeaMsg: PropTypes.any,
 }
 
 export default AddEmployeeOf;

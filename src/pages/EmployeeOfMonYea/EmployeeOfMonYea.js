@@ -44,8 +44,6 @@ const EmployeeOfMonYea = () => {
 
     const [awardId, setAwardId] = useState('')
 
-    const [appEmployeeMsg, setAppEmployeeMsg] = useState('')
-
     const [searchVal, setSearchVal] = useState("")
     const [filterVal, setFilterVal] = useState("")
     const [yearVal, setYearVal] = useState(parseInt(new Date().getFullYear()))
@@ -209,6 +207,7 @@ const EmployeeOfMonYea = () => {
     }
 
     const toggleApply = () => {
+        setAppEmployeeOfMonYeaMsg('')
         dispatch(deleteEmployeeOf({ award_id: awardId }))
         setModal(!modal)
         setLoadingSpinner(true)
@@ -216,7 +215,7 @@ const EmployeeOfMonYea = () => {
 
     useEffect(() => {
         let messageToUpdate;
-    
+
         if (appMessageDelete.status === '1') {
             messageToUpdate = appMessageDelete;
         } else if (appMessageAdd.status === '1') {
@@ -224,14 +223,14 @@ const EmployeeOfMonYea = () => {
         } else if (appMessageEdit.status === '1') {
             messageToUpdate = appMessageEdit;
         }
-    
+
         if (messageToUpdate) {
             setLoadingSpinner(false);
             dispatch(getListData(appEmployeeMonYeaTabelSearch));
             setAppEmployeeOfMonYeaMsg(messageToUpdate);
         }
     }, [appMessageDelete, appMessageAdd, appMessageEdit]);
-    
+
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
@@ -411,13 +410,13 @@ const EmployeeOfMonYea = () => {
                         setAppEmployeeOfMonYea={setAppEmployeeOfMonYea}
                         appAddEmployeeOfMonYea={appAddEmployeeOfMonYea}
                         setAppAddEmployeeOfMonYea={setAppAddEmployeeOfMonYea}
-                        setAppEmployeeMsg={setAppEmployeeMsg}
+                        setAppEmployeeOfMonYeaMsg={setAppEmployeeOfMonYeaMsg}
                     />
                     <EditEmployeeOf
                         setAppEmployeeOfMonYea={setAppEmployeeOfMonYea}
                         appEditEmployeeOfMonYea={appEditEmployeeOfMonYea}
                         setAppEditEmployeeOfMonYea={setAppEditEmployeeOfMonYea}
-                        setAppEmployeeMsg={setAppEmployeeMsg}
+                        setAppEmployeeOfMonYeaMsg={setAppEmployeeOfMonYeaMsg}
                         appEmployeeOfMonYeaData={appEmployeeOfMonYeaData}
                     />
                     <MsgModal

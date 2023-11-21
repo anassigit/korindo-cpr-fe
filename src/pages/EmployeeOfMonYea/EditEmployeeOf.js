@@ -66,7 +66,6 @@ const EditEmployeeOf = (props) => {
         return date; // Return the input date if already formatted or if it's falsy
     };
 
-
     const appEditEmployeeValidInput = useFormik({
         enableReinitialize: true,
 
@@ -89,6 +88,7 @@ const EditEmployeeOf = (props) => {
         }),
 
         onSubmit: (values) => {
+
             let dateFrom = formatDate(values.period_from)
             let dateTo = formatDate(values.period_to)
 
@@ -100,6 +100,7 @@ const EditEmployeeOf = (props) => {
                 member_id: values.member_id,
                 description: values.description,
             }))
+            props.setAppEmployeeOfMonYeaMsg('')
 
             props.setAppEmployeeOfMonYea(true)
             props.setAppEditEmployeeOfMonYea(false)
@@ -153,10 +154,9 @@ const EditEmployeeOf = (props) => {
             setAppCandidateSearchLov(appCandidateData?.data?.result.member_id)
             setLovOneRender(0)
         } else {
+            appEditEmployeeValidInput.setFieldValue('member_id', '')
             setAppCandidateSearchLov("")
         }
-
-
     }, [appEditEmployeeValidInput.values.period_from, appEditEmployeeValidInput.values.period_to, appEditEmployeeValidInput.values.location_id]);
 
     useEffect(() => {
@@ -167,6 +167,12 @@ const EditEmployeeOf = (props) => {
             setLoadingSpinner(false)
         }
     }, [lovData])
+
+    useEffect(() => {
+        if (appCandidateSearchLov === '') {
+            appEditEmployeeValidInput.setFieldValue('member_id', '')
+        }
+    }, [appCandidateSearchLov])
 
     const appLovCandidateListColumns = [
         {
@@ -207,6 +213,8 @@ const EditEmployeeOf = (props) => {
     };
 
     const appCallBackEmployee = (row) => {
+        debugger
+        appEditEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
         appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
 
@@ -442,6 +450,7 @@ const EditEmployeeOf = (props) => {
                                             Nama Karyawan <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
+                                    {console.log(appEditEmployeeValidInput.values)}
                                     <div className="col-8">
                                         <Lovv2
                                             title="Karyawan"
@@ -552,7 +561,7 @@ EditEmployeeOf.propTypes = {
     appEditEmployeeOfMonYea: PropTypes.any,
     setAppEmployeeOfMonYea: PropTypes.any,
     setAppEditEmployeeOfMonYea: PropTypes.any,
-    setAppEmployeeMsg: PropTypes.any,
+    setAppEmployeeOfMonYeaMsg: PropTypes.any,
     appEmployeeOfMonYeaData: PropTypes.any,
 }
 
