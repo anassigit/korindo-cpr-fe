@@ -7,6 +7,7 @@ import rekomendasiSaga from "./rekomendasi/saga"
 import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga"
 import managementSystemSaga from "./employeeofmonyea/saga"
+import deptMasterSaga from "./deptmaster/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -16,5 +17,6 @@ export default function* rootSaga() {
     fork(rekomendasiSaga),
     fork(dashboardSaga),
     fork(managementSystemSaga),
+    fork(deptMasterSaga),
   ])
 }

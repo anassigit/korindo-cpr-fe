@@ -9,6 +9,7 @@ import LovReducer from "./lov/reducer"
 import rekomendasiReducer from "./rekomendasi/reducer"
 import dashboardReducer from "./dashboard/reducer"
 import managementSystemReducer from "./employeeofmonyea/reducer"
+import deptMasterReducer from "./employeeofmonyea/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   rekomendasiReducer,
   dashboardReducer,
   managementSystemReducer,
+  deptMasterReducer,
 })
 
 export default rootReducer

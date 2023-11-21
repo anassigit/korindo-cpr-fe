@@ -37,8 +37,7 @@ const Organization = () => {
 
   const [appDetailDeptDataState, setAppDetailDeptDataState] = useState()
   const [collapser, setCollapser] = useState({
-    "0": true,
-    "0-0": true
+    "1531": true,
   })
 
   const [appMemberList, setMemberList] = useState()
@@ -135,7 +134,6 @@ const Organization = () => {
 
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 
-    debugger
     const currentDepth = depth + 1;
     const paddingLeft = `${currentDepth * 0.5}vw`;
     return (

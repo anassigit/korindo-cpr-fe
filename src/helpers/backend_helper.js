@@ -51,6 +51,8 @@ export const getCandidateListBE = req => post("rest/BestEmployeeMasterRest/getCa
 
 export const getCandidateBE = req => postWithParam("rest/BestEmployeeMasterRest/select", req)
 
+export const getDeptListBE = req => post("/rest/DeptMasterRest/getList", req)
+
 export const getLocationListBE = req => post("rest/BestEmployeeMasterRest/getLocationList", req)
 
 export const getKeywordListBE = req => post("rest/BestEmployeeMasterRest/getKeywordList", req)
