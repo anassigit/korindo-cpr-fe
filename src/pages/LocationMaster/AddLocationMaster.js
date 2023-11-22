@@ -35,20 +35,17 @@ const AddLocationMaster = (props) => {
         enableReinitialize: true,
 
         initialValues: {
-            deptName: '',
-            deptNameKor: '',
+            locationName: '',
         },
         validationSchema: Yup.object().shape({
-            deptName: Yup.string().required("Wajib diisi"),
-            deptNameKor: Yup.string().required("Wajib diisi"),
+            locationName: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
             props.setAppLocationMasterMsg('')
 
             dispatch(addLocationMaster({
-                deptName: values.deptName,
-                deptNameKor: values.deptNameKor,
+                locationName: values.locationName,
             }))
 
         }
@@ -91,7 +88,7 @@ const AddLocationMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Department Code <span className="text-danger"> *</span>
+                                            Lokasi Code <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -110,44 +107,19 @@ const AddLocationMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Department Name <span className="text-danger"> *</span>
+                                            Lokasi Name <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             type="text"
-                                            value={appAddLocationMasterValidInput.values.deptName}
-                                            invalid={appAddLocationMasterValidInput.touched.deptName && appAddLocationMasterValidInput.errors.deptName
+                                            value={appAddLocationMasterValidInput.values.locationName}
+                                            invalid={appAddLocationMasterValidInput.touched.locationName && appAddLocationMasterValidInput.errors.locationName
                                                 ? true : false
                                             }
-                                            onChange={(e) => appAddLocationMasterValidInput.setFieldValue('deptName', e.target.value)}
+                                            onChange={(e) => appAddLocationMasterValidInput.setFieldValue('locationName', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appAddLocationMasterValidInput.errors.deptName}</FormFeedback>
-                                    </div>
-                                </div>
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "2px",
-                                            }}
-                                        >
-                                            Department Name (Korean) <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8" style={{ marginTop: "-8px" }}>
-                                        <Input
-                                            type="text"
-                                            value={appAddLocationMasterValidInput.values.deptNameKor}
-                                            invalid={appAddLocationMasterValidInput.touched.deptNameKor && appAddLocationMasterValidInput.errors.deptNameKor
-                                                ? true : false
-                                            }
-                                            onChange={(e) => appAddLocationMasterValidInput.setFieldValue('deptNameKor', e.target.value)}
-                                        />
-                                        <FormFeedback type="invalid">{appAddLocationMasterValidInput.errors.deptNameKor}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddLocationMasterValidInput.errors.locationName}</FormFeedback>
                                     </div>
                                 </div>
                                 <div

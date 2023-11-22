@@ -16,7 +16,7 @@ import {
     Label,
     Spinner
 } from "reactstrap";
-import { editLocationMaster, getDeptDataAction, resetMessage } from "store/actions";
+import { editLocationMaster, getLocationDataAction, resetMessage } from "store/actions";
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
@@ -27,7 +27,7 @@ const EditLocationMaster = (props) => {
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
-    const appDeptData = useSelector((state) => state.locationMasterReducer.respGetDept2);
+    const appLocationData = useSelector((state) => state.locationMasterReducer.respGetLocation2);
 
 
     useEffect(() => {
@@ -38,20 +38,17 @@ const EditLocationMaster = (props) => {
         enableReinitialize: true,
 
         initialValues: {
-            deptName: '',
-            deptNameKor: '',
+            locationName: '',
         },
         validationSchema: Yup.object().shape({
-            deptName: Yup.string().required("Wajib diisi"),
-            deptNameKor: Yup.string().required("Wajib diisi"),
+            locationName: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
 
             dispatch(editLocationMaster({
-                deptId: props.appLocationMasterData.deptId,
-                deptName: values.deptName,
-                deptNameKor: values.deptNameKor,
+                locationId: props.appLocationMasterData.locationId,
+                locationName: values.locationName,
             }))
             props.setAppLocationMasterMsg('')
         }
@@ -59,7 +56,7 @@ const EditLocationMaster = (props) => {
 
     useEffect(() => {
         if (props.appEditLocationMaster) {
-            dispatch(getDeptDataAction({ deptId: props.appLocationMasterData.deptId }))
+            dispatch(getLocationDataAction({ locationId: props.appLocationMasterData.locationId }))
             setLoadingSpinner(true)
         } else {
             appEditLocationMasterValidInput.resetForm()
@@ -67,12 +64,11 @@ const EditLocationMaster = (props) => {
     }, [props.appEditLocationMaster])
 
     useEffect(() => {
-        appEditLocationMasterValidInput.setFieldValue('deptId', appDeptData?.data?.result.deptId)
-        appEditLocationMasterValidInput.setFieldValue('deptName', appDeptData?.data?.result.deptName)
-        appEditLocationMasterValidInput.setFieldValue('deptNameKor', appDeptData?.data?.result.deptNameKor)
+        appEditLocationMasterValidInput.setFieldValue('locationId', appLocationData?.data?.result.locationId)
+        appEditLocationMasterValidInput.setFieldValue('locationName', appLocationData?.data?.result.locationName)
         
         setLoadingSpinner(false)
-    }, [appDeptData])
+    }, [appLocationData])
 
 
     return (
@@ -106,13 +102,13 @@ const EditLocationMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Department Code <span className="text-danger"> *</span>
+                                            Lokasi Code <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             disabled
-                                            value={appEditLocationMasterValidInput.values.deptId}
+                                            value={appEditLocationMasterValidInput.values.locationId}
                                         />
                                     </div>
                                 </div>
@@ -126,44 +122,19 @@ const EditLocationMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Department Name <span className="text-danger"> *</span>
+                                            Lokasi Name <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             type="text"
-                                            value={appEditLocationMasterValidInput.values.deptName}
-                                            onChange={(e) => appEditLocationMasterValidInput.setFieldValue('deptName', e.target.value)}
-                                            invalid={appEditLocationMasterValidInput.touched.deptName && appEditLocationMasterValidInput.errors.deptName
+                                            value={appEditLocationMasterValidInput.values.locationName}
+                                            onChange={(e) => appEditLocationMasterValidInput.setFieldValue('locationName', e.target.value)}
+                                            invalid={appEditLocationMasterValidInput.touched.locationName && appEditLocationMasterValidInput.errors.locationName
                                                 ? true : false
                                             }
                                         />
-                                        <FormFeedback type="invalid">{appEditLocationMasterValidInput.errors.deptName}</FormFeedback>
-                                    </div>
-                                </div>
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "2px",
-                                            }}
-                                        >
-                                            Department Name (Korean) <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8" style={{ marginTop: "-8px" }}>
-                                        <Input
-                                            type="text"
-                                            value={appEditLocationMasterValidInput.values.deptNameKor}
-                                            onChange={(e) => appEditLocationMasterValidInput.setFieldValue('deptNameKor', e.target.value)}
-                                            invalid={appEditLocationMasterValidInput.touched.deptNameKor && appEditLocationMasterValidInput.errors.deptNameKor
-                                                ? true : false
-                                            }
-                                        />
-                                        <FormFeedback type="invalid">{appEditLocationMasterValidInput.errors.deptNameKor}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditLocationMasterValidInput.errors.locationName}</FormFeedback>
                                     </div>
                                 </div>
                                 <div
