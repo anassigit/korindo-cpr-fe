@@ -12,18 +12,19 @@ import {
     CardHeader,
     Container,
     Input,
+    Label,
     Spinner,
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
-import { resetMessage } from "store/actions";
-import { deleteDeptMaster, getDeptListDataAction } from "store/deptmaster/actions";
+import { deleteEmployeeOf, getYearListData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import AddDeptMaster from "./AddDeptMaster";
-import EditDeptMaster from "./EditDeptMaster";
+import { deleteLocationMaster, getLocationListDataAction } from "store/locationmaster/actions";
+import AddLocationMaster from "./AddLocationMaster";
+import EditLocationMaster from "./EditLocationMaster";
 
-const DeptMaster = () => {
+const LocationMaster = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -31,30 +32,30 @@ const DeptMaster = () => {
     const [modal, setModal] = useState(false)
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-    const [appDeptMasterMsg, setAppDeptMasterMsg] = useState("")
+    const [appLocationMasterMsg, setAppLocationMasterMsg] = useState("")
 
     const [searchVal, setSearchVal] = useState("")
 
-    const [appDeptMaster, setAppDeptMaster] = useState(true)
-    const [appAddDeptMaster, setAppAddDeptMaster] = useState(false)
-    const [appEditDeptMaster, setAppEditDeptMaster] = useState(false)
+    const [appLocationMaster, setAppLocationMaster] = useState(true)
+    const [appAddLocationMaster, setAppAddLocationMaster] = useState(false)
+    const [appEditLocationMaster, setAppEditLocationMaster] = useState(false)
 
-    const [appDeptMasterData, setAppDeptMasterData] = useState({})
+    const [appLocationMasterData, setAppLocationMasterData] = useState({})
 
-    const [deptId, setDeptId] = useState('')
+    const [locationId, setLocationId] = useState('')
 
-    const appDeptListData = useSelector((state) => {
-        return state.deptMasterReducer.respGetDeptList
+    const appLocationListData = useSelector((state) => {
+        return state.locationMasterReducer.respGetLocationList
     });
 
-    const appMessageDelete = useSelector((state) => state.deptMasterReducer.msgDelete);
-    const appMessageAdd = useSelector((state) => state.deptMasterReducer.msgAdd);
+    const appMessageDelete = useSelector((state) => state.locationMasterReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.locationMasterReducer.msgAdd);
 
     const appMessageEdit = useSelector((state) => {
-        return state.deptMasterReducer.msgEdit
+        return state.locationMasterReducer.msgEdit
     });
 
-    const [appDeptTabelSearch, setAppDeptTabelSearch] = useState({
+    const [appLocationTabelSearch, setAppLocationTabelSearch] = useState({
         page: 1,
         limit: 10,
         offset: 0,
@@ -66,22 +67,16 @@ const DeptMaster = () => {
         }
     });
 
-    const appDeptColumn = [
+    const appLocationColumn = [
         {
-            dataField: "deptId",
-            text: "Department Code",
+            dataField: "locationId",
+            text: "Lokasi Code",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "deptName",
-            text: "Nama Department",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "deptNameKor",
-            text: "Nama Department (Korean)",
+            dataField: "locationName",
+            text: "Nama Lokasi",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -92,10 +87,10 @@ const DeptMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.deptId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-                        <a id={`delete-${cellData.deptId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.deptId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.deptId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.locationId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${cellData.locationId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.locationId}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.locationId}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -114,7 +109,7 @@ const DeptMaster = () => {
     };
 
     const handleClick = () => {
-        setAppDeptTabelSearch((prevState) => ({
+        setAppLocationTabelSearch((prevState) => ({
             ...prevState,
             search: {
                 ...prevState.search,
@@ -124,26 +119,26 @@ const DeptMaster = () => {
     };
 
     const preAddEmployeeOf = () => {
-        setAppAddDeptMaster(true)
-        setAppDeptMaster(false)
+        setAppAddLocationMaster(true)
+        setAppLocationMaster(false)
     }
 
     const preEditEmployeeOf = (data) => {
-        setAppEditDeptMaster(true)
-        setAppDeptMaster(false)
-        setAppDeptMasterData(data)
+        setAppEditLocationMaster(true)
+        setAppLocationMaster(false)
+        setAppLocationMasterData(data)
     }
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.deptId) {
-            setDeptId(data.deptId)
+        if (data.locationId) {
+            setLocationId(data.locationId)
         }
     }
 
     const toggleApply = () => {
-        setAppDeptMasterMsg('')
-        dispatch(deleteDeptMaster({ deptId: deptId }))
+        setAppLocationMasterMsg('')
+        dispatch(deleteLocationMaster({ locationId: locationId }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
@@ -160,22 +155,22 @@ const DeptMaster = () => {
         if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
             if (appMessageAdd.status === '1') {
-                setAppDeptMaster(true)
-                setAppAddDeptMaster(false)
+                setAppLocationMaster(true)
+                setAppAddLocationMaster(false)
             }
         }
         if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
             if (appMessageEdit.status === '1') {
-                setAppDeptMaster(true)
-                setAppEditDeptMaster(false)
+                setAppLocationMaster(true)
+                setAppEditLocationMaster(false)
             }
         }
 
         if (messageToUpdate) {
             setLoadingSpinner(false);
-            dispatch(getDeptListDataAction(appDeptTabelSearch));
-            setAppDeptMasterMsg(messageToUpdate);
+            dispatch(getLocationListDataAction(appLocationTabelSearch));
+            setAppLocationMasterMsg(messageToUpdate);
         }
     }, [appMessageDelete, appMessageAdd, appMessageEdit]);
 
@@ -183,15 +178,15 @@ const DeptMaster = () => {
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
-                    {appDeptMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppDeptMasterMsg("") }} color={appDeptMasterMsg?.status == "1" ? "success" : "danger"}>
-                        {typeof appDeptMasterMsg == 'string' ? null : appDeptMasterMsg?.message}</UncontrolledAlert> : null}
+                    {appLocationMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLocationMasterMsg("") }} color={appLocationMasterMsg?.status == "1" ? "success" : "danger"}>
+                        {typeof appLocationMasterMsg == 'string' ? null : appLocationMasterMsg?.message}</UncontrolledAlert> : null}
                     <Container
-                        style={{ display: appDeptMaster ? 'block' : "none" }}
+                        style={{ display: appLocationMaster ? 'block' : "none" }}
                         fluid
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-office-building"></span> Master Department
+                                <span className="mdi mdi-map"></span> Master Lokasi
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{
@@ -249,14 +244,14 @@ const DeptMaster = () => {
                                 </div>
 
                                 <TableCustom
-                                    keyField={"deptId"}
-                                    columns={appDeptColumn}
-                                    redukResponse={appDeptListData}
-                                    appdata={appDeptListData?.data != null && appDeptListData?.data.list ? appDeptListData?.data.list : []}
-                                    appdataTotal={appDeptListData?.data != null ? appDeptListData?.data.count : 0}
-                                    searchSet={setAppDeptTabelSearch}
-                                    searchGet={appDeptTabelSearch}
-                                    redukCall={getDeptListDataAction}
+                                    keyField={"locationId"}
+                                    columns={appLocationColumn}
+                                    redukResponse={appLocationListData}
+                                    appdata={appLocationListData?.data != null && appLocationListData?.data.list ? appLocationListData?.data.list : []}
+                                    appdataTotal={appLocationListData?.data != null ? appLocationListData?.data.count : 0}
+                                    searchSet={setAppLocationTabelSearch}
+                                    searchGet={appLocationTabelSearch}
+                                    redukCall={getLocationListDataAction}
                                 />
                             </CardBody>
                         </Card>
@@ -275,19 +270,19 @@ const DeptMaster = () => {
                         </div>
                     </Container>
 
-                    <AddDeptMaster
-                        appAddDeptMaster={appAddDeptMaster}
-                        setAppDeptMaster={setAppDeptMaster}
-                        setAppAddDeptMaster={setAppAddDeptMaster}
-                        setAppDeptMasterMsg={setAppDeptMasterMsg}
+                    <AddLocationMaster
+                        appAddLocationMaster={appAddLocationMaster}
+                        setAppLocationMaster={setAppLocationMaster}
+                        setAppAddLocationMaster={setAppAddLocationMaster}
+                        setAppLocationMasterMsg={setAppLocationMasterMsg}
                     />
 
-                    <EditDeptMaster
-                        appDeptMasterData={appDeptMasterData}
-                        appEditDeptMaster={appEditDeptMaster}
-                        setAppDeptMaster={setAppDeptMaster}
-                        setAppEditDeptMaster={setAppEditDeptMaster}
-                        setAppDeptMasterMsg={setAppDeptMasterMsg}
+                    <EditLocationMaster
+                        appLocationMasterData={appLocationMasterData}
+                        appEditLocationMaster={appEditLocationMaster}
+                        setAppLocationMaster={setAppLocationMaster}
+                        setAppEditLocationMaster={setAppEditLocationMaster}
+                        setAppLocationMasterMsg={setAppLocationMasterMsg}
                     />
 
                     <MsgModal
@@ -302,4 +297,4 @@ const DeptMaster = () => {
     );
 };
 
-export default DeptMaster;
+export default LocationMaster;

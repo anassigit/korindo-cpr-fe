@@ -8,6 +8,7 @@ import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga"
 import employeeOfMonYeaSaga from "./employeeofmonyea/saga"
 import deptMasterSaga from "./deptmaster/saga"
+import locationMasterSaga from "./locationmaster/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     fork(dashboardSaga),
     fork(employeeOfMonYeaSaga),
     fork(deptMasterSaga),
+    fork(locationMasterSaga),
   ])
 }

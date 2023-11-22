@@ -74,3 +74,11 @@ export const deleteEmployeeOfBE = req => postWithParam("rest/BestEmployeeMasterR
 export const getLovCandidateBE = req => post("rest/BestEmployeeMasterRest/getCandidateList", req)
 
 export const getLocationListBE2 = req => post("/rest/LocationMasterRest/getList", req)
+
+export const getLocationBE = req => postWithParam("/rest/LocationMasterRest/select", req)
+
+export const saveLocationBE = req => postWithParam("/rest/LocationMasterRest/insert", req)
+
+export const editLocationBE = req => postWithParam("/rest/LocationMasterRest/update", req)
+
+export const deleteLocationBE = req => postWithParam("/rest/LocationMasterRest/delete", req)

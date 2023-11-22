@@ -10,6 +10,7 @@ import rekomendasiReducer from "./rekomendasi/reducer"
 import dashboardReducer from "./dashboard/reducer"
 import employeeOfMonYeaReducer from "./employeeofmonyea/reducer"
 import deptMasterReducer from "./deptmaster/reducer"
+import locationMasterReducer from "./locationmaster/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   dashboardReducer,
   employeeOfMonYeaReducer,
   deptMasterReducer,
+  locationMasterReducer,
 })
 
 export default rootReducer

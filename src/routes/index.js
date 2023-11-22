@@ -13,6 +13,7 @@ import EmployeeOfMonYea from "pages/EmployeeOfMonYea/EmployeeOfMonYea"
 import Manual from "pages/Manual/Manual"
 import Organization from "pages/Organization/Organization"
 import DeptMaster from "pages/DeptMaster/DeptMaster"
+import LocationMaster from "pages/LocationMaster/LocationMaster"
 
 const authProtectedRoutes = [
 
@@ -22,6 +23,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc013", component: EmployeeOfMonYea},
   { path: "/korsoc000/forms/korsoc004", component: Organization},
   { path: "/korsoc000/forms/korsoc008", component: DeptMaster},
+  { path: "/korsoc000/forms/korsoc011", component: LocationMaster},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},
   

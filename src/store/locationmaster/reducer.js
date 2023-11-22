@@ -1,14 +1,20 @@
 import {
-  GET_LIST,
+  DELETE_LOCATION,
+  EDIT_LOCATION,
+  GET_LOCATION2,
+  GET_LIST_LOCATION,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
-  RESP_GET_LIST
+  RESP_GET_LOCATION2,
+  RESP_GET_LOCATION_LIST,
+  SAVE_LOCATION
 } from "./actionTypes"
 
 const INIT_STATE = {
-  respGetList: {},
+  respGetLocationList: {},
+  respGetLocation2: {},
   msgAdd: '',
   msgEdit: '',
   msgDelete: '',
@@ -17,14 +23,35 @@ const INIT_STATE = {
 const locationMasterReducer = (state = INIT_STATE, action) => {
 
   switch (action.type) {
-    case GET_LIST:
+    case GET_LIST_LOCATION:
       return {
         ...state,
       }
-    case RESP_GET_LIST:
+    case RESP_GET_LOCATION_LIST:
       return {
         ...state,
-        respGetList: action.payload,
+        respGetLocationList: action.payload,
+      }
+    case GET_LOCATION2:
+      return {
+        ...state,
+      }
+    case RESP_GET_LOCATION2:
+      return {
+        ...state,
+        respGetLocation2: action.payload,
+      }
+    case SAVE_LOCATION:
+      return {
+        ...state,
+      }
+    case EDIT_LOCATION:
+      return {
+        ...state,
+      }
+    case DELETE_LOCATION:
+      return {
+        ...state,
       }
     case MSG_ADD:
       return {
