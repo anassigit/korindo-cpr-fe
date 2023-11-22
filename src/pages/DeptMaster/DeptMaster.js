@@ -20,7 +20,9 @@ import {
 import { deleteEmployeeOf, getYearListData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { getDeptListDataAction } from "store/deptmaster/actions";
+import { deleteDeptMaster, getDeptListDataAction } from "store/deptmaster/actions";
+import AddDeptMaster from "./AddDeptMaster";
+import EditDeptMaster from "./EditDeptMaster";
 
 const DeptMaster = () => {
 
@@ -40,14 +42,17 @@ const DeptMaster = () => {
 
     const [appDeptMasterData, setAppDeptMasterData] = useState({})
 
-    const [awardId, setAwardId] = useState('')
+    const [deptId, setDeptId] = useState('')
 
-    const appDeptListData = useSelector((state) => state.deptMasterReducer.respGetDeptList);
+    const appDeptListData = useSelector((state) => {
+        return state.deptMasterReducer.respGetDeptList
+    });
 
-    const appMessageDelete = useSelector((state) => state.managementSystemReducer.msgDelete);
-    const appMessageAdd = useSelector((state) => state.managementSystemReducer.msgAdd);
+    const appMessageDelete = useSelector((state) => state.deptMasterReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.deptMasterReducer.msgAdd);
+
     const appMessageEdit = useSelector((state) => {
-        return state.managementSystemReducer.msgEdit
+        return state.deptMasterReducer.msgEdit
     });
 
     const [appDeptTabelSearch, setAppDeptTabelSearch] = useState({
@@ -65,34 +70,33 @@ const DeptMaster = () => {
     const appDeptColumn = [
         {
             dataField: "deptId",
-            text: "ID",
-            hidden: true,
+            text: "Department Code",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "deptName",
-            text: "Nama Departement",
+            text: "Nama Department",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "deptNameKor",
-            text: "Nama Departement (Korean)",
+            text: "Nama Department (Korean)",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             text: "Actions",
             headerStyle: { textAlign: 'center' },
-            style: { justifyContent: 'center', display: 'flex', gap: '12px' },
+            style: { justifyContent: 'center', display: 'flex', gap: '1vw', fontSize: '16px' },
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.id}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-                        <a id={`delete-${cellData.id}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.id}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.id}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.deptId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${cellData.deptId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.deptId}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.deptId}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -110,6 +114,16 @@ const DeptMaster = () => {
         }
     };
 
+    const handleClick = () => {
+        setAppDeptTabelSearch((prevState) => ({
+            ...prevState,
+            search: {
+                ...prevState.search,
+                search: searchVal,
+            },
+        }));
+    };
+
     const preAddEmployeeOf = () => {
         setAppAddDeptMaster(true)
         setAppDeptMaster(false)
@@ -123,14 +137,14 @@ const DeptMaster = () => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.id) {
-            setAwardId(data.id)
+        if (data.deptId) {
+            setDeptId(data.deptId)
         }
     }
 
     const toggleApply = () => {
         setAppDeptMasterMsg('')
-        dispatch(deleteEmployeeOf({ award_id: awardId }))
+        dispatch(deleteDeptMaster({ deptId: deptId }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
@@ -138,12 +152,23 @@ const DeptMaster = () => {
     useEffect(() => {
         let messageToUpdate;
 
-        if (appMessageDelete.status === '1') {
+        if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
             messageToUpdate = appMessageDelete;
-        } else if (appMessageAdd.status === '1') {
+            if(appMessageDelete.status === '1') {
+
+            }
+        } else if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
-        } else if (appMessageEdit.status === '1') {
+            if(appMessageAdd.status === '1') {
+                setAppDeptMaster(true)
+                setAppAddDeptMaster(false)
+            }
+        } else if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
+            if(appMessageEdit.status === '1') {
+                setAppDeptMaster(true)
+                setAppEditDeptMaster(false)
+            }
         }
 
         if (messageToUpdate) {
@@ -165,7 +190,7 @@ const DeptMaster = () => {
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-star-circle"></span> Master Departement
+                                <span className="mdi mdi-office-building"></span> Master Department
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{
@@ -192,7 +217,7 @@ const DeptMaster = () => {
                                                 type="search"
                                                 value={searchVal}
                                                 onChange={(e) => setSearchVal(e.target.value)}
-                                                onKeyPress={handleEnterKeyPress}
+                                                onKeyDown={handleEnterKeyPress}
                                             />
                                             <Button
                                                 onClick={() => {
@@ -232,8 +257,6 @@ const DeptMaster = () => {
                                     searchGet={appDeptTabelSearch}
                                     redukCall={getDeptListDataAction}
                                 />
-
-                                {console.log(appDeptListData)}
                             </CardBody>
                         </Card>
                         <Button
@@ -250,6 +273,22 @@ const DeptMaster = () => {
                             <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                         </div>
                     </Container>
+
+                    <AddDeptMaster
+                        appAddDeptMaster={appAddDeptMaster}
+                        setAppDeptMaster={setAppDeptMaster}
+                        setAppAddDeptMaster={setAppAddDeptMaster}
+                        setAppDeptMasterMsg={setAppDeptMasterMsg}
+                    />
+
+                    <EditDeptMaster
+                        appDeptMasterData={appDeptMasterData}
+                        appEditDeptMaster={appEditDeptMaster}
+                        setAppDeptMaster={setAppDeptMaster}
+                        setAppEditDeptMaster={setAppEditDeptMaster}
+                        setAppDeptMasterMsg={setAppDeptMasterMsg}
+                    />
+
                     <MsgModal
                         toggle={toggleDeleteModal}
                         toggleApply={toggleApply}
@@ -257,7 +296,6 @@ const DeptMaster = () => {
                         message={'Apakah anda yakin untuk menghapus ini?'}
                     />
                 </React.Fragment>
-
             }
         />
     );

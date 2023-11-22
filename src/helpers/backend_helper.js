@@ -53,6 +53,14 @@ export const getCandidateBE = req => postWithParam("rest/BestEmployeeMasterRest/
 
 export const getDeptListBE = req => post("/rest/DeptMasterRest/getList", req)
 
+export const getDeptBE2 = req => postWithParam("/rest/DeptMasterRest/select", req)
+
+export const saveDeptBE = req => postWithParam("/rest/DeptMasterRest/insert", req)
+
+export const editDeptBE = req => postWithParam("/rest/DeptMasterRest/update", req)
+
+export const deleteDeptBE = req => postWithParam("/rest/DeptMasterRest/delete", req)
+
 export const getLocationListBE = req => post("rest/BestEmployeeMasterRest/getLocationList", req)
 
 export const getKeywordListBE = req => post("rest/BestEmployeeMasterRest/getKeywordList", req)

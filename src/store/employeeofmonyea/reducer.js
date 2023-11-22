@@ -32,7 +32,7 @@ const INIT_STATE = {
   msgDelete: '',
 }
 
-const managementSystemReducer = (state = INIT_STATE, action) => {
+const employeeOfMonYeaReducer = (state = INIT_STATE, action) => {
 
   switch (action.type) {
     case GET_LIST:
@@ -134,4 +134,4 @@ const managementSystemReducer = (state = INIT_STATE, action) => {
   }
 }
 
-export default managementSystemReducer
+export default employeeOfMonYeaReducer

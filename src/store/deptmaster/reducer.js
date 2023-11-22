@@ -1,14 +1,20 @@
 import {
+  DELETE_DEPT,
+  EDIT_DEPT,
+  GET_DEPT2,
   GET_LIST_DEPT,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
+  RESP_GET_DEPT2,
   RESP_GET_DEPT_LIST,
+  SAVE_DEPT
 } from "./actionTypes"
 
 const INIT_STATE = {
   respGetDeptList: {},
+  respGetDept2: {},
   msgAdd: '',
   msgEdit: '',
   msgDelete: '',
@@ -25,6 +31,27 @@ const deptMasterReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         respGetDeptList: action.payload,
+      }
+    case GET_DEPT2:
+      return {
+        ...state,
+      }
+    case RESP_GET_DEPT2:
+      return {
+        ...state,
+        respGetDept2: action.payload,
+      }
+    case SAVE_DEPT:
+      return {
+        ...state,
+      }
+    case EDIT_DEPT:
+      return {
+        ...state,
+      }
+    case DELETE_DEPT:
+      return {
+        ...state,
       }
     case MSG_ADD:
       return {

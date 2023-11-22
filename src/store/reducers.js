@@ -8,8 +8,8 @@ import Login from "./auth/login/reducer"
 import LovReducer from "./lov/reducer"
 import rekomendasiReducer from "./rekomendasi/reducer"
 import dashboardReducer from "./dashboard/reducer"
-import managementSystemReducer from "./employeeofmonyea/reducer"
-import deptMasterReducer from "./employeeofmonyea/reducer"
+import employeeOfMonYeaReducer from "./employeeofmonyea/reducer"
+import deptMasterReducer from "./deptmaster/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   LovReducer,
   rekomendasiReducer,
   dashboardReducer,
-  managementSystemReducer,
+  employeeOfMonYeaReducer,
   deptMasterReducer,
 })
 

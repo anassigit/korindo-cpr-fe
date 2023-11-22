@@ -36,8 +36,8 @@ const AddEmployeeOf = (props) => {
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
 
-    const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
-    const appLocationListData = useSelector((state) => state.managementSystemReducer.respGetLocationList);
+    const appKeywordListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetKeywordList);
+    const appLocationListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetLocationList);
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -90,8 +90,6 @@ const AddEmployeeOf = (props) => {
                 description: values.description,
             }))
 
-            props.setAppEmployeeOfMonYea(true)
-            props.setAppAddEmployeeOfMonYea(false)
         }
     });
 
@@ -164,7 +162,7 @@ const AddEmployeeOf = (props) => {
         },
         {
             dataField: "dept_nm",
-            text: "Departement Name",
+            text: "Department Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -524,7 +522,6 @@ const AddEmployeeOf = (props) => {
                 onClick={() => {
                     props.setAppEmployeeOfMonYea(true)
                     props.setAppAddEmployeeOfMonYea(false)
-
                 }}
             >
                 <span className="mdi mdi-arrow-left" />

@@ -119,7 +119,7 @@ function* fetchAddRekomendasi({ payload: req }) {
     yield put(msgAdd(response))
   } catch (error) {
     console.log(error);
-    yield put(msgAdd({ "status": 0, "message": "Error Get Data" }))
+    yield put(msgAdd({ "status": 0, "message": "Error Save Data" }))
   }
 }
 
@@ -129,7 +129,7 @@ function* fetchEditRekomendasi({ payload: req }) {
     yield put(msgEdit(response))
   } catch (error) {
     console.log(error);
-    yield put(msgEdit({ "status": 0, "message": "Error Get Data" }))
+    yield put(msgEdit({ "status": 0, "message": "Error Edit Data" }))
   }
 }
 
@@ -139,7 +139,7 @@ function* fetchDeleteRekomendasi({ payload: req }) {
     yield put(msgDelete(response))
   } catch (error) {
     console.log(error);
-    yield put(msgDelete({ "status": 0, "message": "Error Get Data" }))
+    yield put(msgDelete({ "status": 0, "message": "Error Delete Data" }))
   }
 }
 

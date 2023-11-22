@@ -132,7 +132,7 @@ function* fetchDeleteEmployeeOf({ payload: req }) {
   }
 }
 
-function* managementSystemSaga() {
+function* employeeOfMonYeaSaga() {
 
   yield takeEvery(GET_LIST, fetchGetList)
   yield takeEvery(GET_YEAR_LIST, fetchGetYearList)
@@ -145,4 +145,4 @@ function* managementSystemSaga() {
 
 }
 
-export default managementSystemSaga
+export default employeeOfMonYeaSaga

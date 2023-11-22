@@ -38,9 +38,9 @@ const EditEmployeeOf = (props) => {
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
 
-    const appKeywordListData = useSelector((state) => state.managementSystemReducer.respGetKeywordList);
-    const appCandidateData = useSelector((state) => state.managementSystemReducer.respGetCandidate);
-    const appLocationListData = useSelector((state) => state.managementSystemReducer.respGetLocationList);
+    const appKeywordListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetKeywordList);
+    const appCandidateData = useSelector((state) => state.employeeOfMonYeaReducer.respGetCandidate);
+    const appLocationListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetLocationList);
 
     const lovData = useSelector(state => {
         return state.LovReducer.resp;
@@ -101,9 +101,6 @@ const EditEmployeeOf = (props) => {
                 description: values.description,
             }))
             props.setAppEmployeeOfMonYeaMsg('')
-
-            props.setAppEmployeeOfMonYea(true)
-            props.setAppEditEmployeeOfMonYea(false)
         }
     });
 
@@ -189,7 +186,7 @@ const EditEmployeeOf = (props) => {
         },
         {
             dataField: "dept_nm",
-            text: "Departement Name",
+            text: "Department Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },

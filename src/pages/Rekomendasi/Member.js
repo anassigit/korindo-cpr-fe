@@ -110,7 +110,7 @@ const Member = (props) => {
           <Row className="text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em", paddingTop: "2%", paddingBottom: "2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
             {props.searchEntered ?
               <>
-                <Col xs='3'>Departement</Col>
+                <Col xs='3'>Department</Col>
                 <Col xs='3'>Name</Col>
                 <Col xs='2' style={{ paddingLeft: "3%" }}>Position</Col>
                 <Col xs='4' style={{ paddingLeft: "10%" }} className="text-center">Apresiasi</Col>

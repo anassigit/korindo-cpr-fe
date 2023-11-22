@@ -48,13 +48,13 @@ const EmployeeOfMonYea = () => {
     const [filterVal, setFilterVal] = useState("")
     const [yearVal, setYearVal] = useState(parseInt(new Date().getFullYear()))
 
-    const appEmployeeMonYeaData = useSelector((state) => state.managementSystemReducer.respGetList);
-    const appYearListData = useSelector((state) => state.managementSystemReducer.respGetYearList);
+    const appEmployeeMonYeaData = useSelector((state) => state.employeeOfMonYeaReducer.respGetList);
+    const appYearListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetYearList);
 
-    const appMessageDelete = useSelector((state) => state.managementSystemReducer.msgDelete);
-    const appMessageAdd = useSelector((state) => state.managementSystemReducer.msgAdd);
+    const appMessageDelete = useSelector((state) => state.employeeOfMonYeaReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.employeeOfMonYeaReducer.msgAdd);
     const appMessageEdit = useSelector((state) => {
-        return state.managementSystemReducer.msgEdit
+        return state.employeeOfMonYeaReducer.msgEdit
     });
 
     const [appEmployeeMonYeaTabelSearch, setAppEmployeeMonYeaTabelSearch] = useState({
@@ -216,14 +216,24 @@ const EmployeeOfMonYea = () => {
     useEffect(() => {
         let messageToUpdate;
 
-        if (appMessageDelete.status === '1') {
+        if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
             messageToUpdate = appMessageDelete;
-        } else if (appMessageAdd.status === '1') {
-            messageToUpdate = appMessageAdd;
-        } else if (appMessageEdit.status === '1') {
-            messageToUpdate = appMessageEdit;
-        }
+            if(appMessageDelete.status === '1') {
 
+            }
+        } else if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
+            messageToUpdate = appMessageAdd;
+            if(appMessageAdd.status === '1') {
+                setAppEmployeeOfMonYea(true)
+                setAppEditEmployeeOfMonYea(false)
+            }
+        } else if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
+            messageToUpdate = appMessageEdit;
+            if(appMessageEdit.status === '1') {
+                setAppEmployeeOfMonYea(true)
+                setAppEditEmployeeOfMonYea(false)
+            }
+        }
         if (messageToUpdate) {
             setLoadingSpinner(false);
             dispatch(getListData(appEmployeeMonYeaTabelSearch));
@@ -243,7 +253,7 @@ const EmployeeOfMonYea = () => {
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-star-circle"></span> List Employee of Month/Year
+                                <span className="mdi mdi-account"></span> List Employee of Month/Year
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{

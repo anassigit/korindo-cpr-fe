@@ -6,7 +6,7 @@ import LovSaga from "./lov/saga"
 import rekomendasiSaga from "./rekomendasi/saga"
 import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga"
-import managementSystemSaga from "./employeeofmonyea/saga"
+import employeeOfMonYeaSaga from "./employeeofmonyea/saga"
 import deptMasterSaga from "./deptmaster/saga"
 
 export default function* rootSaga() {
@@ -16,7 +16,7 @@ export default function* rootSaga() {
     fork(LovSaga),
     fork(rekomendasiSaga),
     fork(dashboardSaga),
-    fork(managementSystemSaga),
+    fork(employeeOfMonYeaSaga),
     fork(deptMasterSaga),
   ])
 }
