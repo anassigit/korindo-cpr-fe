@@ -154,18 +154,20 @@ const DeptMaster = () => {
 
         if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
             messageToUpdate = appMessageDelete;
-            if(appMessageDelete.status === '1') {
+            if (appMessageDelete.status === '1') {
 
             }
-        } else if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
+        }
+        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
-            if(appMessageAdd.status === '1') {
+            if (appMessageAdd.status === '1') {
                 setAppDeptMaster(true)
                 setAppAddDeptMaster(false)
             }
-        } else if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
+        }
+        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
-            if(appMessageEdit.status === '1') {
+            if (appMessageEdit.status === '1') {
                 setAppDeptMaster(true)
                 setAppEditDeptMaster(false)
             }
