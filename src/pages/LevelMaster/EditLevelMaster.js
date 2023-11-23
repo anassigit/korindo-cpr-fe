@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     Button,
     Card,
@@ -16,64 +16,79 @@ import {
     Label,
     Spinner
 } from "reactstrap";
-import { addDeptMaster, resetMessage } from "store/actions";
+import { editLevelMaster, getLevelDataAction, resetMessage } from "store/actions";
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
 
-const AddDeptMaster = (props) => {
+const EditLevelMaster = (props) => {
 
     const dispatch = useDispatch()
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
+    const appLevelData = useSelector((state) => state.levelMasterReducer.respGetLevel2);
+
+
     useEffect(() => {
         dispatch(resetMessage())
     }, [dispatch])
 
-    const appAddDeptMasterValidInput = useFormik({
+    const appEditLevelMasterValidInput = useFormik({
         enableReinitialize: true,
 
         initialValues: {
-            deptName: '',
-            deptNameKor: '',
+            levelName: '',
+            levelNameKor: '',
         },
         validationSchema: Yup.object().shape({
-            deptName: Yup.string().required("Wajib diisi"),
-            deptNameKor: Yup.string().required("Wajib diisi"),
+            levelName: Yup.string().required("Wajib diisi"),
+            levelNameKor: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
-            props.setAppDeptMasterMsg('')
 
-            dispatch(addDeptMaster({
-                deptName: values.deptName,
-                deptNameKor: values.deptNameKor,
+            dispatch(editLevelMaster({
+                levelId: props.appLevelMasterData.levelId,
+                levelName: values.levelName,
+                levelNameKor: values.levelNameKor,
             }))
-
+            props.setAppLevelMasterMsg('')
         }
     });
 
     useEffect(() => {
-        if (props.appAddDeptMaster) {
-            appAddDeptMasterValidInput.resetForm()
+        if (props.appEditLevelMaster) {
+            dispatch(getLevelDataAction({ levelId: props.appLevelMasterData.levelId }))
+            setLoadingSpinner(true)
+        } else {
+            appEditLevelMasterValidInput.resetForm()
         }
-    }, [props.appAddDeptMaster])
+    }, [props.appEditLevelMaster])
+
+    useEffect(() => {
+        appEditLevelMasterValidInput.setFieldValue('levelId', appLevelData?.data?.result.levelId)
+        appEditLevelMasterValidInput.setFieldValue('levelName', appLevelData?.data?.result.levelName)
+        appEditLevelMasterValidInput.setFieldValue('levelNameKor', appLevelData?.data?.result.levelNameKor)
+        
+        setLoadingSpinner(false)
+    }, [appLevelData])
+
 
     return (
         <Container
-            style={{ display: props.appAddDeptMaster ? 'block' : "none" }}
+            style={{ display: props.appEditLevelMaster ? 'block' : "none" }}
             fluid
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-plus"></span> Tambah Penghargaan Karyawan
+                    <span className="mdi mdi-account-plus"></span> Ubah Penghargaan Karyawan
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            appAddDeptMasterValidInput.handleSubmit();
+                            appEditLevelMasterValidInput.handleSubmit();
                             return false
                         }}
                     >
@@ -91,12 +106,13 @@ const AddDeptMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Department Code <span className="text-danger"> *</span>
+                                            Level Code <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             disabled
+                                            value={appEditLevelMasterValidInput.values.levelId}
                                         />
                                     </div>
                                 </div>
@@ -110,19 +126,19 @@ const AddDeptMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Department Name <span className="text-danger"> *</span>
+                                            Level Name <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             type="text"
-                                            value={appAddDeptMasterValidInput.values.deptName}
-                                            invalid={appAddDeptMasterValidInput.touched.deptName && appAddDeptMasterValidInput.errors.deptName
+                                            value={appEditLevelMasterValidInput.values.levelName}
+                                            onChange={(e) => appEditLevelMasterValidInput.setFieldValue('levelName', e.target.value)}
+                                            invalid={appEditLevelMasterValidInput.touched.levelName && appEditLevelMasterValidInput.errors.levelName
                                                 ? true : false
                                             }
-                                            onChange={(e) => appAddDeptMasterValidInput.setFieldValue('deptName', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appAddDeptMasterValidInput.errors.deptName}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditLevelMasterValidInput.errors.levelName}</FormFeedback>
                                     </div>
                                 </div>
                                 <div
@@ -135,19 +151,19 @@ const AddDeptMaster = (props) => {
                                                 marginTop: "2px",
                                             }}
                                         >
-                                            Department Name (Korean) <span className="text-danger"> *</span>
+                                            Level Name (Korean) <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <Input
                                             type="text"
-                                            value={appAddDeptMasterValidInput.values.deptNameKor}
-                                            invalid={appAddDeptMasterValidInput.touched.deptNameKor && appAddDeptMasterValidInput.errors.deptNameKor
+                                            value={appEditLevelMasterValidInput.values.levelNameKor}
+                                            onChange={(e) => appEditLevelMasterValidInput.setFieldValue('levelNameKor', e.target.value)}
+                                            invalid={appEditLevelMasterValidInput.touched.levelNameKor && appEditLevelMasterValidInput.errors.levelNameKor
                                                 ? true : false
                                             }
-                                            onChange={(e) => appAddDeptMasterValidInput.setFieldValue('deptNameKor', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appAddDeptMasterValidInput.errors.deptNameKor}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditLevelMasterValidInput.errors.levelNameKor}</FormFeedback>
                                     </div>
                                 </div>
                                 <div
@@ -179,8 +195,8 @@ const AddDeptMaster = (props) => {
             <Button
                 className="btn btn-danger my-3"
                 onClick={() => {
-                    props.setAppDeptMaster(true)
-                    props.setAppAddDeptMaster(false)
+                    props.setAppLevelMaster(true)
+                    props.setAppEditLevelMaster(false)
 
                 }}
             >
@@ -194,11 +210,13 @@ const AddDeptMaster = (props) => {
     );
 };
 
-AddDeptMaster.propTypes = {
-    appAddDeptMaster: PropTypes.any,
-    setAppDeptMaster: PropTypes.any,
-    setAppAddDeptMaster: PropTypes.any,
-    setAppDeptMasterMsg: PropTypes.any,
+EditLevelMaster.propTypes = {
+    appLevelLocationListData: PropTypes.any,
+    appLevelMasterData: PropTypes.any,
+    appEditLevelMaster: PropTypes.any,
+    setAppLevelMaster: PropTypes.any,
+    setAppEditLevelMaster: PropTypes.any,
+    setAppLevelMasterMsg: PropTypes.any,
 }
 
-export default AddDeptMaster;
+export default EditLevelMaster;

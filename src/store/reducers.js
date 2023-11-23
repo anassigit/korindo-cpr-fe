@@ -11,6 +11,7 @@ import dashboardReducer from "./dashboard/reducer"
 import employeeOfMonYeaReducer from "./employeeofmonyea/reducer"
 import deptMasterReducer from "./deptmaster/reducer"
 import locationMasterReducer from "./locationmaster/reducer"
+import levelMasterReducer from "./levelmaster/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   employeeOfMonYeaReducer,
   deptMasterReducer,
   locationMasterReducer,
+  levelMasterReducer,
 })
 
 export default rootReducer

@@ -82,3 +82,15 @@ export const saveLocationBE = req => postWithParam("/rest/LocationMasterRest/ins
 export const editLocationBE = req => postWithParam("/rest/LocationMasterRest/update", req)
 
 export const deleteLocationBE = req => postWithParam("/rest/LocationMasterRest/delete", req)
+
+export const getLocationListBE3 = req => post("rest/BestEmployeeMasterRest/getLocationList", req)
+
+export const getLevelListBE = req => post("/rest/LevelMasterRest/getList", req)
+
+export const getLevelBE2 = req => postWithParam("/rest/LevelMasterRest/select", req)
+
+export const saveLevelBE = req => postWithParam("/rest/LevelMasterRest/insert", req)
+
+export const editLevelBE = req => postWithParam("/rest/LevelMasterRest/update", req)
+
+export const deleteLevelBE = req => postWithParam("/rest/LevelMasterRest/delete", req)

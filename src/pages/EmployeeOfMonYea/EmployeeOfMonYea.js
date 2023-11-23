@@ -84,6 +84,7 @@ const EmployeeOfMonYea = () => {
             text: "NIK",
             sort: true,
             headerStyle: { textAlign: 'center' },
+            style: { textAlign: 'center' },
         },
         {
             dataField: "member_name",
@@ -160,6 +161,8 @@ const EmployeeOfMonYea = () => {
     useEffect(() => {
         setAppEmployeeMonYeaTabelSearch((prevState) => ({
             ...prevState,
+            page: 1,
+            offset: 0,
             search: {
                 ...prevState.search,
                 search: searchVal,
@@ -179,6 +182,8 @@ const EmployeeOfMonYea = () => {
     const handleClick = () => {
         setAppEmployeeMonYeaTabelSearch((prevState) => ({
             ...prevState,
+            page: 1,
+            offset: 0,
             search: {
                 ...prevState.search,
                 search: searchVal,

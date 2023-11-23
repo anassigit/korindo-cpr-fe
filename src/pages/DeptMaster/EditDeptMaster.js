@@ -1,5 +1,7 @@
+import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Button,
@@ -14,17 +16,10 @@ import {
     Label,
     Spinner
 } from "reactstrap";
+import { editDeptMaster, getDeptDataAction, resetMessage } from "store/actions";
+import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { ErrorMessage, useFormik } from "formik";
-import * as Yup from "yup";
-import Lovv2 from "common/Lovv2";
-import { deleteDeptMaster, editDeptMaster, getCandidateData, getCandidateListData, getDeptDataAction, getKeywordListData, getLocationListData, resetMessage } from "store/actions";
-import DatePicker from "react-datepicker";
-import moment from "moment";
-import { format } from 'date-fns';
-import "react-datepicker/dist/react-datepicker.css";
-import { getCandidateLov } from "store/lov/actions";
 
 const EditDeptMaster = (props) => {
 

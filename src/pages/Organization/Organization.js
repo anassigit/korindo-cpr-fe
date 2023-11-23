@@ -135,7 +135,7 @@ const Organization = () => {
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 
     const currentDepth = depth + 1;
-    const paddingLeft = `${currentDepth * 0.5}vw`;
+    const paddingLeft = `${currentDepth * 0.8}vw`;
     return (
       <React.Fragment>
         {Array.isArray(data) &&

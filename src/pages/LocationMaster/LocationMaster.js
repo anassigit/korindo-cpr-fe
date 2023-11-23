@@ -17,12 +17,11 @@ import {
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
-import { deleteEmployeeOf, getYearListData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { deleteLocationMaster, getLocationListDataAction } from "store/locationmaster/actions";
 import AddLocationMaster from "./AddLocationMaster";
 import EditLocationMaster from "./EditLocationMaster";
+import { resetMessage, deleteLocationMaster, getLocationListDataAction } from "store/actions";
 
 const LocationMaster = () => {
 
@@ -73,6 +72,7 @@ const LocationMaster = () => {
             text: "Lokasi Code",
             sort: true,
             headerStyle: { textAlign: 'center' },
+            style: { textAlign: 'center' },
         },
         {
             dataField: "locationName",
@@ -87,7 +87,7 @@ const LocationMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.locationId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`edit-${cellData.locationId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditLocationMaster(cellData)} />
                         <a id={`delete-${cellData.locationId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${cellData.locationId}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${cellData.locationId}`}>Delete</UncontrolledTooltip>
@@ -111,6 +111,8 @@ const LocationMaster = () => {
     const handleClick = () => {
         setAppLocationTabelSearch((prevState) => ({
             ...prevState,
+            page: 1,
+            offset: 0,
             search: {
                 ...prevState.search,
                 search: searchVal,
@@ -118,12 +120,12 @@ const LocationMaster = () => {
         }));
     };
 
-    const preAddEmployeeOf = () => {
+    const preAddLocationMaster = () => {
         setAppAddLocationMaster(true)
         setAppLocationMaster(false)
     }
 
-    const preEditEmployeeOf = (data) => {
+    const preEditLocationMaster = (data) => {
         setAppEditLocationMaster(true)
         setAppLocationMaster(false)
         setAppLocationMasterData(data)
@@ -237,7 +239,7 @@ const LocationMaster = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddEmployeeOf()}
+                                        onClick={() => preAddLocationMaster()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>

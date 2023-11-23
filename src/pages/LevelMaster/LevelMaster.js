@@ -16,14 +16,14 @@ import {
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
-import { resetMessage } from "store/actions";
-import { deleteDeptMaster, getDeptListDataAction } from "store/deptmaster/actions";
+import { getLocationListDataAction3, resetMessage } from "store/actions";
+import { deleteLevelMaster, getLevelListDataAction } from "store/levelmaster/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import AddDeptMaster from "./AddDeptMaster";
-import EditDeptMaster from "./EditDeptMaster";
+import AddLevelMaster from "./AddLevelMaster";
+import EditLevelMaster from "./EditLevelMaster";
 
-const DeptMaster = () => {
+const LevelMaster = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -31,30 +31,34 @@ const DeptMaster = () => {
     const [modal, setModal] = useState(false)
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-    const [appDeptMasterMsg, setAppDeptMasterMsg] = useState("")
+    const [appLevelMasterMsg, setAppLevelMasterMsg] = useState("")
 
     const [searchVal, setSearchVal] = useState("")
 
-    const [appDeptMaster, setAppDeptMaster] = useState(true)
-    const [appAddDeptMaster, setAppAddDeptMaster] = useState(false)
-    const [appEditDeptMaster, setAppEditDeptMaster] = useState(false)
+    const [appLevelMaster, setAppLevelMaster] = useState(true)
+    const [appAddLevelMaster, setAppAddLevelMaster] = useState(false)
+    const [appEditLevelMaster, setAppEditLevelMaster] = useState(false)
 
-    const [appDeptMasterData, setAppDeptMasterData] = useState({})
+    const [appLevelMasterData, setAppLevelMasterData] = useState({})
 
-    const [deptId, setDeptId] = useState('')
+    const [levelCd, setLevelCd] = useState('')
 
-    const appDeptListData = useSelector((state) => {
-        return state.deptMasterReducer.respGetDeptList
+    const appLevelListData = useSelector((state) => {
+        return state.levelMasterReducer.respGetLevelList
+    });
+    
+    const appLevelLocationListData = useSelector((state) => {
+        return state.levelMasterReducer.respGetLocationList3
     });
 
-    const appMessageDelete = useSelector((state) => state.deptMasterReducer.msgDelete);
-    const appMessageAdd = useSelector((state) => state.deptMasterReducer.msgAdd);
+    const appMessageDelete = useSelector((state) => state.levelMasterReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.levelMasterReducer.msgAdd);
 
     const appMessageEdit = useSelector((state) => {
-        return state.deptMasterReducer.msgEdit
+        return state.levelMasterReducer.msgEdit
     });
 
-    const [appDeptTabelSearch, setAppDeptTabelSearch] = useState({
+    const [appLevelTabelSearch, setAppLevelTabelSearch] = useState({
         page: 1,
         limit: 10,
         offset: 0,
@@ -66,23 +70,23 @@ const DeptMaster = () => {
         }
     });
 
-    const appDeptColumn = [
+    const appLevelColumn = [
         {
-            dataField: "deptId",
-            text: "Department Code",
+            dataField: "levelCd",
+            text: "Level Code",
             sort: true,
-            headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "deptName",
-            text: "Nama Department",
+            dataField: "levelName",
+            text: "Nama Level",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "deptNameKor",
-            text: "Nama Department (Korean)",
+            dataField: "locationName",
+            text: "Lokasi",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -93,15 +97,19 @@ const DeptMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.deptId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-                        <a id={`delete-${cellData.deptId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.deptId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.deptId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.levelCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${cellData.levelCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.levelCd}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.levelCd}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
         },
     ]
+
+    useEffect(() => {
+        dispatch(getLocationListDataAction3())
+    }, [])
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -115,7 +123,7 @@ const DeptMaster = () => {
     };
 
     const handleClick = () => {
-        setAppDeptTabelSearch((prevState) => ({
+        setAppLevelTabelSearch((prevState) => ({
             ...prevState,
             page: 1,
             offset: 0,
@@ -127,26 +135,26 @@ const DeptMaster = () => {
     };
 
     const preAddEmployeeOf = () => {
-        setAppAddDeptMaster(true)
-        setAppDeptMaster(false)
+        setAppAddLevelMaster(true)
+        setAppLevelMaster(false)
     }
 
     const preEditEmployeeOf = (data) => {
-        setAppEditDeptMaster(true)
-        setAppDeptMaster(false)
-        setAppDeptMasterData(data)
+        setAppEditLevelMaster(true)
+        setAppLevelMaster(false)
+        setAppLevelMasterData(data)
     }
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.deptId) {
-            setDeptId(data.deptId)
+        if (data.levelCd) {
+            setLevelCd(data.levelCd)
         }
     }
 
     const toggleApply = () => {
-        setAppDeptMasterMsg('')
-        dispatch(deleteDeptMaster({ deptId: deptId }))
+        setAppLevelMasterMsg('')
+        dispatch(deleteLevelMaster({ levelCd: levelCd }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
@@ -163,22 +171,22 @@ const DeptMaster = () => {
         if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
             if (appMessageAdd.status === '1') {
-                setAppDeptMaster(true)
-                setAppAddDeptMaster(false)
+                setAppLevelMaster(true)
+                setAppAddLevelMaster(false)
             }
         }
         if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
             if (appMessageEdit.status === '1') {
-                setAppDeptMaster(true)
-                setAppEditDeptMaster(false)
+                setAppLevelMaster(true)
+                setAppEditLevelMaster(false)
             }
         }
 
         if (messageToUpdate) {
             setLoadingSpinner(false);
-            dispatch(getDeptListDataAction(appDeptTabelSearch));
-            setAppDeptMasterMsg(messageToUpdate);
+            dispatch(getLevelListDataAction(appLevelTabelSearch));
+            setAppLevelMasterMsg(messageToUpdate);
         }
     }, [appMessageDelete, appMessageAdd, appMessageEdit]);
 
@@ -186,15 +194,15 @@ const DeptMaster = () => {
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
-                    {appDeptMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppDeptMasterMsg("") }} color={appDeptMasterMsg?.status == "1" ? "success" : "danger"}>
-                        {typeof appDeptMasterMsg == 'string' ? null : appDeptMasterMsg?.message}</UncontrolledAlert> : null}
+                    {appLevelMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLevelMasterMsg("") }} color={appLevelMasterMsg?.status == "1" ? "success" : "danger"}>
+                        {typeof appLevelMasterMsg == 'string' ? null : appLevelMasterMsg?.message}</UncontrolledAlert> : null}
                     <Container
-                        style={{ display: appDeptMaster ? 'block' : "none" }}
+                        style={{ display: appLevelMaster ? 'block' : "none" }}
                         fluid
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-office-building"></span> Master Department
+                                <span className="mdi mdi-office-building"></span> Master Level
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{
@@ -252,14 +260,14 @@ const DeptMaster = () => {
                                 </div>
 
                                 <TableCustom
-                                    keyField={"deptId"}
-                                    columns={appDeptColumn}
-                                    redukResponse={appDeptListData}
-                                    appdata={appDeptListData?.data != null && appDeptListData?.data.list ? appDeptListData?.data.list : []}
-                                    appdataTotal={appDeptListData?.data != null ? appDeptListData?.data.count : 0}
-                                    searchSet={setAppDeptTabelSearch}
-                                    searchGet={appDeptTabelSearch}
-                                    redukCall={getDeptListDataAction}
+                                    keyField={"levelCd"}
+                                    columns={appLevelColumn}
+                                    redukResponse={appLevelListData}
+                                    appdata={appLevelListData?.data != null && appLevelListData?.data.list ? appLevelListData?.data.list : []}
+                                    appdataTotal={appLevelListData?.data != null ? appLevelListData?.data.count : 0}
+                                    searchSet={setAppLevelTabelSearch}
+                                    searchGet={appLevelTabelSearch}
+                                    redukCall={getLevelListDataAction}
                                 />
                             </CardBody>
                         </Card>
@@ -278,19 +286,21 @@ const DeptMaster = () => {
                         </div>
                     </Container>
 
-                    <AddDeptMaster
-                        appAddDeptMaster={appAddDeptMaster}
-                        setAppDeptMaster={setAppDeptMaster}
-                        setAppAddDeptMaster={setAppAddDeptMaster}
-                        setAppDeptMasterMsg={setAppDeptMasterMsg}
+                    <AddLevelMaster
+                        appLevelLocationListData={appLevelLocationListData}
+                        appAddLevelMaster={appAddLevelMaster}
+                        setAppLevelMaster={setAppLevelMaster}
+                        setAppAddLevelMaster={setAppAddLevelMaster}
+                        setAppLevelMasterMsg={setAppLevelMasterMsg}
                     />
 
-                    <EditDeptMaster
-                        appDeptMasterData={appDeptMasterData}
-                        appEditDeptMaster={appEditDeptMaster}
-                        setAppDeptMaster={setAppDeptMaster}
-                        setAppEditDeptMaster={setAppEditDeptMaster}
-                        setAppDeptMasterMsg={setAppDeptMasterMsg}
+                    <EditLevelMaster
+                        appLevelLocationListData={appLevelLocationListData}
+                        appLevelMasterData={appLevelMasterData}
+                        appEditLevelMaster={appEditLevelMaster}
+                        setAppLevelMaster={setAppLevelMaster}
+                        setAppEditLevelMaster={setAppEditLevelMaster}
+                        setAppLevelMasterMsg={setAppLevelMasterMsg}
                     />
 
                     <MsgModal
@@ -305,4 +315,4 @@ const DeptMaster = () => {
     );
 };
 
-export default DeptMaster;
+export default LevelMaster;
