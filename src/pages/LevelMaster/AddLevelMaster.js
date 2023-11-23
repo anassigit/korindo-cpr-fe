@@ -36,11 +36,11 @@ const AddLevelMaster = (props) => {
 
         initialValues: {
             levelName: '',
-            locationName: '',
+            locationId: '',
         },
         validationSchema: Yup.object().shape({
             levelName: Yup.string().required("Wajib diisi"),
-            locationName: Yup.string().required("Wajib diisi"),
+            locationId: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
@@ -48,7 +48,7 @@ const AddLevelMaster = (props) => {
 
             dispatch(addLevelMaster({
                 levelName: values.levelName,
-                locationName: values.locationName,
+                locationId: values.locationId,
             }))
 
         }
@@ -57,6 +57,7 @@ const AddLevelMaster = (props) => {
     useEffect(() => {
         if (props.appAddLevelMaster) {
             appAddLevelMasterValidInput.resetForm()
+            appAddLevelMasterValidInput.setFieldValue('locationId', props.appLevelLocationListData?.data?.list[0].locationId)
         }
     }, [props.appAddLevelMaster])
 
@@ -67,7 +68,7 @@ const AddLevelMaster = (props) => {
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-plus"></span> Tambah Penghargaan Karyawan
+                    <span className="mdi mdi-plus"></span> Tambah Level Master
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
@@ -141,11 +142,11 @@ const AddLevelMaster = (props) => {
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <Input
                                             type="select"
-                                            value={appAddLevelMasterValidInput.values.locationName}
-                                            invalid={appAddLevelMasterValidInput.touched.locationName && appAddLevelMasterValidInput.errors.locationName
+                                            value={appAddLevelMasterValidInput.values.locationId}
+                                            invalid={appAddLevelMasterValidInput.touched.locationId && appAddLevelMasterValidInput.errors.locationId
                                                 ? true : false
                                             }
-                                            onChange={(e) => appAddLevelMasterValidInput.setFieldValue('locationName', e.target.value)}
+                                            onChange={(e) => appAddLevelMasterValidInput.setFieldValue('locationId', e.target.value)}
                                         >
                                             {
                                                 props.appLevelLocationListData?.data?.list.map((item, index) => {
@@ -160,7 +161,7 @@ const AddLevelMaster = (props) => {
                                                 })
                                             }
                                         </Input>
-                                        <FormFeedback type="invalid">{appAddLevelMasterValidInput.errors.locationName}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddLevelMasterValidInput.errors.locationId}</FormFeedback>
                                     </div>
                                 </div>
                                 <div

@@ -67,7 +67,7 @@ const AddDeptMaster = (props) => {
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-plus"></span> Tambah Penghargaan Karyawan
+                    <span className="mdi mdi-plus"></span> Tambah Department Master
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
