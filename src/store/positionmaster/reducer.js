@@ -59,7 +59,7 @@ const positionMasterReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
       }
-    case RESP_GET_LEVEL_LIST2:
+    case RESP_GET_POSITION2:
       return {
         ...state,
         respGetPosition2: action.payload,

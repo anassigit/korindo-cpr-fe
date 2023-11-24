@@ -27,7 +27,7 @@ const AddPositionMaster = (props) => {
     const dispatch = useDispatch()
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
+    const [appLevelSearchLov, setAppLevelSearchLov] = useState("");
     const [appLovParam, setAppLovParam] = useState({});
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const AddPositionMaster = (props) => {
     useEffect(() => {
         if (props.appAddPositionMaster) {
             appAddPositionMasterValidInput.resetForm()
-            appAddPositionMasterValidInput.setFieldValue('locationId', props.appPositionLocationListData?.data?.list[0].locationId)
+            appAddPositionMasterValidInput.setFieldValue('locationId', props.appLocationListData?.data?.list[0].locationId)
         }
     }, [props.appAddPositionMaster])
 
@@ -73,9 +73,9 @@ const AddPositionMaster = (props) => {
                 locationId: appAddPositionMasterValidInput.values.locationId
             })
         }
-    }, [appAddPositionMasterValidInput.values])
+    }, [appAddPositionMasterValidInput.values.locationId])
 
-    const appLovCandidateListColumns = [
+    const appLovLevelListColumns = [
         {
             dataField: "levelCd",
             text: "Level No",
@@ -91,8 +91,7 @@ const AddPositionMaster = (props) => {
     ]
 
     const appCallBackLevel = (row) => {
-        appAddLevelValidInput.setFieldValue("member_id", row.iidnrp)
-        appAddLevelValidInput.setFieldValue("star", row.star)
+        appAddPositionMasterValidInput.setFieldValue("levelCd", row.levelCd)
     }
 
     return (
@@ -183,7 +182,7 @@ const AddPositionMaster = (props) => {
                                             onChange={(e) => appAddPositionMasterValidInput.setFieldValue('locationId', e.target.value)}
                                         >
                                             {
-                                                props.appPositionLocationListData?.data?.list.map((item, index) => {
+                                                props.appLocationListData?.data?.list.map((item, index) => {
                                                     return (
                                                         <option
                                                             key={index}
@@ -217,17 +216,17 @@ const AddPositionMaster = (props) => {
                                         <Lovv2
                                             title="Level"
                                             keyFieldData="levelCd"
-                                            columns={appLovCandidateListColumns}
+                                            columns={appLovLevelListColumns}
                                             getData={getLevelLov}
                                             pageSize={10}
                                             callbackFunc={appCallBackLevel}
                                             defaultSetInput="levelName"
                                             invalidData={appAddPositionMasterValidInput}
                                             fieldValue="levelName"
-                                            stateSearchInput={appCandidateSearchLov}
-                                            stateSearchInputSet={setAppCandidateSearchLov}
-                                            touchedLovField={appAddPositionMasterValidInput.touched.member_id}
-                                            errorLovField={appAddPositionMasterValidInput.errors.member_id}
+                                            stateSearchInput={appLevelSearchLov}
+                                            stateSearchInputSet={setAppLevelSearchLov}
+                                            touchedLovField={appAddPositionMasterValidInput.touched.levelCd}
+                                            errorLovField={appAddPositionMasterValidInput.errors.levelCd}
                                             pParam={appLovParam}
                                         />
                                     </div>
@@ -277,7 +276,7 @@ const AddPositionMaster = (props) => {
 };
 
 AddPositionMaster.propTypes = {
-    appPositionLocationListData: PropTypes.any,
+    appLocationListData: PropTypes.any,
     appAddPositionMaster: PropTypes.any,
     setAppPositionMaster: PropTypes.any,
     setAppAddPositionMaster: PropTypes.any,

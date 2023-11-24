@@ -107,4 +107,4 @@ export const savePositionBE = req => postWithParam("/rest/PositionMasterRest/ins
 
 export const editPositionBE = req => postWithParam("/rest/PositionMasterRest/update", req)
 
-export const deletePositionBE = req => postWithParam("/rest/LevelMasterRest/delete", req)
+export const deletePositionBE = req => postWithParam("/rest/PositionMasterRest/delete", req)

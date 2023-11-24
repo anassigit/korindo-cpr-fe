@@ -16,19 +16,23 @@ import {
     Label,
     Spinner
 } from "reactstrap";
-import { editPositionMaster, getPositionDataAction, resetMessage } from "store/actions";
+import { editPositionMaster, getLevelLov, getPositionDataAction, resetMessage } from "store/actions";
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
+import Lovv2 from "common/Lovv2";
 
 const EditPositionMaster = (props) => {
 
     const dispatch = useDispatch()
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [appLevelSearchLov, setAppLevelSearchLov] = useState("");
+    const [appLovParam, setAppLovParam] = useState({});
 
-    const appPositionData = useSelector((state) => state.positionMasterReducer.respGetPosition2);
-
+    const appPositionData = useSelector((state) => {
+        return state.positionMasterReducer.respGetPosition2
+    });
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -40,10 +44,12 @@ const EditPositionMaster = (props) => {
         initialValues: {
             positionName: '',
             locationId: '',
+            levelCd: '',
         },
         validationSchema: Yup.object().shape({
             positionName: Yup.string().required("Wajib diisi"),
             locationId: Yup.string().required("Wajib diisi"),
+            levelCd: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
@@ -52,6 +58,7 @@ const EditPositionMaster = (props) => {
                 positionCd: props.appPositionMasterData.positionCd,
                 positionName: values.positionName,
                 locationId: values.locationId,
+                levelCd: values.levelCd,
             }))
             props.setAppPositionMasterMsg('')
         }
@@ -67,13 +74,39 @@ const EditPositionMaster = (props) => {
     }, [props.appEditPositionMaster])
 
     useEffect(() => {
-        appEditPositionMasterValidInput.setFieldValue('positionCd', appPositionData?.data?.result.positionCd)
         appEditPositionMasterValidInput.setFieldValue('positionName', appPositionData?.data?.result.positionName)
         appEditPositionMasterValidInput.setFieldValue('locationId', appPositionData?.data?.result.locationId)
-
+        appEditPositionMasterValidInput.setFieldValue('levelCd', appPositionData?.data?.result.levelCd)
+        setAppLevelSearchLov(appPositionData?.data?.result.levelName)
         setLoadingSpinner(false)
     }, [appPositionData])
 
+    useEffect(() => {
+        if (appEditPositionMasterValidInput.values.locationId) {
+            setAppLovParam({
+                locationId: appEditPositionMasterValidInput.values.locationId
+            })
+        }
+    }, [appEditPositionMasterValidInput.values.locationId])
+
+    const appLovLevelListColumns = [
+        {
+            dataField: "levelCd",
+            text: "Level No",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "levelName",
+            text: "Level Name",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+    ]
+
+    const appCallBackLevel = (row) => {
+        appEditPositionMasterValidInput.setFieldValue("levelCd", row.levelCd)
+    }
 
     return (
         <Container
@@ -162,14 +195,15 @@ const EditPositionMaster = (props) => {
                                                 ? true : false
                                             }
                                             onChange={(e) => appEditPositionMasterValidInput.setFieldValue('locationId', e.target.value)}
+                                            defaultValue={appEditPositionMasterValidInput.values.locationId}
                                         >
                                             {
-                                                props.appPositionLocationListData?.data?.list.map((item, index) => {
+                                                props.appLocationListData?.data?.list.map((item, index) => {
                                                     return (
                                                         <option
                                                             key={index}
                                                             value={item.locationId}
-                                                            selected={item.locationId === appEditPositionMasterValidInput.values.locationId}
+                                                        // selected={item.locationId === appEditPositionMasterValidInput.values.locationId}
                                                         >
                                                             {item.locationName}
                                                         </option>
@@ -178,6 +212,39 @@ const EditPositionMaster = (props) => {
                                             }
                                         </Input>
                                         <FormFeedback type="invalid">{appEditPositionMasterValidInput.errors.locationId}</FormFeedback>
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Level <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+
+                                    <div className="col-8">
+                                        <Lovv2
+                                            title="Level"
+                                            keyFieldData="levelCd"
+                                            columns={appLovLevelListColumns}
+                                            getData={getLevelLov}
+                                            pageSize={10}
+                                            callbackFunc={appCallBackLevel}
+                                            defaultSetInput="levelName"
+                                            invalidData={appEditPositionMasterValidInput}
+                                            fieldValue="levelName"
+                                            stateSearchInput={appLevelSearchLov}
+                                            stateSearchInputSet={setAppLevelSearchLov}
+                                            touchedLovField={appEditPositionMasterValidInput.touched.levelCd}
+                                            errorLovField={appEditPositionMasterValidInput.errors.levelCd}
+                                            pParam={appLovParam}
+                                        />
                                     </div>
                                 </div>
                                 <div
@@ -225,7 +292,7 @@ const EditPositionMaster = (props) => {
 };
 
 EditPositionMaster.propTypes = {
-    appPositionLocationListData: PropTypes.any,
+    appLocationListData: PropTypes.any,
     appPositionMasterData: PropTypes.any,
     appEditPositionMaster: PropTypes.any,
     setAppPositionMaster: PropTypes.any,

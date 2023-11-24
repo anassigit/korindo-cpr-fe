@@ -47,11 +47,7 @@ const PositionMaster = () => {
         return state.positionMasterReducer.respGetPositionList
     });
     
-    const appPositionLocationListData = useSelector((state) => {
-        return state.positionMasterReducer.respGetLocationList3
-    });
-    
-    const appPositionLevelListData = useSelector((state) => {
+    const appLocationListData = useSelector((state) => {
         return state.positionMasterReducer.respGetLocationList3
     });
 
@@ -303,7 +299,7 @@ const PositionMaster = () => {
                     </Container>
 
                     <AddPositionMaster
-                        appPositionLocationListData={appPositionLocationListData}
+                        appLocationListData={appLocationListData}
                         appAddPositionMaster={appAddPositionMaster}
                         setAppPositionMaster={setAppPositionMaster}
                         setAppAddPositionMaster={setAppAddPositionMaster}
@@ -311,7 +307,7 @@ const PositionMaster = () => {
                     />
 
                     <EditPositionMaster
-                        appPositionLocationListData={appPositionLocationListData}
+                        appLocationListData={appLocationListData}
                         appPositionMasterData={appPositionMasterData}
                         appEditPositionMaster={appEditPositionMaster}
                         setAppPositionMaster={setAppPositionMaster}
