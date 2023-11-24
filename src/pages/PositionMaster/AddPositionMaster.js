@@ -64,6 +64,7 @@ const AddPositionMaster = (props) => {
         if (props.appAddPositionMaster) {
             appAddPositionMasterValidInput.resetForm()
             appAddPositionMasterValidInput.setFieldValue('locationId', props.appLocationListData?.data?.list[0].locationId)
+            setAppLevelSearchLov("")
         }
     }, [props.appAddPositionMaster])
 

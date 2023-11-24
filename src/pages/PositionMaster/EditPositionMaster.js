@@ -70,6 +70,7 @@ const EditPositionMaster = (props) => {
             setLoadingSpinner(true)
         } else {
             appEditPositionMasterValidInput.resetForm()
+            setAppLevelSearchLov("")
         }
     }, [props.appEditPositionMaster])
 
@@ -145,7 +146,7 @@ const EditPositionMaster = (props) => {
                                     <div className="col-8">
                                         <Input
                                             disabled
-                                            value={appEditPositionMasterValidInput.values.positionCd}
+                                            value={props.appPositionMasterData.positionCd}
                                         />
                                     </div>
                                 </div>
