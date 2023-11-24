@@ -1,6 +1,7 @@
 import {
   LOV_CANDIDATE,
   LOV_DIV,
+  LOV_LEVEL,
   LOV_MENU,
   LOV_MENU_PARENT,
   LOV_USER,
@@ -9,6 +10,11 @@ import {
 
 export const getCandidateLov = (resp) => ({
   type: LOV_CANDIDATE,
+  payload: resp,
+})
+
+export const getLevelLov = (resp) => ({
+  type: LOV_LEVEL,
   payload: resp,
 })
 

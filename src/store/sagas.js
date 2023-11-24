@@ -9,6 +9,7 @@ import dashboardSaga from "./dashboard/saga"
 import employeeOfMonYeaSaga from "./employeeofmonyea/saga"
 import deptMasterSaga from "./deptmaster/saga"
 import locationMasterSaga from "./locationmaster/saga"
+import positionMasterSaga from "./positionmaster/saga"
 import levelMasterSaga from "./levelmaster/saga"
 
 export default function* rootSaga() {
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     fork(employeeOfMonYeaSaga),
     fork(deptMasterSaga),
     fork(locationMasterSaga),
+    fork(positionMasterSaga),
     fork(levelMasterSaga),
   ])
 }

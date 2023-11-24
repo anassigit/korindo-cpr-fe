@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
     Button,
     Card,
@@ -16,79 +16,99 @@ import {
     Label,
     Spinner
 } from "reactstrap";
-import { editLevelMaster, getLevelDataAction, resetMessage } from "store/actions";
+import { addPositionMaster, getLevelLov, resetMessage } from "store/actions";
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
+import Lovv2 from "common/Lovv2";
 
-const EditLevelMaster = (props) => {
+const AddPositionMaster = (props) => {
 
     const dispatch = useDispatch()
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-
-    const appLevelData = useSelector((state) => state.levelMasterReducer.respGetLevel2);
-
+    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
+    const [appLovParam, setAppLovParam] = useState({});
 
     useEffect(() => {
         dispatch(resetMessage())
     }, [dispatch])
 
-    const appEditLevelMasterValidInput = useFormik({
+    const appAddPositionMasterValidInput = useFormik({
         enableReinitialize: true,
 
         initialValues: {
-            levelName: '',
+            positionName: '',
             locationId: '',
+            levelCd: '',
         },
         validationSchema: Yup.object().shape({
-            levelName: Yup.string().required("Wajib diisi"),
+            positionName: Yup.string().required("Wajib diisi"),
             locationId: Yup.string().required("Wajib diisi"),
+            levelCd: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
+            props.setAppPositionMasterMsg('')
 
-            dispatch(editLevelMaster({
-                levelCd: props.appLevelMasterData.levelCd,
-                levelName: values.levelName,
+            dispatch(addPositionMaster({
+                positionName: values.positionName,
                 locationId: values.locationId,
+                levelCd: values.levelCd,
             }))
-            props.setAppLevelMasterMsg('')
+
         }
     });
 
     useEffect(() => {
-        if (props.appEditLevelMaster) {
-            dispatch(getLevelDataAction({ levelCd: props.appLevelMasterData.levelCd }))
-            setLoadingSpinner(true)
-        } else {
-            appEditLevelMasterValidInput.resetForm()
+        if (props.appAddPositionMaster) {
+            appAddPositionMasterValidInput.resetForm()
+            appAddPositionMasterValidInput.setFieldValue('locationId', props.appPositionLocationListData?.data?.list[0].locationId)
         }
-    }, [props.appEditLevelMaster])
+    }, [props.appAddPositionMaster])
 
     useEffect(() => {
-        appEditLevelMasterValidInput.setFieldValue('levelCd', appLevelData?.data?.result.levelCd)
-        appEditLevelMasterValidInput.setFieldValue('levelName', appLevelData?.data?.result.levelName)
-        appEditLevelMasterValidInput.setFieldValue('locationId', appLevelData?.data?.result.locationId)
+        if (appAddPositionMasterValidInput.values.locationId) {
+            setAppLovParam({
+                locationId: appAddPositionMasterValidInput.values.locationId
+            })
+        }
+    }, [appAddPositionMasterValidInput.values])
 
-        setLoadingSpinner(false)
-    }, [appLevelData])
+    const appLovCandidateListColumns = [
+        {
+            dataField: "levelCd",
+            text: "Level No",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "levelName",
+            text: "Level Name",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+    ]
 
+    const appCallBackLevel = (row) => {
+        appAddLevelValidInput.setFieldValue("member_id", row.iidnrp)
+        appAddLevelValidInput.setFieldValue("star", row.star)
+    }
 
     return (
         <Container
-            style={{ display: props.appEditLevelMaster ? 'block' : "none" }}
+            style={{ display: props.appAddPositionMaster ? 'block' : "none" }}
             fluid
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-account-plus"></span> Ubah Level Master
+                    <span className="mdi mdi-plus"></span> Tambah Position Master
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            appEditLevelMasterValidInput.handleSubmit();
+                            appAddPositionMasterValidInput.handleSubmit();
                             return false
                         }}
                     >
@@ -106,13 +126,12 @@ const EditLevelMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Level Code <span className="text-danger"> *</span>
+                                            Position Code <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             disabled
-                                            value={appEditLevelMasterValidInput.values.levelCd}
                                         />
                                     </div>
                                 </div>
@@ -126,19 +145,19 @@ const EditLevelMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Level Name <span className="text-danger"> *</span>
+                                            Position Name <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <Input
                                             type="text"
-                                            value={appEditLevelMasterValidInput.values.levelName}
-                                            onChange={(e) => appEditLevelMasterValidInput.setFieldValue('levelName', e.target.value)}
-                                            invalid={appEditLevelMasterValidInput.touched.levelName && appEditLevelMasterValidInput.errors.levelName
+                                            value={appAddPositionMasterValidInput.values.positionName}
+                                            invalid={appAddPositionMasterValidInput.touched.positionName && appAddPositionMasterValidInput.errors.positionName
                                                 ? true : false
                                             }
+                                            onChange={(e) => appAddPositionMasterValidInput.setFieldValue('positionName', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appEditLevelMasterValidInput.errors.levelName}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddPositionMasterValidInput.errors.positionName}</FormFeedback>
                                     </div>
                                 </div>
                                 <div
@@ -157,19 +176,18 @@ const EditLevelMaster = (props) => {
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <Input
                                             type="select"
-                                            value={appEditLevelMasterValidInput.values.locationId}
-                                            invalid={appEditLevelMasterValidInput.touched.locationId && appEditLevelMasterValidInput.errors.locationId
+                                            value={appAddPositionMasterValidInput.values.locationId}
+                                            invalid={appAddPositionMasterValidInput.touched.locationId && appAddPositionMasterValidInput.errors.locationId
                                                 ? true : false
                                             }
-                                            onChange={(e) => appEditLevelMasterValidInput.setFieldValue('locationId', e.target.value)}
+                                            onChange={(e) => appAddPositionMasterValidInput.setFieldValue('locationId', e.target.value)}
                                         >
                                             {
-                                                props.appLevelLocationListData?.data?.list.map((item, index) => {
+                                                props.appPositionLocationListData?.data?.list.map((item, index) => {
                                                     return (
                                                         <option
                                                             key={index}
                                                             value={item.locationId}
-                                                            selected={item.locationId === appEditLevelMasterValidInput.values.locationId}
                                                         >
                                                             {item.locationName}
                                                         </option>
@@ -177,7 +195,41 @@ const EditLevelMaster = (props) => {
                                                 })
                                             }
                                         </Input>
-                                        <FormFeedback type="invalid">{appEditLevelMasterValidInput.errors.locationId}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddPositionMasterValidInput.errors.locationId}</FormFeedback>
+                                    </div>
+                                </div>
+
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Level <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+
+                                    <div className="col-8">
+                                        <Lovv2
+                                            title="Level"
+                                            keyFieldData="levelCd"
+                                            columns={appLovCandidateListColumns}
+                                            getData={getLevelLov}
+                                            pageSize={10}
+                                            callbackFunc={appCallBackLevel}
+                                            defaultSetInput="levelName"
+                                            invalidData={appAddPositionMasterValidInput}
+                                            fieldValue="levelName"
+                                            stateSearchInput={appCandidateSearchLov}
+                                            stateSearchInputSet={setAppCandidateSearchLov}
+                                            touchedLovField={appAddPositionMasterValidInput.touched.member_id}
+                                            errorLovField={appAddPositionMasterValidInput.errors.member_id}
+                                            pParam={appLovParam}
+                                        />
                                     </div>
                                 </div>
                                 <div
@@ -209,8 +261,8 @@ const EditLevelMaster = (props) => {
             <Button
                 className="btn btn-danger my-3"
                 onClick={() => {
-                    props.setAppLevelMaster(true)
-                    props.setAppEditLevelMaster(false)
+                    props.setAppPositionMaster(true)
+                    props.setAppAddPositionMaster(false)
 
                 }}
             >
@@ -224,13 +276,12 @@ const EditLevelMaster = (props) => {
     );
 };
 
-EditLevelMaster.propTypes = {
-    appLevelLocationListData: PropTypes.any,
-    appLevelMasterData: PropTypes.any,
-    appEditLevelMaster: PropTypes.any,
-    setAppLevelMaster: PropTypes.any,
-    setAppEditLevelMaster: PropTypes.any,
-    setAppLevelMasterMsg: PropTypes.any,
+AddPositionMaster.propTypes = {
+    appPositionLocationListData: PropTypes.any,
+    appAddPositionMaster: PropTypes.any,
+    setAppPositionMaster: PropTypes.any,
+    setAppAddPositionMaster: PropTypes.any,
+    setAppPositionMasterMsg: PropTypes.any,
 }
 
-export default EditLevelMaster;
+export default AddPositionMaster;

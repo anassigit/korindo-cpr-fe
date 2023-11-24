@@ -11,6 +11,7 @@ import dashboardReducer from "./dashboard/reducer"
 import employeeOfMonYeaReducer from "./employeeofmonyea/reducer"
 import deptMasterReducer from "./deptmaster/reducer"
 import locationMasterReducer from "./locationmaster/reducer"
+import positionMasterReducer from "./positionmaster/reducer"
 import levelMasterReducer from "./levelmaster/reducer"
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   employeeOfMonYeaReducer,
   deptMasterReducer,
   locationMasterReducer,
+  positionMasterReducer,
   levelMasterReducer,
 })
 

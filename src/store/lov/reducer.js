@@ -1,5 +1,6 @@
 import {
   LOV_CANDIDATE,
+  LOV_LEVEL,
   MSG_LOV
 } from "./actionTypes"
 
@@ -11,6 +12,10 @@ const getLovData = (state = INIT_STATE, action) => {
 
   switch (action.type) {
     case LOV_CANDIDATE:
+      return {
+        ...state,
+      }
+    case LOV_LEVEL:
       return {
         ...state,
       }

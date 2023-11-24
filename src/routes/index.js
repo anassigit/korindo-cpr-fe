@@ -15,6 +15,7 @@ import Organization from "pages/Organization/Organization"
 import DeptMaster from "pages/DeptMaster/DeptMaster"
 import LocationMaster from "pages/LocationMaster/LocationMaster"
 import LevelMaster from "pages/LevelMaster/LevelMaster"
+import PositionMaster from "pages/PositionMaster/PositionMaster"
 
 const authProtectedRoutes = [
 
@@ -25,6 +26,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc004", component: Organization},
   { path: "/korsoc000/forms/korsoc008", component: DeptMaster},
   { path: "/korsoc000/forms/korsoc011", component: LocationMaster},
+  { path: "/korsoc000/forms/korsoc010", component: PositionMaster},
   { path: "/korsoc000/forms/korsoc009", component: LevelMaster},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},

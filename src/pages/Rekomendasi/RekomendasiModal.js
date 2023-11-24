@@ -75,6 +75,7 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
         if (appRecommendData.status === '1') {
             appRekomendasiValidInput.setFieldValue('comment', appRecommendData?.data?.result?.comment)
             appRecommendData?.data?.result?.stickerList.map((item, index) => {
+                debugger
                 if (item.selected) {
                     appRekomendasiValidInput.setFieldValue(`sticker[${item.id}]`, true);
                 } else {

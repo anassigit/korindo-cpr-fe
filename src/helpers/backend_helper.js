@@ -73,6 +73,8 @@ export const deleteEmployeeOfBE = req => postWithParam("rest/BestEmployeeMasterR
 
 export const getLovCandidateBE = req => post("rest/BestEmployeeMasterRest/getCandidateList", req)
 
+export const getLovLevelBE = req => post("rest/PositionMasterRest/getLevelList", req)
+
 export const getLocationListBE2 = req => post("/rest/LocationMasterRest/getList", req)
 
 export const getLocationBE = req => postWithParam("/rest/LocationMasterRest/select", req)
@@ -83,7 +85,7 @@ export const editLocationBE = req => postWithParam("/rest/LocationMasterRest/upd
 
 export const deleteLocationBE = req => postWithParam("/rest/LocationMasterRest/delete", req)
 
-export const getLocationListBE3 = req => post("rest/BestEmployeeMasterRest/getLocationList", req)
+export const getLocationListBE3 = req => post("rest/LevelMasterRest/getLocationList", req)
 
 export const getLevelListBE = req => post("/rest/LevelMasterRest/getList", req)
 
@@ -94,3 +96,15 @@ export const saveLevelBE = req => postWithParam("/rest/LevelMasterRest/insert", 
 export const editLevelBE = req => postWithParam("/rest/LevelMasterRest/update", req)
 
 export const deleteLevelBE = req => postWithParam("/rest/LevelMasterRest/delete", req)
+
+export const getLocationListBE4 = req => post("rest/PositionMasterRest/getLocationList", req)
+
+export const getPositionListBE = req => post("/rest/PositionMasterRest/getList", req)
+
+export const getPositionBE2 = req => postWithParam("/rest/PositionMasterRest/select", req)
+
+export const savePositionBE = req => postWithParam("/rest/PositionMasterRest/insert", req)
+
+export const editPositionBE = req => postWithParam("/rest/PositionMasterRest/update", req)
+
+export const deletePositionBE = req => postWithParam("/rest/LevelMasterRest/delete", req)
