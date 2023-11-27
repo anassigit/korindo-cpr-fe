@@ -11,6 +11,7 @@ import deptMasterSaga from "./deptmaster/saga"
 import locationMasterSaga from "./locationmaster/saga"
 import positionMasterSaga from "./positionmaster/saga"
 import levelMasterSaga from "./levelmaster/saga"
+import settingMasterSaga from "./settingmaster/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -24,5 +25,6 @@ export default function* rootSaga() {
     fork(locationMasterSaga),
     fork(positionMasterSaga),
     fork(levelMasterSaga),
+    fork(settingMasterSaga),
   ])
 }

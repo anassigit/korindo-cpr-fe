@@ -108,3 +108,13 @@ export const savePositionBE = req => postWithParam("/rest/PositionMasterRest/ins
 export const editPositionBE = req => postWithParam("/rest/PositionMasterRest/update", req)
 
 export const deletePositionBE = req => postWithParam("/rest/PositionMasterRest/delete", req)
+
+export const getSettingListBE = req => post("/rest/SettingMasterRest/getList", req)
+
+export const getSettingBE2 = req => postWithParam("/rest/SettingMasterRest/select", req)
+
+export const saveSettingBE = req => postWithParam("/rest/SettingMasterRest/insert", req)
+
+export const editSettingBE = req => postWithParam("/rest/SettingMasterRest/update", req)
+
+export const deleteSettingBE = req => postWithParam("/rest/SettingMasterRest/delete", req)

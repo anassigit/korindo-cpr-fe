@@ -16,14 +16,14 @@ import {
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
-import { getLocationListDataAction3, resetMessage } from "store/actions";
-import { deleteLevelMaster, getLevelListDataAction } from "store/levelmaster/actions";
+import { resetMessage, getSettingListDataAction } from "store/actions";
+import { deleteSettingMaster } from "store/settingmaster/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import AddLevelMaster from "./AddLevelMaster";
-import EditLevelMaster from "./EditLevelMaster";
+import AddSettingMaster from "./AddSettingMaster";
+import EditSettingMaster from "./EditSettingMaster";
 
-const LevelMaster = () => {
+const SettingMaster = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -31,34 +31,34 @@ const LevelMaster = () => {
     const [modal, setModal] = useState(false)
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-    const [appLevelMasterMsg, setAppLevelMasterMsg] = useState("")
+    const [appSettingMasterMsg, setAppSettingMasterMsg] = useState("")
 
     const [searchVal, setSearchVal] = useState("")
 
-    const [appLevelMaster, setAppLevelMaster] = useState(true)
-    const [appAddLevelMaster, setAppAddLevelMaster] = useState(false)
-    const [appEditLevelMaster, setAppEditLevelMaster] = useState(false)
+    const [appSettingMaster, setAppSettingMaster] = useState(true)
+    const [appAddSettingMaster, setAppAddSettingMaster] = useState(false)
+    const [appEditSettingMaster, setAppEditSettingMaster] = useState(false)
 
-    const [appLevelMasterData, setAppLevelMasterData] = useState({})
+    const [appSettingMasterData, setAppSettingMasterData] = useState({})
 
-    const [levelCd, setLevelCd] = useState('')
+    const [itemCd, setItemCd] = useState('')
 
-    const appLevelListData = useSelector((state) => {
-        return state.levelMasterReducer.respGetLevelList
+    const appSettingListData = useSelector((state) => {
+        return state.settingMasterReducer.respGetSettingList
     });
     
-    const appLevelLocationListData = useSelector((state) => {
-        return state.levelMasterReducer.respGetLocationList3
+    const appLocationListData = useSelector((state) => {
+        return state.settingMasterReducer.respGetLocationList3
     });
 
-    const appMessageDelete = useSelector((state) => state.levelMasterReducer.msgDelete);
-    const appMessageAdd = useSelector((state) => state.levelMasterReducer.msgAdd);
+    const appMessageDelete = useSelector((state) => state.settingMasterReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.settingMasterReducer.msgAdd);
 
     const appMessageEdit = useSelector((state) => {
-        return state.levelMasterReducer.msgEdit
+        return state.settingMasterReducer.msgEdit
     });
 
-    const [appLevelTabelSearch, setAppLevelTabelSearch] = useState({
+    const [appSettingTabelSearch, setAppSettingTabelSearch] = useState({
         page: 1,
         limit: 10,
         offset: 0,
@@ -70,24 +70,46 @@ const LevelMaster = () => {
         }
     });
 
-    const appLevelColumn = [
+    const appSettingColumn = [
         {
-            dataField: "levelCd",
-            text: "Level Code",
+            dataField: "id",
+            text: "ID",
+            sort: true,
+            hidden: true,
+            style: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "itemCd",
+            text: "Setting Code",
             sort: true,
             style: { textAlign: 'center' },
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "levelName",
-            text: "Nama Level",
+            dataField: "itemName",
+            text: "Nama Setting",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "locationName",
-            text: "Lokasi",
+            dataField: "itemDesc",
+            text: "Level Code",
             sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "active",
+            text: "Active",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+            style: { textAlign: 'center' },
+        },
+        {
+            dataField: "level",
+            text: "Level",
+            sort: true,
+            style: { textAlign: 'center' },
             headerStyle: { textAlign: 'center' },
         },
         {
@@ -97,10 +119,8 @@ const LevelMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.levelCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-                        <a id={`delete-${cellData.levelCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.levelCd}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.levelCd}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.itemCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.itemCd}`}>Edit</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -108,7 +128,6 @@ const LevelMaster = () => {
     ]
 
     useEffect(() => {
-        dispatch(getLocationListDataAction3())
     }, [])
 
     useEffect(() => {
@@ -123,7 +142,7 @@ const LevelMaster = () => {
     };
 
     const handleClick = () => {
-        setAppLevelTabelSearch((prevState) => ({
+        setAppSettingTabelSearch((prevState) => ({
             ...prevState,
             page: 1,
             offset: 0,
@@ -135,26 +154,26 @@ const LevelMaster = () => {
     };
 
     const preAddEmployeeOf = () => {
-        setAppAddLevelMaster(true)
-        setAppLevelMaster(false)
+        setAppAddSettingMaster(true)
+        setAppSettingMaster(false)
     }
 
     const preEditEmployeeOf = (data) => {
-        setAppEditLevelMaster(true)
-        setAppLevelMaster(false)
-        setAppLevelMasterData(data)
+        setAppEditSettingMaster(true)
+        setAppSettingMaster(false)
+        setAppSettingMasterData(data)
     }
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.levelCd) {
-            setLevelCd(data.levelCd)
+        if (data.itemCd) {
+            setItemCd(data.itemCd)
         }
     }
 
     const toggleApply = () => {
-        setAppLevelMasterMsg('')
-        dispatch(deleteLevelMaster({ levelCd: levelCd }))
+        setAppSettingMasterMsg('')
+        dispatch(deleteSettingMaster({ itemCd: itemCd }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
@@ -171,22 +190,22 @@ const LevelMaster = () => {
         if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
             if (appMessageAdd.status === '1') {
-                setAppLevelMaster(true)
-                setAppAddLevelMaster(false)
+                setAppSettingMaster(true)
+                setAppAddSettingMaster(false)
             }
         }
         if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
             if (appMessageEdit.status === '1') {
-                setAppLevelMaster(true)
-                setAppEditLevelMaster(false)
+                setAppSettingMaster(true)
+                setAppEditSettingMaster(false)
             }
         }
 
         if (messageToUpdate) {
             setLoadingSpinner(false);
-            dispatch(getLevelListDataAction(appLevelTabelSearch));
-            setAppLevelMasterMsg(messageToUpdate);
+            dispatch(getSettingListDataAction(appSettingTabelSearch));
+            setAppSettingMasterMsg(messageToUpdate);
         }
     }, [appMessageDelete, appMessageAdd, appMessageEdit]);
 
@@ -194,15 +213,15 @@ const LevelMaster = () => {
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
-                    {appLevelMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLevelMasterMsg("") }} color={appLevelMasterMsg?.status == "1" ? "success" : "danger"}>
-                        {typeof appLevelMasterMsg == 'string' ? null : appLevelMasterMsg?.message}</UncontrolledAlert> : null}
+                    {appSettingMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppSettingMasterMsg("") }} color={appSettingMasterMsg?.status == "1" ? "success" : "danger"}>
+                        {typeof appSettingMasterMsg == 'string' ? null : appSettingMasterMsg?.message}</UncontrolledAlert> : null}
                     <Container
-                        style={{ display: appLevelMaster ? 'block' : "none" }}
+                        style={{ display: appSettingMaster ? 'block' : "none" }}
                         fluid
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-source-branch"></span> Master Level
+                                <span className="mdi mdi-cog"></span> Master Setting
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{
@@ -260,14 +279,14 @@ const LevelMaster = () => {
                                 </div>
 
                                 <TableCustom
-                                    keyField={"levelCd"}
-                                    columns={appLevelColumn}
-                                    redukResponse={appLevelListData}
-                                    appdata={appLevelListData?.data != null && appLevelListData?.data.list ? appLevelListData?.data.list : []}
-                                    appdataTotal={appLevelListData?.data != null ? appLevelListData?.data.count : 0}
-                                    searchSet={setAppLevelTabelSearch}
-                                    searchGet={appLevelTabelSearch}
-                                    redukCall={getLevelListDataAction}
+                                    keyField={"id"}
+                                    columns={appSettingColumn}
+                                    redukResponse={appSettingListData}
+                                    appdata={appSettingListData?.data != null && appSettingListData?.data.list ? appSettingListData?.data.list : []}
+                                    appdataTotal={appSettingListData?.data != null ? appSettingListData?.data.count : 0}
+                                    searchSet={setAppSettingTabelSearch}
+                                    searchGet={appSettingTabelSearch}
+                                    redukCall={getSettingListDataAction}
                                 />
                             </CardBody>
                         </Card>
@@ -281,38 +300,32 @@ const LevelMaster = () => {
                             <span className="mdi mdi-arrow-left" />
                             &nbsp;Kembali
                         </Button>
-                        <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
-                            <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
+                        <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", setting: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
+                            <Spinner style={{ padding: "24px", display: "block", setting: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                         </div>
                     </Container>
 
-                    <AddLevelMaster
-                        appLevelLocationListData={appLevelLocationListData}
-                        appAddLevelMaster={appAddLevelMaster}
-                        setAppLevelMaster={setAppLevelMaster}
-                        setAppAddLevelMaster={setAppAddLevelMaster}
-                        setAppLevelMasterMsg={setAppLevelMasterMsg}
+                    <AddSettingMaster
+                        appLocationListData={appLocationListData}
+                        appAddSettingMaster={appAddSettingMaster}
+                        setAppSettingMaster={setAppSettingMaster}
+                        setAppAddSettingMaster={setAppAddSettingMaster}
+                        setAppSettingMasterMsg={setAppSettingMasterMsg}
                     />
 
-                    <EditLevelMaster
-                        appLevelLocationListData={appLevelLocationListData}
-                        appLevelMasterData={appLevelMasterData}
-                        appEditLevelMaster={appEditLevelMaster}
-                        setAppLevelMaster={setAppLevelMaster}
-                        setAppEditLevelMaster={setAppEditLevelMaster}
-                        setAppLevelMasterMsg={setAppLevelMasterMsg}
+                    <EditSettingMaster
+                        appLocationListData={appLocationListData}
+                        appSettingMasterData={appSettingMasterData}
+                        appEditSettingMaster={appEditSettingMaster}
+                        setAppSettingMaster={setAppSettingMaster}
+                        setAppEditSettingMaster={setAppEditSettingMaster}
+                        setAppSettingMasterMsg={setAppSettingMasterMsg}
                     />
 
-                    <MsgModal
-                        toggle={toggleDeleteModal}
-                        toggleApply={toggleApply}
-                        modal={modal}
-                        message={'Apakah anda yakin untuk menghapus ini?'}
-                    />
                 </React.Fragment>
             }
         />
     );
 };
 
-export default LevelMaster;
+export default SettingMaster;

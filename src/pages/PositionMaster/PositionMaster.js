@@ -214,7 +214,7 @@ const PositionMaster = () => {
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-office-building"></span> Master Position
+                                <span className="mdi mdi-briefcase"></span> Master Position
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{
