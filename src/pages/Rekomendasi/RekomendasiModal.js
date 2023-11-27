@@ -77,9 +77,9 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
             appRecommendData?.data?.result?.stickerList.map((item, index) => {
                 debugger
                 if (item.selected) {
-                    appRekomendasiValidInput.setFieldValue(`sticker[${item.id}]`, true);
+                    appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, true);
                 } else {
-                    appRekomendasiValidInput.setFieldValue(`sticker[${item.id}]`, false);
+                    appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, false);
                 }
             })
         }
@@ -144,23 +144,23 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                                 <React.Fragment key={index}>
                                                     <Input
                                                         type='checkbox'
-                                                        name={`sticker[${item.id}]`}
-                                                        id={item.id}
+                                                        name={`sticker[${item.stickerId}]`}
+                                                        id={item.stickerId}
                                                         onChange={(e) => {
                                                             if (e.target.checked) {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.id}]`, true);
+                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, true);
                                                             } else {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.id}]`, false);
+                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, false);
                                                             }
                                                         }}
-                                                        checked={appRekomendasiValidInput.values.sticker[item.id] || false}
+                                                        checked={appRekomendasiValidInput.values.sticker[item.stickerId] || false}
                                                         invalid={
                                                             appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? true : false
                                                         }
                                                     />
-                                                    <label htmlFor={item.id} style={{ marginRight: "12px" }}>
-                                                        &nbsp;{item.name}
-                                                        <img width={'18px'} style={{ position: "relative", top: "-2px", marginLeft: "2px" }} src={item.url} alt={item.name} />
+                                                    <label htmlFor={item.stickerId} style={{ marginRight: "12px" }}>
+                                                        &nbsp;{item.stickerName}
+                                                        <img width={'18px'} style={{ position: "relative", top: "-2px", marginLeft: "2px" }} src={item.stickerUrl} alt={item.stickerName} />
                                                     </label>
 
                                                 </React.Fragment>
@@ -195,20 +195,20 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                                 <React.Fragment key={index}>
                                                     <Input
                                                         type='checkbox'
-                                                        name={`sticker[${item.id}]`}
-                                                        id={item.id}
+                                                        name={`sticker[${item.stickerId}]`}
+                                                        id={item.stickerId}
                                                         onChange={(e) => {
                                                             if (e.target.checked) {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.id}]`, true);
+                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, true);
                                                             } else {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.id}]`, false);
+                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, false);
                                                             }
                                                         }}
-                                                        checked={appRekomendasiValidInput.values.sticker[item.id] || false}
+                                                        checked={appRekomendasiValidInput.values.sticker[item.stickerId] || false}
                                                     />
-                                                    <label htmlFor={item.id} style={{ marginRight: "12px" }}>
-                                                        &nbsp;{item.name}
-                                                        <img width={'18px'} style={{ position: "relative", top: "-2px", marginLeft: "2px" }} src={item.url} alt={item.name} />
+                                                    <label htmlFor={item.stickerId} style={{ marginRight: "12px" }}>
+                                                        &nbsp;{item.stickerName}
+                                                        <img width={'18px'} style={{ position: "relative", top: "-2px", marginLeft: "2px" }} src={item.stickerUrl} alt={item.stickerName} />
                                                     </label>
                                                 </React.Fragment>
 

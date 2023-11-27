@@ -41,8 +41,6 @@ const Rekomendasi = () => {
   const [collapser, setCollapser] = useState({
     "1531": true,
   })
-  console.log(collapser)
-
   const [appMemberList, setMemberList] = useState()
 
   const appDeptData = useSelector((state) => state.rekomendasiReducer.respGetDept)

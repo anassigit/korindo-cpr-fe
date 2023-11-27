@@ -141,9 +141,9 @@ const Rekomendasi = () => {
 
         if (e === 'back') {
             if (lengthArray2 === 3) {
-                newSliderYear = sliderYear >= 2.6 ? -56 : (sliderYear + step);
+                newSliderYear = sliderYear >= 4 ? -56 : (sliderYear + step);
             } else if (lengthArray2 === 2) {
-                newSliderYear = sliderYear >= 2.6 ? -26 : (sliderYear + step);
+                newSliderYear = sliderYear >= 4 ? -26 : (sliderYear + step);
             } else {
                 newSliderYear = 4;
             }
@@ -151,7 +151,7 @@ const Rekomendasi = () => {
             if (lengthArray2 === 3) {
                 newSliderYear = sliderYear <= -56 ? 4 : (sliderYear - step);
             } else if (lengthArray2 === 2) {
-                newSliderYear = sliderYear <= -26 ? 2.6 : (sliderYear - step);
+                newSliderYear = sliderYear <= -26 ? 4 : (sliderYear - step);
             } else {
                 newSliderYear = 4;
             }
@@ -161,7 +161,6 @@ const Rekomendasi = () => {
 
         setSliderYear(newSliderYear);
     };
-
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -261,67 +260,72 @@ const Rekomendasi = () => {
                                     }}
                                 >
                                     {
-                                        appBestlistData?.data?.list.map((item, index) => {
+                                        Array.isArray(appBestlistData?.data?.list) && appBestlistData?.data?.list.length > 0 ?
+                                            appBestlistData?.data?.list.map((item, index) => {
 
-                                            const imageUrls = [satu, dua, tiga, empat, lima];
-                                            const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#A084DC']; // Replace with desired colors
+                                                const imageUrls = [satu, dua, tiga, empat, lima];
+                                                const colors = ['#F0A500', '#A9A9A9', '#B0926A', '#427D9D', '#A084DC']; // Replace with desired colors
 
-                                            return (
-                                                <a
-                                                    href="/home/detail"
-                                                    draggable="false"
-                                                    key={index}
-                                                    className="col-10 rounded-3 peringkat"
-                                                    style={{
-                                                        background: `linear-gradient(-45deg, ${colors[index % colors.length]}a6, ${colors[index % colors.length]})`, // Applying gradient with 20% opacity of white
-                                                        padding: "12px",
-                                                        display: "flex",
-                                                        flexDirection: "row",
-                                                        justifyContent: "space-between",
-                                                        alignItems: "center",
-                                                        width: "85%", // Define a width for the container
-                                                        textOverflow: "ellipsis"
-                                                    }}
-                                                    onClick={() => appDetailHandler(item)}
-                                                    onContextMenu={(e) => { e.preventDefault(); }}
-                                                >
-                                                    <div style={{ width: "80%" }}>
-                                                        <div
-                                                            style={{
-                                                                fontSize: "16px",
-                                                                fontWeight: "bold",
-                                                                color: 'white',
-                                                                whiteSpace: "nowrap",
-                                                                overflow: "hidden",
-                                                                textOverflow: "ellipsis",
+                                                return (
+                                                    <a
+                                                        href="/home/detail"
+                                                        draggable="false"
+                                                        key={index}
+                                                        className="col-10 rounded-3 peringkat"
+                                                        style={{
+                                                            background: `linear-gradient(-45deg, ${colors[index % colors.length]}a6, ${colors[index % colors.length]})`, // Applying gradient with 20% opacity of white
+                                                            padding: "12px",
+                                                            display: "flex",
+                                                            flexDirection: "row",
+                                                            justifyContent: "space-between",
+                                                            alignItems: "center",
+                                                            width: "85%", // Define a width for the container
+                                                            textOverflow: "ellipsis"
+                                                        }}
+                                                        onClick={() => appDetailHandler(item)}
+                                                        onContextMenu={(e) => { e.preventDefault(); }}
+                                                    >
+                                                        <div style={{ width: "80%" }}>
+                                                            <div
+                                                                style={{
+                                                                    fontSize: "16px",
+                                                                    fontWeight: "bold",
+                                                                    color: 'white',
+                                                                    whiteSpace: "nowrap",
+                                                                    overflow: "hidden",
+                                                                    textOverflow: "ellipsis",
 
-                                                            }}
-                                                            id={`index_member_${index}`}
-                                                        >
-                                                            {item.member_name}
+                                                                }}
+                                                                id={`index_member_${index}`}
+                                                            >
+                                                                {item.member_name}
+                                                            </div>
+                                                            <h5
+                                                                className="text-white"
+                                                                style={{
+                                                                    fontSize: "16px",
+                                                                    marginBottom: 0,
+                                                                    color: "white",
+                                                                }}
+                                                            >
+                                                                {item.dept_name}
+                                                            </h5>
                                                         </div>
-                                                        <h5
-                                                            className="text-white"
-                                                            style={{
-                                                                fontSize: "16px",
-                                                                marginBottom: 0,
-                                                                color: "white",
-                                                            }}
-                                                        >
-                                                            {item.dept_name}
-                                                        </h5>
-                                                    </div>
-                                                    <img
-                                                        width={"20%"}
-                                                        src={imageUrls[index % imageUrls.length]} // Cycling through image URLs
-                                                        alt={`Image ${index}`}
-                                                    />
-                                                    <UncontrolledTooltip target={`index_member_${index}`} placement='top'>
-                                                        {item.member_name}
-                                                    </UncontrolledTooltip>
-                                                </a>
-                                            )
-                                        })
+                                                        <img
+                                                            width={"20%"}
+                                                            src={imageUrls[index % imageUrls.length]} // Cycling through image URLs
+                                                            alt={`Image ${index}`}
+                                                        />
+                                                        <UncontrolledTooltip target={`index_member_${index}`} placement='top'>
+                                                            {item.member_name}
+                                                        </UncontrolledTooltip>
+                                                    </a>
+                                                )
+                                            })
+                                            :
+                                            <h1 className="text-danger" style={{ textAlign: 'center', position: 'absolute', top: '45%' }}>
+                                                NO DATA
+                                            </h1>
                                     }
                                 </CardBody>
                             </Card>
@@ -336,9 +340,9 @@ const Rekomendasi = () => {
                                         className="py-2 m-2 d-flex justify-content-center align-items-center"
                                         style={{ gap: "25px", height: "370px" }}
                                     >
-                                        {appListData?.data?.list?.map((item, index) => {
-                                            return (
+                                        {Array.isArray(appListData?.data?.list) && appListData?.data?.list.length > 0 ? appListData?.data?.list?.map((item, index) => {
 
+                                            return (
 
                                                 <Card
                                                     key={index}
@@ -476,7 +480,12 @@ const Rekomendasi = () => {
                                                     </a>
                                                 </Card>
                                             )
-                                        })}
+                                        })
+                                            :
+                                            <h1 className="text-danger" style={{ textAlign: 'center' }}>
+                                                NO DATA
+                                            </h1>
+                                        }
                                     </Row>
                                     <Row>
                                         <div className="d-flex justify-content-center">
@@ -637,60 +646,71 @@ const Rekomendasi = () => {
                                                     )
                                                 })
                                                 : (
-                                                    <Card
-                                                        className="slideshow-content"
+                                                    <h1
+                                                        className="text-danger"
                                                         style={{
-                                                            opacity: "0",
-                                                            width: "25vw",
-                                                            height: "150px",
-                                                            position: "relative",
-                                                            left: `0vw`,
-                                                            transition: "left 0.5s ease",
+                                                            textAlign: 'center',
+                                                            position: 'absolute',
+                                                            width: '100%',
+                                                            height: '150px',
+                                                            top: '50%',
                                                         }}>
-                                                        <CardBody
-                                                            style={{
-                                                                display: "flex",
-                                                                padding: "10px",
-                                                                justifyContent: "center",
-                                                                alignItems: "center",
-                                                                height: "100%",
-                                                            }}>
-                                                            {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
-                                                            {/* <img
-                                                                src={crown}
-                                                                style={{
-                                                                    position: "absolute",
-                                                                    right: 0,
-                                                                    top: 5,
-                                                                    color: "gold",
-                                                                    width: "64px",
-                                                                    fontSize: "32px"
-                                                                }}
-                                                                className="mdi mdi-crown px-3 py-1"
-                                                            /> */}
-                                                            <img
-                                                                style={{
-                                                                    minWidth: "10em",
-                                                                    maxWidth: "10em",
-                                                                    height: "10em",
-                                                                    objectFit: "cover",
-                                                                    borderRadius: "50%",
-                                                                    marginRight: "5%",
-                                                                }}
-                                                                alt="Profile Image"
-                                                            />
-                                                            <Col style={{
-                                                                display: 'flex',
-                                                                flexDirection: 'column',
-                                                                alignItems: 'flex-start',
-                                                                maxWidth: "60%"
-                                                            }}>
-                                                                <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
-                                                                <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                                <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
-                                                            </Col>
-                                                        </CardBody>
-                                                    </Card>
+                                                        NO DATA
+                                                    </h1>
+                                                    // <Card
+                                                    //     className="slideshow-content"
+                                                    //     style={{
+                                                    //         opacity: "0",
+                                                    //         width: "25vw",
+                                                    //         height: "150px",
+                                                    //         position: "relative",
+                                                    //         left: `0vw`,
+                                                    //         transition: "left 0.5s ease",
+                                                    //     }}>
+                                                    //     <CardBody
+                                                    //         style={{
+                                                    //             display: "flex",
+                                                    //             padding: "10px",
+                                                    //             justifyContent: "center",
+                                                    //             alignItems: "center",
+                                                    //             height: "100%",
+                                                    //         }}>
+                                                    //         {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                    //         {/* <img
+                                                    //             src={crown}
+                                                    //             style={{
+                                                    //                 position: "absolute",
+                                                    //                 right: 0,
+                                                    //                 top: 5,
+                                                    //                 color: "gold",
+                                                    //                 width: "64px",
+                                                    //                 fontSize: "32px"
+                                                    //             }}
+                                                    //             className="mdi mdi-crown px-3 py-1"
+                                                    //         /> */}
+                                                    //         <img
+                                                    //             style={{
+                                                    //                 minWidth: "10em",
+                                                    //                 maxWidth: "10em",
+                                                    //                 height: "10em",
+                                                    //                 objectFit: "cover",
+                                                    //                 borderRadius: "50%",
+                                                    //                 marginRight: "5%",
+                                                    //             }}
+                                                    //             alt="Profile Image"
+                                                    //         />
+                                                    //         <Col style={{
+                                                    //             display: 'flex',
+                                                    //             flexDirection: 'column',
+                                                    //             alignItems: 'flex-start',
+                                                    //             maxWidth: "60%"
+                                                    //         }}>
+                                                    //             <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
+                                                    //             <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
+                                                    //             <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
+                                                    //         </Col>
+                                                    //     </CardBody>
+                                                    // </Card>
                                                 )
                                         }
                                         <a
@@ -875,48 +895,60 @@ const Rekomendasi = () => {
                                                     )
                                                 })
                                                 : (
-                                                    <Card
-                                                        className="slideshow-content"
+
+                                                    <h1
+                                                        className="text-danger"
                                                         style={{
-                                                            opacity: "0",
-                                                            width: "25vw",
-                                                            height: "150px",
-                                                            position: "relative",
-                                                            left: `0vw`,
-                                                            transition: "left 0.5s ease",
+                                                            textAlign: 'center',
+                                                            position: 'absolute',
+                                                            width: '100%',
+                                                            height: '150px',
+                                                            top: '50%',
                                                         }}>
-                                                        <CardBody
-                                                            style={{
-                                                                display: "flex",
-                                                                padding: "10px",
-                                                                justifyContent: "center",
-                                                                alignItems: "center",
-                                                                height: "100%",
-                                                            }}>
-                                                            {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
-                                                            <img
-                                                                style={{
-                                                                    minWidth: "10em",
-                                                                    maxWidth: "10em",
-                                                                    height: "10em",
-                                                                    objectFit: "cover",
-                                                                    borderRadius: "50%",
-                                                                    marginRight: "5%",
-                                                                }}
-                                                                alt="Profile Image"
-                                                            />
-                                                            <Col style={{
-                                                                display: 'flex',
-                                                                flexDirection: 'column',
-                                                                alignItems: 'flex-start',
-                                                                maxWidth: "60%"
-                                                            }}>
-                                                                <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
-                                                                <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                                <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
-                                                            </Col>
-                                                        </CardBody>
-                                                    </Card>
+                                                        NO DATA
+                                                    </h1>
+                                                    // <Card
+                                                    //     className="slideshow-content"
+                                                    //     style={{
+                                                    //         opacity: "0",
+                                                    //         width: "25vw",
+                                                    //         height: "150px",
+                                                    //         position: "relative",
+                                                    //         left: `0vw`,
+                                                    //         transition: "left 0.5s ease",
+                                                    //     }}>
+                                                    //     <CardBody
+                                                    //         style={{
+                                                    //             display: "flex",
+                                                    //             padding: "10px",
+                                                    //             justifyContent: "center",
+                                                    //             alignItems: "center",
+                                                    //             height: "100%",
+                                                    //         }}>
+                                                    //         {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                    //         <img
+                                                    //             style={{
+                                                    //                 minWidth: "10em",
+                                                    //                 maxWidth: "10em",
+                                                    //                 height: "10em",
+                                                    //                 objectFit: "cover",
+                                                    //                 borderRadius: "50%",
+                                                    //                 marginRight: "5%",
+                                                    //             }}
+                                                    //             alt="Profile Image"
+                                                    //         />
+                                                    //         <Col style={{
+                                                    //             display: 'flex',
+                                                    //             flexDirection: 'column',
+                                                    //             alignItems: 'flex-start',
+                                                    //             maxWidth: "60%"
+                                                    //         }}>
+                                                    //             <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
+                                                    //             <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
+                                                    //             <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
+                                                    //         </Col>
+                                                    //     </CardBody>
+                                                    // </Card>
                                                 )
                                         }
                                         <a
