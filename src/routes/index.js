@@ -10,13 +10,14 @@ import Rekomendasi from "pages/Rekomendasi/Rekomendasi"
 import Dashboard from "pages/Dashboard/Dashboard"
 import DetailInfluencer from "pages/Dashboard/DetailInfluencer"
 import EmployeeOfMonYea from "pages/EmployeeOfMonYea/EmployeeOfMonYea"
-import Manual from "pages/Manual/Manual"
+import Manual from "pages/KetentuanCPR/Manual"
 import Organization from "pages/Organization/Organization"
 import DeptMaster from "pages/DeptMaster/DeptMaster"
 import LocationMaster from "pages/LocationMaster/LocationMaster"
 import LevelMaster from "pages/LevelMaster/LevelMaster"
 import PositionMaster from "pages/PositionMaster/PositionMaster"
 import SettingMaster from "pages/SettingMaster/SettingMaster"
+import UserManual from "pages/UserManual/UserManual"
 
 const authProtectedRoutes = [
 
@@ -32,6 +33,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc005", component: SettingMaster},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},
+  { path: "/korsoc000/forms/korsoc401", component: UserManual},
   
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name

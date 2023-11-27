@@ -5,6 +5,7 @@ export * from "./auth/login/actions"
 export * from "./lov/actions"
 
 export * from "./rekomendasi/actions"
+export * from "./manual/actions"
 export * from "./dashboard/actions"
 export * from "./employeeofmonyea/actions"
 export * from "./deptmaster/actions"
