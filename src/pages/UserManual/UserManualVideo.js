@@ -3,19 +3,14 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Card, CardBody, CardHeader, Container } from "reactstrap";
-import { getManualData } from "store/actions";
+import { getManualVideoData } from "store/actions";
 
-// ... (other imports)
-
-const UserManual = () => {
+const UserManualVideo = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const appManualData = useSelector((state) => state.manualReducer.respGetManual);
-
-    const videoRef = useRef(null);
+    const appManualVideoData = useSelector((state) => state.manualReducer.respGetManualVideo);
 
     useEffect(() => {
-        dispatch(getManualData());
+        dispatch(getManualVideoData());
     }, [dispatch]);
 
 
@@ -34,17 +29,14 @@ const UserManual = () => {
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                                     <video
-                                        src={appManualData?.data?.result}
-                                        ref={videoRef}
+                                        src={appManualVideoData?.data?.result}
                                         controls
+                                        autoPlay
                                         style={{
-                                            width: '40%',
+                                            width: '75%',
                                             margin: 'auto'
                                         }}>
                                     </video>
-                                </div>
-                                <div style={{ marginTop: '12px' }}>
-                                    Download PDF Tutorial: <a className="link-download" download> <span className="mdi mdi-file-pdf text-danger" style={{ fontSize: "16px" }}></span> Click Here</a>
                                 </div>
                             </CardBody>
                         </Card>
@@ -55,4 +47,4 @@ const UserManual = () => {
     );
 };
 
-export default UserManual;
+export default UserManualVideo;

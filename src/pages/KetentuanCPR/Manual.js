@@ -21,7 +21,7 @@ const Manual = () => {
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-information-outline"></span> Ketentuan CPR
+                                <span className="mdi mdi-information-outline"></span> Ketentuan KTA
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <Table className="table-ketentuan" style={{ borderCollapse: "collapse", width: "100%" }}>
@@ -52,7 +52,9 @@ const Manual = () => {
                                         <tr>
                                             <td scope="row">
                                                 Jumlah transaksi <b>X</b> total karyawan pada divisi yang melakukan transaksi.
-                                                Sebagai contoh: Jumlah Karyawan HRD 30 orang dan yang melakukan transaksi 15 Karyawan, maka 15 : 30 = 0,5 (50%).
+                                                <div style={{ fontWeight: 'bold' }} className="text-primary">
+                                                    Sebagai contoh: Jumlah Karyawan HRD 30 orang dan yang melakukan transaksi 15 Karyawan, maka 15 : 30 = 0,5 (50%).
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>

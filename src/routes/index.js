@@ -17,7 +17,8 @@ import LocationMaster from "pages/LocationMaster/LocationMaster"
 import LevelMaster from "pages/LevelMaster/LevelMaster"
 import PositionMaster from "pages/PositionMaster/PositionMaster"
 import SettingMaster from "pages/SettingMaster/SettingMaster"
-import UserManual from "pages/UserManual/UserManual"
+import UserManualVideo from "pages/UserManual/UserManualVideo"
+import UserManualPDF from "pages/UserManual/UserManualPDF"
 
 const authProtectedRoutes = [
 
@@ -33,7 +34,8 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc005", component: SettingMaster},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},
-  { path: "/korsoc000/forms/korsoc401", component: UserManual},
+  { path: "/korsoc000/forms/korsoc411", component: UserManualVideo},
+  { path: "/korsoc000/forms/korsoc412", component: UserManualPDF},
   
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name

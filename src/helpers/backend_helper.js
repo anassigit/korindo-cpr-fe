@@ -119,4 +119,6 @@ export const editSettingBE = req => postWithParam("/rest/SettingMasterRest/updat
 
 export const deleteSettingBE = req => postWithParam("/rest/SettingMasterRest/delete", req)
 
-export const getManualBE = req => post("/rest/ManualRest/getManual", req)
+export const getManualVideoBE = req => post("/rest/ManualRest/getManualVideo", req)
+
+export const getManualPDFBE = req => post("/rest/ManualRest/getManualPDF", req)
