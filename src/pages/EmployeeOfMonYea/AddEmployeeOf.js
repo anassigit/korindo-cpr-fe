@@ -58,7 +58,7 @@ const AddEmployeeOf = (props) => {
 
         initialValues: {
             member_id: '',
-            keyword_id: '',
+            keyword: '',
             location_id: '',
             filter: 'month',
             period_from: '',
@@ -82,7 +82,7 @@ const AddEmployeeOf = (props) => {
 
             dispatch(addEmployeeOf({
                 filter: values.filter,
-                keyword_id: values.keyword_id,
+                keyword: values.keyword,
                 locationId: values.location_id,
                 period_from: dateFrom,
                 period_to: dateTo,
@@ -103,7 +103,7 @@ const AddEmployeeOf = (props) => {
     }, [props.appAddEmployeeOfMonYea])
 
     useEffect(() => {
-        appAddEmployeeValidInput.setFieldValue('keyword_id', appKeywordListData?.data?.month[0].keyword_Id)
+        appAddEmployeeValidInput.setFieldValue('keyword', appKeywordListData?.data?.month[0].keyword)
     }, [appKeywordListData])
 
     useEffect(() => {
@@ -277,18 +277,18 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="select"
-                                            value={appAddEmployeeValidInput.values.keyword_id}
+                                            value={appAddEmployeeValidInput.values.keyword}
                                             onChange={(e) =>
-                                                appAddEmployeeValidInput.setFieldValue("keyword_id", e.target.value)
+                                                appAddEmployeeValidInput.setFieldValue("keyword", e.target.value)
                                             }
                                             invalid={
-                                                appAddEmployeeValidInput.touched.keyword_id && appAddEmployeeValidInput.errors.keyword_id
+                                                appAddEmployeeValidInput.touched.keyword && appAddEmployeeValidInput.errors.keyword
                                                     ? true : false
                                             }
                                         >
                                             {appAddEmployeeValidInput.values.filter === "month" ? (
                                                 Array.isArray(appKeywordListData?.data?.month) ? appKeywordListData?.data?.month.map((item, index) => (
-                                                    <option key={index} value={item.keyword_id}>
+                                                    <option key={index} value={item.keyword}>
                                                         {item.keyword_Name}
                                                     </option>
                                                 )) :
@@ -299,7 +299,7 @@ const AddEmployeeOf = (props) => {
                                                 )
                                             ) : (
                                                 Array.isArray(appKeywordListData?.data?.year) ? appKeywordListData?.data?.year.map((item, index) => (
-                                                    <option key={index} value={item.keyword_id}>
+                                                    <option key={index} value={item.keyword}>
                                                         {item.keyword_Name}
                                                     </option>
                                                 ))
@@ -311,7 +311,7 @@ const AddEmployeeOf = (props) => {
                                                 )
                                             )}
                                         </Input>
-                                        <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.keyword_id}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.keyword}</FormFeedback>
                                     </div>
                                 </div>
                                 <div

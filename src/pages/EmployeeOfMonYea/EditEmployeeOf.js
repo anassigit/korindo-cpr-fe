@@ -65,7 +65,7 @@ const EditEmployeeOf = (props) => {
         enableReinitialize: true,
 
         initialValues: {
-            member_id: '',
+            iidnrp: '',
             keyword: '',
             location_id: '',
             flag: '',
@@ -73,9 +73,10 @@ const EditEmployeeOf = (props) => {
             period_to: '',
             star: '',
             description: '',
+            vfullname: '',
         },
         validationSchema: Yup.object().shape({
-            member_id: Yup.string().required("Wajib diisi"),
+            iidnrp: Yup.string().required("Wajib diisi"),
             keyword: Yup.string().required("Wajib diisi"),
             flag: Yup.string().required("Wajib diisi"),
             period_from: Yup.string().required("Wajib diisi"),
@@ -92,7 +93,7 @@ const EditEmployeeOf = (props) => {
                 locationId: values.location_id,
                 period_from: dateFrom,
                 period_to: dateTo,
-                member_id: values.member_id,
+                iidnrp: values.iidnrp,
                 description: values.description,
             }))
             props.setAppEmployeeOfMonYeaMsg('')
@@ -116,15 +117,15 @@ const EditEmployeeOf = (props) => {
     useEffect(() => {
 
         if (appCandidateData.status === '1') {
-            appEditEmployeeValidInput.setFieldValue('member_id', appCandidateData?.data?.result.member_id)
+            appEditEmployeeValidInput.setFieldValue('iidnrp', appCandidateData?.data?.result.iidnrp)
             appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
             appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
             appEditEmployeeValidInput.setFieldValue('location_id', appCandidateData?.data?.result.locationId)
-            appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.periodFrom)
-            appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.periodTo)
+            appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.period_from)
+            appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.period_to)
             appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
             appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
-            setAppCandidateSearchLov(appCandidateData?.data?.result.member_name)
+            setAppCandidateSearchLov(appCandidateData?.data?.result.vfullname)
             setLoadingSpinner(false)
         }
 
@@ -150,7 +151,7 @@ const EditEmployeeOf = (props) => {
         });
 
         if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.location_id) {
-            appEditEmployeeValidInput.setFieldValue('member_id', '')
+            appEditEmployeeValidInput.setFieldValue('iidnrp', '')
             setAppCandidateSearchLov("")
         }
 
@@ -196,7 +197,7 @@ const EditEmployeeOf = (props) => {
     };
 
     const appCallBackEmployee = (row) => {
-        appEditEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
+        appEditEmployeeValidInput.setFieldValue("iidnrp", row.iidnrp)
         appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
 
@@ -440,13 +441,13 @@ const EditEmployeeOf = (props) => {
                                             getData={getCandidateLov}
                                             pageSize={10}
                                             callbackFunc={appCallBackEmployee}
-                                            defaultSetInput="member_name"
+                                            defaultSetInput="vfullname"
                                             invalidData={appEditEmployeeValidInput}
-                                            fieldValue="member_name"
+                                            fieldValue="vfullname"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
-                                            touchedLovField={appEditEmployeeValidInput.touched.member_id}
-                                            errorLovField={appEditEmployeeValidInput.errors.member_id}
+                                            touchedLovField={appEditEmployeeValidInput.touched.iidnrp}
+                                            errorLovField={appEditEmployeeValidInput.errors.iidnrp}
                                             pParam={appLovParam}
                                         />
                                     </div>
