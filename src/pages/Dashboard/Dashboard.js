@@ -646,71 +646,72 @@ const Rekomendasi = () => {
                                                     )
                                                 })
                                                 : (
-                                                    <h1
-                                                        className="text-danger"
-                                                        style={{
-                                                            textAlign: 'center',
-                                                            position: 'absolute',
-                                                            width: '100%',
-                                                            height: '150px',
-                                                            top: '50%',
-                                                        }}>
-                                                        NO DATA
-                                                    </h1>
-                                                    // <Card
-                                                    //     className="slideshow-content"
+                                                    // <h1
+                                                    //     className="text-danger"
                                                     //     style={{
-                                                    //         opacity: "0",
-                                                    //         width: "25vw",
-                                                    //         height: "150px",
-                                                    //         position: "relative",
-                                                    //         left: `0vw`,
-                                                    //         transition: "left 0.5s ease",
+                                                    //         textAlign: 'center',
+                                                    //         position: 'absolute',
+                                                    //         width: '100%',
+                                                    //         height: '150px',
+                                                    //         top: '50%',
                                                     //     }}>
-                                                    //     <CardBody
-                                                    //         style={{
-                                                    //             display: "flex",
-                                                    //             padding: "10px",
-                                                    //             justifyContent: "center",
-                                                    //             alignItems: "center",
-                                                    //             height: "100%",
-                                                    //         }}>
-                                                    //         {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
-                                                    //         {/* <img
-                                                    //             src={crown}
-                                                    //             style={{
-                                                    //                 position: "absolute",
-                                                    //                 right: 0,
-                                                    //                 top: 5,
-                                                    //                 color: "gold",
-                                                    //                 width: "64px",
-                                                    //                 fontSize: "32px"
-                                                    //             }}
-                                                    //             className="mdi mdi-crown px-3 py-1"
-                                                    //         /> */}
-                                                    //         <img
-                                                    //             style={{
-                                                    //                 minWidth: "10em",
-                                                    //                 maxWidth: "10em",
-                                                    //                 height: "10em",
-                                                    //                 objectFit: "cover",
-                                                    //                 borderRadius: "50%",
-                                                    //                 marginRight: "5%",
-                                                    //             }}
-                                                    //             alt="Profile Image"
-                                                    //         />
-                                                    //         <Col style={{
-                                                    //             display: 'flex',
-                                                    //             flexDirection: 'column',
-                                                    //             alignItems: 'flex-start',
-                                                    //             maxWidth: "60%"
-                                                    //         }}>
-                                                    //             <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
-                                                    //             <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                    //             <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
-                                                    //         </Col>
-                                                    //     </CardBody>
-                                                    // </Card>
+                                                    //     NO DATA
+                                                    // </h1>
+                                                    <Card
+                                                        className="slideshow-content"
+                                                        style={{
+                                                            // opacity: "0",
+                                                            width: "25vw",
+                                                            height: "150px",
+                                                            position: "relative",
+                                                            left: `3.5vw`,
+                                                            transition: "left 0.5s ease",
+                                                        }}>
+                                                        <CardBody
+                                                            style={{
+                                                                display: "flex",
+                                                                padding: "10px",
+                                                                justifyContent: "center",
+                                                                alignItems: "center",
+                                                                height: "100%",
+                                                            }}>
+                                                            {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                            {/* <img
+                                                                src={crown}
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    right: 0,
+                                                                    top: 5,
+                                                                    color: "gold",
+                                                                    width: "64px",
+                                                                    fontSize: "32px"
+                                                                }}
+                                                                className="mdi mdi-crown px-3 py-1"
+                                                            /> */}
+                                                            <img
+                                                                src="http://192.168.0.29:8080/filefotocpr/default-user.png"
+                                                                style={{
+                                                                    minWidth: "10em",
+                                                                    maxWidth: "10em",
+                                                                    height: "10em",
+                                                                    objectFit: "cover",
+                                                                    borderRadius: "50%",
+                                                                    marginRight: "5%",
+                                                                }}
+                                                                alt="Profile Image"
+                                                            />
+                                                            <Col style={{
+                                                                display: 'flex',
+                                                                flexDirection: 'column',
+                                                                alignItems: 'flex-start',
+                                                                maxWidth: "60%"
+                                                            }}>
+                                                                <div style={{ opacity:'.5', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>[Name]</div>
+                                                                <div className="text-primary" style={{ opacity:'.5', fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>[Department]</div>
+                                                                <div className="text-warning" style={{ opacity:'.5', fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>[Title]</div>
+                                                            </Col>
+                                                        </CardBody>
+                                                    </Card>
                                                 )
                                         }
                                         <a
@@ -896,59 +897,72 @@ const Rekomendasi = () => {
                                                 })
                                                 : (
 
-                                                    <h1
-                                                        className="text-danger"
-                                                        style={{
-                                                            textAlign: 'center',
-                                                            position: 'absolute',
-                                                            width: '100%',
-                                                            height: '150px',
-                                                            top: '50%',
-                                                        }}>
-                                                        NO DATA
-                                                    </h1>
-                                                    // <Card
-                                                    //     className="slideshow-content"
+                                                    // <h1
+                                                    //     className="text-danger"
                                                     //     style={{
-                                                    //         opacity: "0",
-                                                    //         width: "25vw",
-                                                    //         height: "150px",
-                                                    //         position: "relative",
-                                                    //         left: `0vw`,
-                                                    //         transition: "left 0.5s ease",
+                                                    //         textAlign: 'center',
+                                                    //         position: 'absolute',
+                                                    //         width: '100%',
+                                                    //         height: '150px',
+                                                    //         top: '50%',
                                                     //     }}>
-                                                    //     <CardBody
-                                                    //         style={{
-                                                    //             display: "flex",
-                                                    //             padding: "10px",
-                                                    //             justifyContent: "center",
-                                                    //             alignItems: "center",
-                                                    //             height: "100%",
-                                                    //         }}>
-                                                    //         {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
-                                                    //         <img
-                                                    //             style={{
-                                                    //                 minWidth: "10em",
-                                                    //                 maxWidth: "10em",
-                                                    //                 height: "10em",
-                                                    //                 objectFit: "cover",
-                                                    //                 borderRadius: "50%",
-                                                    //                 marginRight: "5%",
-                                                    //             }}
-                                                    //             alt="Profile Image"
-                                                    //         />
-                                                    //         <Col style={{
-                                                    //             display: 'flex',
-                                                    //             flexDirection: 'column',
-                                                    //             alignItems: 'flex-start',
-                                                    //             maxWidth: "60%"
-                                                    //         }}>
-                                                    //             <div style={{ fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>test</div>
-                                                    //             <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>teestt</div>
-                                                    //             <div className="text-warning" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>test</div>
-                                                    //         </Col>
-                                                    //     </CardBody>
-                                                    // </Card>
+                                                    //     NO DATA
+                                                    // </h1>
+                                                    <Card
+                                                        className="slideshow-content"
+                                                        style={{
+                                                            // opacity: "0",
+                                                            width: "25vw",
+                                                            height: "150px",
+                                                            position: "relative",
+                                                            left: `3.5vw`,
+                                                            transition: "left 0.5s ease",
+                                                        }}>
+                                                        <CardBody
+                                                            style={{
+                                                                display: "flex",
+                                                                padding: "10px",
+                                                                justifyContent: "center",
+                                                                alignItems: "center",
+                                                                height: "100%",
+                                                            }}>
+                                                            {/* <span style={{ position: "absolute", right: 0, top: 0, color: "gold", fontSize: "32px" }} className="mdi mdi-crown px-3 py-1"></span> */}
+                                                            {/* <img
+                                                                src={crown}
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    right: 0,
+                                                                    top: 5,
+                                                                    color: "gold",
+                                                                    width: "64px",
+                                                                    fontSize: "32px"
+                                                                }}
+                                                                className="mdi mdi-crown px-3 py-1"
+                                                            /> */}
+                                                            <img
+                                                                src="http://192.168.0.29:8080/filefotocpr/default-user.png"
+                                                                style={{
+                                                                    minWidth: "10em",
+                                                                    maxWidth: "10em",
+                                                                    height: "10em",
+                                                                    objectFit: "cover",
+                                                                    borderRadius: "50%",
+                                                                    marginRight: "5%",
+                                                                }}
+                                                                alt="Profile Image"
+                                                            />
+                                                            <Col style={{
+                                                                display: 'flex',
+                                                                flexDirection: 'column',
+                                                                alignItems: 'flex-start',
+                                                                maxWidth: "60%"
+                                                            }}>
+                                                                <div style={{ opacity:'.5', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>[Name]</div>
+                                                                <div className="text-primary" style={{ opacity:'.5', fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>[Department]</div>
+                                                                <div className="text-warning" style={{ opacity:'.5', fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>[Title]</div>
+                                                            </Col>
+                                                        </CardBody>
+                                                    </Card>
                                                 )
                                         }
                                         <a

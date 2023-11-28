@@ -7,7 +7,7 @@ var API_URL = "http://localhost:9013/cpr";
 if(process.env.REACT_APP_APIKEY === "development"){
   API_URL = "http://192.168.0.29:9013/cpr";
 }else if(process.env.REACT_APP_APIKEY === "production"){
-  API_URL = "http://10.10.20.94:9002/kth";
+  API_URL = "http://10.10.20.94:9002/cpr";
 }
 
 const axiosApi = axios.create({

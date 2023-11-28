@@ -38,13 +38,8 @@ const EditEmployeeOf = (props) => {
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
 
-    const appKeywordListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetKeywordList);
     const appCandidateData = useSelector((state) => state.employeeOfMonYeaReducer.respGetCandidate);
     const appLocationListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetLocationList);
-
-    const lovData = useSelector(state => {
-        return state.LovReducer.resp;
-    });
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -119,13 +114,20 @@ const EditEmployeeOf = (props) => {
     }, [props.appEditEmployeeOfMonYea])
 
     useEffect(() => {
-        appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
-        appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
-        appEditEmployeeValidInput.setFieldValue('location_id', appCandidateData?.data?.result.locationId)
-        appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.periodFrom)
-        appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.periodTo)
-        appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
-        appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
+
+        if (appCandidateData.status === '1') {
+            appEditEmployeeValidInput.setFieldValue('member_id', appCandidateData?.data?.result.member_id)
+            appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
+            appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
+            appEditEmployeeValidInput.setFieldValue('location_id', appCandidateData?.data?.result.locationId)
+            appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.periodFrom)
+            appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.periodTo)
+            appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
+            appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
+            setAppCandidateSearchLov(appCandidateData?.data?.result.member_name)
+            setLoadingSpinner(false)
+        }
+
     }, [appCandidateData])
 
 
@@ -147,29 +149,13 @@ const EditEmployeeOf = (props) => {
             locationId: appEditEmployeeValidInput.values.location_id,
         });
 
-        if (formattedDateFrom && formattedDateTo && appEditEmployeeValidInput.values.location_id && !appEditEmployeeValidInput.values.member_id) {
-            setAppCandidateSearchLov(appCandidateData?.data?.result.member_id)
-            setLovOneRender(0)
-        } else {
+        if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.location_id) {
             appEditEmployeeValidInput.setFieldValue('member_id', '')
             setAppCandidateSearchLov("")
         }
+
     }, [appEditEmployeeValidInput.values.period_from, appEditEmployeeValidInput.values.period_to, appEditEmployeeValidInput.values.location_id]);
 
-    useEffect(() => {
-        if (lovData.status === '1' && lovOneRender === 0 && lovData?.data?.lov.length === 1) {
-            appEditEmployeeValidInput.setFieldValue('member_id', lovData?.data?.lov[0].iidnrp)
-            setAppCandidateSearchLov(lovData?.data?.lov[0].vfullname)
-            setLovOneRender(1)
-            setLoadingSpinner(false)
-        }
-    }, [lovData])
-
-    useEffect(() => {
-        if (appCandidateSearchLov === '') {
-            appEditEmployeeValidInput.setFieldValue('member_id', '')
-        }
-    }, [appCandidateSearchLov])
 
     const appLovCandidateListColumns = [
         {
@@ -210,7 +196,6 @@ const EditEmployeeOf = (props) => {
     };
 
     const appCallBackEmployee = (row) => {
-        debugger
         appEditEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
         appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
@@ -447,7 +432,6 @@ const EditEmployeeOf = (props) => {
                                             Nama Karyawan <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
-                                    {console.log(appEditEmployeeValidInput.values)}
                                     <div className="col-8">
                                         <Lovv2
                                             title="Karyawan"
@@ -456,9 +440,9 @@ const EditEmployeeOf = (props) => {
                                             getData={getCandidateLov}
                                             pageSize={10}
                                             callbackFunc={appCallBackEmployee}
-                                            defaultSetInput="vfullname"
+                                            defaultSetInput="member_name"
                                             invalidData={appEditEmployeeValidInput}
-                                            fieldValue="vfullname"
+                                            fieldValue="member_name"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
                                             touchedLovField={appEditEmployeeValidInput.touched.member_id}

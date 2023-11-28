@@ -287,17 +287,28 @@ const AddEmployeeOf = (props) => {
                                             }
                                         >
                                             {appAddEmployeeValidInput.values.filter === "month" ? (
-                                                appKeywordListData?.data?.month.map((item, index) => (
+                                                Array.isArray(appKeywordListData?.data?.month) ? appKeywordListData?.data?.month.map((item, index) => (
                                                     <option key={index} value={item.keyword_id}>
                                                         {item.keyword_Name}
                                                     </option>
-                                                ))
+                                                )) :
+                                                (
+                                                    <option>
+
+                                                    </option>
+                                                )
                                             ) : (
-                                                appKeywordListData?.data?.year.map((item, index) => (
+                                                Array.isArray(appKeywordListData?.data?.year) ? appKeywordListData?.data?.year.map((item, index) => (
                                                     <option key={index} value={item.keyword_id}>
                                                         {item.keyword_Name}
                                                     </option>
                                                 ))
+                                                :
+                                                (
+                                                    <option>
+                                                        
+                                                    </option>
+                                                )
                                             )}
                                         </Input>
                                         <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.keyword_id}</FormFeedback>

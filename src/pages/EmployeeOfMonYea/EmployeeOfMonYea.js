@@ -106,6 +106,13 @@ const EmployeeOfMonYea = () => {
 
         },
         {
+            dataField: "flag",
+            text: "Year/Month",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+
+        },
+        {
             dataField: "keyword",
             text: "Keyword",
             sort: true,

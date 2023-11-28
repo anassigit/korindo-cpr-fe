@@ -132,6 +132,7 @@ const Rekomendasi = () => {
     }
   }
 
+  console.log(collapser)
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 
     const currentDepth = depth + 1;
@@ -145,7 +146,7 @@ const Rekomendasi = () => {
               <React.Fragment key={index}>
                 <Row style={{ marginBottom: "8px" }}>
                   <div style={{ color: "#3F4031", paddingLeft }}>
-                    {item.childList ? (
+                    {item.childList.length > 0 ? (
                       <span
                         className={collapser[item.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {

@@ -145,7 +145,7 @@ const Organization = () => {
               <React.Fragment key={index}>
                 <Row style={{ marginBottom: "8px" }}>
                   <div style={{ color: "#3F4031", paddingLeft }}>
-                    {item.childList ? (
+                    {item.childList.length > 0 ? (
                       <span
                         className={collapser[item.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
@@ -227,6 +227,7 @@ const Organization = () => {
     setSelectedDeptName: PropTypes.func,
     depth: PropTypes.any,
   };
+
 
   return (
     <RootPageCustom msgStateGet={null} msgStateSet={null}
