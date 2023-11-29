@@ -85,6 +85,13 @@ const StickerMaster = () => {
             text: "URL Sticker",
             sort: true,
             headerStyle: { textAlign: 'center' },
+            style: { textAlign: 'center' },
+            formatter: (cellContent, cellData) => {
+                return <img
+                    src={cellContent}
+                    width={'16px'}
+                />
+            }
         },
         {
             text: "Actions",
@@ -150,7 +157,7 @@ const StickerMaster = () => {
         setModal(!modal)
         setLoadingSpinner(true)
     }
-    
+
     useEffect(() => {
         let messageToUpdate;
 

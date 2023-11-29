@@ -27,6 +27,7 @@ const AddStickerMaster = (props) => {
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [file, setFile] = useState(null)
+    const [imagePreview, setImagePreview] = useState(null);
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -37,13 +38,14 @@ const AddStickerMaster = (props) => {
 
         initialValues: {
             stickerName: '',
+            file: '',
         },
         validationSchema: Yup.object().shape({
             stickerName: Yup.string().required("Wajib diisi"),
+            file: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
-            debugger
             props.setAppStickerMasterMsg('')
 
             const formData = new FormData()
@@ -62,21 +64,23 @@ const AddStickerMaster = (props) => {
             setFile(null)
         }
     }, [props.appAddStickerMaster])
-    
+
     const handleFileChange = (e) => {
-        const file = e.target.files[0];
-      
-        if (file && file.type === "image/png") {
-          // Valid PNG file selected
-          // Perform your desired actions with the file
-          setFile(file)
-          console.log("Valid PNG file selected:", file);
-        } else {
-          // Invalid file type selected
-          // Notify the user or take appropriate action
-          console.error("Please select a valid PNG file.");
+        const fileTemp = e.target.files[0];
+
+        appAddStickerMasterValidInput.setFieldValue('file', fileTemp ? fileTemp.name : '');
+
+        if (fileTemp) {
+            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/svg+xml"];
+            if (allowedTypes.includes(fileTemp.type)) {
+                setFile(fileTemp);
+                setImagePreview(URL.createObjectURL(fileTemp));
+                console.log("Valid file selected:", fileTemp)
+            } else {
+                console.error("Please select a valid file (PNG, JPEG, JPG, GIF, SVG).");
+            }
         }
-      }
+    };
 
     return (
         <Container
@@ -159,8 +163,7 @@ const AddStickerMaster = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="file"
-                                            accept=".png"
-                                            value={appAddStickerMasterValidInput.values.file}
+                                            accept=".png, .jpeg, .jpg, .gif, .svg"
                                             invalid={appAddStickerMasterValidInput.touched.file && appAddStickerMasterValidInput.errors.file
                                                 ? true : false
                                             }
@@ -168,6 +171,36 @@ const AddStickerMaster = (props) => {
                                             multiple={false}
                                         />
                                         <FormFeedback type="invalid">{appAddStickerMasterValidInput.errors.file}</FormFeedback>
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Preview <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        {imagePreview ? (
+
+                                            <img
+                                                src={imagePreview}
+                                                alt="Image Preview"
+                                                style={{ maxWidth: "50px", marginTop: "10px" }}
+                                            />
+                                        ) :
+                                            (
+                                                <span style={{ paddingLeft: '1rem' }}>
+                                                    -
+                                                </span>
+                                            )
+                                        }
                                     </div>
                                 </div>
                                 <div

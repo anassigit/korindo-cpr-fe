@@ -129,6 +129,6 @@ export const getStickerBE = req => postWithParam("/rest/StickerMasterRest/select
 
 export const saveStickerBE = req => postUpload("/rest/StickerMasterRest/insert", req)
 
-export const editStickerBE = req => postWithParam("/rest/StickerMasterRest/update", req)
+export const editStickerBE = req => postUpload("/rest/StickerMasterRest/update", req)
 
 export const deleteStickerBE = req => postWithParam("/rest/StickerMasterRest/delete", req)

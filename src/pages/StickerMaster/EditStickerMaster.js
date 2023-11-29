@@ -27,8 +27,11 @@ const EditStickerMaster = (props) => {
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
-    const appStickerData = useSelector((state) => state.stickerMasterReducer.respGetSticker2);
+    const [file, setFile] = useState(null)
+    const [imagePreview, setImagePreview] = useState(null);
+    const [prevFile, setPrevFile] = useState()
 
+    const appStickerData = useSelector((state) => state.stickerMasterReducer.respGetSticker);
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -39,18 +42,24 @@ const EditStickerMaster = (props) => {
 
         initialValues: {
             stickerName: '',
+            file: '',
         },
         validationSchema: Yup.object().shape({
             stickerName: Yup.string().required("Wajib diisi"),
+            file: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
 
-            dispatch(editStickerMaster({
-                stickerId: props.appStickerMasterData.stickerId,
-                stickerName: values.stickerName,
-            }))
             props.setAppStickerMasterMsg('')
+
+            const formData = new FormData()
+            formData.append('stickerId', props.appStickerMasterData.stickerId)
+            formData.append('stickerName', values.stickerName)
+            formData.append('file', file)
+
+            dispatch(editStickerMaster(formData))
+
         }
     });
 
@@ -66,10 +75,30 @@ const EditStickerMaster = (props) => {
     useEffect(() => {
         appEditStickerMasterValidInput.setFieldValue('stickerId', appStickerData?.data?.result.stickerId)
         appEditStickerMasterValidInput.setFieldValue('stickerName', appStickerData?.data?.result.stickerName)
-        
+        setImagePreview(appStickerData?.data?.result.stickerUrl)
+
         setLoadingSpinner(false)
     }, [appStickerData])
 
+    const handleFileChange = (e) => {
+        debugger
+
+        const fileTemp = e.target.files[0];
+        const fileName = fileTemp ? fileTemp.name : '';
+        
+        if (fileTemp) {
+            appEditStickerMasterValidInput.setFieldValue('file', fileName);
+            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/svg+xml"];
+            if (allowedTypes.includes(fileTemp.type)) {
+                setFile(fileTemp);
+                setImagePreview(URL.createObjectURL(fileTemp));
+                setPrevFile(e.target.value)
+                console.log("Valid file selected:", fileTemp);
+            } else {
+                console.error("Please select a valid file (PNG, JPEG, JPG, GIF, SVG).");
+            }
+        } 
+    };
 
     return (
         <Container
@@ -135,6 +164,62 @@ const EditStickerMaster = (props) => {
                                             }
                                         />
                                         <FormFeedback type="invalid">{appEditStickerMasterValidInput.errors.stickerName}</FormFeedback>
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Upload Sticker <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        <Input
+                                            type="file"
+                                            accept=".png, .jpeg, .jpg, .gif, .svg"
+                                            invalid={appEditStickerMasterValidInput.touched.file && appEditStickerMasterValidInput.errors.file
+                                                ? true : false
+                                            }
+                                            onChange={(e) => handleFileChange(e)}
+                                            multiple={false}
+                                        />
+                                        <FormFeedback type="invalid">{appEditStickerMasterValidInput.errors.file}</FormFeedback>
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Preview <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        {imagePreview ? (
+
+                                            <img
+                                                src={imagePreview}
+                                                alt="Image Preview"
+                                                style={{ maxWidth: "50px", marginTop: "10px" }}
+                                            />
+                                        ) :
+                                            (
+                                                <span style={{ paddingLeft: '1rem' }}>
+                                                    -
+                                                </span>
+                                            )
+                                        }
                                     </div>
                                 </div>
                                 <div
