@@ -306,17 +306,17 @@ const Organization = () => {
 
 
                   <Col
-                    xs={5}
+                    xs={9}
                     className="bg-light py-2"
-                    style={{ border: "1px solid #BBB", width: "37%", paddingRight: 0, paddingLeft: 0, height: "70vh" }}
+                    style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "70vh" }}
                   >
                   </Col>
-                  <Col
+                  {/* <Col
                     xs={5}
                     className="bg-light"
                     style={{ border: "1px solid #BBB", padding: 0, margin: 0 }}
                   >
-                  </Col>
+                  </Col> */}
                 </Row>
               </CardBody>
             </Card>
