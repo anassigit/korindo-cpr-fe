@@ -19,6 +19,7 @@ import PositionMaster from "pages/PositionMaster/PositionMaster"
 import SettingMaster from "pages/SettingMaster/SettingMaster"
 import UserManualVideo from "pages/UserManual/UserManualVideo"
 import UserManualPDF from "pages/UserManual/UserManualPDF"
+import StickerMaster from "pages/StickerMaster/StickerMaster"
 
 const authProtectedRoutes = [
 
@@ -32,6 +33,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc010", component: PositionMaster},
   { path: "/korsoc000/forms/korsoc009", component: LevelMaster},
   { path: "/korsoc000/forms/korsoc005", component: SettingMaster},
+  { path: "/korsoc000/forms/korsoc006", component: StickerMaster},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},
   { path: "/korsoc000/forms/korsoc411", component: UserManualVideo},

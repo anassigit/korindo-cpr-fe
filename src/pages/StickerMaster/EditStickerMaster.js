@@ -102,7 +102,7 @@ const EditStickerMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Lokasi Code <span className="text-danger"> *</span>
+                                            Sticker ID <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -122,7 +122,7 @@ const EditStickerMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Lokasi Name <span className="text-danger"> *</span>
+                                            Sticker Name <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">

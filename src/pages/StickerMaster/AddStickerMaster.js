@@ -26,6 +26,7 @@ const AddStickerMaster = (props) => {
     const dispatch = useDispatch()
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [file, setFile] = useState(null)
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -42,11 +43,15 @@ const AddStickerMaster = (props) => {
         }),
 
         onSubmit: (values) => {
+            debugger
             props.setAppStickerMasterMsg('')
 
-            dispatch(addStickerMaster({
-                stickerName: values.stickerName,
-            }))
+            const formData = new FormData()
+
+            formData.append('stickerName', values.stickerName)
+            formData.append('file', file)
+
+            dispatch(addStickerMaster(formData))
 
         }
     });
@@ -54,8 +59,24 @@ const AddStickerMaster = (props) => {
     useEffect(() => {
         if (props.appAddStickerMaster) {
             appAddStickerMasterValidInput.resetForm()
+            setFile(null)
         }
     }, [props.appAddStickerMaster])
+    
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+      
+        if (file && file.type === "image/png") {
+          // Valid PNG file selected
+          // Perform your desired actions with the file
+          setFile(file)
+          console.log("Valid PNG file selected:", file);
+        } else {
+          // Invalid file type selected
+          // Notify the user or take appropriate action
+          console.error("Please select a valid PNG file.");
+        }
+      }
 
     return (
         <Container
@@ -64,7 +85,7 @@ const AddStickerMaster = (props) => {
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-plus"></span> Tambah Lokasi Master
+                    <span className="mdi mdi-plus"></span> Tambah Sticker Master
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
@@ -88,7 +109,7 @@ const AddStickerMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Lokasi Code <span className="text-danger"> *</span>
+                                            Sticker ID <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -107,7 +128,7 @@ const AddStickerMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Lokasi Name <span className="text-danger"> *</span>
+                                            Sticker Name <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -120,6 +141,33 @@ const AddStickerMaster = (props) => {
                                             onChange={(e) => appAddStickerMasterValidInput.setFieldValue('stickerName', e.target.value)}
                                         />
                                         <FormFeedback type="invalid">{appAddStickerMasterValidInput.errors.stickerName}</FormFeedback>
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Upload Sticker <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        <Input
+                                            type="file"
+                                            accept=".png"
+                                            value={appAddStickerMasterValidInput.values.file}
+                                            invalid={appAddStickerMasterValidInput.touched.file && appAddStickerMasterValidInput.errors.file
+                                                ? true : false
+                                            }
+                                            onChange={(e) => handleFileChange(e)}
+                                            multiple={false}
+                                        />
+                                        <FormFeedback type="invalid">{appAddStickerMasterValidInput.errors.file}</FormFeedback>
                                     </div>
                                 </div>
                                 <div

@@ -1,49 +1,49 @@
 import {
-  DELETE_LOCATION,
-  EDIT_LOCATION,
-  GET_LOCATION2,
-  GET_LIST_LOCATION,
+  DELETE_STICKER,
+  EDIT_STICKER,
+  GET_STICKER,
+  GET_LIST_STICKER2,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
-  RESP_GET_LOCATION2,
-  RESP_GET_LOCATION_LIST,
-  SAVE_LOCATION
+  RESP_GET_STICKER,
+  RESP_GET_STICKER_LIST2,
+  SAVE_STICKER
 } from "./actionTypes"
 
-export const getLocationListDataAction = (req) => ({
-  type: GET_LIST_LOCATION,
+export const getStickerListDataAction2 = (req) => ({
+  type: GET_LIST_STICKER2,
   payload: req,
 })
 
-export const respGetLocationList = resp => ({
-  type: RESP_GET_LOCATION_LIST,
+export const respGetStickerList2 = resp => ({
+  type: RESP_GET_STICKER_LIST2,
   payload: resp,
 })
 
-export const getLocationDataAction = (req) => ({
-  type: GET_LOCATION2,
+export const getStickerDataAction = (req) => ({
+  type: GET_STICKER,
   payload: req,
 })
 
-export const respGetLocation2 = resp => ({
-  type: RESP_GET_LOCATION2,
+export const respGetSticker = resp => ({
+  type: RESP_GET_STICKER,
   payload: resp,
 })
 
-export const addLocationMaster = (req) => ({
-  type: SAVE_LOCATION,
+export const addStickerMaster = (req) => ({
+  type: SAVE_STICKER,
   payload: req,
 })
 
-export const editLocationMaster = (req) => ({
-  type: EDIT_LOCATION,
+export const editStickerMaster = (req) => ({
+  type: EDIT_STICKER,
   payload: req,
 })
 
-export const deleteLocationMaster = (req) => ({
-  type: DELETE_LOCATION,
+export const deleteStickerMaster = (req) => ({
+  type: DELETE_STICKER,
   payload: req,
 })
 

@@ -157,21 +157,7 @@ const DeptMaster = () => {
         if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
             messageToUpdate = appMessageDelete;
             if (appMessageDelete.status === '1') {
-
-            }
-        }
-        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
-            messageToUpdate = appMessageAdd;
-            if (appMessageAdd.status === '1') {
-                setAppDeptMaster(true)
-                setAppAddDeptMaster(false)
-            }
-        }
-        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
-            messageToUpdate = appMessageEdit;
-            if (appMessageEdit.status === '1') {
-                setAppDeptMaster(true)
-                setAppEditDeptMaster(false)
+                // Additional logic for appMessageDelete with status '1'
             }
         }
 
@@ -180,7 +166,43 @@ const DeptMaster = () => {
             dispatch(getDeptListDataAction(appDeptTabelSearch));
             setAppDeptMasterMsg(messageToUpdate);
         }
-    }, [appMessageDelete, appMessageAdd, appMessageEdit]);
+    }, [appMessageDelete]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
+            messageToUpdate = appMessageAdd;
+            if (appMessageAdd.status === '1') {
+                setAppDeptMaster(true);
+                setAppAddDeptMaster(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getDeptListDataAction(appDeptTabelSearch));
+            setAppDeptMasterMsg(messageToUpdate);
+        }
+    }, [appMessageAdd]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
+            messageToUpdate = appMessageEdit;
+            if (appMessageEdit.status === '1') {
+                setAppDeptMaster(true);
+                setAppEditDeptMaster(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getDeptListDataAction(appDeptTabelSearch));
+            setAppDeptMasterMsg(messageToUpdate);
+        }
+    }, [appMessageEdit]);
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}

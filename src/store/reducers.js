@@ -15,12 +15,14 @@ import locationMasterReducer from "./locationmaster/reducer"
 import positionMasterReducer from "./positionmaster/reducer"
 import levelMasterReducer from "./levelmaster/reducer"
 import settingMasterReducer from "./settingmaster/reducer"
+import stickerMasterReducer from "./stickermaster/reducer"
 
 const rootReducer = combineReducers({
   // public
   Layout,
   Login,
   LovReducer,
+  manualReducer,
   rekomendasiReducer,
   dashboardReducer,
   employeeOfMonYeaReducer,
@@ -29,7 +31,7 @@ const rootReducer = combineReducers({
   positionMasterReducer,
   levelMasterReducer,
   settingMasterReducer,
-  manualReducer,
+  stickerMasterReducer,
 })
 
 export default rootReducer

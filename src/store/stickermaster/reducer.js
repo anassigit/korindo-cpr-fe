@@ -1,55 +1,55 @@
 import {
-  DELETE_LOCATION,
-  EDIT_LOCATION,
-  GET_LOCATION2,
-  GET_LIST_LOCATION,
+  DELETE_STICKER,
+  EDIT_STICKER,
+  GET_STICKER,
+  GET_LIST_STICKER2,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
-  RESP_GET_LOCATION2,
-  RESP_GET_LOCATION_LIST,
-  SAVE_LOCATION
+  RESP_GET_STICKER,
+  RESP_GET_STICKER_LIST2,
+  SAVE_STICKER
 } from "./actionTypes"
 
 const INIT_STATE = {
-  respGetLocationList: {},
-  respGetLocation2: {},
+  respGetStickerList2: {},
+  respGetSticker: {},
   msgAdd: '',
   msgEdit: '',
   msgDelete: '',
 }
 
-const locationMasterReducer = (state = INIT_STATE, action) => {
+const stickerMasterReducer = (state = INIT_STATE, action) => {
 
   switch (action.type) {
-    case GET_LIST_LOCATION:
+    case GET_LIST_STICKER2:
       return {
         ...state,
       }
-    case RESP_GET_LOCATION_LIST:
+    case RESP_GET_STICKER_LIST2:
       return {
         ...state,
-        respGetLocationList: action.payload,
+        respGetStickerList2: action.payload,
       }
-    case GET_LOCATION2:
-      return {
-        ...state,
-      }
-    case RESP_GET_LOCATION2:
-      return {
-        ...state,
-        respGetLocation2: action.payload,
-      }
-    case SAVE_LOCATION:
+    case GET_STICKER:
       return {
         ...state,
       }
-    case EDIT_LOCATION:
+    case RESP_GET_STICKER:
+      return {
+        ...state,
+        respGetSticker: action.payload,
+      }
+    case SAVE_STICKER:
       return {
         ...state,
       }
-    case DELETE_LOCATION:
+    case EDIT_STICKER:
+      return {
+        ...state,
+      }
+    case DELETE_STICKER:
       return {
         ...state,
       }
@@ -80,4 +80,4 @@ const locationMasterReducer = (state = INIT_STATE, action) => {
   }
 }
 
-export default locationMasterReducer
+export default stickerMasterReducer

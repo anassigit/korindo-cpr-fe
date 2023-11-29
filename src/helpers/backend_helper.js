@@ -122,3 +122,13 @@ export const deleteSettingBE = req => postWithParam("/rest/SettingMasterRest/del
 export const getManualVideoBE = req => post("/rest/ManualRest/getManualVideo", req)
 
 export const getManualPDFBE = req => post("/rest/ManualRest/getManualPDF", req)
+
+export const getStickerListBE2 = req => post("/rest/StickerMasterRest/getList", req)
+
+export const getStickerBE = req => postWithParam("/rest/StickerMasterRest/select", req)
+
+export const saveStickerBE = req => postUpload("/rest/StickerMasterRest/insert", req)
+
+export const editStickerBE = req => postWithParam("/rest/StickerMasterRest/update", req)
+
+export const deleteStickerBE = req => postWithParam("/rest/StickerMasterRest/delete", req)

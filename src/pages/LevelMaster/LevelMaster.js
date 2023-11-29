@@ -46,7 +46,7 @@ const LevelMaster = () => {
     const appLevelListData = useSelector((state) => {
         return state.levelMasterReducer.respGetLevelList
     });
-    
+
     const appLevelLocationListData = useSelector((state) => {
         return state.levelMasterReducer.respGetLocationList3
     });
@@ -165,21 +165,7 @@ const LevelMaster = () => {
         if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
             messageToUpdate = appMessageDelete;
             if (appMessageDelete.status === '1') {
-
-            }
-        }
-        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
-            messageToUpdate = appMessageAdd;
-            if (appMessageAdd.status === '1') {
-                setAppLevelMaster(true)
-                setAppAddLevelMaster(false)
-            }
-        }
-        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
-            messageToUpdate = appMessageEdit;
-            if (appMessageEdit.status === '1') {
-                setAppLevelMaster(true)
-                setAppEditLevelMaster(false)
+                // Additional logic for appMessageDelete with status '1'
             }
         }
 
@@ -188,7 +174,43 @@ const LevelMaster = () => {
             dispatch(getLevelListDataAction(appLevelTabelSearch));
             setAppLevelMasterMsg(messageToUpdate);
         }
-    }, [appMessageDelete, appMessageAdd, appMessageEdit]);
+    }, [appMessageDelete]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
+            messageToUpdate = appMessageAdd;
+            if (appMessageAdd.status === '1') {
+                setAppLevelMaster(true);
+                setAppAddLevelMaster(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getLevelListDataAction(appLevelTabelSearch));
+            setAppLevelMasterMsg(messageToUpdate);
+        }
+    }, [appMessageAdd]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
+            messageToUpdate = appMessageEdit;
+            if (appMessageEdit.status === '1') {
+                setAppLevelMaster(true);
+                setAppEditLevelMaster(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getLevelListDataAction(appLevelTabelSearch));
+            setAppLevelMasterMsg(messageToUpdate);
+        }
+    }, [appMessageEdit]);
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}

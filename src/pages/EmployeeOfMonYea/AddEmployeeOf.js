@@ -86,7 +86,7 @@ const AddEmployeeOf = (props) => {
                 locationId: values.location_id,
                 period_from: dateFrom,
                 period_to: dateTo,
-                member_id: values.member_id,
+                iidnrp: values.member_id,
                 description: values.description,
             }))
 

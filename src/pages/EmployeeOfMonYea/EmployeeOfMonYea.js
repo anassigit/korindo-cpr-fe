@@ -230,28 +230,54 @@ const EmployeeOfMonYea = () => {
 
         if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
             messageToUpdate = appMessageDelete;
-            if(appMessageDelete.status === '1') {
-
-            }
-        } else if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
-            messageToUpdate = appMessageAdd;
-            if(appMessageAdd.status === '1') {
-                setAppEmployeeOfMonYea(true)
-                setAppAddEmployeeOfMonYea(false)
-            }
-        } else if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
-            messageToUpdate = appMessageEdit;
-            if(appMessageEdit.status === '1') {
-                setAppEmployeeOfMonYea(true)
-                setAppEditEmployeeOfMonYea(false)
+            if (appMessageDelete.status === '1') {
+                // Additional logic for appMessageDelete with status '1'
             }
         }
+
         if (messageToUpdate) {
             setLoadingSpinner(false);
             dispatch(getListData(appEmployeeMonYeaTabelSearch));
             setAppEmployeeOfMonYeaMsg(messageToUpdate);
         }
-    }, [appMessageDelete, appMessageAdd, appMessageEdit]);
+    }, [appMessageDelete]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
+            messageToUpdate = appMessageAdd;
+            if (appMessageAdd.status === '1') {
+                setAppEmployeeOfMonYea(true);
+                setAppAddEmployeeOfMonYea(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getListData(appEmployeeMonYeaTabelSearch));
+            setAppEmployeeOfMonYeaMsg(messageToUpdate);
+        }
+    }, [appMessageAdd]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
+            messageToUpdate = appMessageEdit;
+            if (appMessageEdit.status === '1') {
+                setAppEmployeeOfMonYea(true);
+                setAppEditEmployeeOfMonYea(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getListData(appEmployeeMonYeaTabelSearch));
+            setAppEmployeeOfMonYeaMsg(messageToUpdate);
+        }
+    }, [appMessageEdit]);
+
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}

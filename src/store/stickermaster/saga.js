@@ -1,56 +1,56 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
-  DELETE_LOCATION,
-  EDIT_LOCATION,
-  GET_LIST_LOCATION,
-  GET_LOCATION2,
-  SAVE_LOCATION
+  DELETE_STICKER,
+  EDIT_STICKER,
+  GET_LIST_STICKER2,
+  GET_STICKER,
+  SAVE_STICKER
 } from "./actionTypes"
 import {
-  respGetLocation2,
-  respGetLocationList
+  respGetSticker,
+  respGetStickerList2
 } from "./actions"
 
 import {
-  deleteLocationBE,
-  editLocationBE,
-  getLocationBE,
-  getLocationListBE2, saveLocationBE
+  deleteStickerBE,
+  editStickerBE,
+  getStickerBE,
+  getStickerListBE2, saveStickerBE
 } from "helpers/backend_helper"
 import { msgAdd, msgDelete, msgEdit } from "store/actions"
 
-function* fetchGetLocationList({ payload: req }) {
+function* fetchGetStickerList({ payload: req }) {
   try {
-    const response = yield call(getLocationListBE2, req)
+    const response = yield call(getStickerListBE2, req)
     if (response.status == 1) {
-      yield put(respGetLocationList(response))
+      yield put(respGetStickerList2(response))
     } else {
-      yield put(respGetLocationList(response))
+      yield put(respGetStickerList2(response))
     }
   } catch (error) {
     console.log(error);
-    yield put(respGetLocationList({ "status": 0, "message": "Error Get Data" }))
+    yield put(respGetStickerList2({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
-function* fetchGetLocation({ payload: req }) {
+function* fetchGetSticker({ payload: req }) {
   try {
-    const response = yield call(getLocationBE, req)
+    const response = yield call(getStickerBE, req)
     if (response.status == 1) {
-      yield put(respGetLocation2(response))
+      yield put(respGetSticker(response))
     } else {
-      yield put(respGetLocation2(response))
+      yield put(respGetSticker(response))
     }
   } catch (error) {
     console.log(error);
-    yield put(respGetLocation2({ "status": 0, "message": "Error Get Data" }))
+    yield put(respGetSticker({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
-function* fetchAddLocation({ payload: req }) {
+function* fetchAddSticker({ payload: req }) {
   try {
-    const response = yield call(saveLocationBE, req)
+    const response = yield call(saveStickerBE, req)
     if (response.status == 1) {
       yield put(msgAdd(response))
     } else {
@@ -62,9 +62,9 @@ function* fetchAddLocation({ payload: req }) {
   }
 }
 
-function* fetchEditLocation({ payload: req }) {
+function* fetchEditSticker({ payload: req }) {
   try {
-    const response = yield call(editLocationBE, req)
+    const response = yield call(editStickerBE, req)
     if (response.status == 1) {
       yield put(msgEdit(response))
     } else {
@@ -76,9 +76,9 @@ function* fetchEditLocation({ payload: req }) {
   }
 }
 
-function* fetchDeleteLocation({ payload: req }) {
+function* fetchDeleteSticker({ payload: req }) {
   try {
-    const response = yield call(deleteLocationBE, req)
+    const response = yield call(deleteStickerBE, req)
     if (response.status == 1) {
       yield put(msgDelete(response))
     } else {
@@ -90,16 +90,16 @@ function* fetchDeleteLocation({ payload: req }) {
   }
 }
 
-function* locationMasterSaga() {
+function* stickerMasterSaga() {
 
-  yield takeEvery(GET_LIST_LOCATION, fetchGetLocationList)
+  yield takeEvery(GET_LIST_STICKER2, fetchGetStickerList)
 
-  yield takeEvery(GET_LOCATION2, fetchGetLocation)
+  yield takeEvery(GET_STICKER, fetchGetSticker)
 
-  yield takeEvery(SAVE_LOCATION, fetchAddLocation)
-  yield takeEvery(EDIT_LOCATION, fetchEditLocation)
-  yield takeEvery(DELETE_LOCATION, fetchDeleteLocation)
+  yield takeEvery(SAVE_STICKER, fetchAddSticker)
+  yield takeEvery(EDIT_STICKER, fetchEditSticker)
+  yield takeEvery(DELETE_STICKER, fetchDeleteSticker)
 
 }
 
-export default locationMasterSaga
+export default stickerMasterSaga

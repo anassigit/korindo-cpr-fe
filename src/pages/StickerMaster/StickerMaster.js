@@ -21,7 +21,7 @@ import '../../assets/scss/custom.scss';
 import '../../config';
 import AddStickerMaster from "./AddStickerMaster";
 import EditStickerMaster from "./EditStickerMaster";
-import { resetMessage, deleteStickerMaster, getStickerListDataAction } from "store/actions";
+import { resetMessage, deleteStickerMaster, getStickerListDataAction2 } from "store/actions";
 
 const StickerMaster = () => {
 
@@ -44,7 +44,7 @@ const StickerMaster = () => {
     const [stickerId, setStickerId] = useState('')
 
     const appStickerListData = useSelector((state) => {
-        return state.stickerMasterReducer.respGetStickerList
+        return state.stickerMasterReducer.respGetStickerList2
     });
 
     const appMessageDelete = useSelector((state) => state.stickerMasterReducer.msgDelete);
@@ -69,14 +69,20 @@ const StickerMaster = () => {
     const appStickerColumn = [
         {
             dataField: "stickerId",
-            text: "Lokasi Code",
+            text: "Sticker Code",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
             dataField: "stickerName",
-            text: "Nama Lokasi",
+            text: "Nama Sticker",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "stickerUrl",
+            text: "URL Sticker",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -144,37 +150,60 @@ const StickerMaster = () => {
         setModal(!modal)
         setLoadingSpinner(true)
     }
-
+    
     useEffect(() => {
         let messageToUpdate;
 
         if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
             messageToUpdate = appMessageDelete;
             if (appMessageDelete.status === '1') {
-
-            }
-        }
-        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
-            messageToUpdate = appMessageAdd;
-            if (appMessageAdd.status === '1') {
-                setAppStickerMaster(true)
-                setAppAddStickerMaster(false)
-            }
-        }
-        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
-            messageToUpdate = appMessageEdit;
-            if (appMessageEdit.status === '1') {
-                setAppStickerMaster(true)
-                setAppEditStickerMaster(false)
+                // Additional logic for appMessageDelete with status '1'
             }
         }
 
         if (messageToUpdate) {
             setLoadingSpinner(false);
-            dispatch(getStickerListDataAction(appStickerTabelSearch));
+            dispatch(getStickerListDataAction2(appStickerTabelSearch));
             setAppStickerMasterMsg(messageToUpdate);
         }
-    }, [appMessageDelete, appMessageAdd, appMessageEdit]);
+    }, [appMessageDelete]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
+            messageToUpdate = appMessageAdd;
+            if (appMessageAdd.status === '1') {
+                setAppStickerMaster(true);
+                setAppAddStickerMaster(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getStickerListDataAction2(appStickerTabelSearch));
+            setAppStickerMasterMsg(messageToUpdate);
+        }
+    }, [appMessageAdd]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
+            messageToUpdate = appMessageEdit;
+            if (appMessageEdit.status === '1') {
+                setAppStickerMaster(true);
+                setAppEditStickerMaster(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            setLoadingSpinner(false);
+            dispatch(getStickerListDataAction2(appStickerTabelSearch));
+            setAppStickerMasterMsg(messageToUpdate);
+        }
+    }, [appMessageEdit]);
+
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -188,7 +217,7 @@ const StickerMaster = () => {
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-map"></span> Master Lokasi
+                                <span className="mdi mdi-map"></span> Master Sticker
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{
@@ -253,7 +282,7 @@ const StickerMaster = () => {
                                     appdataTotal={appStickerListData?.data != null ? appStickerListData?.data.count : 0}
                                     searchSet={setAppStickerTabelSearch}
                                     searchGet={appStickerTabelSearch}
-                                    redukCall={getStickerListDataAction}
+                                    redukCall={getStickerListDataAction2}
                                 />
                             </CardBody>
                         </Card>
