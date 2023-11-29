@@ -84,7 +84,7 @@ const EditEmployeeOf = (props) => {
         }),
 
         onSubmit: (values) => {
-
+            props.setAppEmployeeOfMonYeaMsg("")
             let dateFrom = formatDate(values.period_from)
             let dateTo = formatDate(values.period_to)
 

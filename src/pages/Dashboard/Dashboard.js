@@ -67,6 +67,7 @@ const Rekomendasi = () => {
         const temp = foundRow ? foundRow.path : null;
 
         setLinkRekomendasi(temp);
+    
     }, [])
 
     useEffect(() => {
@@ -99,9 +100,11 @@ const Rekomendasi = () => {
         }
         if (appListData.status === '1') {
             setLoadingSpinner(false)
+        } else {
+            setLoadingSpinner(false)
         }
     }, [appListData])
-
+    
     const handleSliderChange = (e) => {
         const step = 30;
         let newSliderMonth = sliderMonth;
@@ -706,9 +709,9 @@ const Rekomendasi = () => {
                                                                 alignItems: 'flex-start',
                                                                 maxWidth: "60%"
                                                             }}>
-                                                                <div style={{ opacity:'.5', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>[Name]</div>
-                                                                <div className="text-primary" style={{ opacity:'.5', fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>[Department]</div>
-                                                                <div className="text-warning" style={{ opacity:'.5', fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>[Title]</div>
+                                                                <div style={{ opacity: '.5', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>[Name]</div>
+                                                                <div className="text-primary" style={{ opacity: '.5', fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>[Department]</div>
+                                                                <div className="text-warning" style={{ opacity: '.5', fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>[Title]</div>
                                                             </Col>
                                                         </CardBody>
                                                     </Card>
@@ -731,39 +734,41 @@ const Rekomendasi = () => {
                                 </CardBody>
                             </Card>
 
-                            <a
-                                className="berikan-recommend"
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    fontSize: "24px",
-                                    position: "relative", // Added for stacking
-                                }}
-                                href={linkRekomendasi}
-                            >
-                                <img
-                                    height={'180px'}
-                                    src={give}
+                            {linkRekomendasi && (
+                                <a
+                                    className="berikan-recommend"
                                     style={{
-                                        transition: "filter 0.3s", // Add a transition for smooth hover effect
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        fontSize: "24px",
+                                        position: "relative", // Added for stacking
                                     }}
-                                />
-                                <b>Berikan Bintang</b>
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        top: 0,
-                                        left: 0,
-                                        width: "100%",
-                                        height: "100%",
-                                        background: "rgba(0, 0, 0, 0.5)", // Adjust the darkness here (0.5 means 50% dark)
-                                        opacity: 0, // Initially invisible
-                                        transition: "opacity 0.3s", // Add a transition for smooth hover effect
-                                    }}
-                                ></div>
-                            </a>
+                                    href={linkRekomendasi}
+                                >
+                                    <img
+                                        height={'180px'}
+                                        src={give}
+                                        style={{
+                                            transition: "filter 0.3s", // Add a transition for smooth hover effect
+                                        }}
+                                    />
+                                    <b>Berikan Bintang</b>
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
+                                            width: "100%",
+                                            height: "100%",
+                                            background: "rgba(0, 0, 0, 0.5)", // Adjust the darkness here (0.5 means 50% dark)
+                                            opacity: 0, // Initially invisible
+                                            transition: "opacity 0.3s", // Add a transition for smooth hover effect
+                                        }}
+                                    ></div>
+                                </a>
+                            )}
                             <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%" }}>
                                 <CardHeader style={{ fontSize: "16px" }}>
                                     <span className="mdi mdi-star-circle"></span> Employee of the Year
@@ -957,9 +962,9 @@ const Rekomendasi = () => {
                                                                 alignItems: 'flex-start',
                                                                 maxWidth: "60%"
                                                             }}>
-                                                                <div style={{ opacity:'.5', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>[Name]</div>
-                                                                <div className="text-primary" style={{ opacity:'.5', fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>[Department]</div>
-                                                                <div className="text-warning" style={{ opacity:'.5', fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>[Title]</div>
+                                                                <div style={{ opacity: '.5', fontSize: "20px", fontWeight: "bold", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "95%" }}>[Name]</div>
+                                                                <div className="text-primary" style={{ opacity: '.5', fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>[Department]</div>
+                                                                <div className="text-warning" style={{ opacity: '.5', fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>[Title]</div>
                                                             </Col>
                                                         </CardBody>
                                                     </Card>

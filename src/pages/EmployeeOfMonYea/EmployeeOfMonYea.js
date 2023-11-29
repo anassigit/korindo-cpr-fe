@@ -237,7 +237,7 @@ const EmployeeOfMonYea = () => {
             messageToUpdate = appMessageAdd;
             if(appMessageAdd.status === '1') {
                 setAppEmployeeOfMonYea(true)
-                setAppEditEmployeeOfMonYea(false)
+                setAppAddEmployeeOfMonYea(false)
             }
         } else if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;

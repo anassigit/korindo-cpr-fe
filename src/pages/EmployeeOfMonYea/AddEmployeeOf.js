@@ -82,7 +82,7 @@ const AddEmployeeOf = (props) => {
 
             dispatch(addEmployeeOf({
                 filter: values.filter,
-                keyword: values.keyword,
+                keyword_id: values.keyword,
                 locationId: values.location_id,
                 period_from: dateFrom,
                 period_to: dateTo,
@@ -103,7 +103,7 @@ const AddEmployeeOf = (props) => {
     }, [props.appAddEmployeeOfMonYea])
 
     useEffect(() => {
-        appAddEmployeeValidInput.setFieldValue('keyword', appKeywordListData?.data?.month[0].keyword)
+        appAddEmployeeValidInput.setFieldValue('keyword', appKeywordListData?.data?.month[0].keyword_Id)
     }, [appKeywordListData])
 
     useEffect(() => {
@@ -288,7 +288,7 @@ const AddEmployeeOf = (props) => {
                                         >
                                             {appAddEmployeeValidInput.values.filter === "month" ? (
                                                 Array.isArray(appKeywordListData?.data?.month) ? appKeywordListData?.data?.month.map((item, index) => (
-                                                    <option key={index} value={item.keyword}>
+                                                    <option key={index} value={item.keyword_Id}>
                                                         {item.keyword_Name}
                                                     </option>
                                                 )) :
