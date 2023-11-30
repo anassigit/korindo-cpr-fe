@@ -771,7 +771,7 @@ const Rekomendasi = () => {
                             )}
                             <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent", width: "35%" }}>
                                 <CardHeader style={{ fontSize: "16px" }}>
-                                    <span className="mdi mdi-star-circle"></span> Employee of the Year
+                                    <span className="mdi mdi-star-circle"></span> {appListData?.data?.eoy}
                                 </CardHeader>
                                 <CardBody style={{
                                     padding: 0, margin: 0, backgroundColor: "transparent", display: "flex",

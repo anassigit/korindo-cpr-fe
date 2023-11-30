@@ -39,9 +39,7 @@ const Organization = () => {
   const [collapser, setCollapser] = useState({
     "1531": true,
   })
-
-  const [appMemberList, setMemberList] = useState()
-
+  
   const appDeptData = useSelector((state) => state.rekomendasiReducer.respGetDept)
   const appSearchData = useSelector((state) => state.rekomendasiReducer.respGetSearch)
 
@@ -105,32 +103,6 @@ const Organization = () => {
       setSelectedDeptData(ReactSession.get('selectedDeptData'))
     }
   }, [selectedDeptData])
-
-  useEffect(() => {
-    if (searchEntered === true) {
-      setOffset(0)
-      setLimit(10)
-      setCurrentPage(1)
-      ReactSession.set('searchVal', searchVal)
-      ReactSession.set('selectedDeptData', null)
-    }
-  }, [searchEntered])
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      // Prevent the default form submission behavior
-      e.preventDefault()
-      setCurrentPage(1)
-      dispatch(getSearchData({
-        "offset": 0,
-        "limit": 10,
-        "search": {
-          "search": searchVal,
-        }
-      }))
-    }
-  }
-
 
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 
@@ -236,54 +208,10 @@ const Organization = () => {
           {appOrganizationMsg !== "" ? <UncontrolledAlert toggle={() => { setAppOrganizationMsg("") }} color={appOrganizationMsg?.status == "1" ? "success" : "danger"}>
             {typeof appOrganizationMsg == 'string' ? null : appOrganizationMsg?.message}</UncontrolledAlert> : null}
           <Container fluid>
-            <Card style={{ marginBottom: 0 }}>
-              <CardHeader>
-                <span className="mdi mdi-magnify"></span> Pilih Karyawan
-              </CardHeader>
-              <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
-                <Row
-                  className="py-2 m-2"
-                >
-
-                  <Col sm={2} md={2} xl={1}>
-                    <Input
-                      type="select"
-                      name="searchBy"
-                      className="form-control"
-                      value={searchBy}
-                    >
-                      <option>Name</option>
-                    </Input>
-                  </Col>
-                  <Col sm={2} md={2}>
-                    <Input
-                      type="search"
-                      name="search"
-                      className="form-control"
-                      value={searchVal}
-                      onChange={(e) => setSearchVal(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                    />
-                  </Col>
-                  <Col sm={2} md={2}>
-                    <Button className="btn btn-primary rounded-0 px-4" style={{ border: "1px solid #BBB" }} onClick={() => {
-                      setCurrentPage(1)
-                      dispatch(getSearchData({
-                        "offset": 0,
-                        "limit": 10,
-                        "search": {
-                          "search": searchVal,
-                        }
-                      }))
-                    }}>
-                      <b>Search</b>
-                    </Button>
-                  </Col>
-
-                </Row>
-              </CardBody>
-            </Card>
             <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent" }}>
+              <CardHeader>
+                <span className="mdi mdi-format-list-bulleted"/> List Struktur Organisasi
+              </CardHeader>
               <CardBody style={{ padding: 0, margin: 0, }}>
                 <Row
                   className="d-flex justify-content-between py-1"
@@ -292,7 +220,7 @@ const Organization = () => {
                   <Col
                     xs={3}
                     className="bg-light py-2"
-                    style={{ border: "1px solid #BBB", width: "20%", height: "70vh", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
+                    style={{ border: "1px solid #BBB", width: "20%", height: "78vh", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
                   >
                     <CollapsibleList
                       data={appDeptData?.data?.result?.childList}
@@ -307,16 +235,19 @@ const Organization = () => {
 
                   <Col
                     xs={9}
-                    className="bg-light py-2"
-                    style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "70vh" }}
-                  >
-                  </Col>
-                  {/* <Col
-                    xs={5}
                     className="bg-light"
-                    style={{ border: "1px solid #BBB", padding: 0, margin: 0 }}
+                    style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "78vh" }}
                   >
-                  </Col> */}
+                    <Container fluid style={{ padding: 0, margin: 0 }}>
+                      <button className="btn btn-primary" style={{ color:'#fff', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
+                        Add Organisasi
+                      </button>
+                      <button className="btn btn-light" style={{ color:'#495057', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
+                        Add Karyawan/User
+                      </button>
+
+                    </Container>
+                  </Col>
                 </Row>
               </CardBody>
             </Card>
