@@ -557,7 +557,8 @@ const Rekomendasi = () => {
                                             <span className="mdi mdi-chevron-left" style={{ position: "absolute", left: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
                                         </a>
                                         {
-                                            appBestlistOfMonthData?.data?.list ?
+                                            appBestlistOfMonthData?.data?.list &&
+                                            appBestlistOfMonthData?.data?.list.length > 0  ?
                                                 appBestlistOfMonthData?.data?.list.map((row, key) => {
                                                     return (
                                                         <Card
@@ -795,7 +796,7 @@ const Rekomendasi = () => {
                                             <span className="mdi mdi-chevron-left" style={{ position: "absolute", left: "2%", top: 35, fontSize: "62px", zIndex: 2 }} />
                                         </a>
                                         {
-                                            appBestlistOfYearData?.data?.list ?
+                                            appBestlistOfYearData?.data?.list && appBestlistOfYearData?.data?.list.length > 0 ?
                                                 appBestlistOfYearData?.data?.list.map((row, key) => {
                                                     return (
                                                         <Card
