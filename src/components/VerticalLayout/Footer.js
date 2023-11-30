@@ -9,7 +9,7 @@ const Footer = () => {
           <Row>
             <Col md={7}>
               {/* ©Korindo {new Date().getFullYear()} */}
-              <span className="mdi mdi-phone"></span> CPR Help Contact: &nbsp;
+              <span className="mdi mdi-phone"></span> KTA Help Contact: &nbsp;
               <b>
               Venna (HRD & GA Division, ext. 214), &nbsp; Nalu (HRD & GA Division, ext. 217)
               </b>

@@ -162,23 +162,18 @@ const ProfileMenu = props => {
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"
-          style={{ borderLeft: "2px solid #A084DC" }}
+          style={{ borderLeft: "2px solid #A084DC", cursor:"auto" }}
           tag="button"
         >
           <span style={{ fontSize: "14px" }} className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
-          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
+          {/* <i className="mdi mdi-chevron-down d-none d-xl-inline-block" /> */}
         </DropdownToggle>
-        <DropdownMenu className="dropdown-menu-end">
-          {/* <Link to="/app007" className="dropdown-item">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1" />
-            <span>{props.t("Change User Data")}</span>
-          </Link>
-          <div className="dropdown-divider" /> */}
-          <Link to="/logout" className="dropdown-item">
+        {/* <DropdownMenu className="dropdown-menu-end"> */}
+          {/* <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
             <span style={{ fontSize: "14px" }}>{props.t("Logout")}</span>
-          </Link>
-        </DropdownMenu>
+          </Link> */}
+        {/* </DropdownMenu> */}
       </Dropdown>
     </React.Fragment>
   )
