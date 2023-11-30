@@ -7,7 +7,7 @@ const INIT_STATE = {
   respGetMenu: {},
 }
 
-const dashboardReducer = (state = INIT_STATE, action) => {
+const menuReducer = (state = INIT_STATE, action) => {
 
   switch (action.type) {
     case GET_MENU:
@@ -24,4 +24,4 @@ const dashboardReducer = (state = INIT_STATE, action) => {
   }
 }
 
-export default dashboardReducer
+export default menuReducer

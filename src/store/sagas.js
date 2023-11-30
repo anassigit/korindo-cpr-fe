@@ -15,11 +15,13 @@ import levelMasterSaga from "./levelmaster/saga"
 import settingMasterSaga from "./settingmaster/saga"
 import stickerMasterSaga from "./stickermaster/saga"
 import organizationSaga from "./organization/saga"
+import menuSaga from "./menu/saga"
 
 export default function* rootSaga() {
   yield all([
     fork(AuthSaga),
     fork(LayoutSaga),
+    fork(menuSaga),
     fork(LovSaga),
     fork(manualSaga),
     fork(rekomendasiSaga),

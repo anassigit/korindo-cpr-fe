@@ -10,7 +10,7 @@ import {
     Input,
     Row, Spinner, UncontrolledTooltip
 } from "reactstrap";
-import { getBestListData, getBestOfMonthListData, getBestOfYearListData, getListData1, getSearchData } from "store/actions";
+import { getBestListData, getBestOfMonthListData, getBestOfYearListData, getListData1, getMenuData, getSearchData } from "store/actions";
 import '../../assets/scss/custom.scss';
 import RootPageCustom from '../../common/RootPageCustom';
 import '../../config';
@@ -35,13 +35,17 @@ const Rekomendasi = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const menu = JSON.parse(ReactSession.get("menu") || '[]');
     const [linkRekomendasi, setLinkRekomendasi] = useState();
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
     const [appDashboardPage, setAppDashboardPage] = useState(true)
 
     const [appDetailRecommendationData, setAppDetailRecommendationData] = useState()
+
+    // SPECIAL
+    const menu = useSelector(state => (
+        state.menuReducer.respGetMenu
+    ));
 
     const [sliderMonth, setSliderMonth] = useState(4)
     const [sliderYear, setSliderYear] = useState(4)
@@ -62,13 +66,19 @@ const Rekomendasi = () => {
         dispatch(getBestListData())
         dispatch(getBestOfMonthListData())
         dispatch(getBestOfYearListData())
+        dispatch(getMenuData())
         setLoadingSpinner(true)
-        const foundRow = menu?.find((row) => row.id === 'KORTRN001');
+
+    }, [])
+
+    useEffect(() => {
+
+        debugger
+        const foundRow = Array.isArray(menu?.data?.list) ? menu?.data?.list.find((row) => row.id === 'KORTRN001') : null
         const temp = foundRow ? foundRow.path : null;
 
         setLinkRekomendasi(temp);
-    
-    }, [])
+    }, [menu])
 
     useEffect(() => {
         ReactSession.set("currentPage", currentPage)
@@ -104,7 +114,7 @@ const Rekomendasi = () => {
             setLoadingSpinner(false)
         }
     }, [appListData])
-    
+
     const handleSliderChange = (e) => {
         const step = 30;
         let newSliderMonth = sliderMonth;
@@ -558,7 +568,7 @@ const Rekomendasi = () => {
                                         </a>
                                         {
                                             appBestlistOfMonthData?.data?.list &&
-                                            appBestlistOfMonthData?.data?.list.length > 0  ?
+                                                appBestlistOfMonthData?.data?.list.length > 0 ?
                                                 appBestlistOfMonthData?.data?.list.map((row, key) => {
                                                     return (
                                                         <Card

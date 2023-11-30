@@ -25,10 +25,10 @@ function* fetchGetMenu({ payload: req }) {
   }
 }
 
-function* dashboardSaga() {
+function* menuSaga() {
 
   yield takeEvery(GET_MENU, fetchGetMenu)
 
 }
 
-export default dashboardSaga
+export default menuSaga

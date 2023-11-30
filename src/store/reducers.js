@@ -5,6 +5,7 @@ import Layout from "./layout/reducer"
 
 // Authentication
 import Login from "./auth/login/reducer"
+import menuReducer from "./menu/reducer"
 import LovReducer from "./lov/reducer"
 import manualReducer from "./manual/reducer"
 import rekomendasiReducer from "./rekomendasi/reducer"
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   // public
   Layout,
   Login,
+  menuReducer,
   LovReducer,
   manualReducer,
   rekomendasiReducer,
