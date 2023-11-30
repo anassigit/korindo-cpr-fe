@@ -15,6 +15,7 @@ import PropTypes from 'prop-types'
 import RootPageCustom from '../../common/RootPageCustom'
 import '../../config'
 import { getOrganizationListData } from "store/organization/actions"
+import TabAddOrganisasi from "./TabAddOrganisasi"
 
 const Organization = () => {
 
@@ -312,7 +313,7 @@ const Organization = () => {
                       <button className="btn btn-light" style={{ color: '#495057', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
                         Add Karyawan/User
                       </button>
-
+                      <TabAddOrganisasi/>
                     </Container>
                   </Col>
                 </Row>

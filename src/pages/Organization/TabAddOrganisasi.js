@@ -1,14 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function TabAddOrganisasi(props) {
+const TabAddOrganisasi = (props) => {
   return (
-    <div>TabAddOrganisasi</div>
+    <div
+      style={{ border: '1px solid #A084DC' }}
+    >
+      TabAddOrganisasi
+    </div>
   )
 }
 
 TabAddOrganisasi.propTypes = {
-    
+
 }
 
 export default TabAddOrganisasi

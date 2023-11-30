@@ -734,7 +734,7 @@ const Rekomendasi = () => {
                                     </div>
                                 </CardBody>
                             </Card>
-
+                            {console.log('linkRekomendasi', linkRekomendasi)}
                             {linkRekomendasi && (
                                 <a
                                     className="berikan-recommend"
