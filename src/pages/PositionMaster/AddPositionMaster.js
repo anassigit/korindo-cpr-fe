@@ -126,25 +126,6 @@ const AddPositionMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Position Code <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8">
-                                        <Input
-                                            disabled
-                                        />
-                                    </div>
-                                </div>
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                            }}
-                                        >
                                             Position Name <span className="text-danger"> *</span>
                                         </Label>
                                     </div>

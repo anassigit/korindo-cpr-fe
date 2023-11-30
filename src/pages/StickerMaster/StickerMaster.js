@@ -83,7 +83,6 @@ const StickerMaster = () => {
         {
             dataField: "stickerUrl",
             text: "URL Sticker",
-            sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
             formatter: (cellContent, cellData) => {
