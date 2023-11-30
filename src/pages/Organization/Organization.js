@@ -14,6 +14,7 @@ import '../../assets/scss/custom.scss'
 import PropTypes from 'prop-types'
 import RootPageCustom from '../../common/RootPageCustom'
 import '../../config'
+import { getOrganizationListData } from "store/organization/actions"
 
 const Organization = () => {
 
@@ -37,11 +38,11 @@ const Organization = () => {
 
   const [appDetailDeptDataState, setAppDetailDeptDataState] = useState()
   const [collapser, setCollapser] = useState({
+    "1525": true,
     "1531": true,
   })
-  
-  const appDeptData = useSelector((state) => state.rekomendasiReducer.respGetDept)
-  const appSearchData = useSelector((state) => state.rekomendasiReducer.respGetSearch)
+
+  const appOrganizationListData = useSelector((state) => state.organizationReducer.respGetOrganizationList)
 
   useEffect(() => {
 
@@ -62,7 +63,7 @@ const Organization = () => {
       setSelectedDeptName(ReactSession.get('selectedDeptName'))
     }
 
-    dispatch(getDeptData())
+    dispatch(getOrganizationListData())
     setLoadingSpinner(true)
   }, [])
 
@@ -71,26 +72,16 @@ const Organization = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (appDeptData.status == '1') {
+    if (appOrganizationListData.status == '1') {
       setLoadingSpinner(false)
-    } else if (appDeptData.status == '0') {
+    } else if (appOrganizationListData.status == '0') {
       setLoadingSpinner(true)
     }
-  }, [appDeptData])
+  }, [appOrganizationListData])
 
   useEffect(() => {
     ReactSession.set('selectedDeptName', selectedDeptName)
   }, [selectedDeptName])
-
-  useEffect(() => {
-    setSelectedDeptData(null)
-    if (appSearchData.status === '1' && searchVal) {
-      setMemberList(appSearchData)
-      setSearchEntered(true)
-      setSelectedDeptName(null)
-      ReactSession.set('searchVal', searchVal)
-    }
-  }, [appSearchData])
 
   useEffect(() => {
 
@@ -98,7 +89,6 @@ const Organization = () => {
       setSearchEntered(false)
       ReactSession.set('collapser', collapser)
       ReactSession.remove('selectedMemberData')
-      ReactSession.remove('searchVal')
     } else {
       setSelectedDeptData(ReactSession.get('selectedDeptData'))
     }
@@ -110,7 +100,7 @@ const Organization = () => {
     const paddingLeft = `${currentDepth * 0.8}vw`;
     return (
       <React.Fragment>
-        {Array.isArray(data) &&
+        {Array.isArray(data) ?
           data.map((item, index) => {
 
             return (
@@ -185,7 +175,84 @@ const Organization = () => {
                 )}
               </React.Fragment>
             )
-          })}
+          })
+          :
+          data ?
+            (
+              <React.Fragment>
+                <Row style={{ marginBottom: "8px" }}>
+                  <div style={{ color: "#3F4031", paddingLeft }}>
+                    {data.childList.length > 0 ? (
+                      <span
+                        className={collapser[data.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                        onClick={() => {
+                          setCollapser((prevCollapser) => {
+                            return {
+                              ...prevCollapser,
+                              [data.dept_id]: !prevCollapser[data.dept_id],
+                            };
+                          });
+                        }}
+                      ></span>
+                    ) :
+                      <span
+                        className={"mdi mdi-minus-box opacity-0"}
+                      ></span>
+                    }
+                    &nbsp;
+                    <span className="mdi mdi-domain"></span>
+                    <a
+                      style={{
+                        color: "#4c4c4c",
+                        fontWeight: collapser[data.dept_id] || selectedDeptData === data.org_id ? "bold" : "normal",
+                        cursor: "pointer",
+                      }}
+                      className="unselectable-two"
+                      onClick={(e) => {
+                        let org_id = '';
+                        org_id = data.org_id;
+                        ReactSession.remove('selectedMemberData');
+                        setSelectedDeptData(org_id);
+                        setSelectedDeptName(data.dept_name);
+                        ReactSession.set('selectedDeptData', org_id);
+                      }}
+                    >
+                      &nbsp;
+                      <span
+                        style={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                        id={data.dept_id}
+                      >
+                        {data.dept_name}
+                      </span>
+                      {data.dept_id && (
+                        <UncontrolledTooltip target={() => document.getElementById(data.dept_id)} placement="top">
+                          {data.dept_name}
+                        </UncontrolledTooltip>
+                      )}
+                    </a>
+                  </div>
+                </Row>
+
+                {data.childList && collapser[data.dept_id] === true && (
+                  <CollapsibleList
+                    data={data.childList}
+                    collapser={collapser}
+                    setCollapser={setCollapser}
+                    selectedDeptData={selectedDeptData}
+                    setSelectedDeptData={setSelectedDeptData}
+                    setSelectedDeptName={setSelectedDeptName}
+                    depth={currentDepth}
+                  />
+                )}
+              </React.Fragment>
+            )
+            :
+            null
+        }
       </React.Fragment>
     );
   };
@@ -210,7 +277,7 @@ const Organization = () => {
           <Container fluid>
             <Card style={{ padding: 0, margin: "6px 0 0 0", backgroundColor: "transparent" }}>
               <CardHeader>
-                <span className="mdi mdi-format-list-bulleted"/> List Struktur Organisasi
+                <span className="mdi mdi-format-list-bulleted" /> List Struktur Organisasi
               </CardHeader>
               <CardBody style={{ padding: 0, margin: 0, }}>
                 <Row
@@ -223,7 +290,7 @@ const Organization = () => {
                     style={{ border: "1px solid #BBB", width: "20%", height: "78vh", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
                   >
                     <CollapsibleList
-                      data={appDeptData?.data?.result?.childList}
+                      data={appOrganizationListData?.data?.result}
                       collapser={collapser}
                       setCollapser={setCollapser}
                       selectedDeptData={selectedDeptData}
@@ -239,10 +306,10 @@ const Organization = () => {
                     style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "78vh" }}
                   >
                     <Container fluid style={{ padding: 0, margin: 0 }}>
-                      <button className="btn btn-primary" style={{ color:'#fff', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
+                      <button className="btn btn-primary" style={{ color: '#fff', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
                         Add Organisasi
                       </button>
-                      <button className="btn btn-light" style={{ color:'#495057', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
+                      <button className="btn btn-light" style={{ color: '#495057', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
                         Add Karyawan/User
                       </button>
 

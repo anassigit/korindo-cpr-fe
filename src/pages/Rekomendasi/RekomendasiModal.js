@@ -75,7 +75,6 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
         if (appRecommendData.status === '1') {
             appRekomendasiValidInput.setFieldValue('comment', appRecommendData?.data?.result?.comment)
             appRecommendData?.data?.result?.stickerList.map((item, index) => {
-                debugger
                 if (item.selected) {
                     appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, true);
                 } else {
@@ -204,6 +203,9 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                                                 appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, false);
                                                             }
                                                         }}
+                                                        invalid={
+                                                            appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? true : false
+                                                        }
                                                         checked={appRekomendasiValidInput.values.sticker[item.stickerId] || false}
                                                     />
                                                     <label htmlFor={item.stickerId} style={{ marginRight: "12px" }}>
@@ -215,6 +217,9 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                             )
                                         })
                                     }
+                                    {appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? (
+                                        <FormFeedback type="invalid">{appRekomendasiValidInput.errors.sticker}</FormFeedback>
+                                    ) : null}
                                     <div style={{ fontWeight: 'bold' }}>
                                         Keterangan
                                     </div>

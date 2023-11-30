@@ -39,6 +39,7 @@ const Rekomendasi = () => {
 
   const [appDetailDeptDataState, setAppDetailDeptDataState] = useState()
   const [collapser, setCollapser] = useState({
+    "1525": true,
     "1531": true,
   })
   const [appMemberList, setMemberList] = useState()
@@ -132,14 +133,13 @@ const Rekomendasi = () => {
     }
   }
 
-  console.log(collapser)
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 
     const currentDepth = depth + 1;
     const paddingLeft = `${currentDepth * 0.8}vw`;
     return (
       <React.Fragment>
-        {Array.isArray(data) &&
+        {Array.isArray(data) ?
           data.map((item, index) => {
 
             return (
@@ -214,7 +214,84 @@ const Rekomendasi = () => {
                 )}
               </React.Fragment>
             )
-          })}
+          })
+          :
+          data ?
+            (
+              <React.Fragment>
+                <Row style={{ marginBottom: "8px" }}>
+                  <div style={{ color: "#3F4031", paddingLeft }}>
+                    {data.childList.length > 0 ? (
+                      <span
+                        className={collapser[data.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                        onClick={() => {
+                          setCollapser((prevCollapser) => {
+                            return {
+                              ...prevCollapser,
+                              [data.dept_id]: !prevCollapser[data.dept_id],
+                            };
+                          });
+                        }}
+                      ></span>
+                    ) :
+                      <span
+                        className={"mdi mdi-minus-box opacity-0"}
+                      ></span>
+                    }
+                    &nbsp;
+                    <span className="mdi mdi-domain"></span>
+                    <a
+                      style={{
+                        color: "#4c4c4c",
+                        fontWeight: collapser[data.dept_id] || selectedDeptData === data.org_id ? "bold" : "normal",
+                        cursor: "pointer",
+                      }}
+                      className="unselectable-two"
+                      onClick={(e) => {
+                        let org_id = '';
+                        org_id = data.org_id;
+                        ReactSession.remove('selectedMemberData');
+                        setSelectedDeptData(org_id);
+                        setSelectedDeptName(data.dept_name);
+                        ReactSession.set('selectedDeptData', org_id);
+                      }}
+                    >
+                      &nbsp;
+                      <span
+                        style={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                        id={data.dept_id}
+                      >
+                        {data.dept_name}
+                      </span>
+                      {data.dept_id && (
+                        <UncontrolledTooltip target={() => document.getElementById(data.dept_id)} placement="top">
+                          {data.dept_name}
+                        </UncontrolledTooltip>
+                      )}
+                    </a>
+                  </div>
+                </Row>
+
+                {data.childList && collapser[data.dept_id] === true && (
+                  <CollapsibleList
+                    data={data.childList}
+                    collapser={collapser}
+                    setCollapser={setCollapser}
+                    selectedDeptData={selectedDeptData}
+                    setSelectedDeptData={setSelectedDeptData}
+                    setSelectedDeptName={setSelectedDeptName}
+                    depth={currentDepth}
+                  />
+                )}
+              </React.Fragment>
+            )
+            :
+            null
+        }
       </React.Fragment>
     );
   };
@@ -295,7 +372,7 @@ const Rekomendasi = () => {
                     style={{ border: "1px solid #BBB", width: "20%", height: "70vh", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
                   >
                     <CollapsibleList
-                      data={appDeptData?.data?.result?.childList}
+                      data={appDeptData?.data?.result}
                       collapser={collapser}
                       setCollapser={setCollapser}
                       selectedDeptData={selectedDeptData}

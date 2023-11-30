@@ -16,6 +16,7 @@ import positionMasterReducer from "./positionmaster/reducer"
 import levelMasterReducer from "./levelmaster/reducer"
 import settingMasterReducer from "./settingmaster/reducer"
 import stickerMasterReducer from "./stickermaster/reducer"
+import organizationReducer from "./organization/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   levelMasterReducer,
   settingMasterReducer,
   stickerMasterReducer,
+  organizationReducer,
 })
 
 export default rootReducer
