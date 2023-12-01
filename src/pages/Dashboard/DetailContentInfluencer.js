@@ -9,35 +9,35 @@ const DetailContentInfluencer = ({ modal, toggle, recommendData }) => {
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
             <ModalHeader toggle={toggle}>Detail Isi</ModalHeader>
             <ModalBody>
-                <div className='mb-2' style={{ fontWeight: "bold" }}>
+                <div className='my-2' style={{ fontWeight: "bold" }}>
                     Tanggal
                 </div>
                 <Input
                     disabled
                     value={recommendData?.write_time}
                 />
-                <div className='mb-2' style={{ fontWeight: "bold" }}>
+                <div className='my-2' style={{ fontWeight: "bold" }}>
                     Departemen
                 </div>
                 <Input
                     disabled
                     value={recommendData?.dept_name}
                 />
-                <div className='mb-2' style={{ fontWeight: "bold" }}>
+                <div className='my-2' style={{ fontWeight: "bold" }}>
                     Nama
                 </div>
                 <Input
                     disabled
                     value={recommendData?.name}
                 />
-                <div className='mb-2' style={{ fontWeight: "bold" }}>
+                <div className='my-2' style={{ fontWeight: "bold" }}>
                     Compliment
                 </div>
                 <Input
                     disabled
                     value={recommendData?.sticker}
                 />
-                <div className='mb-2' style={{ fontWeight: "bold" }}>
+                <div className='my-2' style={{ fontWeight: "bold" }}>
                     Komentar
                 </div>
                 <Input
