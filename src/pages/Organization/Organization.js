@@ -16,21 +16,17 @@ import RootPageCustom from '../../common/RootPageCustom'
 import '../../config'
 import { getOrganizationListData } from "store/organization/actions"
 import TabAddOrganisasi from "./TabAddOrganisasi"
+import TabEditOrganisasi from "./TabEditOrganisasi"
 
 const Organization = () => {
 
   const dispatch = useDispatch()
 
+  const [appTabAdd, setAppTabAdd] = useState(true)
+  const [appTabEdit, setAppTabEdit] = useState(false)
+
   const [loadingSpinner, setLoadingSpinner] = useState(false)
   const [appOrganizationMsg, setAppOrganizationMsg] = useState('')
-
-  const [searchBy, setSearchBy] = useState(false)
-  const [searchVal, setSearchVal] = useState('')
-  const [searchEntered, setSearchEntered] = useState(false)
-
-  const [offset, setOffset] = useState(0)
-  const [limit, setLimit] = useState(10)
-  const [currentPage, setCurrentPage] = useState(1)
 
   const [selectedDeptData, setSelectedDeptData] = useState()
   const [selectedDeptName, setSelectedDeptName] = useState()
@@ -87,7 +83,6 @@ const Organization = () => {
   useEffect(() => {
 
     if (selectedDeptData) {
-      setSearchEntered(false)
       ReactSession.set('collapser', collapser)
       ReactSession.remove('selectedMemberData')
     } else {
@@ -288,7 +283,7 @@ const Organization = () => {
                   <Col
                     xs={3}
                     className="bg-light py-2"
-                    style={{ border: "1px solid #BBB", width: "20%", height: "78vh", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
+                    style={{ border: "1px solid #BBB", width: "20%", height: "770px", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
                   >
                     <CollapsibleList
                       data={appOrganizationListData?.data?.result}
@@ -304,16 +299,43 @@ const Organization = () => {
                   <Col
                     xs={9}
                     className="bg-light"
-                    style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "78vh" }}
+                    style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "770px" }}
                   >
                     <Container fluid style={{ padding: 0, margin: 0 }}>
-                      <button className="btn btn-primary" style={{ color: '#fff', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
+                      <button
+                        className={appTabAdd ? "btn btn-primary" : "btn btn-light"}
+                        style={{
+                          color: appTabAdd ? "#fff" : '#495057',
+                          borderColor: '#A084DC',
+                          borderRadius: '12px 12px 0 0'
+                        }}
+                        onClick={() => {
+                          setAppTabAdd(!appTabAdd)
+                          setAppTabEdit(!appTabEdit)
+                        }}
+                      >
                         Add Organisasi
                       </button>
-                      <button className="btn btn-light" style={{ color: '#495057', borderColor: '#A084DC', borderRadius: '12px 12px 0 0' }}>
+                      <button
+                        className={appTabEdit ? "btn btn-primary" : "btn btn-light"}
+                        style={{
+                          color: appTabEdit ? "#fff" : '#495057',
+                          borderColor: '#A084DC',
+                          borderRadius: '12px 12px 0 0'
+                        }}
+                        onClick={() => {
+                          setAppTabAdd(!appTabAdd)
+                          setAppTabEdit(!appTabEdit)
+                        }}
+                      >
                         Add Karyawan/User
                       </button>
-                      <TabAddOrganisasi/>
+                      <TabAddOrganisasi
+                        appTabAdd={appTabAdd}
+                      />
+                      <TabEditOrganisasi
+                        appTabEdit={appTabEdit}
+                      />
                     </Container>
                   </Col>
                 </Row>

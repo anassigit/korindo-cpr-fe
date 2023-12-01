@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { getPositionListDataAction } from 'store/actions';
 import { UncontrolledTooltip } from 'reactstrap';
-import TableCustom from 'common/TableCustom';
-import { useSelector } from 'react-redux';
 import TableCustomNoPage from 'common/TableCustomNoPage';
+import { useSelector } from 'react-redux';
+import { getPositionListDataAction } from 'store/actions';
 
-const TabAddOrganisasi = (props) => {
+const TabEditOrganisasi = (props) => {
 
   const appPositionListData = useSelector((state) => {
     return state.positionMasterReducer.respGetPositionList
@@ -75,7 +74,7 @@ const TabAddOrganisasi = (props) => {
 
   return (
     <div
-      hidden={!props.appTabAdd}
+      hidden={!props.appTabEdit}
     >
 
       <TableCustomNoPage
@@ -92,8 +91,8 @@ const TabAddOrganisasi = (props) => {
   )
 }
 
-TabAddOrganisasi.propTypes = {
-  appTabAdd: PropTypes.any,
+TabEditOrganisasi.propTypes = {
+  appTabEdit: PropTypes.any,
 }
 
-export default TabAddOrganisasi
+export default TabEditOrganisasi
