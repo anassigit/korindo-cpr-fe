@@ -1,11 +1,11 @@
-import { call, put, takeEvery } from "redux-saga/effects"
 import { ReactSession } from 'react-client-session';
+import { call, put, takeEvery } from "redux-saga/effects";
 
 // Login Redux States
-import { GET_INFO_PROFILE, LOGIN_USER, LOGOUT_USER, RELOGIN_USER } from "./actionTypes"
-import { apiError, loginSuccess, reloginSuccess, respGetInfoProfile } from "./actions"
+import { LOGIN_USER, LOGOUT_USER, RELOGIN_USER } from "./actionTypes";
+import { apiError, loginSuccess, reloginSuccess } from "./actions";
 
-import { getInfoProfileBE, getMenuBE, login } from "helpers/backend_helper"
+import { getMenuBE, login } from "helpers/backend_helper";
 
 
 function* loginUser({ payload: { user, history } }) {
@@ -42,6 +42,7 @@ function* reloginUser({ payload: { user, history } }) {
       localStorage.setItem("profile_url", JSON.stringify(response.data.profile_url));
       yield put(reloginSuccess(response));
       document.getElementById("reloginForm").style.display = "none";
+      window.location.reload()
       yield put(apiError(''))
     } else {
       yield put(apiError("Username and password tidak sesuai"))
@@ -67,6 +68,8 @@ function* logoutUser({ payload: { history } }) {
     ReactSession.remove('collapser')
     ReactSession.remove('offset')
     ReactSession.remove('limit')
+
+    ReactSession.clear()
 
     history.push("/login")
     yield put(apiError(""))

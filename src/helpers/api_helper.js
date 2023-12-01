@@ -80,10 +80,10 @@ function responseError(response){
             localStorage.setItem("authUser", "")
             localStorage.setItem("user", "")
             localStorage.setItem("menu", "")
-            //document.getElementById("reloginForm").style.display = "block";
-            //response.data.listmessage = []
+            document.getElementById("reloginForm").style.display = "block";
+            // response.data.listmessage = []
             response.data.status = "1"
-            window.location.href = "/login";
+            // window.location.href = "/login";
             return response.data;
           }else{
             return response.data;

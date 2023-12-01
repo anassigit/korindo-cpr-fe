@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { connect, useSelector, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 // Reactstrap
-import { Form, Label, Input, Alert, FormFeedback } from "reactstrap";
+import { Alert, Form, FormFeedback, Input, Label } from "reactstrap";
 
 import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 
 // actions
-import { getInfoProfileData, reloginUser } from "../../store/actions";
+import { reloginUser } from "../../store/actions";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -20,9 +20,9 @@ import * as Yup from "yup";
 
 // Redux Store
 import {
+  changeSidebarType,
   showRightSidebarAction,
   toggleLeftmenu,
-  changeSidebarType,
 } from "../../store/actions";
 
 const Header = props => {
@@ -80,11 +80,14 @@ const Header = props => {
       password: '',
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Input username anda"),
-      password: Yup.string().required("Input Password"),
+      // username: Yup.string().required("Input username anda"),
+      // password: Yup.string().required("Input Password"),
     }),
     onSubmit: (values) => {
-      dispatch(reloginUser(values, props.history));
+
+      window.open('', '_self');
+      window.close();
+
     }
   });
 
@@ -122,58 +125,28 @@ const Header = props => {
                 e.preventDefault();
                 validation.handleSubmit();
                 return false;
-              }} id="reloginForm" className="form-horizontal modal" style={{ backgroundColor: 'rgb(159 159 159)', border: '2px solid rgb(85 110 230)', margin: 'auto', padding: '20px', marginLeft: '0%', width: '100%', height: '100%' }}>
-              <div style={{ backgroundColor: '#fefefe', border: '2px solid rgb(0 0 0 / 22%)', margin: 'auto', padding: '50px', width: '450px', height: '480px' }}>
+              }} id="reloginForm" className="form-horizontal modal" style={{ backgroundColor: '#00000090', margin: 'auto', padding: '20px', marginLeft: '0%' }}>
+              <div style={{ backgroundColor: '#fefefe', margin: 'auto', width: '600px', padding: '10px 25px 10px 25px', borderRadius: '25px' }}>
                 <div className="modal-header">
                   <h5 className="modal-title mt-0">
-                    Re - Login
+                    Token Expired
                   </h5>
                 </div>
                 <div className="modal-body">
                   {error ? <Alert color="danger">{error}</Alert> : null}
-                  <div className="mb-3">
-                    <Label className="form-label">Username</Label>
-                    <Input
-                      name="username"
-                      className="form-control"
-                      placeholder="Enter Username"
-                      type="text"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.username || ""}
-                      invalid={
-                        validation.touched.username && validation.errors.username ? true : false
-                      }
-                    />
-                    {validation.touched.username && validation.errors.username ? (
-                      <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
-                    ) : null}
+                  <div style={{ fontSize: '14px' }}>
+                    Token sudah kedaluwarsa, Harap masuk kembali melalui GreenWare
                   </div>
-
-                  <div className="mb-3">
-                    <Label className="form-label">Password</Label>
-                    <Input
-                      name="password"
-                      value={validation.values.password || ""}
-                      type="password"
-                      placeholder="Enter Password"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      invalid={
-                        validation.touched.password && validation.errors.password ? true : false
-                      }
-                    />
-                    {validation.touched.password && validation.errors.password ? (
-                      <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
-                    ) : null}
+                  <div style={{ fontSize: '14px' }}>
+                    <span className='opacity-50 unselectable'>(Menekan tombol close akan pindah aplikasi)</span>
                   </div>
                   <br />
-                  <div className="mt-3 d-grid">
+                  <div className="d-grid">
                     <button
                       className="btn btn-primary btn-block"
                       type="submit"
                     >
-                      Log In
+                      Close
                     </button>
                   </div>
                 </div>

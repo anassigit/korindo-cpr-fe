@@ -72,8 +72,6 @@ const Rekomendasi = () => {
     }, [])
 
     useEffect(() => {
-
-        debugger
         const foundRow = Array.isArray(menu?.data?.list) ? menu?.data?.list.find((row) => row.id === 'KORTRN001') : null
         const temp = foundRow ? foundRow.path : null;
 
