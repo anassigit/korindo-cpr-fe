@@ -238,6 +238,18 @@ const Rekomendasi = () => {
         ReactSession.set('appDetailRecommendationData', e);
     }
 
+    const [isBreathing, setIsBreathing] = useState(false);
+
+    useEffect(() => {
+        const breathingInterval = setInterval(() => {
+            setIsBreathing((prevIsBreathing) => !prevIsBreathing);
+        }, 1000); // Adjust the interval duration as needed
+
+        return () => {
+            clearInterval(breathingInterval);
+        };
+    }, []);
+
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
@@ -753,6 +765,8 @@ const Rekomendasi = () => {
                                         alignItems: "center",
                                         fontSize: "24px",
                                         position: "relative", // Added for stacking
+                                        transform: isBreathing ? 'scale(1.15)' : 'scale(1)',
+                                        transition: 'transform 1s ease',
                                     }}
                                     href={linkRekomendasi}
                                 >
@@ -760,7 +774,7 @@ const Rekomendasi = () => {
                                         height={'180px'}
                                         src={give}
                                         style={{
-                                            transition: "filter 0.3s", // Add a transition for smooth hover effect
+                                            transition: 'transform 0.3s ease-in-out',
                                         }}
                                     />
                                     <b>Berikan Bintang</b>

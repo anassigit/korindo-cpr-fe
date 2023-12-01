@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import RootPageCustom from "common/RootPageCustom";
 import { ReactSession } from 'react-client-session';
 import DetailReportModal from "./DetailReportModal";
+import DetailContentInfluencer from "./DetailContentInfluencer";
 
 const DetailInfluencer = (props) => {
 
@@ -29,11 +30,14 @@ const DetailInfluencer = (props) => {
     const [linkRekomendasi, setLinkRekomendasi] = useState();
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
+    
     const [detailModal, setDetailModal] = useState(false)
+    const [detailContentModal, setDetailContentModal] = useState(false)
 
     const [msgAddState, setMsgAddState] = useState()
 
     const [recommendId, setRecommendId] = useState(null)
+    const [recommendData, setRecommendData] = useState({})
     const [appDetailRecommendationData, setAppDetailRecommendationData] = useState(ReactSession.get('appDetailRecommendationData'))
 
     const msgAdd = useSelector((state) => state.dashboardReducer.msgAdd);
@@ -69,55 +73,30 @@ const DetailInfluencer = (props) => {
             text: "ID",
             hidden: true,
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "write_time",
             text: "Tanggal",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "dept_name",
             text: "Departemen",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "name",
             text: "Nama",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "comment",
             text: "Komentar",
             sort: true,
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             headerStyle: { textAlign: 'center' },
             style: { minWidth: "30vw", maxWidth: "25vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" },
             formatter: (row, rowData, rowIndex) => {
@@ -136,11 +115,6 @@ const DetailInfluencer = (props) => {
             dataField: "sticker",
             text: "Compliments",
             headerStyle: { textAlign: 'center' },
-            events: {
-                onClick: (e, column, columnIndex, data, rowIndex) => {
-                    toggleModal(data)
-                },
-            },
             formatter: (row, rowData, rowIndex) => {
                 return (
                     <React.Fragment>
@@ -153,6 +127,33 @@ const DetailInfluencer = (props) => {
                 )
             }
         },
+        {
+            dataField: "action",
+            text: "Action",
+            headerStyle: { textAlign: 'center' },
+            formatter: (row, rowData, rowIndex) => {
+                return (
+                    <div style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', gap: '12px', margin: '0 25px 0 25px' }}>
+                        <span
+                            onClick={() => toggleModalContent(rowData)}
+                            id={`viewtooltip-action-${rowIndex}`}
+                            className="mdi mdi-text-box-outline text-primary"
+                        />
+                        <span
+                            onClick={() => toggleModal(rowData)}
+                            id={`viewtooltip-action2-${rowIndex}`}
+                            className="mdi mdi-alert text-danger"
+                        />
+                        <UncontrolledTooltip placement="top" target={`viewtooltip-action-${rowIndex}`}>
+                            Detail
+                        </UncontrolledTooltip>
+                        <UncontrolledTooltip placement="top" target={`viewtooltip-action2-${rowIndex}`}>
+                            Lapor
+                        </UncontrolledTooltip>
+                    </div>
+                )
+            }
+        },
     ]
 
     const toggleModal = (data) => {
@@ -160,6 +161,14 @@ const DetailInfluencer = (props) => {
             setRecommendId(data.id)
         }
         setDetailModal(!detailModal)
+    }
+
+    const toggleModalContent = (data) => {
+        debugger
+        if (data?.id) {
+            setRecommendData(data)
+        }
+        setDetailContentModal(!detailContentModal)
     }
 
     useEffect(() => {
@@ -241,6 +250,11 @@ const DetailInfluencer = (props) => {
                             modal={detailModal}
                             toggle={toggleModal}
                             recommendId={recommendId}
+                        />
+                        <DetailContentInfluencer
+                            modal={detailContentModal}
+                            toggle={toggleModalContent}
+                            recommendData={recommendData}
                         />
                     </Container>
                 </React.Fragment>
