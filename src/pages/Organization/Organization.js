@@ -16,7 +16,7 @@ import RootPageCustom from '../../common/RootPageCustom'
 import '../../config'
 import { getOrganizationListData } from "store/organization/actions"
 import TabAddOrganisasi from "./TabAddOrganisasi"
-import TabEditOrganisasi from "./TabEditOrganisasi"
+import TabEditOrganisasi from "./TabAddKaryawan"
 
 const Organization = () => {
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { getPositionListDataAction } from 'store/actions';
+import { getDepartmentListDataAction, getDeptListOrgData } from 'store/actions';
 import { UncontrolledTooltip } from 'reactstrap';
 import TableCustom from 'common/TableCustom';
 import { useSelector } from 'react-redux';
@@ -8,11 +8,11 @@ import TableCustomNoPage from 'common/TableCustomNoPage';
 
 const TabAddOrganisasi = (props) => {
 
-  const appPositionListData = useSelector((state) => {
-    return state.positionMasterReducer.respGetPositionList
+  const appDepartmentListData = useSelector((state) => {
+    return state.organizationReducer.respGetDeptListOrg
   });
 
-  const [appPositionTabelSearch, setAppPositionTabelSearch] = useState({
+  const [appDepartmentTabelSearch, setAppDepartmentTabelSearch] = useState({
     page: 1,
     limit: 15,
     offset: 0,
@@ -24,17 +24,17 @@ const TabAddOrganisasi = (props) => {
     }
   });
 
-  const appPositionColumn = [
+  const appDepartmentColumn = [
     {
-      dataField: "positionCd",
-      text: "Position Code",
+      dataField: "departmentCd",
+      text: "Department Code",
       sort: true,
       style: { textAlign: 'center' },
       headerStyle: { textAlign: 'center' },
     },
     {
-      dataField: "positionName",
-      text: "Nama Position",
+      dataField: "departmentName",
+      text: "Nama Department",
       sort: true,
       headerStyle: { textAlign: 'center' },
     },
@@ -63,10 +63,10 @@ const TabAddOrganisasi = (props) => {
       formatter: (cellContent, cellData) => {
         return (
           <React.Fragment>
-            <a id={`edit-${cellData.positionCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-            <a id={`delete-${cellData.positionCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-            <UncontrolledTooltip target={`edit-${cellData.positionCd}`}>Edit</UncontrolledTooltip>
-            <UncontrolledTooltip target={`delete-${cellData.positionCd}`}>Delete</UncontrolledTooltip>
+            <a id={`edit-${cellData.departmentCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+            <a id={`delete-${cellData.departmentCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+            <UncontrolledTooltip target={`edit-${cellData.departmentCd}`}>Edit</UncontrolledTooltip>
+            <UncontrolledTooltip target={`delete-${cellData.departmentCd}`}>Delete</UncontrolledTooltip>
           </React.Fragment>
         )
       }
@@ -79,14 +79,15 @@ const TabAddOrganisasi = (props) => {
     >
 
       <TableCustomNoPage
-        keyField={"positionCd"}
-        columns={appPositionColumn}
-        redukResponse={appPositionListData}
-        appdata={appPositionListData?.data != null && appPositionListData?.data.list ? appPositionListData?.data.list : []}
-        appdataTotal={appPositionListData?.data != null ? appPositionListData?.data.count : 0}
-        searchSet={setAppPositionTabelSearch}
-        searchGet={appPositionTabelSearch}
-        redukCall={getPositionListDataAction}
+        keyField={"departmentCd"}
+        columns={appDepartmentColumn}
+        redukResponse={appDepartmentListData}
+        appdata={appDepartmentListData?.data != null && appDepartmentListData?.data.list ? appDepartmentListData?.data.list : []}
+        appdataTotal={appDepartmentListData?.data != null ? appDepartmentListData?.data.count : 0}
+        searchSet={setAppDepartmentTabelSearch}
+        searchGet={appDepartmentTabelSearch}
+        redukCall={getDeptListOrgData}
+
       />
     </div>
   )
