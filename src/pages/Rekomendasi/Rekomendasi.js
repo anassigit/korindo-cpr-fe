@@ -220,7 +220,13 @@ const Rekomendasi = () => {
             (
               <React.Fragment>
                 <Row style={{ marginBottom: "8px" }}>
-                  <div style={{ color: "#3F4031", paddingLeft }}>
+                  <div style={{
+                    color: "#3F4031",
+                    paddingLeft,
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                  }}>
                     {data.childList.length > 0 ? (
                       <span
                         className={collapser[data.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
@@ -259,9 +265,6 @@ const Rekomendasi = () => {
                       &nbsp;
                       <span
                         style={{
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
                         }}
                         id={data.dept_id}
                       >

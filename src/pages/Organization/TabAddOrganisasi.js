@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { getDepartmentListDataAction, getDeptListOrgData } from 'store/actions';
-import { UncontrolledTooltip } from 'reactstrap';
+import { Button, Col, Container, Form, FormGroup, Input, Row, UncontrolledTooltip } from 'reactstrap';
 import TableCustom from 'common/TableCustom';
 import { useSelector } from 'react-redux';
 import TableCustomNoPage from 'common/TableCustomNoPage';
+import { useFormik } from 'formik';
+import * as Yup from 'yup'
+import Lovv2 from 'common/Lovv2';
 
 const TabAddOrganisasi = (props) => {
 
@@ -12,19 +15,26 @@ const TabAddOrganisasi = (props) => {
     return state.organizationReducer.respGetDeptListOrg
   });
 
-  const [appDepartmentTabelSearch, setAppDepartmentTabelSearch] = useState({
-    page: 1,
-    limit: 15,
-    offset: 0,
-    sort: "",
-    order: "",
-    search:
-    {
-      search: "",
+  const appAddOrganizationMasterValidInput = useFormik({
+    enableReinitialize: true,
+
+    initialValues: {
+      org_cd: '',
+      deptId: '',
+    },
+    validationSchema: Yup.object().shape({
+      org_cd: Yup.string().required("Wajib diisi"),
+      deptId: Yup.string().required("Wajib diisi"),
+    }),
+
+    onSubmit: (values) => {
+
     }
   });
 
-  const appDepartmentColumn = [
+  const [appDepartmentTabelSearch, setAppDepartmentTabelSearch] = useState('');
+
+  const appDepartmentColumnLov = [
     {
       dataField: "departmentCd",
       text: "Department Code",
@@ -73,23 +83,177 @@ const TabAddOrganisasi = (props) => {
     },
   ]
 
+  const appCallBackDepartment = (e) => {
+    appAddOrganizationMasterValidInput.setValues('deptId', e.deptId)
+  }
+
   return (
-    <div
-      hidden={!props.appTabAdd}
-    >
+    <React.Fragment>
+      {
+        props.appTabAdd &&
+        (<Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            appAddOrganizationMasterValidInput.handleSubmit();
+            return false
+          }}
+        >
+          <FormGroup>
+            <div
+              className='m-3'
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.25em',
+              }}
 
-      <TableCustomNoPage
-        keyField={"departmentCd"}
-        columns={appDepartmentColumn}
-        redukResponse={appDepartmentListData}
-        appdata={appDepartmentListData?.data != null && appDepartmentListData?.data.list ? appDepartmentListData?.data.list : []}
-        appdataTotal={appDepartmentListData?.data != null ? appDepartmentListData?.data.count : 0}
-        searchSet={setAppDepartmentTabelSearch}
-        searchGet={appDepartmentTabelSearch}
-        redukCall={getDeptListOrgData}
+            >
+              <Row
+                style={{
+                  width: '450px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    Kode Department <span className='text-danger'>*</span>
+                  </div>
+                  <div style={{ width: '250px' }}>
+                    <div style={{ width: '185px' }}>
+                      <Lovv2
+                        title="Kode Department"
+                        keyFieldData="deptCd"
+                        columns={appDepartmentColumnLov}
+                        getData={getDeptListOrgData}
+                        pageSize={10}
+                        callbackFunc={appCallBackDepartment}
+                        defaultSetInput="deptCd"
+                        invalidData={appAddOrganizationMasterValidInput}
+                        fieldValue="deptCd"
+                        stateSearchInput={appDepartmentTabelSearch}
+                        stateSearchInputSet={setAppDepartmentTabelSearch}
+                        touchedLovField={appAddOrganizationMasterValidInput.touched.deptId}
+                        errorLovField={appAddOrganizationMasterValidInput.errors.deptId}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Row>
+              <Row
+                style={{
+                  width: '450px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    Nama Department <span className='text-danger'>*</span>
+                  </div>
+                  <div style={{ width: '250px' }}>
+                    <div style={{ width: '250px' }}>
+                      <Input />
+                    </div>
+                  </div>
+                </div>
+              </Row>
+              <Row
+                style={{
+                  width: '450px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    Kode Induk <span className='text-danger'>*</span>
+                  </div>
+                  <div style={{ width: '250px' }}>
+                    <div style={{ width: '185px' }}>
+                      <Input />
+                    </div>
+                  </div>
+                </div>
+              </Row>
+              <Row
+                style={{
+                  width: '450px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    Kode Organisasi <span className='text-danger'>*</span>
+                  </div>
+                  <div style={{ width: '250px' }}>
+                    <div style={{ width: '185px' }}>
+                      <Input />
+                    </div>
+                  </div>
+                </div>
+              </Row>
+              <Row
+                style={{
+                  width: '450px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    Level <span className='text-danger'>*</span>
+                  </div>
+                  <div style={{ width: '250px' }}>
+                    <div style={{ width: '100px' }}>
+                      <Input />
+                    </div>
+                  </div>
+                </div>
+              </Row>
+              <Col style={{
+                display: 'flex',
+                gap: '8px',
+              }}>
+                <Button>
+                  Submit
+                </Button>
+                <Button className='btn-danger'>
+                  Delete
+                </Button>
+              </Col>
+            </div>
+          </FormGroup>
+        </Form>)
+      }
+    </React.Fragment>
 
-      />
-    </div>
   )
 }
 

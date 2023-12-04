@@ -1,8 +1,10 @@
 import {
   GET_DEPT_LIST_ORG,
   GET_ORGANIZATION_LIST,
+  MSG_ADD,
   RESP_GET_DEPT_LIST_ORG,
-  RESP_GET_ORGANIZATION_LIST
+  RESP_GET_ORGANIZATION_LIST,
+  SAVE_MAPPING_DEPT
 } from "./actionTypes"
 
 export const getDeptListOrgData = (req) => ({
@@ -25,10 +27,10 @@ export const respGetOrganizationList = resp => ({
   payload: resp,
 })
 
-// export const getSearchData = (req) => ({
-//   type: GET_SEARCH,
-//   payload: req,
-// })
+export const saveMappingDept = (req) => ({
+  type: SAVE_MAPPING_DEPT,
+  payload: req,
+})
 
 // export const respGetSearch = resp => ({
 //   type: RESP_GET_SEARCH,
@@ -85,10 +87,10 @@ export const respGetOrganizationList = resp => ({
 //   payload: resp,
 // })
 
-// export const msgAdd = resp => ({
-//   type: MSG_ADD,
-//   payload: resp,
-// })
+export const msgAdd = resp => ({
+  type: MSG_ADD,
+  payload: resp,
+})
 
 // export const msgEdit = resp => ({
 //   type: MSG_EDIT,

@@ -16,7 +16,8 @@ import RootPageCustom from '../../common/RootPageCustom'
 import '../../config'
 import { getOrganizationListData } from "store/organization/actions"
 import TabAddOrganisasi from "./TabAddOrganisasi"
-import TabEditOrganisasi from "./TabAddKaryawan"
+import TabAddKaryawan from "./TabAddKaryawan"
+import TabEditOrganisasi from "./TabEditOrganisasi"
 
 const Organization = () => {
 
@@ -24,6 +25,7 @@ const Organization = () => {
 
   const [appTabAdd, setAppTabAdd] = useState(true)
   const [appTabEdit, setAppTabEdit] = useState(false)
+  const [appAddKaryawan, setAppAddKaryawan] = useState(false)
 
   const [loadingSpinner, setLoadingSpinner] = useState(false)
   const [appOrganizationMsg, setAppOrganizationMsg] = useState('')
@@ -102,7 +104,13 @@ const Organization = () => {
             return (
               <React.Fragment key={index}>
                 <Row style={{ marginBottom: "8px" }}>
-                  <div style={{ color: "#3F4031", paddingLeft }}>
+                  <div style={{
+                    color: "#3F4031",
+                    paddingLeft,
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                  }}>
                     {item.childList.length > 0 ? (
                       <span
                         className={collapser[item.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
@@ -140,11 +148,6 @@ const Organization = () => {
                     >
                       &nbsp;
                       <span
-                        style={{
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
                         id={item.dept_id}
                       >
                         {item.dept_name}
@@ -263,6 +266,23 @@ const Organization = () => {
     depth: PropTypes.any,
   };
 
+  const handleChangeTab = (e) => {
+
+    if (e === 'addOrg') {
+      setAppTabAdd(true)
+      setAppTabEdit(false)
+      setAppAddKaryawan(false)
+    } else if (e === 'editOrg') {
+      setAppTabAdd(false)
+      setAppTabEdit(true)
+      setAppAddKaryawan(false)
+    } else if (e === 'addKaryawan') {
+      setAppTabAdd(false)
+      setAppTabEdit(false)
+      setAppAddKaryawan(true)
+    }
+
+  }
 
   return (
     <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -281,7 +301,7 @@ const Organization = () => {
                   style={{ fontSize: "14px", marginRight: 1, marginLeft: 1 }}
                 >
                   <Col
-                    xs={3}
+                    xl={3}
                     className="bg-light py-2"
                     style={{ border: "1px solid #BBB", width: "20%", height: "770px", overflowX: "hidden", overflowY: "auto", fontSize: "1.5vh" }}
                   >
@@ -297,7 +317,7 @@ const Organization = () => {
 
 
                   <Col
-                    xs={9}
+                    xl={9}
                     className="bg-light"
                     style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "770px" }}
                   >
@@ -310,8 +330,7 @@ const Organization = () => {
                           borderRadius: '12px 12px 0 0'
                         }}
                         onClick={() => {
-                          setAppTabAdd(!appTabAdd)
-                          setAppTabEdit(!appTabEdit)
+                          handleChangeTab('addOrg')
                         }}
                       >
                         Add Organisasi
@@ -324,8 +343,20 @@ const Organization = () => {
                           borderRadius: '12px 12px 0 0'
                         }}
                         onClick={() => {
-                          setAppTabAdd(!appTabAdd)
-                          setAppTabEdit(!appTabEdit)
+                          handleChangeTab('editOrg')
+                        }}
+                      >
+                        Edit Order Organisasi
+                      </button>
+                      <button
+                        className={appAddKaryawan ? "btn btn-primary" : "btn btn-light"}
+                        style={{
+                          color: appAddKaryawan ? "#fff" : '#495057',
+                          borderColor: '#A084DC',
+                          borderRadius: '12px 12px 0 0'
+                        }}
+                        onClick={() => {
+                          handleChangeTab('addKaryawan')
                         }}
                       >
                         Add Karyawan/User
@@ -335,6 +366,9 @@ const Organization = () => {
                       />
                       <TabEditOrganisasi
                         appTabEdit={appTabEdit}
+                      />
+                      <TabAddKaryawan
+                        appAddKaryawan={appAddKaryawan}
                       />
                     </Container>
                   </Col>

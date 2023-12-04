@@ -5,7 +5,7 @@ import TableCustomNoPage from 'common/TableCustomNoPage';
 import { useSelector } from 'react-redux';
 import { getPositionListDataAction } from 'store/actions';
 
-const TabEditOrganisasi = (props) => {
+const TabAddKaryawan = (props) => {
 
   const appPositionListData = useSelector((state) => {
     return state.positionMasterReducer.respGetPositionList
@@ -74,7 +74,7 @@ const TabEditOrganisasi = (props) => {
 
   return (
     <div
-      hidden={!props.appTabEdit}
+      hidden={!props.appAddKaryawan}
     >
 
       <TableCustomNoPage
@@ -91,8 +91,8 @@ const TabEditOrganisasi = (props) => {
   )
 }
 
-TabEditOrganisasi.propTypes = {
-  appTabEdit: PropTypes.any,
+TabAddKaryawan.propTypes = {
+  appAddKaryawan: PropTypes.any,
 }
 
-export default TabEditOrganisasi
+export default TabAddKaryawan

@@ -1,13 +1,16 @@
 import {
   GET_DEPT_LIST_ORG,
   GET_ORGANIZATION_LIST,
+  MSG_ADD,
   RESP_GET_DEPT_LIST_ORG,
-  RESP_GET_ORGANIZATION_LIST
+  RESP_GET_ORGANIZATION_LIST,
+  SAVE_MAPPING_DEPT
 } from "./actionTypes"
 
 const INIT_STATE = {
   respGetDeptListOrg: {},
   respGetOrganizationList: {},
+  msgAdd: '',
 }
 
 const organizationReducer = (state = INIT_STATE, action) => {
@@ -30,6 +33,15 @@ const organizationReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         respGetOrganizationList: action.payload,
+      }
+    case SAVE_MAPPING_DEPT:
+      return {
+        ...state,
+      }
+    case MSG_ADD:
+      return {
+        ...state,
+        msgAdd: action.payload,
       }
     default:
       return state
