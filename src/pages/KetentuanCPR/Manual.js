@@ -60,6 +60,17 @@ const Manual = () => {
                                         <tr>
                                             <td scope="row">
                                                 Rumus Final: (Total Transaksi valid) <b>X</b> (Persentase total Partisipan aktif)
+                                                <div>
+                                                    <span className="text-danger">*</span>) Apabila antar kandidat pemenang memperoleh nilai yang sama, maka dilakukan penilaian lebih lanjut yaitu:
+                                                </div>
+
+                                                <div>
+                                                    1. Jumlah penerimaan bintang terbanyak.
+                                                </div>
+                                                <div>
+                                                    2. Jumlah transaksi pemberian bintang terbanyak.
+                                                </div>
+
                                             </td>
                                         </tr>
                                         <tr>
