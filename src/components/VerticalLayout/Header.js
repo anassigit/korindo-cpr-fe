@@ -87,7 +87,7 @@ const Header = props => {
       debugger
       // window.open('', '_self', '');
       // window.close();
-      window.open('http://green.korindo.co.id/')
+      window.open('http://green.korindo.co.id/', "_self")
     }
   });
 
