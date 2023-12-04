@@ -84,10 +84,10 @@ const Header = props => {
       // password: Yup.string().required("Input Password"),
     }),
     onSubmit: (values) => {
-      debugger
-      // window.open('', '_self', '');
-      // window.close();
-      window.open('http://green.korindo.co.id/', "_self")
+
+      window.open('', '_self');
+      window.close();
+
     }
   });
 
