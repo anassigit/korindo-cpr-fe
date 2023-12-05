@@ -72,6 +72,14 @@ const Rekomendasi = () => {
     }, [])
 
     useEffect(() => {
+        if (appBestlistData.status === '1') {
+            setLoadingSpinner(false)
+        } else if (appBestlistData.status === '0') {
+            setLoadingSpinner(false)
+        }
+    }, [appBestlistData])
+
+    useEffect(() => {
         const foundRow = Array.isArray(menu?.data?.list) ? menu?.data?.list.find((row) => row.id === 'KORTRN001') : null
         const temp = foundRow ? foundRow.path : null;
 
@@ -105,11 +113,6 @@ const Rekomendasi = () => {
     useEffect(() => {
         if (appBestlistOfMonthData?.data?.list?.length) {
             ReactSession.set('lengthArray', appBestlistOfMonthData?.data?.list?.length)
-        }
-        if (appListData.status === '1') {
-            setLoadingSpinner(false)
-        } else {
-            setLoadingSpinner(false)
         }
     }, [appListData])
 

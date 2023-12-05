@@ -30,7 +30,7 @@ const Organization = () => {
   const [loadingSpinner, setLoadingSpinner] = useState(false)
   const [appOrganizationMsg, setAppOrganizationMsg] = useState('')
 
-  const [selectedDeptData, setSelectedDeptData] = useState()
+  const [selectedDeptData, setSelectedDeptData] = useState({})
   const [selectedDeptName, setSelectedDeptName] = useState()
 
   const [selectedMemberData, setSelectedMemberData] = useState()
@@ -49,7 +49,8 @@ const Organization = () => {
       setCollapser(ReactSession.get('collapser'))
     }
     if (ReactSession.get('selectedDeptData')) {
-      setSelectedDeptData(ReactSession.get('selectedDeptData'))
+      let temp = ReactSession.get('selectedDeptData')
+      setSelectedDeptData(temp)
     }
     if (ReactSession.get('selectedMemberData')) {
       setSelectedMemberData(ReactSession.get('selectedMemberData'))
@@ -94,6 +95,7 @@ const Organization = () => {
 
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 
+
     const currentDepth = depth + 1;
     const paddingLeft = `${currentDepth * 0.8}vw`;
     return (
@@ -133,17 +135,15 @@ const Organization = () => {
                     <a
                       style={{
                         color: "#4c4c4c",
-                        fontWeight: collapser[item.dept_id] || selectedDeptData === item.org_id ? "bold" : "normal",
+                        fontWeight: collapser[item.dept_id] || selectedDeptData.org_id === item.org_id ? "bold" : "normal",
                         cursor: "pointer",
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
-                        let org_id = '';
-                        org_id = item.org_id;
                         ReactSession.remove('selectedMemberData');
-                        setSelectedDeptData(org_id);
+                        setSelectedDeptData(item);
                         setSelectedDeptName(item.dept_name);
-                        ReactSession.set('selectedDeptData', org_id);
+                        ReactSession.set('selectedDeptData', item);
                       }}
                     >
                       &nbsp;
@@ -257,7 +257,7 @@ const Organization = () => {
   };
 
   CollapsibleList.propTypes = {
-    data: PropTypes.array,
+    data: PropTypes.any,
     collapser: PropTypes.object,
     setCollapser: PropTypes.func,
     selectedDeptData: PropTypes.string,
@@ -362,6 +362,7 @@ const Organization = () => {
                         Add Karyawan/User
                       </button>
                       <TabAddOrganisasi
+                        selectedDeptData={selectedDeptData}
                         appTabAdd={appTabAdd}
                       />
                       <TabEditOrganisasi

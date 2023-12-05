@@ -163,7 +163,10 @@ const TabAddOrganisasi = (props) => {
                   </div>
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '250px' }}>
-                      <Input />
+                      <Input
+                        value={props.selectedDeptData.dept_name}
+                        disabled
+                      />
                     </div>
                   </div>
                 </div>
@@ -186,7 +189,10 @@ const TabAddOrganisasi = (props) => {
                   </div>
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '185px' }}>
-                      <Input />
+                      <Input
+                        value={props.selectedDeptData.org_parent_id}
+                        disabled
+                      />
                     </div>
                   </div>
                 </div>
@@ -209,7 +215,10 @@ const TabAddOrganisasi = (props) => {
                   </div>
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '185px' }}>
-                      <Input />
+                      <Input
+                        value={props.selectedDeptData.org_id}
+                        disabled
+                      />
                     </div>
                   </div>
                 </div>
@@ -232,7 +241,9 @@ const TabAddOrganisasi = (props) => {
                   </div>
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '100px' }}>
-                      <Input />
+                      <Input
+                        disabled
+                      />
                     </div>
                   </div>
                 </div>
@@ -258,6 +269,7 @@ const TabAddOrganisasi = (props) => {
 }
 
 TabAddOrganisasi.propTypes = {
+  selectedDeptData: PropTypes.any,
   appTabAdd: PropTypes.any,
 }
 
