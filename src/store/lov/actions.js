@@ -1,10 +1,7 @@
 import {
   LOV_CANDIDATE,
-  LOV_DIV,
+  LOV_DEPT_LIST_ORG,
   LOV_LEVEL,
-  LOV_MENU,
-  LOV_MENU_PARENT,
-  LOV_USER,
   MSG_LOV
 } from "./actionTypes"
 
@@ -16,6 +13,11 @@ export const getCandidateLov = (resp) => ({
 export const getLevelLov = (resp) => ({
   type: LOV_LEVEL,
   payload: resp,
+})
+
+export const getDeptListOrgLov = (req) => ({
+  type: LOV_DEPT_LIST_ORG,
+  payload: req,
 })
 
 export const msgLov = (resp) => ({

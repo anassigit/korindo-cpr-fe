@@ -4,7 +4,8 @@ import {
   GET_DEPT_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT
 } from "./actionTypes"
 import {
-  respGetDeptListOrg, respGetOrganizationList
+  respGetDeptListOrg,
+  respGetOrganizationList
 } from "./actions"
 
 import {

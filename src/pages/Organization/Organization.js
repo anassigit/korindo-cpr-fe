@@ -319,7 +319,7 @@ const Organization = () => {
                   <Col
                     xl={9}
                     className="bg-light"
-                    style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, height: "770px" }}
+                    style={{ border: "1px solid #BBB", width: "79.5%", paddingRight: 0, paddingLeft: 0, minHeight: "770px" }}
                   >
                     <Container fluid style={{ padding: 0, margin: 0 }}>
                       <button
@@ -364,9 +364,12 @@ const Organization = () => {
                       <TabAddOrganisasi
                         selectedDeptData={selectedDeptData}
                         appTabAdd={appTabAdd}
+                        setAppOrganizationMsg={setAppOrganizationMsg}
                       />
                       <TabEditOrganisasi
+                        selectedDeptData={selectedDeptData}
                         appTabEdit={appTabEdit}
+                        setAppOrganizationMsg={setAppOrganizationMsg}
                       />
                       <TabAddKaryawan
                         appAddKaryawan={appAddKaryawan}

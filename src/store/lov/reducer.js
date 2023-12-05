@@ -1,5 +1,6 @@
 import {
   LOV_CANDIDATE,
+  LOV_DEPT_LIST_ORG,
   LOV_LEVEL,
   MSG_LOV
 } from "./actionTypes"
@@ -16,6 +17,10 @@ const getLovData = (state = INIT_STATE, action) => {
         ...state,
       }
     case LOV_LEVEL:
+      return {
+        ...state,
+      }
+    case LOV_DEPT_LIST_ORG:
       return {
         ...state,
       }

@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { getDepartmentListDataAction, getDeptListOrgData } from 'store/actions';
-import { Button, Col, Container, Form, FormGroup, Input, Row, UncontrolledTooltip } from 'reactstrap';
-import TableCustom from 'common/TableCustom';
-import { useSelector } from 'react-redux';
-import TableCustomNoPage from 'common/TableCustomNoPage';
-import { useFormik } from 'formik';
-import * as Yup from 'yup'
 import Lovv2 from 'common/Lovv2';
+import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Col, Form, FormGroup, Input, Row, UncontrolledTooltip } from 'reactstrap';
+import { getDeptListOrgLov, getOrganizationListData, resetMessage, saveMappingDept } from 'store/actions';
+import * as Yup from 'yup';
 
 const TabAddOrganisasi = (props) => {
 
-  const appDepartmentListData = useSelector((state) => {
-    return state.organizationReducer.respGetDeptListOrg
-  });
+  const dispatch = useDispatch()
+
+  const appMsgAdd = useSelector((state) => {
+    return state.organizationReducer.msgAdd
+  })
 
   const appAddOrganizationMasterValidInput = useFormik({
     enableReinitialize: true,
@@ -21,71 +21,66 @@ const TabAddOrganisasi = (props) => {
     initialValues: {
       org_cd: '',
       deptId: '',
+      deptName: '',
     },
     validationSchema: Yup.object().shape({
-      org_cd: Yup.string().required("Wajib diisi"),
       deptId: Yup.string().required("Wajib diisi"),
     }),
 
     onSubmit: (values) => {
-
+      props.setAppOrganizationMsg('')
+      dispatch(saveMappingDept({
+        org_cd: values.org_cd,
+        deptId: values.deptId,
+      }))
     }
   });
 
-  const [appDepartmentTabelSearch, setAppDepartmentTabelSearch] = useState('');
+  useEffect(() => {
+    dispatch(resetMessage())
+  }, [dispatch])
+
+  const [appDepartmentLovSearch, setAppDepartmentLovSearch] = useState('');
 
   const appDepartmentColumnLov = [
     {
-      dataField: "departmentCd",
-      text: "Department Code",
+      dataField: "deptId",
+      text: "Department ID",
       sort: true,
       style: { textAlign: 'center' },
       headerStyle: { textAlign: 'center' },
     },
     {
-      dataField: "departmentName",
+      dataField: "deptName",
       text: "Nama Department",
       sort: true,
       headerStyle: { textAlign: 'center' },
     },
     {
-      dataField: "levelCd",
-      text: "Level Code",
+      dataField: "deptNameKor",
+      text: "Nama Department (Korean)",
       sort: true,
       headerStyle: { textAlign: 'center' },
-    },
-    {
-      dataField: "levelName",
-      text: "Nama Level",
-      sort: true,
-      headerStyle: { textAlign: 'center' },
-    },
-    {
-      dataField: "locationName",
-      text: "Lokasi",
-      sort: true,
-      headerStyle: { textAlign: 'center' },
-    },
-    {
-      text: "Actions",
-      headerStyle: { textAlign: 'center' },
-      style: { justifyContent: 'center', display: 'flex', gap: '1vw', fontSize: '16px' },
-      formatter: (cellContent, cellData) => {
-        return (
-          <React.Fragment>
-            <a id={`edit-${cellData.departmentCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-            <a id={`delete-${cellData.departmentCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-            <UncontrolledTooltip target={`edit-${cellData.departmentCd}`}>Edit</UncontrolledTooltip>
-            <UncontrolledTooltip target={`delete-${cellData.departmentCd}`}>Delete</UncontrolledTooltip>
-          </React.Fragment>
-        )
-      }
     },
   ]
 
   const appCallBackDepartment = (e) => {
-    appAddOrganizationMasterValidInput.setValues('deptId', e.deptId)
+    appAddOrganizationMasterValidInput.setFieldValue('deptId', e.deptId)
+    appAddOrganizationMasterValidInput.setFieldValue('deptName', e.deptName)
   }
+
+  useEffect(() => {
+    if (props.selectedDeptData) {
+      appAddOrganizationMasterValidInput.setFieldValue('org_cd', props.selectedDeptData.org_parent_id)
+    }
+  }, [props.selectedDeptData])
+
+  useEffect(() => {
+    if (appMsgAdd) {
+      props.setAppOrganizationMsg(appMsgAdd)
+      dispatch(getOrganizationListData())
+    }
+  }, [appMsgAdd])
 
   return (
     <React.Fragment>
@@ -128,16 +123,16 @@ const TabAddOrganisasi = (props) => {
                     <div style={{ width: '185px' }}>
                       <Lovv2
                         title="Kode Department"
-                        keyFieldData="deptCd"
+                        keyFieldData="deptId"
                         columns={appDepartmentColumnLov}
-                        getData={getDeptListOrgData}
+                        getData={getDeptListOrgLov}
                         pageSize={10}
                         callbackFunc={appCallBackDepartment}
-                        defaultSetInput="deptCd"
+                        defaultSetInput="deptId"
                         invalidData={appAddOrganizationMasterValidInput}
-                        fieldValue="deptCd"
-                        stateSearchInput={appDepartmentTabelSearch}
-                        stateSearchInputSet={setAppDepartmentTabelSearch}
+                        fieldValue="deptId"
+                        stateSearchInput={appDepartmentLovSearch}
+                        stateSearchInputSet={setAppDepartmentLovSearch}
                         touchedLovField={appAddOrganizationMasterValidInput.touched.deptId}
                         errorLovField={appAddOrganizationMasterValidInput.errors.deptId}
                       />
@@ -164,7 +159,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '250px' }}>
                       <Input
-                        value={props.selectedDeptData.dept_name}
+                        value={appAddOrganizationMasterValidInput.values.deptName}
                         disabled
                       />
                     </div>
@@ -242,6 +237,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '100px' }}>
                       <Input
+                        value={props.selectedDeptData.dept_level_cd}
                         disabled
                       />
                     </div>
@@ -252,7 +248,9 @@ const TabAddOrganisasi = (props) => {
                 display: 'flex',
                 gap: '8px',
               }}>
-                <Button>
+                <Button
+                  type='submit'
+                >
                   Submit
                 </Button>
                 <Button className='btn-danger'>
@@ -271,6 +269,7 @@ const TabAddOrganisasi = (props) => {
 TabAddOrganisasi.propTypes = {
   selectedDeptData: PropTypes.any,
   appTabAdd: PropTypes.any,
+  setAppOrganizationMsg: PropTypes.any,
 }
 
 export default TabAddOrganisasi

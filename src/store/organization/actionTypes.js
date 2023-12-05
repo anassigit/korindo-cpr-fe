@@ -21,7 +21,7 @@ export const SAVE_MAPPING_DEPT = "SAVE_MAPPING_DEPT"
 
 // export const SUBMIT_RECOMMEND = "SUBMIT_RECOMMEND"
 
-// export const RESET_MESSAGE = "RESET_MESSAGE"
+export const RESET_MESSAGE = "RESET_MESSAGE"
 
 export const MSG_ADD = "MSG_ADD"
 // export const MSG_EDIT = "MSG_EDIT"

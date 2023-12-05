@@ -2,14 +2,15 @@ import {
   GET_DEPT_LIST_ORG,
   GET_ORGANIZATION_LIST,
   MSG_ADD,
+  RESET_MESSAGE,
   RESP_GET_DEPT_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
   SAVE_MAPPING_DEPT
 } from "./actionTypes"
 
-export const getDeptListOrgData = (req) => ({
+export const getDeptListOrg = resp => ({
   type: GET_DEPT_LIST_ORG,
-  payload: req,
+  payload: resp,
 })
 
 export const respGetDeptListOrg = resp => ({
@@ -102,7 +103,7 @@ export const msgAdd = resp => ({
 //   payload: resp,
 // })
 
-// export const resetMessage = (resp) => ({
-//   type: RESET_MESSAGE,
-//   payload: resp,
-// })
+export const resetMessage = (resp) => ({
+  type: RESET_MESSAGE,
+  payload: resp,
+})

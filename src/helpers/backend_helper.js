@@ -133,8 +133,10 @@ export const editStickerBE = req => postUpload("/rest/StickerMasterRest/update",
 
 export const deleteStickerBE = req => postWithParam("/rest/StickerMasterRest/delete", req)
 
-export const getDeptListOrgBE = req => post("rest/OrganizationMasterRest/getDeptListForAdd", req)
+export const getLovDeptListOrgBE = req => post("rest/OrganizationMasterRest/getDeptListForAdd", req)
+
+export const getDeptListOrgBE = req => postWithParam("rest/OrganizationMasterRest/getDeptList", req)
 
 export const getOrganizationListBE = req => post("rest/OrganizationMasterRest/getOrganization", req)
 
-export const saveMappingDeptBE = req => post("rest/OrganizationMasterRest/mappingDept", req)
+export const saveMappingDeptBE = req => postWithParam("rest/OrganizationMasterRest/mappingDept", req)

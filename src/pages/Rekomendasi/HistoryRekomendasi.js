@@ -49,11 +49,15 @@ const HistoryRekomendasi = (props) => {
     }, [dispatch])
 
     useEffect(() => {
-        dispatch(getRecommendListData())
+        if (appMsgAdd) {
 
-        dispatch(getInfoData())
+            dispatch(getRecommendListData())
 
-        props.setAppRekomendasiMsg(appMsgAdd)
+            dispatch(getInfoData())
+
+            props.setAppRekomendasiMsg(appMsgAdd)
+            setLoadingSpinner(false)
+        }
     }, [appMsgAdd])
 
     useEffect(() => {
@@ -353,6 +357,7 @@ const HistoryRekomendasi = (props) => {
                         onClick={() => {
                             dispatch(submitRecommend());
                             props.setAppRekomendasiMsg('');
+                            setLoadingSpinner(true)
                         }}
                         style={{
                             backgroundColor: submitEnable ? '' : "#A9A9A9",

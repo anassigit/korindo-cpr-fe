@@ -2,6 +2,7 @@ import {
   GET_DEPT_LIST_ORG,
   GET_ORGANIZATION_LIST,
   MSG_ADD,
+  RESET_MESSAGE,
   RESP_GET_DEPT_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
   SAVE_MAPPING_DEPT
@@ -42,6 +43,11 @@ const organizationReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         msgAdd: action.payload,
+      }
+    case RESET_MESSAGE:
+      return {
+        ...state,
+        msgAdd: '',
       }
     default:
       return state
