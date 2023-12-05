@@ -71,7 +71,7 @@ const TabAddOrganisasi = (props) => {
 
   useEffect(() => {
     if (props.selectedDeptData) {
-      appAddOrganizationMasterValidInput.setFieldValue('org_cd', props.selectedDeptData.org_cd)
+      appAddOrganizationMasterValidInput.setFieldValue('org_cd', props.selectedDeptData.org_id)
     }
   }, [props.selectedDeptData])
 

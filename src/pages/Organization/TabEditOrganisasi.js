@@ -60,7 +60,6 @@ const TabEditOrganisasi = (props) => {
                             </thead>
                             <tbody>
                                 {Array.isArray(appDeptList?.data?.list) && appDeptList?.data?.list.sort((a, b) => {
-                                    debugger
                                     return a.order-b.order
                                 }).map((department, index) => {
                                     return (
