@@ -37,31 +37,13 @@ const Organization = () => {
 
   const [appDetailDeptDataState, setAppDetailDeptDataState] = useState()
   const [collapser, setCollapser] = useState({
-    "1525": true,
-    "1531": true,
+    "1": true,
+    "2": true,
   })
 
   const appOrganizationListData = useSelector((state) => state.organizationReducer.respGetOrganizationList)
 
   useEffect(() => {
-
-    if (ReactSession.get('collapser')) {
-      setCollapser(ReactSession.get('collapser'))
-    }
-    if (ReactSession.get('selectedDeptData')) {
-      let temp = ReactSession.get('selectedDeptData')
-      setSelectedDeptData(temp)
-    }
-    if (ReactSession.get('selectedMemberData')) {
-      setSelectedMemberData(ReactSession.get('selectedMemberData'))
-    }
-
-    if (ReactSession.get('selectedDeptData')) {
-    }
-
-    if (ReactSession.get('selectedDeptName')) {
-      setSelectedDeptName(ReactSession.get('selectedDeptName'))
-    }
 
     dispatch(getOrganizationListData())
     setLoadingSpinner(true)
@@ -115,12 +97,12 @@ const Organization = () => {
                   }}>
                     {item.childList.length > 0 ? (
                       <span
-                        className={collapser[item.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                        className={collapser[item.org_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
                           setCollapser((prevCollapser) => {
                             return {
                               ...prevCollapser,
-                              [item.dept_id]: !prevCollapser[item.dept_id],
+                              [item.org_id]: !prevCollapser[item.org_id],
                             };
                           });
                         }}
@@ -135,11 +117,19 @@ const Organization = () => {
                     <a
                       style={{
                         color: "#4c4c4c",
-                        fontWeight: collapser[item.dept_id] || selectedDeptData.org_id === item.org_id ? "bold" : "normal",
+                        fontWeight: collapser[item.org_id] || selectedDeptData.org_id === item.org_id ? "bold" : "normal",
                         cursor: "pointer",
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
+                        if (item.childList.length > 0) {
+                          setCollapser((prevCollapser) => {
+                            return {
+                              ...prevCollapser,
+                              [item.org_id]: !prevCollapser[item.org_id],
+                            };
+                          });
+                        }
                         ReactSession.remove('selectedMemberData');
                         setSelectedDeptData(item);
                         setSelectedDeptName(item.dept_name);
@@ -148,12 +138,12 @@ const Organization = () => {
                     >
                       &nbsp;
                       <span
-                        id={item.dept_id}
+                        id={item.org_id}
                       >
                         {item.dept_name}
                       </span>
-                      {item.dept_id && (
-                        <UncontrolledTooltip target={() => document.getElementById(item.dept_id)} placement="top">
+                      {item.org_id && (
+                        <UncontrolledTooltip target={() => document.getElementById(item.org_id)} placement="top">
                           {item.dept_name}
                         </UncontrolledTooltip>
                       )}
@@ -161,7 +151,7 @@ const Organization = () => {
                   </div>
                 </Row>
 
-                {item.childList && collapser[item.dept_id] === true && (
+                {item.childList && collapser[item.org_id] === true && (
                   <CollapsibleList
                     data={item.childList}
                     collapser={collapser}
@@ -183,12 +173,12 @@ const Organization = () => {
                   <div style={{ color: "#3F4031", paddingLeft }}>
                     {data.childList.length > 0 ? (
                       <span
-                        className={collapser[data.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                        className={collapser[data.org_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
                           setCollapser((prevCollapser) => {
                             return {
                               ...prevCollapser,
-                              [data.dept_id]: !prevCollapser[data.dept_id],
+                              [data.org_id]: !prevCollapser[data.org_id],
                             };
                           });
                         }}
@@ -203,15 +193,13 @@ const Organization = () => {
                     <a
                       style={{
                         color: "#4c4c4c",
-                        fontWeight: collapser[data.dept_id] || selectedDeptData === data.org_id ? "bold" : "normal",
+                        fontWeight: collapser[data.org_id] || selectedDeptData.org_id === data.org_id ? "bold" : "normal",
                         cursor: "pointer",
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
-                        let org_id = '';
-                        org_id = data.org_id;
                         ReactSession.remove('selectedMemberData');
-                        setSelectedDeptData(org_id);
+                        setSelectedDeptData(data);
                         setSelectedDeptName(data.dept_name);
                         ReactSession.set('selectedDeptData', org_id);
                       }}
@@ -223,12 +211,12 @@ const Organization = () => {
                           whiteSpace: "nowrap",
                           textOverflow: "ellipsis",
                         }}
-                        id={data.dept_id}
+                        id={data.org_id}
                       >
                         {data.dept_name}
                       </span>
-                      {data.dept_id && (
-                        <UncontrolledTooltip target={() => document.getElementById(data.dept_id)} placement="top">
+                      {data.org_id && (
+                        <UncontrolledTooltip target={() => document.getElementById(data.org_id)} placement="top">
                           {data.dept_name}
                         </UncontrolledTooltip>
                       )}
@@ -236,7 +224,7 @@ const Organization = () => {
                   </div>
                 </Row>
 
-                {data.childList && collapser[data.dept_id] === true && (
+                {data.childList && collapser[data.org_id] === true && (
                   <CollapsibleList
                     data={data.childList}
                     collapser={collapser}
@@ -361,19 +349,32 @@ const Organization = () => {
                       >
                         Add Karyawan/User
                       </button>
-                      <TabAddOrganisasi
-                        selectedDeptData={selectedDeptData}
-                        appTabAdd={appTabAdd}
-                        setAppOrganizationMsg={setAppOrganizationMsg}
-                      />
-                      <TabEditOrganisasi
-                        selectedDeptData={selectedDeptData}
-                        appTabEdit={appTabEdit}
-                        setAppOrganizationMsg={setAppOrganizationMsg}
-                      />
-                      <TabAddKaryawan
-                        appAddKaryawan={appAddKaryawan}
-                      />
+                      <div
+                        style={{
+                          margin: '-1px',
+                          borderTop: '1px solid #A084DC',
+                          borderBottom: '1px solid #A084DC',
+                        }}
+                      >
+                        <TabAddOrganisasi
+                          appOrganizationListData={appOrganizationListData}
+                          selectedDeptData={selectedDeptData}
+                          setSelectedDeptData={setSelectedDeptData}
+                          appTabAdd={appTabAdd}
+                          setAppOrganizationMsg={setAppOrganizationMsg}
+                          setLoadingSpinner={setLoadingSpinner}
+                          setCollapser={setCollapser}
+                        />
+                        <TabEditOrganisasi
+                          selectedDeptData={selectedDeptData}
+                          appTabEdit={appTabEdit}
+                          setAppOrganizationMsg={setAppOrganizationMsg}
+                          setLoadingSpinner={setLoadingSpinner}
+                        />
+                        <TabAddKaryawan
+                          appAddKaryawan={appAddKaryawan}
+                        />
+                      </div>
                     </Container>
                   </Col>
                 </Row>

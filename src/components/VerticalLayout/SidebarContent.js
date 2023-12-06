@@ -125,6 +125,14 @@ const SidebarContent = props => {
               <a href="/home" onClick={() => {
                 ReactSession.remove('appDetailRecommendationData')
                 ReactSession.remove("currentPage")
+  
+                ReactSession.remove('selectedMemberData')
+                ReactSession.remove('selectedDeptData')
+                ReactSession.remove('selectedDeptName')
+                ReactSession.remove('collapser')
+                ReactSession.remove('offset')
+                ReactSession.remove('limit')
+  
               }}>
                 <i className="mdi mdi-home" />
                 <span>{props.t("Home")}</span>

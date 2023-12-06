@@ -81,7 +81,6 @@ const EditStickerMaster = (props) => {
     }, [appStickerData])
 
     const handleFileChange = (e) => {
-        debugger
 
         const fileTemp = e.target.files[0];
         const fileName = fileTemp ? fileTemp.name : '';

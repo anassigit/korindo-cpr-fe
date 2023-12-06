@@ -1,7 +1,10 @@
 import {
+  DELETE_MAPPING_DEPT,
+  EDIT_MAPPING_DEPT,
   GET_DEPT_LIST_ORG,
   GET_ORGANIZATION_LIST,
   MSG_ADD,
+  MSG_DELETE,
   RESET_MESSAGE,
   RESP_GET_DEPT_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
@@ -26,11 +29,6 @@ export const getOrganizationListData = (req) => ({
 export const respGetOrganizationList = resp => ({
   type: RESP_GET_ORGANIZATION_LIST,
   payload: resp,
-})
-
-export const saveMappingDept = (req) => ({
-  type: SAVE_MAPPING_DEPT,
-  payload: req,
 })
 
 // export const respGetSearch = resp => ({
@@ -68,20 +66,20 @@ export const saveMappingDept = (req) => ({
 //   payload: resp,
 // })
 
-// export const addRecommend = resp => ({
-//   type: ADD_RECOMMEND,
-//   payload: resp,
-// })
+export const saveMappingDept = (req) => ({
+  type: SAVE_MAPPING_DEPT,
+  payload: req,
+})
 
-// export const editRecommend = resp => ({
-//   type: EDIT_RECOMMEND,
-//   payload: resp,
-// })
+export const editMappingDept = resp => ({
+  type: EDIT_MAPPING_DEPT,
+  payload: resp,
+})
 
-// export const deleteRecommend = resp => ({
-//   type: DELETE_RECOMMEND,
-//   payload: resp,
-// })
+export const deleteMappingDept = resp => ({
+  type: DELETE_MAPPING_DEPT,
+  payload: resp,
+})
 
 // export const submitRecommend = resp => ({
 //   type: SUBMIT_RECOMMEND,
@@ -93,15 +91,15 @@ export const msgAdd = resp => ({
   payload: resp,
 })
 
-// export const msgEdit = resp => ({
-//   type: MSG_EDIT,
-//   payload: resp,
-// })
+export const msgEdit = resp => ({
+  type: MSG_EDIT,
+  payload: resp,
+})
 
-// export const msgDelete = resp => ({
-//   type: MSG_DELETE,
-//   payload: resp,
-// })
+export const msgDelete = resp => ({
+  type: MSG_DELETE,
+  payload: resp,
+})
 
 export const resetMessage = (resp) => ({
   type: RESET_MESSAGE,

@@ -68,7 +68,6 @@ const Rekomendasi = () => {
         dispatch(getBestOfYearListData())
         dispatch(getMenuData())
         setLoadingSpinner(true)
-
     }, [])
 
     useEffect(() => {

@@ -106,7 +106,7 @@ const Lov = props => {
   }
 
   const onKeyDown = (e) => {
-    if (e.key === "Tab") {
+    if (e.key === "Enter") {
       e.preventDefault();
       dispatch(props.getData(req))
       setmodal_standard(!modal_standard);

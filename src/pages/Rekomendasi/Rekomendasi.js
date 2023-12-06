@@ -49,22 +49,31 @@ const Rekomendasi = () => {
 
   useEffect(() => {
 
-    if (ReactSession.get('collapser')) {
-      setCollapser(ReactSession.get('collapser'))
-    }
-    if (ReactSession.get('selectedDeptData')) {
-      setSelectedDeptData(ReactSession.get('selectedDeptData'))
-    }
-    if (ReactSession.get('selectedMemberData')) {
-      setSelectedMemberData(ReactSession.get('selectedMemberData'))
-    }
+    // if (ReactSession.get('collapser')) {
+    //   setCollapser(ReactSession.get('collapser'))
+    // }
+    // if (ReactSession.get('selectedDeptData')) {
+    //   setSelectedDeptData(ReactSession.get('selectedDeptData'))
+    // }
+    // if (ReactSession.get('selectedMemberData')) {
+    //   setSelectedMemberData(ReactSession.get('selectedMemberData'))
+    // }
 
-    if (ReactSession.get('selectedDeptData')) {
-    }
+    // if (ReactSession.get('selectedDeptData')) {
+    // }
 
-    if (ReactSession.get('selectedDeptName')) {
-      setSelectedDeptName(ReactSession.get('selectedDeptName'))
-    }
+    // if (ReactSession.get('selectedDeptName')) {
+    //   setSelectedDeptName(ReactSession.get('selectedDeptName'))
+    // }
+
+    ReactSession.remove("currentPage")
+
+    ReactSession.remove('selectedMemberData')
+    ReactSession.remove('selectedDeptData')
+    ReactSession.remove('selectedDeptName')
+    ReactSession.remove('collapser')
+    ReactSession.remove('offset')
+    ReactSession.remove('limit')
 
     dispatch(getDeptData())
     setLoadingSpinner(true)
@@ -173,6 +182,14 @@ const Rekomendasi = () => {
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
+                        if (item.childList.length > 0) {
+                          setCollapser((prevCollapser) => {
+                            return {
+                              ...prevCollapser,
+                              [item.dept_id]: !prevCollapser[item.dept_id],
+                            };
+                          });
+                        }
                         let org_id = '';
                         org_id = item.org_id;
                         ReactSession.remove('selectedMemberData');
@@ -201,7 +218,7 @@ const Rekomendasi = () => {
                   </div>
                 </Row>
 
-                {item.childList && collapser[item.dept_id] === true && (
+                {item.childList.length > 0 && collapser[item.dept_id] === true && (
                   <CollapsibleList
                     data={item.childList}
                     collapser={collapser}

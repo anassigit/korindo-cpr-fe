@@ -18,6 +18,22 @@ const Authmiddleware = ({
       const korToken = queryParameters.get("KOR_TOKEN");
 
       if (korToken && localStorage.getItem("authUser") !== korToken) {
+        localStorage.removeItem("authUser");
+        localStorage.removeItem("user");
+        localStorage.removeItem("member_id");
+        ReactSession.remove("menu");
+        localStorage.removeItem("menu");
+        ReactSession.remove('profileData')
+    
+        ReactSession.remove("currentPage")
+    
+        ReactSession.remove('selectedMemberData')
+        ReactSession.remove('selectedDeptData')
+        ReactSession.remove('selectedDeptName')
+        ReactSession.remove('collapser')
+        ReactSession.remove('offset')
+        ReactSession.remove('limit')
+        
         localStorage.setItem('authUser', korToken);
         ReactSession.set('isAuth', true);
         // Use history.push('/') instead of window.location.replace('/') to keep React Router in control

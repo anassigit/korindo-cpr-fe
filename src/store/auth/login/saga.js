@@ -69,8 +69,6 @@ function* logoutUser({ payload: { history } }) {
     ReactSession.remove('offset')
     ReactSession.remove('limit')
 
-    ReactSession.clear()
-
     history.push("/login")
     yield put(apiError(""))
   } catch (error) {

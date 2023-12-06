@@ -4,7 +4,6 @@ import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'react
 import '../../assets/scss/custom/modal/modal.css';
 
 const DetailContentInfluencer = ({ modal, toggle, recommendData }) => {
-    debugger
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
             <ModalHeader toggle={toggle}>Detail Isi</ModalHeader>

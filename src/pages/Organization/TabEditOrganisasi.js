@@ -1,15 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDeptListOrg } from 'store/actions'
-import { Table } from 'reactstrap'
+import { editMappingDept, getDeptListOrg, getOrganizationListData } from 'store/actions'
+import { Button, Table } from 'reactstrap'
 
 const TabEditOrganisasi = (props) => {
 
     const dispatch = useDispatch()
+    const [deptListTemp, setDeptListTemp] = useState([])
 
     const appDeptList = useSelector((state) => {
         return state.organizationReducer.respGetDeptListOrg
+    })
+
+    const appMsgEdit = useSelector((state) => {
+        return state.organizationReducer.msgEdit
     })
 
     useEffect(() => {
@@ -45,11 +50,40 @@ const TabEditOrganisasi = (props) => {
             headerStyle: { textAlign: 'center' },
         },
     ]
+
+    useEffect(() => {
+        setDeptListTemp(appDeptList?.data?.list)
+    }, [appDeptList])
+
+    useEffect(() => {
+        if (appMsgEdit) {
+            props.setAppOrganizationMsg(appMsgEdit)
+            dispatch(getOrganizationListData())
+            props.setLoadingSpinner(true)
+        }
+    }, [appMsgEdit])
+
+    const moveRowUp = (index) => {
+        if (index > 0) {
+            const updatedList = [...deptListTemp];
+            [updatedList[index - 1].order, updatedList[index].order] = [updatedList[index].order, updatedList[index - 1].order];
+            setDeptListTemp(updatedList);
+        }
+    };
+
+    const moveRowDown = (index) => {
+        if (index < deptListTemp.length - 1) {
+            const updatedList = [...deptListTemp];
+            [updatedList[index].order, updatedList[index + 1].order] = [updatedList[index + 1].order, updatedList[index].order];
+            setDeptListTemp(updatedList);
+        }
+    };
+
     return (
         <React.Fragment>
             {
                 props.appTabEdit && (
-                    <div style={{ height: '100%' }}>
+                    <div style={{ height: '100%', margin: '0 1px 0 1px' }}>
                         <Table>
                             <thead>
                                 <tr>
@@ -59,11 +93,11 @@ const TabEditOrganisasi = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Array.isArray(appDeptList?.data?.list) && appDeptList?.data?.list.sort((a, b) => {
-                                    return a.order-b.order
+                                {Array.isArray(deptListTemp) && deptListTemp.sort((a, b) => {
+                                    return a.order - b.order
                                 }).map((department, index) => {
                                     return (
-                                        <tr key={index}>
+                                        <tr className='member-row' key={index}>
                                             <td style={appDepartmentColumn[0].style}>{department.orgCd}</td>
                                             <td style={appDepartmentColumn[1].style}>{department.deptName}</td>
                                             <td style={appDepartmentColumn[2].style}>
@@ -72,15 +106,15 @@ const TabEditOrganisasi = (props) => {
                                                         fontSize: '20px',
                                                     }}
                                                     className='mdi mdi-chevron-up'
-                                                >
-                                                </a>
+                                                    onClick={() => moveRowUp(index)}
+                                                ></a>
                                                 <a
                                                     style={{
                                                         fontSize: '20px',
                                                     }}
                                                     className='mdi mdi-chevron-down'
-                                                >
-                                                </a>
+                                                    onClick={() => moveRowDown(index)}
+                                                ></a>
                                             </td>
                                         </tr>
                                     )
@@ -88,10 +122,48 @@ const TabEditOrganisasi = (props) => {
                                 )}
                             </tbody>
                         </Table>
+                        <div className='m-4'>
+                            <Button
+                                disabled={props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? false : true}
+                                style={{
+                                    backgroundColor: props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? '' : '#A9A9A9',
+                                    borderColor: props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? '' : '#A9A9A9',
+                                    marginRight: '.5rem'
+                                }}
+                                onClick={() => {
+
+                                    let temp = deptListTemp.map((item) => item.orgCd)
+
+                                    props.setLoadingSpinner(true)
+                                    dispatch(editMappingDept({
+                                        orgParentCd: props.selectedDeptData.org_id,
+                                        org_cd: temp,
+                                    }))
+                                }}
+                            >
+                                Save
+                            </Button>
+                            <Button
+                                disabled={props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? false : true}
+                                className='btn-danger'
+                                style={{
+                                    backgroundColor: props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? '' : '#A9A9A9',
+                                    borderColor: props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? '' : '#A9A9A9',
+                                    marginRight: '.5rem'
+                                }}
+                                onClick={() => {
+                                    dispatch(getDeptListOrg({
+                                        org_cd: props.selectedDeptData?.org_id
+                                    }))
+                                }}
+                            >
+                                Reset
+                            </Button>
+                        </div>
                     </div>
                 )
             }
-        </React.Fragment>
+        </React.Fragment >
     )
 }
 
@@ -99,6 +171,7 @@ TabEditOrganisasi.propTypes = {
     appTabEdit: PropTypes.any,
     setAppOrganizationMsg: PropTypes.any,
     selectedDeptData: PropTypes.any,
+    setLoadingSpinner: PropTypes.any,
 }
 
 export default TabEditOrganisasi

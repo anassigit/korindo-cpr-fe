@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Input, Row, UncontrolledTooltip } from 'reactstrap';
-import { getDeptListOrgLov, getOrganizationListData, resetMessage, saveMappingDept } from 'store/actions';
+import { deleteMappingDept, getDeptListOrgLov, getOrganizationListData, resetMessage, saveMappingDept } from 'store/actions';
 import * as Yup from 'yup';
 
 const TabAddOrganisasi = (props) => {
@@ -13,6 +13,10 @@ const TabAddOrganisasi = (props) => {
 
   const appMsgAdd = useSelector((state) => {
     return state.organizationReducer.msgAdd
+  })
+
+  const appMsgDelete = useSelector((state) => {
+    return state.organizationReducer.msgDelete
   })
 
   const appAddOrganizationMasterValidInput = useFormik({
@@ -29,6 +33,7 @@ const TabAddOrganisasi = (props) => {
 
     onSubmit: (values) => {
       props.setAppOrganizationMsg('')
+      props.setLoadingSpinner(true)
       dispatch(saveMappingDept({
         org_cd: values.org_cd,
         deptId: values.deptId,
@@ -75,12 +80,49 @@ const TabAddOrganisasi = (props) => {
     }
   }, [props.selectedDeptData])
 
+  const findDeptById = (org_id, orgStructure) => {
+    for (const department of orgStructure) {
+      if (department.org_id === org_id) {
+        if (department.childList.length === 1) {
+          props.setCollapser((prevCollapser) => {
+            return {
+              ...prevCollapser,
+              [props.selectedDeptData.org_parent_id]: false,
+            }
+          })
+        }
+      } else if (department.childList && department.childList.length > 0) {
+        const result = findDeptById(org_id, department.childList);
+        if (result) {
+          return result;
+        }
+      }
+    }
+    return null;
+  };
+
   useEffect(() => {
     if (appMsgAdd) {
       props.setAppOrganizationMsg(appMsgAdd)
       dispatch(getOrganizationListData())
+      props.setCollapser((prevCollapser) => {
+        return {
+          ...prevCollapser,
+          [props.selectedDeptData.org_id]: true,
+        }
+      })
     }
   }, [appMsgAdd])
+
+  useEffect(() => {
+    if (appMsgDelete) {
+      props.setAppOrganizationMsg(appMsgDelete)
+      props.setSelectedDeptData({})
+      dispatch(getOrganizationListData())
+      findDeptById(props.selectedDeptData.org_parent_id, props.appOrganizationListData?.data?.result?.childList)
+
+    }
+  }, [appMsgDelete])
 
   return (
     <React.Fragment>
@@ -159,7 +201,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '250px' }}>
                       <Input
-                        value={appAddOrganizationMasterValidInput.values.deptName}
+                        value={appAddOrganizationMasterValidInput.values.deptName || ''}
                         disabled
                       />
                     </div>
@@ -185,7 +227,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '185px' }}>
                       <Input
-                        value={props.selectedDeptData.org_parent_id}
+                        value={props.selectedDeptData.org_parent_id || ''}
                         disabled
                       />
                     </div>
@@ -211,7 +253,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '185px' }}>
                       <Input
-                        value={props.selectedDeptData.org_id}
+                        value={props.selectedDeptData.org_id || ''}
                         disabled
                       />
                     </div>
@@ -237,7 +279,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '100px' }}>
                       <Input
-                        value={props.selectedDeptData.dept_level_cd}
+                        value={props.selectedDeptData.dept_level_cd || ''}
                         disabled
                       />
                     </div>
@@ -253,7 +295,15 @@ const TabAddOrganisasi = (props) => {
                 >
                   Submit
                 </Button>
-                <Button className='btn-danger'>
+                <Button className='btn-danger'
+                  onClick={() => {
+                    props.setLoadingSpinner(true)
+                    props.setAppOrganizationMsg('')
+                    dispatch(deleteMappingDept({
+                      org_cd: props.selectedDeptData.org_id
+                    }))
+                  }}
+                >
                   Delete
                 </Button>
               </Col>
@@ -267,9 +317,13 @@ const TabAddOrganisasi = (props) => {
 }
 
 TabAddOrganisasi.propTypes = {
+  appOrganizationListData: PropTypes.any,
   selectedDeptData: PropTypes.any,
+  setSelectedDeptData: PropTypes.any,
   appTabAdd: PropTypes.any,
   setAppOrganizationMsg: PropTypes.any,
+  setLoadingSpinner: PropTypes.any,
+  setCollapser: PropTypes.any,
 }
 
 export default TabAddOrganisasi

@@ -164,7 +164,6 @@ const DetailInfluencer = (props) => {
     }
 
     const toggleModalContent = (data) => {
-        debugger
         if (data?.id) {
             setRecommendData(data)
         }
