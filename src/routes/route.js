@@ -20,7 +20,7 @@ const Authmiddleware = ({
       if (korToken && localStorage.getItem("authUser") !== korToken) {
         localStorage.removeItem("authUser");
         localStorage.removeItem("user");
-        localStorage.removeItem("member_id");
+        localStorage.removeItem("memberId");
         ReactSession.remove("menu");
         localStorage.removeItem("menu");
         ReactSession.remove('profileData')

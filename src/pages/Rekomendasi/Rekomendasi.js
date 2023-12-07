@@ -150,19 +150,18 @@ const Rekomendasi = () => {
       <React.Fragment>
         {Array.isArray(data) ?
           data.map((item, index) => {
-
             return (
               <React.Fragment key={index}>
                 <Row style={{ marginBottom: "8px" }}>
                   <div style={{ color: "#3F4031", paddingLeft }}>
                     {item.childList.length > 0 ? (
                       <span
-                        className={collapser[item.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                        className={collapser[item.deptCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
                           setCollapser((prevCollapser) => {
                             return {
                               ...prevCollapser,
-                              [item.dept_id]: !prevCollapser[item.dept_id],
+                              [item.deptCd]: !prevCollapser[item.deptCd],
                             };
                           });
                         }}
@@ -177,7 +176,7 @@ const Rekomendasi = () => {
                     <a
                       style={{
                         color: "#4c4c4c",
-                        fontWeight: collapser[item.dept_id] || selectedDeptData === item.org_id ? "bold" : "normal",
+                        fontWeight: collapser[item.deptCd] || selectedDeptData === item.orgCd ? "bold" : "normal",
                         cursor: "pointer",
                       }}
                       className="unselectable-two"
@@ -186,16 +185,16 @@ const Rekomendasi = () => {
                           setCollapser((prevCollapser) => {
                             return {
                               ...prevCollapser,
-                              [item.dept_id]: !prevCollapser[item.dept_id],
+                              [item.deptCd]: !prevCollapser[item.deptCd],
                             };
                           });
                         }
-                        let org_id = '';
-                        org_id = item.org_id;
+                        let orgCd = '';
+                        orgCd = item.orgCd;
                         ReactSession.remove('selectedMemberData');
-                        setSelectedDeptData(org_id);
-                        setSelectedDeptName(item.dept_name);
-                        ReactSession.set('selectedDeptData', org_id);
+                        setSelectedDeptData(orgCd);
+                        setSelectedDeptName(item.deptName);
+                        ReactSession.set('selectedDeptData', orgCd);
                       }}
                     >
                       &nbsp;
@@ -205,20 +204,20 @@ const Rekomendasi = () => {
                           whiteSpace: "nowrap",
                           textOverflow: "ellipsis",
                         }}
-                        id={item.dept_id}
+                        id={item.deptCd}
                       >
-                        {item.dept_name}
+                        {item.deptName}
                       </span>
-                      {item.dept_id && (
-                        <UncontrolledTooltip target={() => document.getElementById(item.dept_id)} placement="top">
-                          {item.dept_name}
+                      {item.deptCd && (
+                        <UncontrolledTooltip target={() => document.getElementById(item.deptCd)} placement="top">
+                          {item.deptName}
                         </UncontrolledTooltip>
                       )}
                     </a>
                   </div>
                 </Row>
 
-                {item.childList.length > 0 && collapser[item.dept_id] === true && (
+                {item.childList.length > 0 && collapser[item.deptCd] === true && (
                   <CollapsibleList
                     data={item.childList}
                     collapser={collapser}
@@ -246,12 +245,12 @@ const Rekomendasi = () => {
                   }}>
                     {data.childList.length > 0 ? (
                       <span
-                        className={collapser[data.dept_id] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                        className={collapser[data.deptCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
                           setCollapser((prevCollapser) => {
                             return {
                               ...prevCollapser,
-                              [data.dept_id]: !prevCollapser[data.dept_id],
+                              [data.deptCd]: !prevCollapser[data.deptCd],
                             };
                           });
                         }}
@@ -266,37 +265,37 @@ const Rekomendasi = () => {
                     <a
                       style={{
                         color: "#4c4c4c",
-                        fontWeight: collapser[data.dept_id] || selectedDeptData === data.org_id ? "bold" : "normal",
+                        fontWeight: collapser[data.deptCd] || selectedDeptData === data.orgCd ? "bold" : "normal",
                         cursor: "pointer",
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
-                        let org_id = '';
-                        org_id = data.org_id;
+                        let orgCd = '';
+                        orgCd = data.orgCd;
                         ReactSession.remove('selectedMemberData');
-                        setSelectedDeptData(org_id);
-                        setSelectedDeptName(data.dept_name);
-                        ReactSession.set('selectedDeptData', org_id);
+                        setSelectedDeptData(orgCd);
+                        setSelectedDeptName(data.deptName);
+                        ReactSession.set('selectedDeptData', orgCd);
                       }}
                     >
                       &nbsp;
                       <span
                         style={{
                         }}
-                        id={data.dept_id}
+                        id={data.deptCd}
                       >
-                        {data.dept_name}
+                        {data.deptName}
                       </span>
-                      {data.dept_id && (
-                        <UncontrolledTooltip target={() => document.getElementById(data.dept_id)} placement="top">
-                          {data.dept_name}
+                      {data.deptCd && (
+                        <UncontrolledTooltip target={() => document.getElementById(data.deptCd)} placement="top">
+                          {data.deptName}
                         </UncontrolledTooltip>
                       )}
                     </a>
                   </div>
                 </Row>
 
-                {data.childList && collapser[data.dept_id] === true && (
+                {data.childList && collapser[data.deptCd] === true && (
                   <CollapsibleList
                     data={data.childList}
                     collapser={collapser}

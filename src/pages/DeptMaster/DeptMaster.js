@@ -41,7 +41,7 @@ const DeptMaster = () => {
 
     const [appDeptMasterData, setAppDeptMasterData] = useState({})
 
-    const [deptId, setDeptId] = useState('')
+    const [deptCd, setDeptCd] = useState('')
 
     const appDeptListData = useSelector((state) => {
         return state.deptMasterReducer.respGetDeptList
@@ -68,7 +68,7 @@ const DeptMaster = () => {
 
     const appDeptColumn = [
         {
-            dataField: "deptId",
+            dataField: "deptCd",
             text: "Department Code",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -93,10 +93,10 @@ const DeptMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.deptId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-                        <a id={`delete-${cellData.deptId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.deptId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.deptId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.deptCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${cellData.deptCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.deptCd}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.deptCd}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -139,14 +139,14 @@ const DeptMaster = () => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.deptId) {
-            setDeptId(data.deptId)
+        if (data.deptCd) {
+            setDeptCd(data.deptCd)
         }
     }
 
     const toggleApply = () => {
         setAppDeptMasterMsg('')
-        dispatch(deleteDeptMaster({ deptId: deptId }))
+        dispatch(deleteDeptMaster({ deptCd: deptCd }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
@@ -274,7 +274,7 @@ const DeptMaster = () => {
                                 </div>
 
                                 <TableCustom
-                                    keyField={"deptId"}
+                                    keyField={"deptCd"}
                                     columns={appDeptColumn}
                                     redukResponse={appDeptListData}
                                     appdata={appDeptListData?.data != null && appDeptListData?.data.list ? appDeptListData?.data.list : []}

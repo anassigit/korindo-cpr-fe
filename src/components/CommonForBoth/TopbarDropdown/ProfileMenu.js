@@ -30,8 +30,8 @@ const ProfileMenu = props => {
   const appGetInfo = useSelector((state) => state.dashboardReducer.respGetInfo);
 
   const [username, setusername] = useState("Admin")
-  const [member_id, setmember_id] = useState("")
-  const [profile_url, setprofile_url] = useState("")
+  const [memberId, setmember_id] = useState("")
+  const [profileUrl, setprofile_url] = useState("")
 
   useEffect(() => {
     dispatch(getInfoData())
@@ -43,8 +43,8 @@ const ProfileMenu = props => {
   //   if (localStorage.getItem("user")) {
   //     const u = localStorage.getItem("user")
 
-  //     const m = localStorage.getItem("member_id")
-  //     const p = localStorage.getItem("profile_url")
+  //     const m = localStorage.getItem("memberId")
+  //     const p = localStorage.getItem("profileUrl")
   //     setusername(u?.replace(/"/g, ''));
   //     setmember_id(m?.replace(/"/g, ''));
   //     setprofile_url(p?.replace(/"/g, ''));
@@ -59,8 +59,8 @@ const ProfileMenu = props => {
   useEffect(() => {
 
     const storedUser = localStorage.getItem("user");
-    const storedMemberId = localStorage.getItem("member_id");
-    const storedProfileUrl = localStorage.getItem("profile_url");
+    const storedMemberId = localStorage.getItem("memberId");
+    const storedProfileUrl = localStorage.getItem("profileUrl");
 
     // Check if the stored values are wrapped in double quotes before updating the state
     const isWrappedInQuotes = (value) => /^".*"$/.test(value);
@@ -145,7 +145,7 @@ const ProfileMenu = props => {
         className="d-inline-block"
       >
         <a
-          onClick={() => ReactSession.set('appDetailRecommendationData', member_id)}
+          onClick={() => ReactSession.set('appDetailRecommendationData', memberId)}
           href="/home/detail"
         >
           <img
@@ -154,7 +154,7 @@ const ProfileMenu = props => {
               objectFit: "cover",
               objectPosition: "center top"
             }}
-            src={profile_url || user1}
+            src={profileUrl || user1}
             alt="Header Avatar"
             onClick={() => setFlagForDashboard(true)}
           />

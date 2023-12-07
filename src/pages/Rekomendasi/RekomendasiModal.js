@@ -104,7 +104,7 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                     "offset": offset,
                     "limit": limit,
                     "search": {
-                        "org_id": selectedDeptData
+                        "orgCd": selectedDeptData
                     }
                 }));
             }

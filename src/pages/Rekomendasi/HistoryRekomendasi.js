@@ -82,7 +82,7 @@ const HistoryRekomendasi = (props) => {
                     "offset": offset,
                     "limit": limit,
                     "search": {
-                        "org_id": selectedDeptData
+                        "orgCd": selectedDeptData
                     }
                 }));
             }
@@ -106,7 +106,7 @@ const HistoryRekomendasi = (props) => {
                     "offset": offset,
                     "limit": limit,
                     "search": {
-                        "org_id": selectedDeptData
+                        "orgCd": selectedDeptData
                     }
                 }));
             }
@@ -202,7 +202,7 @@ const HistoryRekomendasi = (props) => {
                                                     width: '80px',
                                                     marginRight: '25px',
                                                 }}
-                                                src={item.profile_url}
+                                                src={item.profileUrl}
                                             />
                                             <div
                                                 style={{
@@ -241,7 +241,7 @@ const HistoryRekomendasi = (props) => {
                                             </b>
 
                                             <div className="text-primary" style={{ fontSize: '1.3vh', marginLeft: '0' }}>
-                                                {item.dept_name}
+                                                {item.deptName}
                                             </div>
                                         </div>
                                         <UncontrolledTooltip target={`name-recommendation-${index}`} placement='top'>

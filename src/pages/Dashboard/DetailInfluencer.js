@@ -45,7 +45,7 @@ const DetailInfluencer = (props) => {
 
     useEffect(() => {
         setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
-        const foundRow = menu?.find((row) => row.id === 'KORTRN001');
+        const foundRow = menu?.find((row) => row.menuId === 'KORTRN001');
         const temp = foundRow ? foundRow.path : null;
 
         setLinkRekomendasi(temp);
@@ -157,14 +157,14 @@ const DetailInfluencer = (props) => {
     ]
 
     const toggleModal = (data) => {
-        if (data?.id) {
-            setRecommendId(data.id)
+        if (data?.recommendId) {
+            setRecommendId(data.recommendId)
         }
         setDetailModal(!detailModal)
     }
 
     const toggleModalContent = (data) => {
-        if (data?.id) {
+        if (data?.recommendId) {
             setRecommendData(data)
         }
         setDetailContentModal(!detailContentModal)

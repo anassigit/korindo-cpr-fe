@@ -14,8 +14,8 @@ function* loginUser({ payload: { user, history } }) {
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      localStorage.setItem("member_id", JSON.stringify(response.data.member_id));
-      localStorage.setItem("profile_url", JSON.stringify(response.data.profile_url));
+      localStorage.setItem("memberId", JSON.stringify(response.data.memberId));
+      localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl));
       const res = yield call(getMenuBE)
       if (res.status == 1) {
         ReactSession.set("menu", JSON.stringify(res.data.list));
@@ -38,8 +38,8 @@ function* reloginUser({ payload: { user, history } }) {
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      localStorage.setItem("member_id", JSON.stringify(response.data.member_id));
-      localStorage.setItem("profile_url", JSON.stringify(response.data.profile_url));
+      localStorage.setItem("memberId", JSON.stringify(response.data.memberId));
+      localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl));
       yield put(reloginSuccess(response));
       document.getElementById("reloginForm").style.display = "none";
       window.location.reload()
@@ -55,7 +55,7 @@ function* logoutUser({ payload: { history } }) {
   try {
     localStorage.removeItem("authUser");
     localStorage.removeItem("user");
-    localStorage.removeItem("member_id");
+    localStorage.removeItem("memberId");
     ReactSession.remove("menu");
     localStorage.removeItem("menu");
     ReactSession.remove('profileData')

@@ -49,7 +49,7 @@ const EditDeptMaster = (props) => {
         onSubmit: (values) => {
 
             dispatch(editDeptMaster({
-                deptId: props.appDeptMasterData.deptId,
+                deptCd: props.appDeptMasterData.deptCd,
                 deptName: values.deptName,
                 deptNameKor: values.deptNameKor,
             }))
@@ -59,7 +59,7 @@ const EditDeptMaster = (props) => {
 
     useEffect(() => {
         if (props.appEditDeptMaster) {
-            dispatch(getDeptDataAction({ deptId: props.appDeptMasterData.deptId }))
+            dispatch(getDeptDataAction({ deptCd: props.appDeptMasterData.deptCd }))
             setLoadingSpinner(true)
         } else {
             appEditDeptMasterValidInput.resetForm()
@@ -67,7 +67,7 @@ const EditDeptMaster = (props) => {
     }, [props.appEditDeptMaster])
 
     useEffect(() => {
-        appEditDeptMasterValidInput.setFieldValue('deptId', appDeptData?.data?.result.deptId)
+        appEditDeptMasterValidInput.setFieldValue('deptCd', appDeptData?.data?.result.deptCd)
         appEditDeptMasterValidInput.setFieldValue('deptName', appDeptData?.data?.result.deptName)
         appEditDeptMasterValidInput.setFieldValue('deptNameKor', appDeptData?.data?.result.deptNameKor)
         
@@ -112,7 +112,7 @@ const EditDeptMaster = (props) => {
                                     <div className="col-8">
                                         <Input
                                             disabled
-                                            value={appEditDeptMasterValidInput.values.deptId}
+                                            value={appEditDeptMasterValidInput.values.deptCd}
                                         />
                                     </div>
                                 </div>

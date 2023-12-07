@@ -102,10 +102,10 @@ const SidebarContent = props => {
 
   function renderMenuItem(item) {
     return (
-      <li key={item.id}>
+      <li key={item.menuId}>
         <a href={"/" + item.path} className={item.childList ? "has-arrow" : ""}>
           {item.icon && <i className={props.t("mdi " + item.icon)}></i>}
-          <span>{props.t(item.title)}</span>
+          <span>{props.t(item.menuName)}</span>
         </a>
         {item.childList && (
           <ul className="sub-menu">

@@ -57,36 +57,36 @@ const AddEmployeeOf = (props) => {
         enableReinitialize: true,
 
         initialValues: {
-            member_id: '',
+            memberId: '',
             keyword: '',
             location_id: '',
             filter: 'month',
-            period_from: '',
-            period_to: '',
+            periodFrom: '',
+            periodTo: '',
             star: '',
             description: '',
         },
         validationSchema: Yup.object().shape({
-            member_id: Yup.string().required("Wajib diisi"),
+            memberId: Yup.string().required("Wajib diisi"),
             filter: Yup.string().required("Wajib diisi"),
             location_id: Yup.string().required("Wajib diisi"),
-            period_from: Yup.string().required("Wajib diisi"),
-            period_to: Yup.string().required("Wajib diisi"),
+            periodFrom: Yup.string().required("Wajib diisi"),
+            periodTo: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
             props.setAppEmployeeOfMonYeaMsg('')
 
-            let dateFrom = formatDate(values.period_from)
-            let dateTo = formatDate(values.period_to)
+            let dateFrom = formatDate(values.periodFrom)
+            let dateTo = formatDate(values.periodTo)
 
             dispatch(addEmployeeOf({
                 filter: values.filter,
                 keyword_id: values.keyword,
                 locationId: values.location_id,
-                period_from: dateFrom,
-                period_to: dateTo,
-                iidnrp: values.member_id,
+                periodFrom: dateFrom,
+                periodTo: dateTo,
+                iidnrp: values.memberId,
                 description: values.description,
             }))
 
@@ -112,7 +112,7 @@ const AddEmployeeOf = (props) => {
 
     useEffect(() => {
         if (appCandidateSearchLov === '') {
-            appAddEmployeeValidInput.setFieldValue("member_id", '')
+            appAddEmployeeValidInput.setFieldValue("memberId", '')
         }
     }, [appCandidateSearchLov])
 
@@ -124,24 +124,24 @@ const AddEmployeeOf = (props) => {
 
     useEffect(() => {
 
-        if (appAddEmployeeValidInput.values.period_from === null) {
-            appAddEmployeeValidInput.setFieldValue('period_from', '')
+        if (appAddEmployeeValidInput.values.periodFrom === null) {
+            appAddEmployeeValidInput.setFieldValue('periodFrom', '')
         }
-        if (appAddEmployeeValidInput.values.period_to === null) {
-            appAddEmployeeValidInput.setFieldValue('period_to', '')
+        if (appAddEmployeeValidInput.values.periodTo === null) {
+            appAddEmployeeValidInput.setFieldValue('periodTo', '')
         }
 
-        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.period_from);
-        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.period_to)
+        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.periodFrom);
+        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.periodTo)
 
         setAppLovParam({
-            period_from: formattedDateFrom,
-            period_to: formattedDateTo,
+            periodFrom: formattedDateFrom,
+            periodTo: formattedDateTo,
             locationId: appAddEmployeeValidInput.values.location_id,
         });
         
         if (!formattedDateFrom && !formattedDateTo && !appAddEmployeeValidInput.values.location_id) {
-            appAddEmployeeValidInput.setFieldValue('member_id', '')
+            appAddEmployeeValidInput.setFieldValue('memberId', '')
             setAppCandidateSearchLov("")
         }
 
@@ -177,16 +177,16 @@ const AddEmployeeOf = (props) => {
     const dateChanger = (name, selectedDate) => {
 
         if (name === 'from') {
-            appAddEmployeeValidInput.setFieldValue('period_from', selectedDate);
+            appAddEmployeeValidInput.setFieldValue('periodFrom', selectedDate);
 
         } else if (name === 'to') {
-            appAddEmployeeValidInput.setFieldValue('period_to', selectedDate);
+            appAddEmployeeValidInput.setFieldValue('periodTo', selectedDate);
         }
 
     };
 
     const appCallBackEmployee = (row) => {
-        appAddEmployeeValidInput.setFieldValue("member_id", row.iidnrp)
+        appAddEmployeeValidInput.setFieldValue("memberId", row.iidnrp)
         appAddEmployeeValidInput.setFieldValue("star", row.star)
     }
 
@@ -368,22 +368,22 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <div className="col-6">
                                             <DatePicker
-                                                className={`form-control ${appAddEmployeeValidInput.touched.period_from && appAddEmployeeValidInput.errors.period_from ? 'is-invalid' : ''}`}
+                                                className={`form-control ${appAddEmployeeValidInput.touched.periodFrom && appAddEmployeeValidInput.errors.periodFrom ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                maxDate={appAddEmployeeValidInput.values.period_to && new Date(appAddEmployeeValidInput.values.period_to)}
-                                                selected={appAddEmployeeValidInput.values.period_from ? new Date(appAddEmployeeValidInput.values.period_from) : ''}
+                                                maxDate={appAddEmployeeValidInput.values.periodTo && new Date(appAddEmployeeValidInput.values.periodTo)}
+                                                selected={appAddEmployeeValidInput.values.periodFrom ? new Date(appAddEmployeeValidInput.values.periodFrom) : ''}
                                                 onChange={(tglMulai) =>
                                                     dateChanger('from', tglMulai ? tglMulai : null)
                                                 }
-                                                isClearable={appAddEmployeeValidInput.values.period_from === '' ? false : true}
+                                                isClearable={appAddEmployeeValidInput.values.periodFrom === '' ? false : true}
                                                 dateFormat="yyyy-MM-dd"
                                                 ariaInvalid={
-                                                    appAddEmployeeValidInput.touched.period_from && appAddEmployeeValidInput.errors.period_from
+                                                    appAddEmployeeValidInput.touched.periodFrom && appAddEmployeeValidInput.errors.periodFrom
                                                         ? true : false
                                                 }
                                             />
-                                            {appAddEmployeeValidInput.touched.period_from && appAddEmployeeValidInput.errors.period_from && (
-                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.period_from}</div>
+                                            {appAddEmployeeValidInput.touched.periodFrom && appAddEmployeeValidInput.errors.periodFrom && (
+                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.periodFrom}</div>
                                             )}
                                         </div>
                                     </div>
@@ -405,22 +405,22 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <div className="col-6">
                                             <DatePicker
-                                                className={`form-control ${appAddEmployeeValidInput.touched.period_to && appAddEmployeeValidInput.errors.period_to ? 'is-invalid' : ''}`}
+                                                className={`form-control ${appAddEmployeeValidInput.touched.periodTo && appAddEmployeeValidInput.errors.periodTo ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                minDate={appAddEmployeeValidInput.values.period_from && new Date(appAddEmployeeValidInput.values.period_from)}
-                                                selected={appAddEmployeeValidInput.values.period_to ? new Date(appAddEmployeeValidInput.values.period_to) : ''}
+                                                minDate={appAddEmployeeValidInput.values.periodFrom && new Date(appAddEmployeeValidInput.values.periodFrom)}
+                                                selected={appAddEmployeeValidInput.values.periodTo ? new Date(appAddEmployeeValidInput.values.periodTo) : ''}
                                                 onChange={(tglSelesai) =>
                                                     dateChanger('to', tglSelesai ? tglSelesai : null)
                                                 }
-                                                isClearable={appAddEmployeeValidInput.values.period_to === '' ? false : true}
+                                                isClearable={appAddEmployeeValidInput.values.periodTo === '' ? false : true}
                                                 dateFormat="yyyy-MM-dd"
                                                 ariaInvalid={
-                                                    appAddEmployeeValidInput.touched.period_to && appAddEmployeeValidInput.errors.period_to
+                                                    appAddEmployeeValidInput.touched.periodTo && appAddEmployeeValidInput.errors.periodTo
                                                         ? true : false
                                                 }
                                             />
-                                            {appAddEmployeeValidInput.touched.period_to && appAddEmployeeValidInput.errors.period_to && (
-                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.period_to}</div>
+                                            {appAddEmployeeValidInput.touched.periodTo && appAddEmployeeValidInput.errors.periodTo && (
+                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.periodTo}</div>
                                             )}
                                         </div>
                                     </div>
@@ -453,8 +453,8 @@ const AddEmployeeOf = (props) => {
                                             fieldValue="vfullname"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
-                                            touchedLovField={appAddEmployeeValidInput.touched.member_id}
-                                            errorLovField={appAddEmployeeValidInput.errors.member_id}
+                                            touchedLovField={appAddEmployeeValidInput.touched.memberId}
+                                            errorLovField={appAddEmployeeValidInput.errors.memberId}
                                             pParam={appLovParam}
                                         />
                                     </div>

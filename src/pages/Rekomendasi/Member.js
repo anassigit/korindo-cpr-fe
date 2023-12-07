@@ -34,8 +34,8 @@ const Member = (props) => {
   }, [appMemberList2])
 
   useEffect(() => {
-    if (history.location.state && history.location.state.member_id) {
-      setEmployeeId(history.location.state.member_id)
+    if (history.location.state && history.location.state.memberId) {
+      setEmployeeId(history.location.state.memberId)
       setIsAdd(true)
       setModalRekomendasi(true)
     }
@@ -44,7 +44,7 @@ const Member = (props) => {
   useEffect(() => {
     if (modalRekomendasi && isAdd) {
       const timeoutId = setTimeout(() => {
-        history.replace({ state: { member_id: null } });
+        history.replace({ state: { memberId: null } });
       }, 200);
 
       return () => clearTimeout(timeoutId);
@@ -64,7 +64,7 @@ const Member = (props) => {
         "offset": offset,
         "limit": limit,
         "search": {
-          "org_id": selectedDeptData
+          "orgCd": selectedDeptData
         }
       }));
     } else {
@@ -155,7 +155,7 @@ const Member = (props) => {
                             textOverflow: "ellipsis",
                             paddingRight: "1%"
                           }}
-                        >{item.dept_name ? item.dept_name : item.dept_name}</Col>
+                        >{item.deptName ? item.deptName : item.deptName}</Col>
                         <Col xs='3'
                           id={`index-${index}`}
                           style={{
@@ -164,7 +164,7 @@ const Member = (props) => {
                             textOverflow: "ellipsis",
                             paddingRight: "1%"
                           }}
-                        >{item.name ? item.name : item.member_name}</Col>
+                        >{item.name ? item.name : item.memberName}</Col>
                         <UncontrolledTooltip target={`index-${index}`} placement='top'>
                           {item.name}
                         </UncontrolledTooltip>
@@ -235,7 +235,7 @@ const Member = (props) => {
                             textOverflow: "ellipsis",
 
                           }}
-                        >{item.name ? item.name : item.member_name}</Col>
+                        >{item.name ? item.name : item.memberName}</Col>
                         <UncontrolledTooltip target={`index-${index}`} placement='top'>
                           {item.name}
                         </UncontrolledTooltip>

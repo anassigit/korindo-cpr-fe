@@ -69,8 +69,8 @@ const EditEmployeeOf = (props) => {
             keyword: '',
             location_id: '',
             flag: '',
-            period_from: '',
-            period_to: '',
+            periodFrom: '',
+            periodTo: '',
             star: '',
             description: '',
             vfullname: '',
@@ -79,20 +79,20 @@ const EditEmployeeOf = (props) => {
             iidnrp: Yup.string().required("Wajib diisi"),
             keyword: Yup.string().required("Wajib diisi"),
             flag: Yup.string().required("Wajib diisi"),
-            period_from: Yup.string().required("Wajib diisi"),
-            period_to: Yup.string().required("Wajib diisi"),
+            periodFrom: Yup.string().required("Wajib diisi"),
+            periodTo: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
             props.setAppEmployeeOfMonYeaMsg("")
-            let dateFrom = formatDate(values.period_from)
-            let dateTo = formatDate(values.period_to)
-
+            let dateFrom = formatDate(values.periodFrom)
+            let dateTo = formatDate(values.periodTo)
+            debugger
             dispatch(editEmployeeOf({
                 award_id: props.appEmployeeOfMonYeaData.id,
                 locationId: values.location_id,
-                period_from: dateFrom,
-                period_to: dateTo,
+                periodFrom: dateFrom,
+                periodTo: dateTo,
                 iidnrp: values.iidnrp,
                 description: values.description,
             }))
@@ -121,8 +121,8 @@ const EditEmployeeOf = (props) => {
             appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
             appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
             appEditEmployeeValidInput.setFieldValue('location_id', appCandidateData?.data?.result.locationId)
-            appEditEmployeeValidInput.setFieldValue('period_from', appCandidateData?.data?.result.period_from)
-            appEditEmployeeValidInput.setFieldValue('period_to', appCandidateData?.data?.result.period_to)
+            appEditEmployeeValidInput.setFieldValue('periodFrom', appCandidateData?.data?.result.periodFrom)
+            appEditEmployeeValidInput.setFieldValue('periodTo', appCandidateData?.data?.result.periodTo)
             appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
             appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
             setAppCandidateSearchLov(appCandidateData?.data?.result.vfullname)
@@ -134,19 +134,19 @@ const EditEmployeeOf = (props) => {
 
     useEffect(() => {
 
-        if (appEditEmployeeValidInput.values.period_from === null) {
-            appEditEmployeeValidInput.setFieldValue('period_from', '')
+        if (appEditEmployeeValidInput.values.periodFrom === null) {
+            appEditEmployeeValidInput.setFieldValue('periodFrom', '')
         }
-        if (appEditEmployeeValidInput.values.period_to === null) {
-            appEditEmployeeValidInput.setFieldValue('period_to', '')
+        if (appEditEmployeeValidInput.values.periodTo === null) {
+            appEditEmployeeValidInput.setFieldValue('periodTo', '')
         }
 
-        const formattedDateFrom = formatDate(appEditEmployeeValidInput.values.period_from);
-        const formattedDateTo = formatDate(appEditEmployeeValidInput.values.period_to);
+        const formattedDateFrom = formatDate(appEditEmployeeValidInput.values.periodFrom);
+        const formattedDateTo = formatDate(appEditEmployeeValidInput.values.periodTo);
 
         setAppLovParam({
-            period_from: formattedDateFrom,
-            period_to: formattedDateTo,
+            periodFrom: formattedDateFrom,
+            periodTo: formattedDateTo,
             locationId: appEditEmployeeValidInput.values.location_id,
         });
 
@@ -155,7 +155,7 @@ const EditEmployeeOf = (props) => {
             setAppCandidateSearchLov("")
         }
 
-    }, [appEditEmployeeValidInput.values.period_from, appEditEmployeeValidInput.values.period_to, appEditEmployeeValidInput.values.location_id]);
+    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo, appEditEmployeeValidInput.values.location_id]);
 
 
     const appLovCandidateListColumns = [
@@ -188,10 +188,10 @@ const EditEmployeeOf = (props) => {
     const dateChanger = (name, selectedDate) => {
 
         if (name === 'from') {
-            appEditEmployeeValidInput.setFieldValue('period_from', selectedDate);
+            appEditEmployeeValidInput.setFieldValue('periodFrom', selectedDate);
 
         } else if (name === 'to') {
-            appEditEmployeeValidInput.setFieldValue('period_to', selectedDate);
+            appEditEmployeeValidInput.setFieldValue('periodTo', selectedDate);
         }
 
     };
@@ -362,22 +362,22 @@ const EditEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <div className="col-6">
                                             <DatePicker
-                                                className={`form-control ${appEditEmployeeValidInput.touched.period_from && appEditEmployeeValidInput.errors.period_from ? 'is-invalid' : ''}`}
+                                                className={`form-control ${appEditEmployeeValidInput.touched.periodFrom && appEditEmployeeValidInput.errors.periodFrom ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                maxDate={appEditEmployeeValidInput.values.period_to && new Date(appEditEmployeeValidInput.values.period_to)}
-                                                selected={appEditEmployeeValidInput.values.period_from ? new Date(appEditEmployeeValidInput.values.period_from) : ''}
+                                                maxDate={appEditEmployeeValidInput.values.periodTo && new Date(appEditEmployeeValidInput.values.periodTo)}
+                                                selected={appEditEmployeeValidInput.values.periodFrom ? new Date(appEditEmployeeValidInput.values.periodFrom) : ''}
                                                 onChange={(tglMulai) =>
                                                     dateChanger('from', tglMulai ? tglMulai : null)
                                                 }
-                                                isClearable={appEditEmployeeValidInput.values.period_from === '' ? false : true}
+                                                isClearable={appEditEmployeeValidInput.values.periodFrom === '' ? false : true}
                                                 dateFormat="yyyy-MM-dd"
                                                 ariaInvalid={
-                                                    appEditEmployeeValidInput.touched.period_from && appEditEmployeeValidInput.errors.period_from
+                                                    appEditEmployeeValidInput.touched.periodFrom && appEditEmployeeValidInput.errors.periodFrom
                                                         ? true : false
                                                 }
                                             />
-                                            {appEditEmployeeValidInput.touched.period_from && appEditEmployeeValidInput.errors.period_from && (
-                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.period_from}</div>
+                                            {appEditEmployeeValidInput.touched.periodFrom && appEditEmployeeValidInput.errors.periodFrom && (
+                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.periodFrom}</div>
                                             )}
                                         </div>
                                     </div>
@@ -399,22 +399,22 @@ const EditEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <div className="col-6">
                                             <DatePicker
-                                                className={`form-control ${appEditEmployeeValidInput.touched.period_to && appEditEmployeeValidInput.errors.period_to ? 'is-invalid' : ''}`}
+                                                className={`form-control ${appEditEmployeeValidInput.touched.periodTo && appEditEmployeeValidInput.errors.periodTo ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                minDate={appEditEmployeeValidInput.values.period_from && new Date(appEditEmployeeValidInput.values.period_from)}
-                                                selected={appEditEmployeeValidInput.values.period_to ? new Date(appEditEmployeeValidInput.values.period_to) : ''}
+                                                minDate={appEditEmployeeValidInput.values.periodFrom && new Date(appEditEmployeeValidInput.values.periodFrom)}
+                                                selected={appEditEmployeeValidInput.values.periodTo ? new Date(appEditEmployeeValidInput.values.periodTo) : ''}
                                                 onChange={(tglSelesai) =>
                                                     dateChanger('to', tglSelesai ? tglSelesai : null)
                                                 }
-                                                isClearable={appEditEmployeeValidInput.values.period_to === '' ? false : true}
+                                                isClearable={appEditEmployeeValidInput.values.periodTo === '' ? false : true}
                                                 dateFormat="yyyy-MM-dd"
                                                 ariaInvalid={
-                                                    appEditEmployeeValidInput.touched.period_to && appEditEmployeeValidInput.errors.period_to
+                                                    appEditEmployeeValidInput.touched.periodTo && appEditEmployeeValidInput.errors.periodTo
                                                         ? true : false
                                                 }
                                             />
-                                            {appEditEmployeeValidInput.touched.period_to && appEditEmployeeValidInput.errors.period_to && (
-                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.period_to}</div>
+                                            {appEditEmployeeValidInput.touched.periodTo && appEditEmployeeValidInput.errors.periodTo && (
+                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.periodTo}</div>
                                             )}
                                         </div>
                                     </div>

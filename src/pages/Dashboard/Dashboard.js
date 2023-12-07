@@ -79,7 +79,7 @@ const Rekomendasi = () => {
     }, [appBestlistData])
 
     useEffect(() => {
-        const foundRow = Array.isArray(menu?.data?.list) ? menu?.data?.list.find((row) => row.id === 'KORTRN001') : null
+        const foundRow = Array.isArray(menu?.data?.list) ? menu?.data?.list.find((row) => row.menuId === 'KORTRN001') : null
         const temp = foundRow ? foundRow.path : null;
 
         setLinkRekomendasi(temp);
@@ -476,7 +476,7 @@ const Rekomendasi = () => {
                                                                     .slice()
                                                                     .sort((a, b) => {
                                                                         return (
-                                                                            b.id - a.id
+                                                                            b.stickerId - a.stickerId
                                                                         )
                                                                     })
                                                                     .map((row, i) => {
@@ -491,11 +491,11 @@ const Rekomendasi = () => {
                                                                                         right: i * 32 + "px",
                                                                                         width: "22px",
                                                                                     }}
-                                                                                    src={row.url}
+                                                                                    src={row.stickerUrl}
                                                                                     id={tooltipTarget}
                                                                                 />
                                                                                 <UncontrolledTooltip target={tooltipTarget}>
-                                                                                    {row.name}
+                                                                                    {row.stickerName}
                                                                                 </UncontrolledTooltip>
                                                                             </React.Fragment>
                                                                         );

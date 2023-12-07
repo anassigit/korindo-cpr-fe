@@ -20,7 +20,7 @@ const TabEditOrganisasi = (props) => {
     useEffect(() => {
         if (props.selectedDeptData) {
             dispatch(getDeptListOrg({
-                org_cd: props.selectedDeptData.org_id
+                orgCd: props.selectedDeptData.orgCd
             }))
         }
     }, [props.selectedDeptData])
@@ -72,6 +72,7 @@ const TabEditOrganisasi = (props) => {
     };
 
     const moveRowDown = (index) => {
+        debugger
         if (index < deptListTemp.length - 1) {
             const updatedList = [...deptListTemp];
             [updatedList[index].order, updatedList[index + 1].order] = [updatedList[index + 1].order, updatedList[index].order];
@@ -136,8 +137,8 @@ const TabEditOrganisasi = (props) => {
 
                                     props.setLoadingSpinner(true)
                                     dispatch(editMappingDept({
-                                        orgParentCd: props.selectedDeptData.org_id,
-                                        org_cd: temp,
+                                        orgParentCd: props.selectedDeptData.orgCd,
+                                        orgCd: temp,
                                     }))
                                 }}
                             >
@@ -153,7 +154,7 @@ const TabEditOrganisasi = (props) => {
                                 }}
                                 onClick={() => {
                                     dispatch(getDeptListOrg({
-                                        org_cd: props.selectedDeptData?.org_id
+                                        orgCd: props.selectedDeptData?.orgCd
                                     }))
                                 }}
                             >

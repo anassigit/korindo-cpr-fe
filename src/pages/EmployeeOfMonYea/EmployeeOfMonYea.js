@@ -80,20 +80,20 @@ const EmployeeOfMonYea = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "member_id",
+            dataField: "memberId",
             text: "NIK",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
-            dataField: "member_name",
+            dataField: "memberName",
             text: "Nama Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "dept_name",
+            dataField: "deptName",
             text: "Divisi",
             sort: true,
             headerStyle: { textAlign: 'center' },

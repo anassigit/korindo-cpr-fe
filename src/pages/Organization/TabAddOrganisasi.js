@@ -23,20 +23,20 @@ const TabAddOrganisasi = (props) => {
     enableReinitialize: true,
 
     initialValues: {
-      org_cd: '',
-      deptId: '',
+      orgCd: '',
+      deptCd: '',
       deptName: '',
     },
     validationSchema: Yup.object().shape({
-      deptId: Yup.string().required("Wajib diisi"),
+      deptCd: Yup.string().required("Wajib diisi"),
     }),
 
     onSubmit: (values) => {
       props.setAppOrganizationMsg('')
       props.setLoadingSpinner(true)
       dispatch(saveMappingDept({
-        org_cd: values.org_cd,
-        deptId: values.deptId,
+        orgCd: values.orgCd,
+        deptCd: values.deptCd,
       }))
     }
   });
@@ -49,7 +49,7 @@ const TabAddOrganisasi = (props) => {
 
   const appDepartmentColumnLov = [
     {
-      dataField: "deptId",
+      dataField: "deptCd",
       text: "Department ID",
       sort: true,
       style: { textAlign: 'center' },
@@ -70,29 +70,29 @@ const TabAddOrganisasi = (props) => {
   ]
 
   const appCallBackDepartment = (e) => {
-    appAddOrganizationMasterValidInput.setFieldValue('deptId', e.deptId)
+    appAddOrganizationMasterValidInput.setFieldValue('deptCd', e.deptCd)
     appAddOrganizationMasterValidInput.setFieldValue('deptName', e.deptName)
   }
 
   useEffect(() => {
     if (props.selectedDeptData) {
-      appAddOrganizationMasterValidInput.setFieldValue('org_cd', props.selectedDeptData.org_id)
+      appAddOrganizationMasterValidInput.setFieldValue('orgCd', props.selectedDeptData.orgCd)
     }
   }, [props.selectedDeptData])
 
-  const findDeptById = (org_id, orgStructure) => {
+  const findDeptById = (orgCd, orgStructure) => {
     for (const department of orgStructure) {
-      if (department.org_id === org_id) {
+      if (department.orgCd === orgCd) {
         if (department.childList.length === 1) {
           props.setCollapser((prevCollapser) => {
             return {
               ...prevCollapser,
-              [props.selectedDeptData.org_parent_id]: false,
+              [props.selectedDeptData.orgParentCd]: false,
             }
           })
         }
       } else if (department.childList && department.childList.length > 0) {
-        const result = findDeptById(org_id, department.childList);
+        const result = findDeptById(orgCd, department.childList);
         if (result) {
           return result;
         }
@@ -108,7 +108,7 @@ const TabAddOrganisasi = (props) => {
       props.setCollapser((prevCollapser) => {
         return {
           ...prevCollapser,
-          [props.selectedDeptData.org_id]: true,
+          [props.selectedDeptData.orgCd]: true,
         }
       })
     }
@@ -119,7 +119,7 @@ const TabAddOrganisasi = (props) => {
       props.setAppOrganizationMsg(appMsgDelete)
       props.setSelectedDeptData({})
       dispatch(getOrganizationListData())
-      findDeptById(props.selectedDeptData.org_parent_id, props.appOrganizationListData?.data?.result?.childList)
+      findDeptById(props.selectedDeptData.orgParentCd, props.appOrganizationListData?.data?.result?.childList)
 
     }
   }, [appMsgDelete])
@@ -165,18 +165,18 @@ const TabAddOrganisasi = (props) => {
                     <div style={{ width: '185px' }}>
                       <Lovv2
                         title="Kode Department"
-                        keyFieldData="deptId"
+                        keyFieldData="deptCd"
                         columns={appDepartmentColumnLov}
                         getData={getDeptListOrgLov}
                         pageSize={10}
                         callbackFunc={appCallBackDepartment}
-                        defaultSetInput="deptId"
+                        defaultSetInput="deptCd"
                         invalidData={appAddOrganizationMasterValidInput}
-                        fieldValue="deptId"
+                        fieldValue="deptCd"
                         stateSearchInput={appDepartmentLovSearch}
                         stateSearchInputSet={setAppDepartmentLovSearch}
-                        touchedLovField={appAddOrganizationMasterValidInput.touched.deptId}
-                        errorLovField={appAddOrganizationMasterValidInput.errors.deptId}
+                        touchedLovField={appAddOrganizationMasterValidInput.touched.deptCd}
+                        errorLovField={appAddOrganizationMasterValidInput.errors.deptCd}
                       />
                     </div>
                   </div>
@@ -227,7 +227,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '185px' }}>
                       <Input
-                        value={props.selectedDeptData.org_parent_id || ''}
+                        value={props.selectedDeptData.orgParentCd || ''}
                         disabled
                       />
                     </div>
@@ -253,7 +253,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '185px' }}>
                       <Input
-                        value={props.selectedDeptData.org_id || ''}
+                        value={props.selectedDeptData.orgCd || ''}
                         disabled
                       />
                     </div>
@@ -279,7 +279,7 @@ const TabAddOrganisasi = (props) => {
                   <div style={{ width: '250px' }}>
                     <div style={{ width: '100px' }}>
                       <Input
-                        value={props.selectedDeptData.dept_level_cd || ''}
+                        value={props.selectedDeptData.deptLevelCd || ''}
                         disabled
                       />
                     </div>
@@ -300,7 +300,7 @@ const TabAddOrganisasi = (props) => {
                     props.setLoadingSpinner(true)
                     props.setAppOrganizationMsg('')
                     dispatch(deleteMappingDept({
-                      org_cd: props.selectedDeptData.org_id
+                      orgCd: props.selectedDeptData.orgCd
                     }))
                   }}
                 >

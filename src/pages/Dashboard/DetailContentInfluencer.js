@@ -20,7 +20,7 @@ const DetailContentInfluencer = ({ modal, toggle, recommendData }) => {
                 </div>
                 <Input
                     disabled
-                    value={recommendData?.dept_name}
+                    value={recommendData?.deptName}
                 />
                 <div className='my-2' style={{ fontWeight: "bold" }}>
                     Nama
