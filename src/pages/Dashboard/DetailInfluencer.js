@@ -63,13 +63,13 @@ const DetailInfluencer = (props) => {
         order: "desc",
         search:
         {
-            member_id: appDetailRecommendationData,
+            memberId: appDetailRecommendationData,
         }
     });
 
     const appDetailInfluencerColumn = [
         {
-            dataField: "id",
+            dataField: "recommendId",
             text: "ID",
             hidden: true,
             sort: true,
@@ -82,13 +82,13 @@ const DetailInfluencer = (props) => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "dept_name",
+            dataField: "deptName",
             text: "Departemen",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "name",
+            dataField: "memberName",
             text: "Nama",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -112,14 +112,14 @@ const DetailInfluencer = (props) => {
             }
         },
         {
-            dataField: "sticker",
+            dataField: "stickerName",
             text: "Compliments",
             headerStyle: { textAlign: 'center' },
             formatter: (row, rowData, rowIndex) => {
                 return (
                     <React.Fragment>
-                        <span id={`viewtooltip-sticker-${rowIndex}`}>{row}</span>
-                        <UncontrolledTooltip placement="bottom-start" target={`viewtooltip-sticker-${rowIndex}`}>
+                        <span id={`viewtooltip-stickerName-${rowIndex}`}>{row}</span>
+                        <UncontrolledTooltip placement="bottom-start" target={`viewtooltip-stickerName-${rowIndex}`}>
                             {row}
                         </UncontrolledTooltip>
 
@@ -176,7 +176,7 @@ const DetailInfluencer = (props) => {
                 ...prevState,
                 search: {
                     ...prevState.search,
-                    member_id: appDetailRecommendationData.member_id ? appDetailRecommendationData.member_id : appDetailRecommendationData,
+                    memberId: appDetailRecommendationData.memberId ? appDetailRecommendationData.memberId : appDetailRecommendationData,
                 }
             }));
         }
@@ -235,8 +235,8 @@ const DetailInfluencer = (props) => {
                             disabled={appDetailInfluencerData?.data?.recommend_type === "CANNOT" ? true : false}
                             onClick={() => {
                                 ReactSession.set('appDetailRecommendationData', "");
-                                const newMemberId = appDetailRecommendationData.member_id;
-                                history.push({ pathname: '/' + linkRekomendasi, state: { member_id: newMemberId } })
+                                const newMemberId = appDetailRecommendationData.memberId;
+                                history.push({ pathname: '/' + linkRekomendasi, state: { memberId: newMemberId } })
                             }}
                         >
                             <span className="mdi mdi-star" />

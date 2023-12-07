@@ -323,7 +323,7 @@ const Rekomendasi = () => {
                                                                 }}
                                                                 id={`index_member_${index}`}
                                                             >
-                                                                {item.member_name}
+                                                                {item.memberName}
                                                             </div>
                                                             <h5
                                                                 className="text-white"
@@ -333,7 +333,7 @@ const Rekomendasi = () => {
                                                                     color: "white",
                                                                 }}
                                                             >
-                                                                {item.dept_name}
+                                                                {item.deptName}
                                                             </h5>
                                                         </div>
                                                         <img
@@ -342,7 +342,7 @@ const Rekomendasi = () => {
                                                             alt={`Image ${index}`}
                                                         />
                                                         <UncontrolledTooltip target={`index_member_${index}`} placement='top'>
-                                                            {item.member_name}
+                                                            {item.memberName}
                                                         </UncontrolledTooltip>
                                                     </a>
                                                 )
@@ -429,7 +429,7 @@ const Rekomendasi = () => {
                                                                     borderRadius: "50%",
                                                                     marginRight: "5%",
                                                                 }}
-                                                                src={encodeURI(item.profile_url)}
+                                                                src={encodeURI(item.profileUrl)}
                                                                 alt="Profile Image"
                                                             />
 
@@ -451,12 +451,12 @@ const Rekomendasi = () => {
                                                                         overflow: "hidden",
                                                                         width: "95%"
                                                                     }}
-                                                                    id={`tooltip-name-${index}-${item.member_id}`}
+                                                                    id={`tooltip-name-${index}-${item.memberId}`}
                                                                 >
-                                                                    {item?.member_name}
+                                                                    {item?.memberName}
                                                                 </div>
-                                                                <UncontrolledTooltip target={`tooltip-name-${index}-${item.member_id}`}>
-                                                                    {item.member_name}
+                                                                <UncontrolledTooltip target={`tooltip-name-${index}-${item.memberId}`}>
+                                                                    {item.memberName}
                                                                 </UncontrolledTooltip>
                                                                 <div
                                                                     className="text-primary"
@@ -467,7 +467,7 @@ const Rekomendasi = () => {
                                                                         overflow: "hidden",
                                                                         width: "100%"
                                                                     }}>
-                                                                    {item.dept_name}
+                                                                    {item.deptName}
                                                                 </div>
                                                             </Col>
                                                             {
@@ -639,7 +639,7 @@ const Rekomendasi = () => {
                                                                         borderRadius: "50%",
                                                                         marginRight: "5%",
                                                                     }}
-                                                                    src={encodeURI(row.profile_url)}
+                                                                    src={encodeURI(row.profileUrl)}
                                                                     alt="Profile Image"
                                                                 />
                                                                 <Col style={{
@@ -657,14 +657,14 @@ const Rekomendasi = () => {
                                                                             overflow: "hidden",
                                                                             width: "95%"
                                                                         }}
-                                                                        id={`tooltip-name-${key}-${row.member_id}`}
+                                                                        id={`tooltip-name-${key}-${row.memberId}`}
                                                                     >
-                                                                        {row.member_name}
+                                                                        {row.memberName}
                                                                     </div>
-                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.member_id}`}>
-                                                                        {row.member_name}
+                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.memberId}`}>
+                                                                        {row.memberName}
                                                                     </UncontrolledTooltip>
-                                                                    <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
+                                                                    <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.deptName}</div>
                                                                     <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
                                                             </CardBody>
@@ -892,7 +892,7 @@ const Rekomendasi = () => {
                                                                         borderRadius: "50%",
                                                                         marginRight: "5%",
                                                                     }}
-                                                                    src={encodeURI(row.profile_url)}
+                                                                    src={encodeURI(row.profileUrl)}
                                                                     alt="Profile Image"
                                                                 />
                                                                 <Col style={{
@@ -910,15 +910,15 @@ const Rekomendasi = () => {
                                                                             overflow: "hidden",
                                                                             width: "95%"
                                                                         }}
-                                                                        id={`tooltip-name-${key}-${row.member_id}`}
+                                                                        id={`tooltip-name-${key}-${row.memberId}`}
                                                                     >
-                                                                        {row.member_name}
+                                                                        {row.memberName}
                                                                     </div>
 
-                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.member_id}`}>
-                                                                        {row.member_name}
+                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.memberId}`}>
+                                                                        {row.memberName}
                                                                     </UncontrolledTooltip>
-                                                                    <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.dept_name}</div>
+                                                                    <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.deptName}</div>
                                                                     <div className="text-warning" style={{ fontSize: "14px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%", fontWeight: "bold", marginTop: "2vh" }}>{row.category}</div>
                                                                 </Col>
                                                             </CardBody>
