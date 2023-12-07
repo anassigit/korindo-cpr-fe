@@ -25,7 +25,7 @@ const Organization = () => {
 
   const [appTabAdd, setAppTabAdd] = useState(true)
   const [appTabEdit, setAppTabEdit] = useState(false)
-  const [appAddKaryawan, setAppAddKaryawan] = useState(false)
+  const [appTabAddKaryawan, setAppAddKaryawan] = useState(false)
 
   const [loadingSpinner, setLoadingSpinner] = useState(false)
   const [appOrganizationMsg, setAppOrganizationMsg] = useState('')
@@ -337,9 +337,9 @@ const Organization = () => {
                         Edit Order Organisasi
                       </button>
                       <button
-                        className={appAddKaryawan ? "btn btn-primary" : "btn btn-light"}
+                        className={appTabAddKaryawan ? "btn btn-primary" : "btn btn-light"}
                         style={{
-                          color: appAddKaryawan ? "#fff" : '#495057',
+                          color: appTabAddKaryawan ? "#fff" : '#495057',
                           borderColor: '#A084DC',
                           borderRadius: '12px 12px 0 0'
                         }}
@@ -372,7 +372,10 @@ const Organization = () => {
                           setLoadingSpinner={setLoadingSpinner}
                         />
                         <TabAddKaryawan
-                          appAddKaryawan={appAddKaryawan}
+                          selectedDeptData={selectedDeptData}
+                          appTabAddKaryawan={appTabAddKaryawan}
+                          setAppOrganizationMsg={setAppOrganizationMsg}
+                          setLoadingSpinner={setLoadingSpinner}
                         />
                       </div>
                     </Container>

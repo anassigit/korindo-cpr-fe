@@ -9,7 +9,7 @@ import { ReactSession } from 'react-client-session';
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 
-const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) => {
+const RekomendasiModal = ({ modal, toggle, isAdd, memberId, recommendId }) => {
 
     const dispatch = useDispatch()
 
@@ -22,12 +22,12 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
         enableReinitialize: true,
 
         initialValues: {
-            employ_id: employee_id,
+            memberId: memberId,
             comment: '',
-            sticker: {},
+            stickerId: {},
         },
         validationSchema: Yup.object().shape({
-            sticker: Yup.object().test(
+            stickerId: Yup.object().test(
                 'atLeastOneSticker',
                 'Wajib dipilih minimal satu',
                 (value) => {
@@ -38,21 +38,21 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
 
 
         onSubmit: (values) => {
-            const selectedStickers = Object.entries(values.sticker)
+            const selectedStickers = Object.entries(values.stickerId)
                 .filter(([key, value]) => value)
                 .map(([key]) => parseInt(key));
 
             if (isAdd) {
                 dispatch(addRecommend({
-                    employ_id: values.employ_id,
+                    memberId: values.memberId,
                     comment: values.comment,
-                    sticker: selectedStickers,
+                    stickerId: selectedStickers,
                 }));
             } else {
                 dispatch(editRecommend({
-                    recommend_id: recommend_id,
+                    recommendId: recommendId,
                     comment: values.comment,
-                    sticker: selectedStickers,
+                    stickerId: selectedStickers,
                 }));
             }
             appRekomendasiValidInput.resetForm();
@@ -67,7 +67,7 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
     useEffect(() => {
         dispatch(getStickerListData())
         if (!isAdd) {
-            dispatch(getRecommendData({ 'recommend_id': recommend_id }))
+            dispatch(getRecommendData({ 'recommendId': recommendId }))
         }
     }, [isAdd, modal])
 
@@ -76,9 +76,9 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
             appRekomendasiValidInput.setFieldValue('comment', appRecommendData?.data?.result?.comment)
             appRecommendData?.data?.result?.stickerList.map((item, index) => {
                 if (item.selected) {
-                    appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, true);
+                    appRekomendasiValidInput.setFieldValue(`stickerId[${item.stickerId}]`, true);
                 } else {
-                    appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, false);
+                    appRekomendasiValidInput.setFieldValue(`stickerId[${item.stickerId}]`, false);
                 }
             })
         }
@@ -143,18 +143,18 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                                 <React.Fragment key={index}>
                                                     <Input
                                                         type='checkbox'
-                                                        name={`sticker[${item.stickerId}]`}
+                                                        name={`stickerId[${item.stickerId}]`}
                                                         id={item.stickerId}
                                                         onChange={(e) => {
                                                             if (e.target.checked) {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, true);
+                                                                appRekomendasiValidInput.setFieldValue(`stickerId[${item.stickerId}]`, true);
                                                             } else {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, false);
+                                                                appRekomendasiValidInput.setFieldValue(`stickerId[${item.stickerId}]`, false);
                                                             }
                                                         }}
-                                                        checked={appRekomendasiValidInput.values.sticker[item.stickerId] || false}
+                                                        checked={appRekomendasiValidInput.values.stickerId[item.stickerId] || false}
                                                         invalid={
-                                                            appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? true : false
+                                                            appRekomendasiValidInput.touched.stickerId && appRekomendasiValidInput.errors.stickerId ? true : false
                                                         }
                                                     />
                                                     <label htmlFor={item.stickerId} style={{ marginRight: "12px" }}>
@@ -167,8 +167,8 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                             )
                                         })
                                     }
-                                    {appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? (
-                                        <FormFeedback type="invalid">{appRekomendasiValidInput.errors.sticker}</FormFeedback>
+                                    {appRekomendasiValidInput.touched.stickerId && appRekomendasiValidInput.errors.stickerId ? (
+                                        <FormFeedback type="invalid">{appRekomendasiValidInput.errors.stickerId}</FormFeedback>
                                     ) : null}
                                     <div style={{ fontWeight: 'bold' }}>
                                         Keterangan
@@ -194,19 +194,19 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                                 <React.Fragment key={index}>
                                                     <Input
                                                         type='checkbox'
-                                                        name={`sticker[${item.stickerId}]`}
+                                                        name={`stickerId[${item.stickerId}]`}
                                                         id={item.stickerId}
                                                         onChange={(e) => {
                                                             if (e.target.checked) {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, true);
+                                                                appRekomendasiValidInput.setFieldValue(`stickerId[${item.stickerId}]`, true);
                                                             } else {
-                                                                appRekomendasiValidInput.setFieldValue(`sticker[${item.stickerId}]`, false);
+                                                                appRekomendasiValidInput.setFieldValue(`stickerId[${item.stickerId}]`, false);
                                                             }
                                                         }}
                                                         invalid={
-                                                            appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? true : false
+                                                            appRekomendasiValidInput.touched.stickerId && appRekomendasiValidInput.errors.stickerId ? true : false
                                                         }
-                                                        checked={appRekomendasiValidInput.values.sticker[item.stickerId] || false}
+                                                        checked={appRekomendasiValidInput.values.stickerId[item.stickerId] || false}
                                                     />
                                                     <label htmlFor={item.stickerId} style={{ marginRight: "12px" }}>
                                                         &nbsp;{item.stickerName}
@@ -217,8 +217,8 @@ const RekomendasiModal = ({ modal, toggle, isAdd, employee_id, recommend_id }) =
                                             )
                                         })
                                     }
-                                    {appRekomendasiValidInput.touched.sticker && appRekomendasiValidInput.errors.sticker ? (
-                                        <FormFeedback type="invalid">{appRekomendasiValidInput.errors.sticker}</FormFeedback>
+                                    {appRekomendasiValidInput.touched.stickerId && appRekomendasiValidInput.errors.stickerId ? (
+                                        <FormFeedback type="invalid">{appRekomendasiValidInput.errors.stickerId}</FormFeedback>
                                     ) : null}
                                     <div style={{ fontWeight: 'bold' }}>
                                         Keterangan
@@ -257,8 +257,8 @@ RekomendasiModal.propTypes = {
     modal: PropTypes.any,
     toggle: PropTypes.any,
     isAdd: PropTypes.any,
-    employee_id: PropTypes.any,
-    recommend_id: PropTypes.any,
+    memberId: PropTypes.any,
+    recommendId: PropTypes.any,
 };
 
 export default RekomendasiModal;

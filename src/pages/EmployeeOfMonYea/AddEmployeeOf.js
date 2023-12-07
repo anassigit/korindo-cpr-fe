@@ -289,7 +289,7 @@ const AddEmployeeOf = (props) => {
                                             {appAddEmployeeValidInput.values.filter === "month" ? (
                                                 Array.isArray(appKeywordListData?.data?.month) ? appKeywordListData?.data?.month.map((item, index) => (
                                                     <option key={index} value={item.keyword_Id}>
-                                                        {item.keyword_Name}
+                                                        {item.keywordName}
                                                     </option>
                                                 )) :
                                                 (
@@ -300,7 +300,7 @@ const AddEmployeeOf = (props) => {
                                             ) : (
                                                 Array.isArray(appKeywordListData?.data?.year) ? appKeywordListData?.data?.year.map((item, index) => (
                                                     <option key={index} value={item.keyword}>
-                                                        {item.keyword_Name}
+                                                        {item.keywordName}
                                                     </option>
                                                 ))
                                                 :

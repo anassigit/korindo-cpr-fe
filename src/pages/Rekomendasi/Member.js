@@ -16,7 +16,7 @@ const Member = (props) => {
 
   const [modalRekomendasi, setModalRekomendasi] = useState(false)
   const [isAdd, setIsAdd] = useState(false)
-  const [employeeId, setEmployeeId] = useState()
+  const [memberId, setMemberId] = useState()
 
   let selectedDeptData = ReactSession.get('selectedDeptData')
 
@@ -35,7 +35,7 @@ const Member = (props) => {
 
   useEffect(() => {
     if (history.location.state && history.location.state.memberId) {
-      setEmployeeId(history.location.state.memberId)
+      setMemberId(history.location.state.memberId)
       setIsAdd(true)
       setModalRekomendasi(true)
     }
@@ -99,7 +99,7 @@ const Member = (props) => {
         toggle={toggleModal}
         modal={modalRekomendasi}
         isAdd={isAdd}
-        employee_id={employeeId}
+        memberId={memberId}
       />
       <div style={{ overflow: "auto", height: "100%" }}>
         <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px' }}></span>
@@ -189,7 +189,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setEmployeeId(item.id)
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang
@@ -205,7 +205,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setEmployeeId(item.id)
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang
@@ -262,7 +262,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setEmployeeId(item.id)
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang
@@ -278,7 +278,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setEmployeeId(item.id)
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang

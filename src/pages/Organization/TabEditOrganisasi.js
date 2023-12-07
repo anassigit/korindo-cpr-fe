@@ -72,7 +72,6 @@ const TabEditOrganisasi = (props) => {
     };
 
     const moveRowDown = (index) => {
-        debugger
         if (index < deptListTemp.length - 1) {
             const updatedList = [...deptListTemp];
             [updatedList[index].order, updatedList[index + 1].order] = [updatedList[index + 1].order, updatedList[index].order];

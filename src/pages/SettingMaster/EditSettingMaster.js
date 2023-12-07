@@ -58,7 +58,7 @@ const EditSettingMaster = (props) => {
         onSubmit: (values) => {
 
             dispatch(editSettingMaster({
-                id: props.appSettingMasterData.id,
+                settingId: props.appSettingMasterData.settingId,
                 itemCd: values.itemCd,
                 itemName: values.itemName,
                 itemDesc: values.itemDesc,
@@ -71,7 +71,7 @@ const EditSettingMaster = (props) => {
 
     useEffect(() => {
         if (props.appEditSettingMaster) {
-            dispatch(getSettingDataAction({ id: props.appSettingMasterData.id }))
+            dispatch(getSettingDataAction({ settingId: props.appSettingMasterData.settingId }))
             setLoadingSpinner(true)
         } else {
             appEditSettingMasterValidInput.resetForm()

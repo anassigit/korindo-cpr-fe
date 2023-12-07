@@ -87,7 +87,6 @@ const EditEmployeeOf = (props) => {
             props.setAppEmployeeOfMonYeaMsg("")
             let dateFrom = formatDate(values.periodFrom)
             let dateTo = formatDate(values.periodTo)
-            debugger
             dispatch(editEmployeeOf({
                 award_id: props.appEmployeeOfMonYeaData.id,
                 locationId: values.location_id,

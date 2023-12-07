@@ -19,7 +19,7 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
 
     const saveHandler = () => {
         dispatch(addReport({
-            recommend_id: recommendId,
+            recommendId: recommendId,
             jenis_lapor: jenisLapor,
         }))
         toggle()

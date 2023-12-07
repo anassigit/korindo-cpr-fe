@@ -26,7 +26,7 @@ const HistoryRekomendasi = (props) => {
     const [submitEnable, setSubmitEnable] = useState(false)
 
     const [recommendId, setRecommendId] = useState()
-    const [employeeId, setEmployeeId] = useState()
+    const [memberId, setMemberId] = useState()
 
     const appRecommendList = useSelector((state) => {
         return state.rekomendasiReducer.respGetRecommendList
@@ -121,7 +121,7 @@ const HistoryRekomendasi = (props) => {
     }
 
     const toggleApply = () => {
-        dispatch(deleteRecommend({ recommend_id: recommendId }))
+        dispatch(deleteRecommend({ recommendId: recommendId }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
@@ -148,7 +148,7 @@ const HistoryRekomendasi = (props) => {
                 toggle={toggleModal}
                 modal={modalRekomendasi}
                 isAdd={isAdd}
-                recommend_id={recommendId}
+                recommendId={recommendId}
             />
             <MsgModal
                 toggle={toggleDeleteModal}
@@ -237,7 +237,7 @@ const HistoryRekomendasi = (props) => {
                                             }}
                                         >
                                             <b id={`name-recommendation-${index}`} style={{ fontSize: '1.8vh' }}>
-                                                {item.name}
+                                                {item.memberName}
                                             </b>
 
                                             <div className="text-primary" style={{ fontSize: '1.3vh', marginLeft: '0' }}>
@@ -245,7 +245,7 @@ const HistoryRekomendasi = (props) => {
                                             </div>
                                         </div>
                                         <UncontrolledTooltip target={`name-recommendation-${index}`} placement='top'>
-                                            {item.name}
+                                            {item.memberName}
                                         </UncontrolledTooltip>
 
                                     </div>
@@ -274,9 +274,9 @@ const HistoryRekomendasi = (props) => {
                                                                 style={{
                                                                     marginRight: "2px"
                                                                 }}
-                                                                src={sticker.url}
+                                                                src={sticker.stickerUrl}
                                                             />
-                                                            {sticker.name}
+                                                            {sticker.stickerName}
                                                         </div>
                                                     </>
                                                 );
@@ -291,7 +291,7 @@ const HistoryRekomendasi = (props) => {
                                                         {item.stickerList.slice(maxStickersToShow).map((row, i) => {
                                                             return (
                                                                 <div key={i}>
-                                                                    {row.name}
+                                                                    {row.memberName}
                                                                 </div>
                                                             )
                                                         })}
@@ -317,7 +317,7 @@ const HistoryRekomendasi = (props) => {
                                                         onClick={() => {
                                                             setIsAdd(false)
                                                             setModalRekomendasi(true)
-                                                            setRecommendId(item.id)
+                                                            setRecommendId(item.recommendId)
                                                         }}
                                                         className='mdi mdi-pencil text-primary'
                                                         style={{ position: "absolute", bottom: 0, right: "15%", paddingBottom: "2%", fontSize: "2.5vh" }}
@@ -325,7 +325,7 @@ const HistoryRekomendasi = (props) => {
                                                     </a>
                                                     <a
                                                         onClick={() => {
-                                                            setRecommendId(item.id)
+                                                            setRecommendId(item.recommendId)
                                                             toggleDeleteModal()
                                                         }}
                                                         className='mdi mdi-close text-danger'

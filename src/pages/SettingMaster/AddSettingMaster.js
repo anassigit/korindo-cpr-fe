@@ -68,6 +68,8 @@ const AddSettingMaster = (props) => {
         }
     }, [props.appAddSettingMaster])
 
+    console.log(appAddSettingMasterValidInput)
+
     return (
         <Container
             style={{ display: props.appAddSettingMaster ? 'block' : "none" }}
@@ -89,6 +91,31 @@ const AddSettingMaster = (props) => {
                             <div
                                 className="col-4"
                             >
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Setting Code <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        <Input
+                                            type="text"
+                                            value={appAddSettingMasterValidInput.values.itemCd}
+                                            invalid={appAddSettingMasterValidInput.touched.itemCd && appAddSettingMasterValidInput.errors.itemCd
+                                                ? true : false
+                                            }
+                                            onChange={(e) => appAddSettingMasterValidInput.setFieldValue('itemCd', e.target.value)}
+                                        />
+                                        <FormFeedback type="invalid">{appAddSettingMasterValidInput.errors.itemCd}</FormFeedback>
+                                    </div>
+                                </div>
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >

@@ -99,7 +99,7 @@ const EmployeeOfMonYea = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "location_name",
+            dataField: "locationName",
             text: "Lokasi",
             sort: true,
             headerStyle: { textAlign: 'center' },
