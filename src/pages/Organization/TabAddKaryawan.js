@@ -9,6 +9,7 @@ import ModalKaryawan from './ModalKaryawan';
 const TabAddKaryawan = (props) => {
 
   const [modal, setModal] = useState()
+  const [isAdd, setIsAdd] = useState(false)
 
   const appMemberListData = useSelector((state) => {
     return state.organizationReducer.respGetMemberListOrg
@@ -65,7 +66,10 @@ const TabAddKaryawan = (props) => {
       formatter: (cellContent, cellData) => {
         return (
           <React.Fragment>
-            <a id={`edit-${cellData.memberCd}`} className="mdi mdi-pencil text-primary" onClick={() => toggle(cellData)} />
+            <a id={`edit-${cellData.memberCd}`} className="mdi mdi-pencil text-primary" onClick={() => {
+              setIsAdd(false)
+              toggle(cellData)
+            }} />
             <a id={`delete-${cellData.memberCd}`} className="mdi mdi-delete text-danger" onClick={() => toggle(cellData)} />
             <UncontrolledTooltip target={`edit-${cellData.memberCd}`}>Edit</UncontrolledTooltip>
             <UncontrolledTooltip target={`delete-${cellData.memberCd}`}>Delete</UncontrolledTooltip>
@@ -95,6 +99,12 @@ const TabAddKaryawan = (props) => {
   const toggleApply = () => {
     setModal(!modal)
   }
+
+  useEffect(() => {
+    if (appMemberListData) {
+      props.setLoadingSpinner(false)
+    }
+  }, [appMemberListData])
 
   return (
     <div style={{ height: '100%', margin: '0 1px 0 1px' }}>
@@ -136,7 +146,12 @@ const TabAddKaryawan = (props) => {
                 </div>
               </div>
               <div>
-                <Button>
+                <Button
+                  onClick={() => {
+                    setIsAdd(true)
+                    toggle()
+                  }}
+                >
                   <span className='mdi mdi-plus' />Add
                 </Button>
               </div>
@@ -155,6 +170,11 @@ const TabAddKaryawan = (props) => {
               modal={modal}
               toggle={toggle}
               toggleApply={toggleApply}
+              isAdd={isAdd}
+              selectedDeptData={props.selectedDeptData}
+              setAppOrganizationMsg={props.setAppOrganizationMsg}
+              setLoadingSpinner={props.setLoadingSpinner}
+              appMemberTabelSearch={appMemberTabelSearch}
             />
           </>
         )

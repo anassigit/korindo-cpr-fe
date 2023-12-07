@@ -2,15 +2,18 @@ import {
   DELETE_MAPPING_DEPT,
   EDIT_MAPPING_DEPT,
   GET_DEPT_LIST_ORG,
+  GET_MEMBER_LIST_FOR_ADD,
   GET_MEMBER_LIST_ORG,
   GET_ORGANIZATION_LIST,
   MSG_ADD,
   MSG_DELETE,
   RESET_MESSAGE,
   RESP_GET_DEPT_LIST_ORG,
+  RESP_GET_MEMBER_LIST_FOR_ADD,
   RESP_GET_MEMBER_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
-  SAVE_MAPPING_DEPT
+  SAVE_MAPPING_DEPT,
+  SAVE_MAPPING_MEMBER
 } from "./actionTypes"
 
 export const getDeptListOrg = resp => ({
@@ -43,15 +46,15 @@ export const respGetMemberListOrg = resp => ({
   payload: resp,
 })
 
-// export const respGetRecommendList = resp => ({
-//   type: RESP_GET_RECOMMEND_LIST,
-//   payload: resp,
-// })
+export const getMemberListForAdd = (req) => ({
+  type: GET_MEMBER_LIST_FOR_ADD,
+  payload: req,
+})
 
-// export const getRecommendData = (req) => ({
-//   type: GET_RECOMMEND,
-//   payload: req,
-// })
+export const respGetMemberListForAdd = resp => ({
+  type: RESP_GET_MEMBER_LIST_FOR_ADD,
+  payload: resp,
+})
 
 // export const respGetRecommend = resp => ({
 //   type: RESP_GET_RECOMMEND,
@@ -70,6 +73,11 @@ export const respGetMemberListOrg = resp => ({
 
 export const saveMappingDept = (req) => ({
   type: SAVE_MAPPING_DEPT,
+  payload: req,
+})
+
+export const saveMappingMember = (req) => ({
+  type: SAVE_MAPPING_MEMBER,
   payload: req,
 })
 

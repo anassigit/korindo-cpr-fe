@@ -3,10 +3,11 @@ import { call, put, takeEvery } from "redux-saga/effects"
 import {
   DELETE_MAPPING_DEPT,
   EDIT_MAPPING_DEPT,
-  GET_DEPT_LIST_ORG, GET_MEMBER_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT
+  GET_DEPT_LIST_ORG, GET_MEMBER_LIST_FOR_ADD, GET_MEMBER_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT, SAVE_MAPPING_MEMBER
 } from "./actionTypes"
 import {
   respGetDeptListOrg,
+  respGetMemberListForAdd,
   respGetMemberListOrg,
   respGetOrganizationList
 } from "./actions"
@@ -14,8 +15,9 @@ import {
 import {
   deleteMappingDeptBE,
   editMappingDeptBE,
-  getDeptListOrgBE, getMemberListOrgBE, getOrganizationListBE,
-  saveMappingDeptBE
+  getDeptListOrgBE, getMemberListForAddBE, getMemberListOrgBE, getOrganizationListBE,
+  saveMappingDeptBE,
+  saveMappingMemberBE
 } from "helpers/backend_helper"
 import { msgAdd, msgDelete, msgEdit } from "store/actions"
 
@@ -61,6 +63,20 @@ function* fetchGetMemberList({ payload: req }) {
   }
 }
 
+function* fetchGetMemberListForAdd({ payload: req }) {
+  try {
+    const response = yield call(getMemberListForAddBE, req)
+    if (response.status == 1) {
+      yield put(respGetMemberListForAdd(response))
+    } else {
+      yield put(respGetMemberListForAdd(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetMemberListForAdd({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
 function* fetchSaveMappingDept({ payload: req }) {
   try {
     const response = yield call(saveMappingDeptBE, req)
@@ -74,6 +90,21 @@ function* fetchSaveMappingDept({ payload: req }) {
     yield put(msgAdd({ "status": 0, "message": "Error Save Data" }))
   }
 }
+
+function* fetchSaveMappingMember({ payload: req }) {
+  try {
+    const response = yield call(saveMappingMemberBE, req)
+    if (response.status == 1) {
+      yield put(msgAdd(response))
+    } else {
+      yield put(msgAdd(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgAdd({ "status": 0, "message": "Error Save Data" }))
+  }
+}
+
 function* fetchEditMappingDept({ payload: req }) {
   try {
     const response = yield call(editMappingDeptBE, req)
@@ -107,7 +138,9 @@ function* organizationSaga() {
   yield takeEvery(GET_DEPT_LIST_ORG, fetchGetDeptListOrg)
   yield takeEvery(GET_ORGANIZATION_LIST, fetchGetOrganizationList)
   yield takeEvery(GET_MEMBER_LIST_ORG, fetchGetMemberList)
+  yield takeEvery(GET_MEMBER_LIST_FOR_ADD, fetchGetMemberListForAdd)
   yield takeEvery(SAVE_MAPPING_DEPT, fetchSaveMappingDept)
+  yield takeEvery(SAVE_MAPPING_MEMBER, fetchSaveMappingMember)
   yield takeEvery(EDIT_MAPPING_DEPT, fetchEditMappingDept)
   yield takeEvery(DELETE_MAPPING_DEPT, fetchDeleteMappingDept)
 

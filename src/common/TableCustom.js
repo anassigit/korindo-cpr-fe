@@ -51,7 +51,7 @@ const TableCustom = props => {
             hover
             condensed
             selectRow={props.selectRow}
-            rowEvents={props.rowClick }
+            rowEvents={props.rowClick}
         />
     );
 }
