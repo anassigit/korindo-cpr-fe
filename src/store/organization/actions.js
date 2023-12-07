@@ -2,11 +2,13 @@ import {
   DELETE_MAPPING_DEPT,
   EDIT_MAPPING_DEPT,
   GET_DEPT_LIST_ORG,
+  GET_MEMBER_LIST_ORG,
   GET_ORGANIZATION_LIST,
   MSG_ADD,
   MSG_DELETE,
   RESET_MESSAGE,
   RESP_GET_DEPT_LIST_ORG,
+  RESP_GET_MEMBER_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
   SAVE_MAPPING_DEPT
 } from "./actionTypes"
@@ -31,15 +33,15 @@ export const respGetOrganizationList = resp => ({
   payload: resp,
 })
 
-// export const respGetSearch = resp => ({
-//   type: RESP_GET_SEARCH,
-//   payload: resp,
-// })
+export const getMemberListOrgData = (req) => ({
+  type: GET_MEMBER_LIST_ORG,
+  payload: req,
+})
 
-// export const getRecommendListData = (req) => ({
-//   type: GET_RECOMMEND_LIST,
-//   payload: req,
-// })
+export const respGetMemberListOrg = resp => ({
+  type: RESP_GET_MEMBER_LIST_ORG,
+  payload: resp,
+})
 
 // export const respGetRecommendList = resp => ({
 //   type: RESP_GET_RECOMMEND_LIST,

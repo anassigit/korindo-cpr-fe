@@ -2,12 +2,14 @@ import {
   DELETE_MAPPING_DEPT,
   EDIT_MAPPING_DEPT,
   GET_DEPT_LIST_ORG,
+  GET_MEMBER_LIST_ORG,
   GET_ORGANIZATION_LIST,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
   RESP_GET_DEPT_LIST_ORG,
+  RESP_GET_MEMBER_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
   SAVE_MAPPING_DEPT
 } from "./actionTypes"
@@ -15,6 +17,7 @@ import {
 const INIT_STATE = {
   respGetDeptListOrg: {},
   respGetOrganizationList: {},
+  respGetMemberListOrg: {},
   msgAdd: '',
   msgEdit: '',
   msgDelete: '',
@@ -40,6 +43,15 @@ const organizationReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         respGetOrganizationList: action.payload,
+      }
+    case GET_MEMBER_LIST_ORG:
+      return {
+        ...state,
+      }
+    case RESP_GET_MEMBER_LIST_ORG:
+      return {
+        ...state,
+        respGetMemberListOrg: action.payload,
       }
     case SAVE_MAPPING_DEPT:
       return {

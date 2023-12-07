@@ -3,17 +3,18 @@ import { call, put, takeEvery } from "redux-saga/effects"
 import {
   DELETE_MAPPING_DEPT,
   EDIT_MAPPING_DEPT,
-  GET_DEPT_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT
+  GET_DEPT_LIST_ORG, GET_MEMBER_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT
 } from "./actionTypes"
 import {
   respGetDeptListOrg,
+  respGetMemberListOrg,
   respGetOrganizationList
 } from "./actions"
 
 import {
   deleteMappingDeptBE,
   editMappingDeptBE,
-  getDeptListOrgBE, getOrganizationListBE,
+  getDeptListOrgBE, getMemberListOrgBE, getOrganizationListBE,
   saveMappingDeptBE
 } from "helpers/backend_helper"
 import { msgAdd, msgDelete, msgEdit } from "store/actions"
@@ -43,6 +44,20 @@ function* fetchGetOrganizationList({ payload: req }) {
   } catch (error) {
     console.log(error);
     yield put(respGetOrganizationList({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
+function* fetchGetMemberList({ payload: req }) {
+  try {
+    const response = yield call(getMemberListOrgBE, req)
+    if (response.status == 1) {
+      yield put(respGetMemberListOrg(response))
+    } else {
+      yield put(respGetMemberListOrg(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetMemberListOrg({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
@@ -91,6 +106,7 @@ function* organizationSaga() {
 
   yield takeEvery(GET_DEPT_LIST_ORG, fetchGetDeptListOrg)
   yield takeEvery(GET_ORGANIZATION_LIST, fetchGetOrganizationList)
+  yield takeEvery(GET_MEMBER_LIST_ORG, fetchGetMemberList)
   yield takeEvery(SAVE_MAPPING_DEPT, fetchSaveMappingDept)
   yield takeEvery(EDIT_MAPPING_DEPT, fetchEditMappingDept)
   yield takeEvery(DELETE_MAPPING_DEPT, fetchDeleteMappingDept)

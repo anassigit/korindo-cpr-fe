@@ -3,58 +3,58 @@ import PropTypes from 'prop-types'
 import { UncontrolledTooltip } from 'reactstrap';
 import TableCustomNoPage from 'common/TableCustomNoPage';
 import { useSelector } from 'react-redux';
-import { getPositionListDataAction } from 'store/actions';
+import { getMemberListDataAction, getMemberListOrgData } from 'store/actions';
 
 const TabAddKaryawan = (props) => {
 
-  const appPositionListData = useSelector((state) => {
-    return state.positionMasterReducer.respGetPositionList
+  const appMemberListData = useSelector((state) => {
+    return state.organizationReducer.respGetMemberListOrg
   });
 
-  const [appPositionTabelSearch, setAppPositionTabelSearch] = useState({
+  const [appMemberTabelSearch, setAppMemberTabelSearch] = useState({
     page: 1,
-    limit: 15,
+    limit: 10,
     offset: 0,
     sort: "",
     order: "",
     search:
     {
-      search: "",
+      orgCd: "",
     }
   });
 
-  const appPositionColumn = [
+  const appMemberColumn = [
     {
-      dataField: "positionCd",
-      text: "Position Code",
+      dataField: "memberId",
+      text: "Member ID",
       sort: true,
       style: { textAlign: 'center' },
       headerStyle: { textAlign: 'center' },
     },
     {
-      dataField: "positionName",
-      text: "Nama Position",
+      dataField: "memberName",
+      text: "Nama",
       sort: true,
       headerStyle: { textAlign: 'center' },
     },
     {
-      dataField: "levelCd",
-      text: "Level Code",
+      dataField: "deptName",
+      text: "Department",
       sort: true,
       headerStyle: { textAlign: 'center' },
     },
     {
-      dataField: "levelName",
-      text: "Nama Level",
+      dataField: "memberName",
+      text: "Jabatan",
       sort: true,
       headerStyle: { textAlign: 'center' },
     },
-    {
-      dataField: "locationName",
-      text: "Lokasi",
-      sort: true,
-      headerStyle: { textAlign: 'center' },
-    },
+    // {
+    //   dataField: "locationName",
+    //   text: "Handphone",
+    //   sort: true,
+    //   headerStyle: { textAlign: 'center' },
+    // },
     {
       text: "Actions",
       headerStyle: { textAlign: 'center' },
@@ -62,10 +62,10 @@ const TabAddKaryawan = (props) => {
       formatter: (cellContent, cellData) => {
         return (
           <React.Fragment>
-            <a id={`edit-${cellData.positionCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-            <a id={`delete-${cellData.positionCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-            <UncontrolledTooltip target={`edit-${cellData.positionCd}`}>Edit</UncontrolledTooltip>
-            <UncontrolledTooltip target={`delete-${cellData.positionCd}`}>Delete</UncontrolledTooltip>
+            <a id={`edit-${cellData.memberCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+            <a id={`delete-${cellData.memberCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+            <UncontrolledTooltip target={`edit-${cellData.memberCd}`}>Edit</UncontrolledTooltip>
+            <UncontrolledTooltip target={`delete-${cellData.memberCd}`}>Delete</UncontrolledTooltip>
           </React.Fragment>
         )
       }
@@ -73,20 +73,21 @@ const TabAddKaryawan = (props) => {
   ]
 
   return (
-    <div
-      hidden={!props.appAddKaryawan}
-    >
-
-      <TableCustomNoPage
-        keyField={"positionCd"}
-        columns={appPositionColumn}
-        redukResponse={appPositionListData}
-        appdata={appPositionListData?.data != null && appPositionListData?.data.list ? appPositionListData?.data.list : []}
-        appdataTotal={appPositionListData?.data != null ? appPositionListData?.data.count : 0}
-        searchSet={setAppPositionTabelSearch}
-        searchGet={appPositionTabelSearch}
-        redukCall={getPositionListDataAction}
-      />
+    <div style={{ height: '100%', margin: '0 1px 0 1px' }}>
+      {
+        props.appAddKaryawan && (
+          <TableCustomNoPage
+            keyField={"memberId"}
+            columns={appMemberColumn}
+            redukResponse={appMemberListData}
+            appdata={appMemberListData?.data != null && appMemberListData?.data.list ? appMemberListData?.data.list : []}
+            appdataTotal={appMemberListData?.data != null ? appMemberListData?.data.count : 0}
+            searchSet={setAppMemberTabelSearch}
+            searchGet={appMemberTabelSearch}
+            redukCall={getMemberListOrgData}
+          />
+        )
+      }
     </div>
   )
 }
