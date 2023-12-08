@@ -17,6 +17,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
         "2": true,
     })
     const [selectedDeptName, setSelectedDeptName] = useState()
+    const [selectedMemberData, setSelectedMemberData] = useState({})
 
     const appOrganizationListData = useSelector((state) => {
         return state.organizationReducer.respGetOrganizationList
@@ -51,7 +52,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
         order: "",
         search:
         {
-            any: appAddMemberListForAddValidInput.values.search,
+            any: '',
         }
     });
 
@@ -66,14 +67,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                 onClick: (e, column, columnIndex, rowIndex) => {
                     const clickedRowData = rowIndex
                     setAppOrganizationMsg('')
-                    dispatch(
-                        saveMappingMember({
-                            orgCd: selectedDeptData.orgCd,
-                            memberId: clickedRowData.memberId,
-                        })
-                    );
-                    toggle()
-                    setLoadingSpinner(true)
+                    setSelectedMemberData(clickedRowData)
                 },
             },
         },
@@ -86,14 +80,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                 onClick: (e, column, columnIndex, rowIndex) => {
                     const clickedRowData = rowIndex
                     setAppOrganizationMsg('')
-                    dispatch(
-                        saveMappingMember({
-                            orgCd: selectedDeptData.orgCd,
-                            memberId: clickedRowData.memberId,
-                        })
-                    );
-                    toggle()
-                    setLoadingSpinner(true)
+                    setSelectedMemberData(clickedRowData)
                 },
             },
         },
@@ -106,15 +93,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             events: {
                 onClick: (e, column, columnIndex, rowIndex) => {
                     const clickedRowData = rowIndex
-                    setAppOrganizationMsg('')
-                    dispatch(
-                        saveMappingMember({
-                            orgCd: selectedDeptData.orgCd,
-                            memberId: clickedRowData.memberId,
-                        })
-                    );
-                    toggle()
-                    setLoadingSpinner(true)
+                    setSelectedMemberData(clickedRowData)
                 },
             },
             formatter: () => {
@@ -129,19 +108,49 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             events: {
                 onClick: (e, column, columnIndex, rowIndex) => {
                     const clickedRowData = rowIndex
-                    setAppOrganizationMsg('')
-                    dispatch(
-                        saveMappingMember({
-                            orgCd: selectedDeptData.orgCd,
-                            memberId: clickedRowData.memberId,
-                        })
-                    );
-                    toggle()
-                    setLoadingSpinner(true)
+                    setSelectedMemberData(clickedRowData)
                 },
             },
         },
     ]
+
+    const handleApply = () => {
+        setAppOrganizationMsg('')
+        dispatch(
+            saveMappingMember({
+                orgCd: selectedDeptData.orgCd,
+                memberId: selectedMemberData.memberId,
+            })
+        );
+        appAddMemberListForAddValidInput.resetForm()
+        setAppMemberForAddTabelSearch((prevState) => ({
+            ...prevState,
+            search: {
+                any: '',
+            },
+        }))
+        setLoadingSpinner(true)
+        setSelectedMemberData(null)
+        toggle()
+    }
+
+    useEffect(() => {
+        if (appAddMemberListForAddValidInput.values.search) {
+            debugger
+            setAppMemberForAddTabelSearch((prevState) => ({
+                ...prevState,
+                search: {
+                    any: appAddMemberListForAddValidInput.values.search,
+                },
+            }))
+        }
+    }, [appAddMemberListForAddValidInput.values.search])
+
+    useEffect(() => {
+        if (selectedMemberData) {
+            appAddMemberListForAddValidInput.setFieldValue('search', selectedMemberData.memberName)
+        }
+    }, [selectedMemberData])
 
     useEffect(() => {
         if (appMsgAdd) {
@@ -332,6 +341,8 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             <ModalBody
                 style={{
                     padding: '16px 16px 0 16px',
+                    overflow: 'auto',
+                    maxHeight: '75vh',
                 }}
             >
                 {
@@ -363,6 +374,9 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                             }}
                                         >
                                             <span className='mdi mdi-magnify' />
+                                            {/* <span>
+                                                Terpilih
+                                            </span> */}
                                         </Button>
                                     </div>
 
@@ -401,18 +415,28 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                     selectedDeptData2.deptName ? (
                         <>
                             <span>
-                                Department <b>{selectedDeptData2.deptName}</b> dipilih
+                                <b>{selectedDeptData2.deptName}</b> dipilih
                             </span>
                             <Button
-                            onClick={toggleApply}
+                                onClick={toggleApply}
                             >
                                 Apply
                             </Button>
                         </>
                     ) :
-                        (
-                            null
-                        )
+                        selectedMemberData?.memberName ? (
+                            <>
+                                <span>
+                                    <b>{selectedMemberData?.memberName}</b> dipilih
+                                </span>
+                                <Button
+                                    onClick={handleApply}
+                                >
+                                    Apply
+                                </Button>
+                            </>
+                        ) :
+                        null
                 }
                 <Button className='btn btn-danger' style={{ border: 'none', color: "white", }} onClick={toggle}>
                     Close

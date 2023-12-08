@@ -126,6 +126,7 @@ const Member = (props) => {
           {
             Array.isArray(props.appMemberList?.data?.list) &&
             props?.appMemberList?.data?.list.map((item, index) => {
+              debugger
               return (
                 <React.Fragment key={index}>
                   <a
@@ -157,16 +158,16 @@ const Member = (props) => {
                           }}
                         >{item.deptName ? item.deptName : item.deptName}</Col>
                         <Col xs='3'
-                          id={`index-${index}`}
+                          id={`memberId-${item.memberId}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             paddingRight: "1%"
                           }}
-                        >{item.name ? item.name : item.memberName}</Col>
-                        <UncontrolledTooltip target={`index-${index}`} placement='top'>
-                          {item.name}
+                        >{item.memberName ? item.memberName : item.memberName}</Col>
+                        <UncontrolledTooltip target={`memberId-${item.memberId}`} placement='top'>
+                          {item.memberName}
                         </UncontrolledTooltip>
                         <Col xs='2' style={{}}>{item.position}</Col>
                         <Col
@@ -228,16 +229,22 @@ const Member = (props) => {
 
                       <>
                         <Col xs='4'
-                          id={`index-${index}`}
+                          id={`memberId-${item.memberId}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
 
                           }}
-                        >{item.name ? item.name : item.memberName}</Col>
-                        <UncontrolledTooltip target={`index-${index}`} placement='top'>
-                          {item.name}
+                        >{item.memberName ? item.memberName : item.memberName}</Col>
+                        <UncontrolledTooltip target={`memberId-${item.memberId}`} placement='top'>
+                          <img
+                            width={'120px'}
+                            src={item.profileUrl}
+                          />
+                          <div>
+                            {item.memberName}
+                          </div>
                         </UncontrolledTooltip>
                         <Col xs='3' style={{}}>{item.position}</Col>
                         <Col

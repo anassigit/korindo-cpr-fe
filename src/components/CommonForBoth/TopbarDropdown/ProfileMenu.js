@@ -58,6 +58,7 @@ const ProfileMenu = props => {
 
   useEffect(() => {
 
+    debugger
     const storedUser = localStorage.getItem("user");
     const storedMemberId = localStorage.getItem("memberId");
     const storedProfileUrl = localStorage.getItem("profileUrl");

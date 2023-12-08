@@ -12,8 +12,9 @@ function* loginUser({ payload: { user, history } }) {
   try {
     const response = yield call(login, user);
     if (response.status == 1) {
+      debugger
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("user", JSON.stringify(response.data.memberName));
       localStorage.setItem("memberId", JSON.stringify(response.data.memberId));
       localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl));
       const res = yield call(getMenuBE)
@@ -37,7 +38,7 @@ function* reloginUser({ payload: { user, history } }) {
     const response = yield call(login, user);
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("user", JSON.stringify(response.data.memberName));
       localStorage.setItem("memberId", JSON.stringify(response.data.memberId));
       localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl));
       yield put(reloginSuccess(response));

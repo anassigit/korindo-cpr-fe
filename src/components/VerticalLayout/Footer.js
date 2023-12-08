@@ -11,7 +11,7 @@ const Footer = () => {
               {/* ©Korindo {new Date().getFullYear()} */}
               <span className="mdi mdi-phone"></span> KTA Help Contact: &nbsp;
               <b>
-              Venna (HRD & GA Division, ext. 214), &nbsp; Nalu (HRD & GA Division, ext. 217)
+              Venna (HRD & GA Division, ext. 214), &nbsp;  Abdul (HRD & GA Division, ext. 231)
               </b>
             </Col>
             <Col md={5}>

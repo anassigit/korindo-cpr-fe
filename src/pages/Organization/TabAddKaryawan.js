@@ -73,14 +73,15 @@ const TabAddKaryawan = (props) => {
     {
       text: "Actions",
       headerStyle: { textAlign: 'center' },
-      style: { justifyContent: 'center', display: 'flex', gap: '1vw', fontSize: '16px' },
+      style: { justifyContent: 'center', alignItems: 'center', display: 'flex', gap: '1vw', fontSize: '16px' },
       formatter: (cellContent, cellData) => {
         return (
           <React.Fragment>
-            <a id={`move-${cellData.memberId}`} className="mdi mdi-autorenew text-primary" onClick={() => {
+            <svg id={`move-${cellData.memberId}`} onClick={() => {
               setIsAdd(false)
               toggle(cellData)
-            }} />
+            }}
+              xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="18px" fill="#A084DC"><g><rect fill="none" height="24" width="24" /></g><g><g><path d="M3,13c0-2.45,1.76-4.47,4.08-4.91L5.59,9.59L7,11l4-4.01L7,3L5.59,4.41l1.58,1.58l0,0.06C3.7,6.46,1,9.42,1,13 c0,3.87,3.13,7,7,7h3v-2H8C5.24,18,3,15.76,3,13z" /><path d="M13,13v7h9v-7H13z M20,18h-5v-3h5V18z" /><rect height="7" width="9" x="13" y="4" /></g></g></svg>
             <a id={`delete-${cellData.memberId}`} className="mdi mdi-delete text-danger" onClick={() => {
               toggleDeleteModal(cellData)
             }} />
@@ -109,6 +110,9 @@ const TabAddKaryawan = (props) => {
   const toggle = (data) => {
     if (data?.memberId) {
       setMemberId(data.memberId)
+    } else {
+      setMemberId(null)
+      setSelectedDeptData2({})
     }
     setModal(!modal)
   }
@@ -131,6 +135,9 @@ const TabAddKaryawan = (props) => {
   const toggleDeleteModal = (data) => {
     if (data?.memberId) {
       setMemberId(data.memberId)
+    } else {
+      setMemberId(null)
+      setSelectedDeptData2({})
     }
     setModalDelete(!modalDelete)
   }
