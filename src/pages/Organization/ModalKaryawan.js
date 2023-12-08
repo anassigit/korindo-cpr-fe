@@ -136,7 +136,6 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
 
     useEffect(() => {
         if (appAddMemberListForAddValidInput.values.search) {
-            debugger
             setAppMemberForAddTabelSearch((prevState) => ({
                 ...prevState,
                 search: {
@@ -436,9 +435,17 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                 </Button>
                             </>
                         ) :
-                        null
+                            null
                 }
-                <Button className='btn btn-danger' style={{ border: 'none', color: "white", }} onClick={toggle}>
+                <Button className='btn btn-danger' style={{ border: 'none', color: "white", }} onClick={() => {
+                    setAppMemberForAddTabelSearch((prevState) => ({
+                        ...prevState,
+                        search: {
+                            any: '',
+                        },
+                    }))
+                    toggle()
+                }}>
                     Close
                 </Button>
             </ModalFooter>
