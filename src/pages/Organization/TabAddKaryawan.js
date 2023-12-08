@@ -107,7 +107,7 @@ const TabAddKaryawan = (props) => {
   }, [props.selectedDeptData])
 
   const toggle = (data) => {
-    if (data.memberId) {
+    if (data?.memberId) {
       setMemberId(data.memberId)
     }
     setModal(!modal)
@@ -129,7 +129,7 @@ const TabAddKaryawan = (props) => {
   }
 
   const toggleDeleteModal = (data) => {
-    if (data.memberId) {
+    if (data?.memberId) {
       setMemberId(data.memberId)
     }
     setModalDelete(!modalDelete)
