@@ -85,22 +85,6 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             },
         },
         {
-            dataField: "deptName",
-            text: "Department",
-            sort: true,
-            style: { textAlign: 'center' },
-            headerStyle: { textAlign: 'center' },
-            events: {
-                onClick: (e, column, columnIndex, rowIndex) => {
-                    const clickedRowData = rowIndex
-                    setSelectedMemberData(clickedRowData)
-                },
-            },
-            formatter: () => {
-                return <span className='unselectable opacity-50'>(belum ada)</span>
-            }
-        },
-        {
             dataField: "positionName",
             text: "Posisi",
             sort: true,
