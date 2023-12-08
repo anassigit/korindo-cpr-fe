@@ -150,3 +150,5 @@ export const saveMappingMemberBE = req => postWithParam("rest/OrganizationMaster
 export const editMappingDeptBE = req => postWithParam("rest/OrganizationMasterRest/updateDept", req)
 
 export const deleteMappingDeptBE = req => postWithParam("rest/OrganizationMasterRest/deleteDept", req)
+
+export const deleteMappingMemberBE = req => postWithParam("rest/OrganizationMasterRest/deleteMember", req)

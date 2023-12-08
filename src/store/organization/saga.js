@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
   DELETE_MAPPING_DEPT,
+  DELETE_MAPPING_MEMBER,
   EDIT_MAPPING_DEPT,
   GET_DEPT_LIST_ORG, GET_MEMBER_LIST_FOR_ADD, GET_MEMBER_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT, SAVE_MAPPING_MEMBER
 } from "./actionTypes"
@@ -14,6 +15,7 @@ import {
 
 import {
   deleteMappingDeptBE,
+  deleteMappingMemberBE,
   editMappingDeptBE,
   getDeptListOrgBE, getMemberListForAddBE, getMemberListOrgBE, getOrganizationListBE,
   saveMappingDeptBE,
@@ -133,6 +135,20 @@ function* fetchDeleteMappingDept({ payload: req }) {
   }
 }
 
+function* fetchDeleteMappingMember({ payload: req }) {
+  try {
+    const response = yield call(deleteMappingMemberBE, req)
+    if (response.status == 1) {
+      yield put(msgDelete(response))
+    } else {
+      yield put(msgDelete(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgDelete({ "status": 0, "message": "Error Delete Data" }))
+  }
+}
+
 function* organizationSaga() {
 
   yield takeEvery(GET_DEPT_LIST_ORG, fetchGetDeptListOrg)
@@ -143,6 +159,7 @@ function* organizationSaga() {
   yield takeEvery(SAVE_MAPPING_MEMBER, fetchSaveMappingMember)
   yield takeEvery(EDIT_MAPPING_DEPT, fetchEditMappingDept)
   yield takeEvery(DELETE_MAPPING_DEPT, fetchDeleteMappingDept)
+  yield takeEvery(DELETE_MAPPING_MEMBER, fetchDeleteMappingMember)
 
 }
 

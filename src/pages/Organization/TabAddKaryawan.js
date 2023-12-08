@@ -1,18 +1,29 @@
 import TableCustomNoPage from 'common/TableCustomNoPage';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, UncontrolledTooltip } from 'reactstrap';
-import { getMemberListOrgData } from 'store/actions';
+import { deleteMappingMember, getMemberListOrgData } from 'store/actions';
 import ModalKaryawan from './ModalKaryawan';
+import MsgModal from 'components/Common/MsgModal';
 
 const TabAddKaryawan = (props) => {
 
+  const dispatch = useDispatch()
+
   const [modal, setModal] = useState()
+  const [modalDelete, setModalDelete] = useState()
   const [isAdd, setIsAdd] = useState(false)
+
+  const [memberId, setMemberId] = useState()
+  const [searchVal, setSearchVal] = useState()
 
   const appMemberListData = useSelector((state) => {
     return state.organizationReducer.respGetMemberListOrg
+  });
+
+  const appMsgDelete = useSelector((state) => {
+    return state.organizationReducer.msgDelete
   });
 
   const [appMemberTabelSearch, setAppMemberTabelSearch] = useState({
@@ -24,6 +35,7 @@ const TabAddKaryawan = (props) => {
     search:
     {
       orgCd: props.selectedDeptData.orgCd,
+      search: searchVal,
     }
   });
 
@@ -66,13 +78,15 @@ const TabAddKaryawan = (props) => {
       formatter: (cellContent, cellData) => {
         return (
           <React.Fragment>
-            <a id={`edit-${cellData.memberCd}`} className="mdi mdi-pencil text-primary" onClick={() => {
+            <a id={`edit-${cellData.memberId}`} className="mdi mdi-pencil text-primary" onClick={() => {
               setIsAdd(false)
               toggle(cellData)
             }} />
-            <a id={`delete-${cellData.memberCd}`} className="mdi mdi-delete text-danger" onClick={() => toggle(cellData)} />
-            <UncontrolledTooltip target={`edit-${cellData.memberCd}`}>Edit</UncontrolledTooltip>
-            <UncontrolledTooltip target={`delete-${cellData.memberCd}`}>Delete</UncontrolledTooltip>
+            <a id={`delete-${cellData.memberId}`} className="mdi mdi-delete text-danger" onClick={() => {
+              toggleDeleteModal(cellData)
+            }} />
+            <UncontrolledTooltip target={`edit-${cellData.memberId}`}>Edit</UncontrolledTooltip>
+            <UncontrolledTooltip target={`delete-${cellData.memberId}`}>Delete</UncontrolledTooltip>
           </React.Fragment>
         )
       }
@@ -85,6 +99,7 @@ const TabAddKaryawan = (props) => {
         return {
           ...prevState,
           search: {
+            ...prevState.search,
             orgCd: props.selectedDeptData.orgCd,
           },
         };
@@ -97,7 +112,17 @@ const TabAddKaryawan = (props) => {
   }
 
   const toggleApply = () => {
-    setModal(!modal)
+    setModalDelete(!modalDelete)
+    dispatch(deleteMappingMember({
+      memberId: memberId
+    }))
+  }
+
+  const toggleDeleteModal = (data) => {
+    if (data.memberId) {
+      setMemberId(data.memberId)
+    }
+    setModalDelete(!modalDelete)
   }
 
   useEffect(() => {
@@ -105,6 +130,42 @@ const TabAddKaryawan = (props) => {
       props.setLoadingSpinner(false)
     }
   }, [appMemberListData])
+
+  useEffect(() => {
+    if (appMsgDelete.status) {
+      dispatch(getMemberListOrgData(
+        setAppMemberTabelSearch((prevState) => {
+          return {
+            ...prevState,
+            search: {
+              ...prevState.search,
+              search: searchVal,
+            },
+          };
+        })
+      ))
+    }
+  }, [appMsgDelete])
+
+  const handleSearch = () => {
+    dispatch(getMemberListOrgData(
+      setAppMemberTabelSearch((prevState) => {
+        return {
+          ...prevState,
+          search: {
+            ...prevState.search,
+            search: searchVal,
+          },
+        };
+      })
+    ));
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <div style={{ height: '100%', margin: '0 1px 0 1px' }}>
@@ -137,12 +198,17 @@ const TabAddKaryawan = (props) => {
                 <div
                   className='col-lg-7 col-6 mx-3'
                 >
-                  <Input />
+                  <Input
+                    type='search'
+                    value={searchVal}
+                    onChange={(e) => {
+                      setSearchVal(e.target.value)
+                    }}
+                    onKeyDown={handleKeyPress}
+                  />
                 </div>
                 <div>
-                  <Button>
-                    Search
-                  </Button>
+                  <Button onClick={handleSearch}>Search</Button>
                 </div>
               </div>
               <div>
@@ -175,6 +241,12 @@ const TabAddKaryawan = (props) => {
               setAppOrganizationMsg={props.setAppOrganizationMsg}
               setLoadingSpinner={props.setLoadingSpinner}
               appMemberTabelSearch={appMemberTabelSearch}
+            />
+            <MsgModal
+              toggle={toggleDeleteModal}
+              toggleApply={toggleApply}
+              modal={modalDelete}
+              message={'Apakah anda yakin untuk menghapus ini?'}
             />
           </>
         )

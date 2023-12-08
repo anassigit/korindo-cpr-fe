@@ -8,7 +8,7 @@ import TableCustom from 'common/TableCustom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, setAppOrganizationMsg, setLoadingSpinner, appMemberTabelSearch }) => {
+const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizationMsg, setLoadingSpinner, appMemberTabelSearch }) => {
 
     const dispatch = useDispatch()
 
@@ -199,13 +199,23 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                     ) :
                         (
                             <>
+                                <TableCustom
+                                    keyField={"memberId"}
+                                    columns={appMemberForAddColumn}
+                                    redukResponse={appMemberListForAddData}
+                                    appdata={appMemberListForAddData?.data != null && appMemberListForAddData?.data.lov ? appMemberListForAddData?.data.lov : []}
+                                    appdataTotal={appMemberListForAddData?.data != null ? appMemberListForAddData?.data.count : 0}
+                                    searchSet={setAppMemberForAddTabelSearch}
+                                    searchGet={appMemberForAddTabelSearch}
+                                    redukCall={getMemberListForAdd}
+                                />
                             </>
                         )
                 }
             </ModalBody>
             <ModalFooter>
 
-                <Button className='btn btn-danger' style={{ border: 'none', color: "white", marginTop: '-32px' }} onClick={toggleApply}>
+                <Button className='btn btn-danger' style={{ border: 'none', color: "white", marginTop: '-32px' }} onClick={toggle}>
                     Close
                 </Button>
             </ModalFooter>
@@ -216,7 +226,6 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
 ModalKaryawan.propTypes = {
     modal: PropTypes.any,
     toggle: PropTypes.any,
-    toggleApply: PropTypes.any,
     isAdd: PropTypes.any,
     selectedDeptData: PropTypes.any,
     setAppOrganizationMsg: PropTypes.any,

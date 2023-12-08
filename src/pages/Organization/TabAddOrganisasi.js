@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 const TabAddOrganisasi = (props) => {
 
   const dispatch = useDispatch()
+  const [onlyTabAdd, setOnlyTabAdd] = useState(false)
 
   const appMsgAdd = useSelector((state) => {
     return state.organizationReducer.msgAdd
@@ -117,7 +118,10 @@ const TabAddOrganisasi = (props) => {
   useEffect(() => {
     if (appMsgDelete) {
       props.setAppOrganizationMsg(appMsgDelete)
-      props.setSelectedDeptData({})
+      if (onlyTabAdd) {
+        props.setSelectedDeptData({})
+        setOnlyTabAdd(false)
+      }
       dispatch(getOrganizationListData())
       findDeptById(props.selectedDeptData.orgParentCd, props.appOrganizationListData?.data?.result?.childList)
 
@@ -299,6 +303,7 @@ const TabAddOrganisasi = (props) => {
                   onClick={() => {
                     props.setLoadingSpinner(true)
                     props.setAppOrganizationMsg('')
+                    setOnlyTabAdd(true)
                     dispatch(deleteMappingDept({
                       orgCd: props.selectedDeptData.orgCd
                     }))

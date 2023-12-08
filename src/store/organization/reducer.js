@@ -1,5 +1,6 @@
 import {
   DELETE_MAPPING_DEPT,
+  DELETE_MAPPING_MEMBER,
   EDIT_MAPPING_DEPT,
   GET_DEPT_LIST_ORG,
   GET_MEMBER_LIST_FOR_ADD,
@@ -79,6 +80,10 @@ const organizationReducer = (state = INIT_STATE, action) => {
         ...state,
       }
     case DELETE_MAPPING_DEPT:
+      return {
+        ...state,
+      }
+    case DELETE_MAPPING_MEMBER:
       return {
         ...state,
       }

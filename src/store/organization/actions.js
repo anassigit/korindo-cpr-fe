@@ -1,5 +1,6 @@
 import {
   DELETE_MAPPING_DEPT,
+  DELETE_MAPPING_MEMBER,
   EDIT_MAPPING_DEPT,
   GET_DEPT_LIST_ORG,
   GET_MEMBER_LIST_FOR_ADD,
@@ -7,6 +8,7 @@ import {
   GET_ORGANIZATION_LIST,
   MSG_ADD,
   MSG_DELETE,
+  MSG_EDIT,
   RESET_MESSAGE,
   RESP_GET_DEPT_LIST_ORG,
   RESP_GET_MEMBER_LIST_FOR_ADD,
@@ -91,10 +93,10 @@ export const deleteMappingDept = resp => ({
   payload: resp,
 })
 
-// export const submitRecommend = resp => ({
-//   type: SUBMIT_RECOMMEND,
-//   payload: resp,
-// })
+export const deleteMappingMember = resp => ({
+  type: DELETE_MAPPING_MEMBER,
+  payload: resp,
+})
 
 export const msgAdd = resp => ({
   type: MSG_ADD,
