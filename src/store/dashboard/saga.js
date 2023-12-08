@@ -19,7 +19,7 @@ import {
 function* fetchGetInfoProfile({ payload: req }) {
   try {
     const response = yield call(getInfoProfileBE, req)
-    localStorage.setItem("user", response?.data?.user);
+    localStorage.setItem("user", response?.data?.memberName);
     localStorage.setItem("memberId", response?.data?.memberId);
     localStorage.setItem("profileUrl", response?.data?.profileUrl);
     
