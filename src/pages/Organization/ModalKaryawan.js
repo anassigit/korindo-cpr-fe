@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, FormFeedback, FormGroup, Input, Modal, ModalBody, ModalFooter, ModalHeader, UncontrolledTooltip } from 'reactstrap';
+import { Button, Form, FormFeedback, FormGroup, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row, UncontrolledTooltip } from 'reactstrap';
 import '../../assets/scss/custom/modal/modal.css';
 import { getMemberListForAdd, getMemberListOrgData, saveMappingMember } from 'store/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,17 @@ import * as Yup from 'yup';
 const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizationMsg, setLoadingSpinner, appMemberTabelSearch }) => {
 
     const dispatch = useDispatch()
+
+    const [collapser, setCollapser] = useState({
+        "1": true,
+        "2": true,
+    })
+    const [selectedDeptData2, setSelectedDeptData2] = useState({})
+    const [selectedDeptName, setSelectedDeptName] = useState()
+
+    const appOrganizationListData = useSelector((state) => {
+        return state.organizationReducer.respGetOrganizationList
+    })
 
     const appMemberListForAddData = useSelector((state) => {
         return state.organizationReducer.respGetMemberListForAdd
@@ -30,13 +41,6 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
         }),
 
         onSubmit: (values) => {
-            // props.setAppMemberListForAddMsg('')
-
-            // dispatch(addMemberListForAdd({
-            //     memberId: values.memberId,
-            //     locationId: values.locationId,
-            // }))
-
         }
     });
 
@@ -147,6 +151,180 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
         }
     }, [appMsgAdd])
 
+    const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData2, setSelectedDeptData2, setSelectedDeptName, depth = 0 }) => {
+
+        const currentDepth = depth + 1;
+        const paddingLeft = `${currentDepth * 0.8}vw`;
+        return (
+            <React.Fragment>
+                {Array.isArray(data) ?
+                    data.map((item, index) => {
+
+                        return (
+                            <React.Fragment key={index}>
+                                <Row style={{ marginBottom: "8px" }}>
+                                    <div style={{
+                                        color: "#3F4031",
+                                        paddingLeft,
+                                        overflow: "hidden",
+                                        whiteSpace: "nowrap",
+                                        textOverflow: "ellipsis",
+                                    }}>
+                                        {item.childList.length > 0 ? (
+                                            <span
+                                                className={collapser[item.orgCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                                onClick={() => {
+                                                    setCollapser((prevCollapser) => {
+                                                        return {
+                                                            ...prevCollapser,
+                                                            [item.orgCd]: !prevCollapser[item.orgCd],
+                                                        };
+                                                    });
+                                                }}
+                                            ></span>
+                                        ) :
+                                            <span
+                                                className={"mdi mdi-minus-box opacity-0"}
+                                            ></span>
+                                        }
+                                        &nbsp;
+                                        <span className="mdi mdi-domain"></span>
+                                        <a
+                                            style={{
+                                                color: "#4c4c4c",
+                                                fontWeight: collapser[item.orgCd] || selectedDeptData.orgCd === item.orgCd ? "bold" : "normal",
+                                                cursor: "pointer",
+                                            }}
+                                            className="unselectable-two"
+                                            onClick={(e) => {
+                                                if (item.childList.length > 0) {
+                                                    setCollapser((prevCollapser) => {
+                                                        return {
+                                                            ...prevCollapser,
+                                                            [item.orgCd]: !prevCollapser[item.orgCd],
+                                                        };
+                                                    });
+                                                }
+                                                setSelectedDeptData2(item);
+                                                setSelectedDeptName(item.deptName);
+                                            }}
+                                        >
+                                            &nbsp;
+                                            <span
+                                                id={item.orgCd}
+                                            >
+                                                {item.deptName}
+                                            </span>
+                                            {item.orgCd && (
+                                                <UncontrolledTooltip target={() => document.getElementById(item.orgCd)} placement="top">
+                                                    {item.deptName}
+                                                </UncontrolledTooltip>
+                                            )}
+                                        </a>
+                                    </div>
+                                </Row>
+
+                                {item.childList && collapser[item.orgCd] === true && (
+                                    <CollapsibleList
+                                        data={item.childList}
+                                        collapser={collapser}
+                                        setCollapser={setCollapser}
+                                        selectedDeptData2={selectedDeptData2}
+                                        setSelectedDeptData2={setSelectedDeptData2}
+                                        setSelectedDeptName={setSelectedDeptName}
+                                        depth={currentDepth}
+                                    />
+                                )}
+                            </React.Fragment>
+                        )
+                    })
+                    :
+                    data ?
+                        (
+                            <React.Fragment>
+                                <Row style={{ marginBottom: "8px" }}>
+                                    <div style={{ color: "#3F4031", paddingLeft }}>
+                                        {data.childList.length > 0 ? (
+                                            <span
+                                                className={collapser[data.orgCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
+                                                onClick={() => {
+                                                    setCollapser((prevCollapser) => {
+                                                        return {
+                                                            ...prevCollapser,
+                                                            [data.orgCd]: !prevCollapser[data.orgCd],
+                                                        };
+                                                    });
+                                                }}
+                                            ></span>
+                                        ) :
+                                            <span
+                                                className={"mdi mdi-minus-box opacity-0"}
+                                            ></span>
+                                        }
+                                        &nbsp;
+                                        <span className="mdi mdi-domain"></span>
+                                        <a
+                                            style={{
+                                                color: "#4c4c4c",
+                                                fontWeight: collapser[data.orgCd] || selectedDeptData2.orgCd === data.orgCd ? "bold" : "normal",
+                                                cursor: "pointer",
+                                            }}
+                                            className="unselectable-two"
+                                            onClick={(e) => {
+                                                setSelectedDeptData2(data);
+                                                setSelectedDeptName(data.deptName);
+                                            }}
+                                        >
+                                            &nbsp;
+                                            <span
+                                                style={{
+                                                    overflow: "hidden",
+                                                    whiteSpace: "nowrap",
+                                                    textOverflow: "ellipsis",
+                                                }}
+                                                id={data.orgCd}
+                                            >
+                                                {data.deptName}
+                                            </span>
+                                            {data.orgCd && (
+                                                <UncontrolledTooltip target={() => document.getElementById(data.orgCd)} placement="top">
+                                                    {data.deptName}
+                                                </UncontrolledTooltip>
+                                            )}
+                                        </a>
+                                    </div>
+                                </Row>
+
+                                {data.childList && collapser[data.orgCd] === true && (
+                                    <CollapsibleList
+                                        data={data.childList}
+                                        collapser={collapser}
+                                        setCollapser={setCollapser}
+                                        selectedDeptData2={selectedDeptData2}
+                                        setSelectedDeptData2={setSelectedDeptData2}
+                                        setSelectedDeptName={setSelectedDeptName}
+                                        depth={currentDepth}
+                                    />
+                                )}
+                            </React.Fragment>
+                        )
+                        :
+                        null
+                }
+            </React.Fragment>
+        );
+    };
+
+    CollapsibleList.propTypes = {
+        data: PropTypes.any,
+        collapser: PropTypes.any,
+        setCollapser: PropTypes.any,
+        selectedDeptData2: PropTypes.any,
+        setSelectedDeptData2: PropTypes.any,
+        setSelectedDeptName: PropTypes.any,
+        depth: PropTypes.any,
+    };
+
     return (
         <Modal size='lg' isOpen={modal} toggle={toggle} backdrop="static">
             <ModalHeader toggle={toggle}>Pilih {isAdd ? 'Member' : 'Department'}</ModalHeader>
@@ -199,15 +377,14 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
                     ) :
                         (
                             <>
-                                <TableCustom
-                                    keyField={"memberId"}
-                                    columns={appMemberForAddColumn}
-                                    redukResponse={appMemberListForAddData}
-                                    appdata={appMemberListForAddData?.data != null && appMemberListForAddData?.data.lov ? appMemberListForAddData?.data.lov : []}
-                                    appdataTotal={appMemberListForAddData?.data != null ? appMemberListForAddData?.data.count : 0}
-                                    searchSet={setAppMemberForAddTabelSearch}
-                                    searchGet={appMemberForAddTabelSearch}
-                                    redukCall={getMemberListForAdd}
+
+                                <CollapsibleList
+                                    data={appOrganizationListData?.data?.result}
+                                    collapser={collapser}
+                                    setCollapser={setCollapser}
+                                    selectedDeptData2={selectedDeptData2}
+                                    setSelectedDeptData2={setSelectedDeptData2}
+                                    setSelectedDeptName={setSelectedDeptName}
                                 />
                             </>
                         )
