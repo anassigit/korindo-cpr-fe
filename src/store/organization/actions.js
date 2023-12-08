@@ -2,6 +2,7 @@ import {
   DELETE_MAPPING_DEPT,
   DELETE_MAPPING_MEMBER,
   EDIT_MAPPING_DEPT,
+  EDIT_MAPPING_MEMBER,
   GET_DEPT_LIST_ORG,
   GET_MEMBER_LIST_FOR_ADD,
   GET_MEMBER_LIST_ORG,
@@ -85,6 +86,11 @@ export const saveMappingMember = (req) => ({
 
 export const editMappingDept = resp => ({
   type: EDIT_MAPPING_DEPT,
+  payload: resp,
+})
+
+export const editMappingMember = resp => ({
+  type: EDIT_MAPPING_MEMBER,
   payload: resp,
 })
 

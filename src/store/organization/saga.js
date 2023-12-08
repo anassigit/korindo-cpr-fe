@@ -4,6 +4,7 @@ import {
   DELETE_MAPPING_DEPT,
   DELETE_MAPPING_MEMBER,
   EDIT_MAPPING_DEPT,
+  EDIT_MAPPING_MEMBER,
   GET_DEPT_LIST_ORG, GET_MEMBER_LIST_FOR_ADD, GET_MEMBER_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT, SAVE_MAPPING_MEMBER
 } from "./actionTypes"
 import {
@@ -17,6 +18,7 @@ import {
   deleteMappingDeptBE,
   deleteMappingMemberBE,
   editMappingDeptBE,
+  editMappingMemberBE,
   getDeptListOrgBE, getMemberListForAddBE, getMemberListOrgBE, getOrganizationListBE,
   saveMappingDeptBE,
   saveMappingMemberBE
@@ -121,6 +123,20 @@ function* fetchEditMappingDept({ payload: req }) {
   }
 }
 
+function* fetchEditMappingMember({ payload: req }) {
+  try {
+    const response = yield call(editMappingMemberBE, req)
+    if (response.status == 1) {
+      yield put(msgEdit(response))
+    } else {
+      yield put(msgEdit(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgEdit({ "status": 0, "message": "Error Update Data" }))
+  }
+}
+
 function* fetchDeleteMappingDept({ payload: req }) {
   try {
     const response = yield call(deleteMappingDeptBE, req)
@@ -158,6 +174,7 @@ function* organizationSaga() {
   yield takeEvery(SAVE_MAPPING_DEPT, fetchSaveMappingDept)
   yield takeEvery(SAVE_MAPPING_MEMBER, fetchSaveMappingMember)
   yield takeEvery(EDIT_MAPPING_DEPT, fetchEditMappingDept)
+  yield takeEvery(EDIT_MAPPING_MEMBER, fetchEditMappingMember)
   yield takeEvery(DELETE_MAPPING_DEPT, fetchDeleteMappingDept)
   yield takeEvery(DELETE_MAPPING_MEMBER, fetchDeleteMappingMember)
 

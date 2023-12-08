@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, UncontrolledTooltip } from 'reactstrap';
-import { deleteMappingMember, getMemberListOrgData } from 'store/actions';
+import { deleteMappingMember, editMappingMember, getMemberListOrgData } from 'store/actions';
 import ModalKaryawan from './ModalKaryawan';
 import MsgModal from 'components/Common/MsgModal';
 
@@ -15,11 +15,16 @@ const TabAddKaryawan = (props) => {
   const [modalDelete, setModalDelete] = useState()
   const [isAdd, setIsAdd] = useState(false)
 
+  const [selectedDeptData2, setSelectedDeptData2] = useState({})
   const [memberId, setMemberId] = useState()
   const [searchVal, setSearchVal] = useState()
 
   const appMemberListData = useSelector((state) => {
     return state.organizationReducer.respGetMemberListOrg
+  });
+
+  const appMsgEdit = useSelector((state) => {
+    return state.organizationReducer.msgEdit
   });
 
   const appMsgDelete = useSelector((state) => {
@@ -65,12 +70,6 @@ const TabAddKaryawan = (props) => {
       sort: true,
       headerStyle: { textAlign: 'center' },
     },
-    // {
-    //   dataField: "locationName",
-    //   text: "Handphone",
-    //   sort: true,
-    //   headerStyle: { textAlign: 'center' },
-    // },
     {
       text: "Actions",
       headerStyle: { textAlign: 'center' },
@@ -78,14 +77,14 @@ const TabAddKaryawan = (props) => {
       formatter: (cellContent, cellData) => {
         return (
           <React.Fragment>
-            <a id={`edit-${cellData.memberId}`} className="mdi mdi-pencil text-primary" onClick={() => {
+            <a id={`move-${cellData.memberId}`} className="mdi mdi-autorenew text-primary" onClick={() => {
               setIsAdd(false)
               toggle(cellData)
             }} />
             <a id={`delete-${cellData.memberId}`} className="mdi mdi-delete text-danger" onClick={() => {
               toggleDeleteModal(cellData)
             }} />
-            <UncontrolledTooltip target={`edit-${cellData.memberId}`}>Edit</UncontrolledTooltip>
+            <UncontrolledTooltip target={`move-${cellData.memberId}`}>Move</UncontrolledTooltip>
             <UncontrolledTooltip target={`delete-${cellData.memberId}`}>Delete</UncontrolledTooltip>
           </React.Fragment>
         )
@@ -107,11 +106,22 @@ const TabAddKaryawan = (props) => {
     }
   }, [props.selectedDeptData])
 
-  const toggle = () => {
+  const toggle = (data) => {
+    if (data.memberId) {
+      setMemberId(data.memberId)
+    }
     setModal(!modal)
   }
 
   const toggleApply = () => {
+    setModal(!modal)
+    dispatch(editMappingMember({
+      orgCd: selectedDeptData2.orgCd,
+      memberId: memberId
+    }))
+  }
+
+  const toggleApplyDelete = () => {
     setModalDelete(!modalDelete)
     dispatch(deleteMappingMember({
       memberId: memberId
@@ -132,7 +142,25 @@ const TabAddKaryawan = (props) => {
   }, [appMemberListData])
 
   useEffect(() => {
+    if (appMsgEdit.status) {
+      props.setLoadingSpinner(true)
+      dispatch(getMemberListOrgData(
+        setAppMemberTabelSearch((prevState) => {
+          return {
+            ...prevState,
+            search: {
+              ...prevState.search,
+              search: searchVal,
+            },
+          };
+        })
+      ))
+    }
+  }, [appMsgEdit])
+
+  useEffect(() => {
     if (appMsgDelete.status) {
+      props.setLoadingSpinner(true)
       dispatch(getMemberListOrgData(
         setAppMemberTabelSearch((prevState) => {
           return {
@@ -241,10 +269,12 @@ const TabAddKaryawan = (props) => {
               setAppOrganizationMsg={props.setAppOrganizationMsg}
               setLoadingSpinner={props.setLoadingSpinner}
               appMemberTabelSearch={appMemberTabelSearch}
+              selectedDeptData2={selectedDeptData2}
+              setSelectedDeptData2={setSelectedDeptData2}
             />
             <MsgModal
               toggle={toggleDeleteModal}
-              toggleApply={toggleApply}
+              toggleApply={toggleApplyDelete}
               modal={modalDelete}
               message={'Apakah anda yakin untuk menghapus ini?'}
             />

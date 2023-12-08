@@ -8,7 +8,7 @@ import TableCustom from 'common/TableCustom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizationMsg, setLoadingSpinner, appMemberTabelSearch }) => {
+const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, setAppOrganizationMsg, setLoadingSpinner, appMemberTabelSearch, selectedDeptData2, setSelectedDeptData2 }) => {
 
     const dispatch = useDispatch()
 
@@ -16,7 +16,6 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
         "1": true,
         "2": true,
     })
-    const [selectedDeptData2, setSelectedDeptData2] = useState({})
     const [selectedDeptName, setSelectedDeptName] = useState()
 
     const appOrganizationListData = useSelector((state) => {
@@ -169,6 +168,8 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
                                         overflow: "hidden",
                                         whiteSpace: "nowrap",
                                         textOverflow: "ellipsis",
+                                        border: selectedDeptData2 === item ? '1px solid #A084DC75' : '',
+                                        borderRadius: '5px',
                                     }}>
                                         {item.childList.length > 0 ? (
                                             <span
@@ -326,9 +327,13 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
     };
 
     return (
-        <Modal size='lg' isOpen={modal} toggle={toggle} backdrop="static">
+        <Modal size={isAdd ? 'lg' : 'md'} isOpen={modal} toggle={toggle} backdrop="static">
             <ModalHeader toggle={toggle}>Pilih {isAdd ? 'Member' : 'Department'}</ModalHeader>
-            <ModalBody>
+            <ModalBody
+                style={{
+                    padding: '16px 16px 0 16px',
+                }}
+            >
                 {
                     isAdd ? (
                         <>
@@ -390,9 +395,26 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
                         )
                 }
             </ModalBody>
-            <ModalFooter>
-
-                <Button className='btn btn-danger' style={{ border: 'none', color: "white", marginTop: '-32px' }} onClick={toggle}>
+            <ModalFooter
+            >
+                {
+                    selectedDeptData2.deptName ? (
+                        <>
+                            <span>
+                                Department <b>{selectedDeptData2.deptName}</b> dipilih
+                            </span>
+                            <Button
+                            onClick={toggleApply}
+                            >
+                                Apply
+                            </Button>
+                        </>
+                    ) :
+                        (
+                            null
+                        )
+                }
+                <Button className='btn btn-danger' style={{ border: 'none', color: "white", }} onClick={toggle}>
                     Close
                 </Button>
             </ModalFooter>
@@ -403,11 +425,14 @@ const ModalKaryawan = ({ modal, toggle, isAdd, selectedDeptData, setAppOrganizat
 ModalKaryawan.propTypes = {
     modal: PropTypes.any,
     toggle: PropTypes.any,
+    toggleApply: PropTypes.any,
     isAdd: PropTypes.any,
     selectedDeptData: PropTypes.any,
     setAppOrganizationMsg: PropTypes.any,
     setLoadingSpinner: PropTypes.any,
     appMemberTabelSearch: PropTypes.any,
+    selectedDeptData2: PropTypes.any,
+    setSelectedDeptData2: PropTypes.any,
 };
 
 export default ModalKaryawan;
