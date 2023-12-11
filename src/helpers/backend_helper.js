@@ -154,3 +154,17 @@ export const editMappingMemberBE = req => postWithParam("rest/OrganizationMaster
 export const deleteMappingDeptBE = req => postWithParam("rest/OrganizationMasterRest/deleteDept", req)
 
 export const deleteMappingMemberBE = req => postWithParam("rest/OrganizationMasterRest/deleteMember", req)
+
+export const getLocationListBE5 = req => post("/rest/MemberMasterRest/getLocationList", req)
+
+export const getMemberListBE2 = req => post("/rest/MemberMasterRest/getList", req)
+
+export const getPositionAndLevelListBE = req => post("/rest/MemberMasterRest/getPositionAndLevelList", req)
+
+export const getMemberBE2 = req => postWithParam("/rest/MemberMasterRest/select", req)
+
+export const saveMemberBE = req => postUpload("/rest/MemberMasterRest/insert", req)
+
+export const editMemberBE = req => postWithParam("/rest/MemberMasterRest/update", req)
+
+export const deleteMemberBE = req => postWithParam("/rest/MemberMasterRest/delete", req)

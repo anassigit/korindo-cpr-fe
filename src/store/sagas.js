@@ -12,6 +12,7 @@ import deptMasterSaga from "./deptmaster/saga"
 import locationMasterSaga from "./locationmaster/saga"
 import positionMasterSaga from "./positionmaster/saga"
 import levelMasterSaga from "./levelmaster/saga"
+import memberMasterSaga from "./membermaster/saga"
 import settingMasterSaga from "./settingmaster/saga"
 import stickerMasterSaga from "./stickermaster/saga"
 import organizationSaga from "./organization/saga"
@@ -31,6 +32,7 @@ export default function* rootSaga() {
     fork(locationMasterSaga),
     fork(positionMasterSaga),
     fork(levelMasterSaga),
+    fork(memberMasterSaga),
     fork(settingMasterSaga),
     fork(stickerMasterSaga),
     fork(organizationSaga),

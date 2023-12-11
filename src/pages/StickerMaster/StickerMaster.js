@@ -69,7 +69,7 @@ const StickerMaster = () => {
     const appStickerColumn = [
         {
             dataField: "stickerId",
-            text: "Sticker Code",
+            text: "Kode Sticker",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },

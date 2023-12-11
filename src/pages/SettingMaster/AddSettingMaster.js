@@ -101,7 +101,7 @@ const AddSettingMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Setting Code <span className="text-danger"> *</span>
+                                            Kode Setting <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">

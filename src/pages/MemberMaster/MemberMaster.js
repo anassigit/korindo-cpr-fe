@@ -12,18 +12,18 @@ import {
     CardHeader,
     Container,
     Input,
-    Label,
     Spinner,
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
+import { getLocationListDataAction5, resetMessage } from "store/actions";
+import { deleteMemberMaster, getMemberListDataAction } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import AddLocationMaster from "./AddLocationMaster";
-import EditLocationMaster from "./EditLocationMaster";
-import { resetMessage, deleteLocationMaster, getLocationListDataAction } from "store/actions";
+import AddMemberMaster from "./AddMemberMaster";
+import EditMemberMaster from "./EditMemberMaster";
 
-const LocationMaster = () => {
+const MemberMaster = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -31,30 +31,34 @@ const LocationMaster = () => {
     const [modal, setModal] = useState(false)
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-    const [appLocationMasterMsg, setAppLocationMasterMsg] = useState("")
+    const [appMemberMasterMsg, setAppMemberMasterMsg] = useState("")
 
     const [searchVal, setSearchVal] = useState("")
 
-    const [appLocationMaster, setAppLocationMaster] = useState(true)
-    const [appAddLocationMaster, setAppAddLocationMaster] = useState(false)
-    const [appEditLocationMaster, setAppEditLocationMaster] = useState(false)
+    const [appMemberMaster, setAppMemberMaster] = useState(true)
+    const [appAddMemberMaster, setAppAddMemberMaster] = useState(false)
+    const [appEditMemberMaster, setAppEditMemberMaster] = useState(false)
 
-    const [appLocationMasterData, setAppLocationMasterData] = useState({})
+    const [appMemberMasterData, setAppMemberMasterData] = useState({})
 
-    const [locationId, setLocationId] = useState('')
+    const [memberId, setmemberId] = useState('')
 
-    const appLocationListData = useSelector((state) => {
-        return state.locationMasterReducer.respGetLocationList
+    const appMemberListData = useSelector((state) => {
+        return state.memberMasterReducer.respGetMemberList
     });
 
-    const appMessageDelete = useSelector((state) => state.locationMasterReducer.msgDelete);
-    const appMessageAdd = useSelector((state) => state.locationMasterReducer.msgAdd);
+    const appMemberLocationListData = useSelector((state) => {
+        return state.memberMasterReducer.respGetLocationList5
+    });
+
+    const appMessageDelete = useSelector((state) => state.memberMasterReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.memberMasterReducer.msgAdd);
 
     const appMessageEdit = useSelector((state) => {
-        return state.locationMasterReducer.msgEdit
+        return state.memberMasterReducer.msgEdit
     });
 
-    const [appLocationTabelSearch, setAppLocationTabelSearch] = useState({
+    const [appMemberTabelSearch, setAppMemberTabelSearch] = useState({
         page: 1,
         limit: 10,
         offset: 0,
@@ -66,17 +70,29 @@ const LocationMaster = () => {
         }
     });
 
-    const appLocationColumn = [
+    const appMemberColumn = [
         {
-            dataField: "locationId",
-            text: "Kode Lokasi",
+            dataField: "memberId",
+            text: "Kode Member",
+            sort: true,
+            style: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "memberName",
+            text: "Nama Member",
             sort: true,
             headerStyle: { textAlign: 'center' },
-            style: { textAlign: 'center' },
+        },
+        {
+            dataField: "positionName",
+            text: "Posisi",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "locationName",
-            text: "Nama Lokasi",
+            text: "Lokasi",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -87,15 +103,19 @@ const LocationMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.locationId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditLocationMaster(cellData)} />
-                        <a id={`delete-${cellData.locationId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.locationId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.locationId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.memberId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${cellData.memberId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.memberId}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.memberId}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
         },
     ]
+
+    useEffect(() => {
+        dispatch(getLocationListDataAction5())
+    }, [])
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -109,7 +129,7 @@ const LocationMaster = () => {
     };
 
     const handleClick = () => {
-        setAppLocationTabelSearch((prevState) => ({
+        setAppMemberTabelSearch((prevState) => ({
             ...prevState,
             page: 1,
             offset: 0,
@@ -120,31 +140,31 @@ const LocationMaster = () => {
         }));
     };
 
-    const preAddLocationMaster = () => {
-        setAppAddLocationMaster(true)
-        setAppLocationMaster(false)
+    const preAddEmployeeOf = () => {
+        setAppAddMemberMaster(true)
+        setAppMemberMaster(false)
     }
 
-    const preEditLocationMaster = (data) => {
-        setAppEditLocationMaster(true)
-        setAppLocationMaster(false)
-        setAppLocationMasterData(data)
+    const preEditEmployeeOf = (data) => {
+        setAppEditMemberMaster(true)
+        setAppMemberMaster(false)
+        setAppMemberMasterData(data)
     }
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.locationId) {
-            setLocationId(data.locationId)
+        if (data.memberId) {
+            setmemberId(data.memberId)
         }
     }
 
     const toggleApply = () => {
-        setAppLocationMasterMsg('')
-        dispatch(deleteLocationMaster({ locationId: locationId }))
+        setAppMemberMasterMsg('')
+        dispatch(deleteMemberMaster({ memberId: memberId }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
-    
+
     useEffect(() => {
         let messageToUpdate;
 
@@ -157,8 +177,8 @@ const LocationMaster = () => {
 
         if (messageToUpdate) {
             setLoadingSpinner(false);
-            dispatch(getLocationListDataAction(appLocationTabelSearch));
-            setAppLocationMasterMsg(messageToUpdate);
+            dispatch(getMemberListDataAction(appMemberTabelSearch));
+            setAppMemberMasterMsg(messageToUpdate);
         }
     }, [appMessageDelete]);
 
@@ -168,15 +188,15 @@ const LocationMaster = () => {
         if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
             if (appMessageAdd.status === '1') {
-                setAppLocationMaster(true);
-                setAppAddLocationMaster(false);
+                setAppMemberMaster(true);
+                setAppAddMemberMaster(false);
             }
         }
 
         if (messageToUpdate) {
             setLoadingSpinner(false);
-            dispatch(getLocationListDataAction(appLocationTabelSearch));
-            setAppLocationMasterMsg(messageToUpdate);
+            dispatch(getMemberListDataAction(appMemberTabelSearch));
+            setAppMemberMasterMsg(messageToUpdate);
         }
     }, [appMessageAdd]);
 
@@ -186,32 +206,31 @@ const LocationMaster = () => {
         if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
             if (appMessageEdit.status === '1') {
-                setAppLocationMaster(true);
-                setAppEditLocationMaster(false);
+                setAppMemberMaster(true);
+                setAppEditMemberMaster(false);
             }
         }
 
         if (messageToUpdate) {
             setLoadingSpinner(false);
-            dispatch(getLocationListDataAction(appLocationTabelSearch));
-            setAppLocationMasterMsg(messageToUpdate);
+            dispatch(getMemberListDataAction(appMemberTabelSearch));
+            setAppMemberMasterMsg(messageToUpdate);
         }
     }, [appMessageEdit]);
-
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
-                    {appLocationMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLocationMasterMsg("") }} color={appLocationMasterMsg?.status == "1" ? "success" : "danger"}>
-                        {typeof appLocationMasterMsg == 'string' ? null : appLocationMasterMsg?.message}</UncontrolledAlert> : null}
+                    {appMemberMasterMsg !== "" ? <UncontrolledAlert toggle={() => { setAppMemberMasterMsg("") }} color={appMemberMasterMsg?.status == "1" ? "success" : "danger"}>
+                        {typeof appMemberMasterMsg == 'string' ? null : appMemberMasterMsg?.message}</UncontrolledAlert> : null}
                     <Container
-                        style={{ display: appLocationMaster ? 'block' : "none" }}
+                        style={{ display: appMemberMaster ? 'block' : "none" }}
                         fluid
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-map"></span> Master Lokasi
+                                <span className="mdi mdi-source-branch"></span> Master Member
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{
@@ -252,7 +271,7 @@ const LocationMaster = () => {
                                 </div>
 
                                 <div
-                                    className="col-12 pb-3"
+                                    className="col-12 pb-5"
                                     style={{
                                         display: "flex",
                                         flexDirection: "row",
@@ -262,26 +281,26 @@ const LocationMaster = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddLocationMaster()}
+                                        onClick={() => preAddEmployeeOf()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>
                                 </div>
 
                                 <TableCustom
-                                    keyField={"locationId"}
-                                    columns={appLocationColumn}
-                                    redukResponse={appLocationListData}
-                                    appdata={appLocationListData?.data != null && appLocationListData?.data.list ? appLocationListData?.data.list : []}
-                                    appdataTotal={appLocationListData?.data != null ? appLocationListData?.data.count : 0}
-                                    searchSet={setAppLocationTabelSearch}
-                                    searchGet={appLocationTabelSearch}
-                                    redukCall={getLocationListDataAction}
+                                    keyField={"memberId"}
+                                    columns={appMemberColumn}
+                                    redukResponse={appMemberListData}
+                                    appdata={appMemberListData?.data != null && appMemberListData?.data.list ? appMemberListData?.data.list : []}
+                                    appdataTotal={appMemberListData?.data != null ? appMemberListData?.data.count : 0}
+                                    searchSet={setAppMemberTabelSearch}
+                                    searchGet={appMemberTabelSearch}
+                                    redukCall={getMemberListDataAction}
                                 />
                             </CardBody>
                         </Card>
                         <Button
-                            className="btn btn-danger my-3"
+                            className="btn btn-danger my-5"
                             onClick={() => {
                                 ReactSession.set('appDetailRecommendationData', "");
                                 history.go(-1)
@@ -295,19 +314,21 @@ const LocationMaster = () => {
                         </div>
                     </Container>
 
-                    <AddLocationMaster
-                        appAddLocationMaster={appAddLocationMaster}
-                        setAppLocationMaster={setAppLocationMaster}
-                        setAppAddLocationMaster={setAppAddLocationMaster}
-                        setAppLocationMasterMsg={setAppLocationMasterMsg}
+                    <AddMemberMaster
+                        appMemberLocationListData={appMemberLocationListData}
+                        appAddMemberMaster={appAddMemberMaster}
+                        setAppMemberMaster={setAppMemberMaster}
+                        setAppAddMemberMaster={setAppAddMemberMaster}
+                        setAppMemberMasterMsg={setAppMemberMasterMsg}
                     />
 
-                    <EditLocationMaster
-                        appLocationMasterData={appLocationMasterData}
-                        appEditLocationMaster={appEditLocationMaster}
-                        setAppLocationMaster={setAppLocationMaster}
-                        setAppEditLocationMaster={setAppEditLocationMaster}
-                        setAppLocationMasterMsg={setAppLocationMasterMsg}
+                    <EditMemberMaster
+                        appMemberLocationListData={appMemberLocationListData}
+                        appMemberMasterData={appMemberMasterData}
+                        appEditMemberMaster={appEditMemberMaster}
+                        setAppMemberMaster={setAppMemberMaster}
+                        setAppEditMemberMaster={setAppEditMemberMaster}
+                        setAppMemberMasterMsg={setAppMemberMasterMsg}
                     />
 
                     <MsgModal
@@ -322,4 +343,4 @@ const LocationMaster = () => {
     );
 };
 
-export default LocationMaster;
+export default MemberMaster;

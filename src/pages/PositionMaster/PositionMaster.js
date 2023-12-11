@@ -73,7 +73,7 @@ const PositionMaster = () => {
     const appPositionColumn = [
         {
             dataField: "positionCd",
-            text: "Position Code",
+            text: "Kode Posisi",
             sort: true,
             style: { textAlign: 'center' },
             headerStyle: { textAlign: 'center' },
@@ -86,7 +86,7 @@ const PositionMaster = () => {
         },
         {
             dataField: "levelCd",
-            text: "Level Code",
+            text: "Kode Level",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },

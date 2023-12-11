@@ -106,7 +106,7 @@ const EditLevelMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Level Code <span className="text-danger"> *</span>
+                                            Kode Level <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">

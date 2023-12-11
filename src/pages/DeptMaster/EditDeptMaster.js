@@ -106,7 +106,7 @@ const EditDeptMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Department Code <span className="text-danger"> *</span>
+                                            Kode Department <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">

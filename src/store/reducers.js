@@ -15,6 +15,7 @@ import deptMasterReducer from "./deptmaster/reducer"
 import locationMasterReducer from "./locationmaster/reducer"
 import positionMasterReducer from "./positionmaster/reducer"
 import levelMasterReducer from "./levelmaster/reducer"
+import memberMasterReducer from "./membermaster/reducer"
 import settingMasterReducer from "./settingmaster/reducer"
 import stickerMasterReducer from "./stickermaster/reducer"
 import organizationReducer from "./organization/reducer"
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   locationMasterReducer,
   positionMasterReducer,
   levelMasterReducer,
+  memberMasterReducer,
   settingMasterReducer,
   stickerMasterReducer,
   organizationReducer,

@@ -69,7 +69,7 @@ const DeptMaster = () => {
     const appDeptColumn = [
         {
             dataField: "deptCd",
-            text: "Department Code",
+            text: "Department Kode",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },

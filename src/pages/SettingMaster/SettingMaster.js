@@ -81,7 +81,7 @@ const SettingMaster = () => {
         },
         {
             dataField: "itemCd",
-            text: "Setting Code",
+            text: "Kode Setting",
             sort: true,
             style: { textAlign: 'center' },
             headerStyle: { textAlign: 'center' },
@@ -94,7 +94,7 @@ const SettingMaster = () => {
         },
         {
             dataField: "itemDesc",
-            text: "Level Code",
+            text: "Kode Level",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },

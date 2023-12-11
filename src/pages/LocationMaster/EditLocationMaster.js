@@ -102,7 +102,7 @@ const EditLocationMaster = (props) => {
                                                 marginTop: "4px",
                                             }}
                                         >
-                                            Lokasi Code <span className="text-danger"> *</span>
+                                            Kode Lokasi <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">

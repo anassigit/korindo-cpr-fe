@@ -73,7 +73,7 @@ const LevelMaster = () => {
     const appLevelColumn = [
         {
             dataField: "levelCd",
-            text: "Level Code",
+            text: "Level Kode",
             sort: true,
             style: { textAlign: 'center' },
             headerStyle: { textAlign: 'center' },
