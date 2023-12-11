@@ -129,7 +129,10 @@ const ProfileMenu = props => {
             </div>
           </a>
           <div className="dropdown-divider" />
-          <a className="dropdown-item d-flex justify-content-between" style={{ width: "20rem" }}>
+          <a
+            onClick={() => ReactSession.set('appDetailRecommendationData', memberId)}
+            href="/home/detail"
+            className="dropdown-item d-flex justify-content-between" style={{ width: "20rem" }}>
             <span style={{ fontSize: "14px" }}>Bintang yang diterima</span>
             <div>
               <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />
@@ -162,14 +165,14 @@ const ProfileMenu = props => {
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"
-          style={{ borderLeft: "2px solid #A084DC", cursor:"auto" }}
+          style={{ borderLeft: "2px solid #A084DC", cursor: "auto" }}
           tag="button"
         >
           <span style={{ fontSize: "14px" }} className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
           {/* <i className="mdi mdi-chevron-down d-none d-xl-inline-block" /> */}
         </DropdownToggle>
         {/* <DropdownMenu className="dropdown-menu-end"> */}
-          {/* <Link to="/logout" className="dropdown-item">
+        {/* <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
             <span style={{ fontSize: "14px" }}>{props.t("Logout")}</span>
           </Link> */}
