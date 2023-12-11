@@ -56,13 +56,18 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
         }
     });
 
+    const rowStyles = (row, rowIndex) => {
+        return {
+            backgroundColor: row === selectedMemberData ? '#EFF2F7' : 'white',
+            transition: 'background-color 0.3s', // Optional: Add a smooth transition
+        };
+    };
     const appMemberForAddColumn = [
         {
             dataField: "memberId",
             text: "Member ID",
             sort: true,
-            style: { textAlign: 'center' },
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: 'white' },
             events: {
                 onClick: (e, column, columnIndex, rowIndex) => {
                     const clickedRowData = rowIndex
@@ -75,7 +80,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             dataField: "memberName",
             text: "Nama",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: 'white' },
             events: {
                 onClick: (e, column, columnIndex, rowIndex) => {
                     const clickedRowData = rowIndex
@@ -88,7 +93,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             dataField: "positionName",
             text: "Posisi",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: 'white' },
             events: {
                 onClick: (e, column, columnIndex, rowIndex) => {
                     const clickedRowData = rowIndex
@@ -119,21 +124,19 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
     }
 
     useEffect(() => {
-        if (appAddMemberListForAddValidInput.values.search) {
-            setAppMemberForAddTabelSearch((prevState) => ({
-                ...prevState,
-                search: {
-                    any: appAddMemberListForAddValidInput.values.search,
-                },
-            }))
-        }
+        setAppMemberForAddTabelSearch((prevState) => ({
+            ...prevState,
+            search: {
+                any: appAddMemberListForAddValidInput.values.search,
+            },
+        }))
     }, [appAddMemberListForAddValidInput.values.search])
 
-    useEffect(() => {
-        if (selectedMemberData) {
-            appAddMemberListForAddValidInput.setFieldValue('search', selectedMemberData.memberName)
-        }
-    }, [selectedMemberData])
+    // useEffect(() => {
+    //     if (selectedMemberData) {
+    //         appAddMemberListForAddValidInput.setFieldValue('search', selectedMemberData.memberName)
+    //     }
+    // }, [selectedMemberData])
 
     useEffect(() => {
         if (appMsgAdd) {
@@ -338,7 +341,9 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                     return false
                                 }}
                             >
-                                <FormGroup>
+                                <FormGroup
+                                    className='form-cust'
+                                >
                                     <div style={{
                                         display: 'flex',
                                         marginBottom: '12px',
@@ -348,7 +353,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                             style={{
                                                 borderRadius: '5px 0 0 5px'
                                             }}
-                                            value={appAddMemberListForAddValidInput.values.search}
+                                            value={appAddMemberListForAddValidInput.values.search || ''}
                                             onChange={(e) => appAddMemberListForAddValidInput.setFieldValue('search', e.target.value)}
                                         />
                                         <Button
@@ -372,6 +377,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                         searchSet={setAppMemberForAddTabelSearch}
                                         searchGet={appMemberForAddTabelSearch}
                                         redukCall={getMemberListForAdd}
+                                        rowStyles={rowStyles}
                                     />
                                 </FormGroup>
                             </Form>

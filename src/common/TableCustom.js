@@ -33,6 +33,7 @@ const TableCustom = props => {
             wrapperClasses="table-responsive"
             keyField={props.keyField}
             rowClasses="text-nowrap"
+            rowStyle={props.rowStyles}
             remote={{ filter: true, pagination: true, sort: true, cellEdit: true }}
             data={props.appdata}
             columns={props.columns}
@@ -68,6 +69,7 @@ TableCustom.propTypes = {
     redukCall : PropTypes.any,
     selectRow : PropTypes.any,
     rowClick : PropTypes.any,
+    rowStyles : PropTypes.any,
 }
 
 export default TableCustom;

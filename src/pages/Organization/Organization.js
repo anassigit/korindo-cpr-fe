@@ -122,14 +122,14 @@ const Organization = () => {
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
-                        if (item.childList.length > 0) {
-                          setCollapser((prevCollapser) => {
-                            return {
-                              ...prevCollapser,
-                              [item.orgCd]: !prevCollapser[item.orgCd],
-                            };
-                          });
-                        }
+                        // if (item.childList.length > 0) {
+                        //   setCollapser((prevCollapser) => {
+                        //     return {
+                        //       ...prevCollapser,
+                        //       [item.orgCd]: !prevCollapser[item.orgCd],
+                        //     };
+                        //   });
+                        // }
                         ReactSession.remove('selectedMemberData');
                         setSelectedDeptData(item);
                         setSelectedDeptName(item.deptName);

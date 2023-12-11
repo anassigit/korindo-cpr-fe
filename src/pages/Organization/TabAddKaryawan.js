@@ -151,39 +151,6 @@ const TabAddKaryawan = (props) => {
   useEffect(() => {
     if (appMsgEdit.status) {
       props.setLoadingSpinner(true)
-      dispatch(getMemberListOrgData(
-        setAppMemberTabelSearch((prevState) => {
-          return {
-            ...prevState,
-            search: {
-              ...prevState.search,
-              search: searchVal,
-            },
-          };
-        })
-      ))
-    }
-  }, [appMsgEdit])
-
-  useEffect(() => {
-    if (appMsgDelete.status) {
-      props.setLoadingSpinner(true)
-      dispatch(getMemberListOrgData(
-        setAppMemberTabelSearch((prevState) => {
-          return {
-            ...prevState,
-            search: {
-              ...prevState.search,
-              search: searchVal,
-            },
-          };
-        })
-      ))
-    }
-  }, [appMsgDelete])
-
-  const handleSearch = () => {
-    dispatch(getMemberListOrgData(
       setAppMemberTabelSearch((prevState) => {
         return {
           ...prevState,
@@ -193,7 +160,34 @@ const TabAddKaryawan = (props) => {
           },
         };
       })
-    ));
+    }
+  }, [appMsgEdit])
+
+  useEffect(() => {
+    if (appMsgDelete.status) {
+      props.setLoadingSpinner(true)
+      setAppMemberTabelSearch((prevState) => {
+        return {
+          ...prevState,
+          search: {
+            ...prevState.search,
+            search: searchVal,
+          },
+        };
+      })
+    }
+  }, [appMsgDelete])
+
+  const handleSearch = () => {
+    setAppMemberTabelSearch((prevState) => {
+      return {
+        ...prevState,
+        search: {
+          ...prevState.search,
+          search: searchVal,
+        },
+      };
+    })
   };
 
   const handleKeyPress = (e) => {
@@ -248,6 +242,12 @@ const TabAddKaryawan = (props) => {
               </div>
               <div>
                 <Button
+                  disabled={props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? false : true}
+                  style={{
+                    backgroundColor: props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? '' : '#A9A9A9',
+                    borderColor: props.selectedDeptData && Object.keys(props.selectedDeptData).length !== 0 ? '' : '#A9A9A9',
+                    marginRight: '.5rem'
+                  }}
                   onClick={() => {
                     setIsAdd(true)
                     toggle()

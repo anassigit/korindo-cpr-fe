@@ -12,7 +12,6 @@ function* loginUser({ payload: { user, history } }) {
   try {
     const response = yield call(login, user);
     if (response.status == 1) {
-      debugger
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.memberName));
       localStorage.setItem("memberId", JSON.stringify(response.data.memberId));

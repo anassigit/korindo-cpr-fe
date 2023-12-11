@@ -126,7 +126,6 @@ const Member = (props) => {
           {
             Array.isArray(props.appMemberList?.data?.list) &&
             props?.appMemberList?.data?.list.map((item, index) => {
-              debugger
               return (
                 <React.Fragment key={index}>
                   <a
@@ -167,7 +166,13 @@ const Member = (props) => {
                           }}
                         >{item.memberName ? item.memberName : item.memberName}</Col>
                         <UncontrolledTooltip target={`memberId-${item.memberId}`} placement='top'>
-                          {item.memberName}
+                          <img
+                            width={'120px'}
+                            src={item.profileUrl}
+                          />
+                          <div>
+                            {item.memberName}
+                          </div>
                         </UncontrolledTooltip>
                         <Col xs='2' style={{}}>{item.position}</Col>
                         <Col
