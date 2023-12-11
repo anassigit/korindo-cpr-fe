@@ -104,7 +104,7 @@ const AddMemberMaster = (props) => {
         if (props.appAddMemberMaster) {
             appAddMemberMasterValidInput.resetForm()
             appAddMemberMasterValidInput.setFieldValue('locationId', props.appMemberLocationListData?.data?.list[0].locationId)
-            appPositionSearchLov("")
+            setAppPositionSearchLov("")
         }
     }, [props.appAddMemberMaster])
 
