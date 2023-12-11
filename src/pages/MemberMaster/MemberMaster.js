@@ -100,13 +100,13 @@ const MemberMaster = () => {
             text: "Actions",
             headerStyle: { textAlign: 'center' },
             style: { justifyContent: 'center', display: 'flex', gap: '1vw', fontSize: '16px' },
-            formatter: (cellContent, cellData) => {
+            formatter: (cellContent, cellData, index) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.memberId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-                        <a id={`delete-${cellData.memberId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.memberId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.memberId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${index}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${index}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${index}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${index}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
