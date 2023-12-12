@@ -87,6 +87,7 @@ const EditMemberMaster = (props) => {
             gender: '',
             status: '',
             profileFoto: '',
+            deletePhoto: '',
         },
         validationSchema: Yup.object().shape({
             memberId: Yup.string().required("Wajib diisi"),
@@ -122,6 +123,9 @@ const EditMemberMaster = (props) => {
             formData.append('levelCd', values.levelCd);
             formData.append('gender', values.gender);
             formData.append('status', values.status);
+            if (values.deletePhoto) {
+                formData.append('deletePhoto', values.deletePhoto);
+            }
 
             // Assuming 'photo' is a File object (e.g., from <input type="file">)
             formData.append('profileFoto', photo);
@@ -195,6 +199,7 @@ const EditMemberMaster = (props) => {
 
     const handleDeleteClick = () => {
         setPreviewPhoto('');
+        appEditMemberMasterValidInput.setFieldValue('deletePhoto', 1)
     };
 
     const dateChanger = (birthdayDate) => {
