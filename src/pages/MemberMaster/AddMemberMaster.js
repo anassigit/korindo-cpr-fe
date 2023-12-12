@@ -31,7 +31,7 @@ const AddMemberMaster = (props) => {
 
     const [photo, setPhoto] = useState(null)
     const [previewPhoto, setPreviewPhoto] = useState('')
-    const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [appLovParam, setAppLovParam] = useState({});
 
     const [appPositionSearchLov, setAppPositionSearchLov] = useState("");
 
@@ -196,6 +196,14 @@ const AddMemberMaster = (props) => {
     useEffect(() => {
         appAddMemberMasterValidInput.setFieldValue('birthday', birthdayDate)
     }, [birthdayDate])
+
+    useEffect(() => {
+        if (appAddMemberMasterValidInput.values.locationId) {
+            setAppLovParam({
+                locationId: appAddMemberMasterValidInput.values.locationId
+            })
+        }
+    }, [appAddMemberMasterValidInput.values.locationId])
 
     return (
         <Container
@@ -673,6 +681,7 @@ const AddMemberMaster = (props) => {
                                             stateSearchInputSet={setAppPositionSearchLov}
                                             touchedLovField={appAddMemberMasterValidInput.touched.positionCd}
                                             errorLovField={appAddMemberMasterValidInput.errors.positionCd}
+                                            pParam={appLovParam}
                                         />
                                         <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.positionCd}</FormFeedback>
                                     </div>
@@ -812,7 +821,7 @@ const AddMemberMaster = (props) => {
                 </CardBody>
             </Card>
             <Button
-                className="btn btn-danger m5-2"
+                className="btn btn-danger my-2"
                 onClick={() => {
                     props.setAppMemberMaster(true)
                     props.setAppAddMemberMaster(false)
