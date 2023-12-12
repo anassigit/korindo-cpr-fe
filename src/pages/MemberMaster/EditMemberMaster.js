@@ -46,19 +46,19 @@ const EditMemberMaster = (props) => {
     const [birthdayDate, setBirthdayDate] = useState('');
     const years = range(1900, new Date().getFullYear() + 1, 1);
     const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Jun",
+        "Jul",
+        "Agt",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Des",
+    ]
 
     function range(start, end, step) {
         const result = [];
@@ -147,6 +147,7 @@ const EditMemberMaster = (props) => {
 
     useEffect(() => {
         if (appMemberData.status === '1') {
+            debugger
             appEditMemberMasterValidInput.setFieldValue('memberId', appMemberData.data.result.memberId)
             appEditMemberMasterValidInput.setFieldValue('memberName', appMemberData.data.result.memberName)
             appEditMemberMasterValidInput.setFieldValue('memberFullName', appMemberData.data.result.memberFullName)
@@ -161,7 +162,7 @@ const EditMemberMaster = (props) => {
             appEditMemberMasterValidInput.setFieldValue('gender', appMemberData.data.result.gender)
             appEditMemberMasterValidInput.setFieldValue('status', appMemberData.data.result.status)
             setAppPositionSearchLov(appMemberData.data.result.positionName)
-            appEditMemberMasterValidInput.setFieldValue('profileFoto', appMemberData.data.result.profileFoto)
+            setPreviewPhoto(appMemberData.data.result.profileUrl)
         } else {
             appEditMemberMasterValidInput.setFieldValue('locationId', props.appMemberLocationListData?.data?.list[0].locationId)
         }
@@ -509,10 +510,11 @@ const EditMemberMaster = (props) => {
                                                             justifyContent: "center",
                                                         }}
                                                     >
-                                                        <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                                        <Button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
                                                             {"<"}
-                                                        </button>
+                                                        </Button>
                                                         <select
+                                                            className="form-control"
                                                             value={new Date(date).getFullYear()}
                                                             onChange={({ target: { value } }) => changeYear(value)}
                                                         >
@@ -524,6 +526,7 @@ const EditMemberMaster = (props) => {
                                                         </select>
 
                                                         <select
+                                                            className="form-control"
                                                             value={months[new Date(date).getMonth()]}
                                                             onChange={({ target: { value } }) =>
                                                                 changeMonth(months.indexOf(value))
@@ -536,9 +539,9 @@ const EditMemberMaster = (props) => {
                                                             ))}
                                                         </select>
 
-                                                        <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                                        <Button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
                                                             {">"}
-                                                        </button>
+                                                        </Button>
                                                     </div>
                                                 )}
                                                 selected={birthdayDate}

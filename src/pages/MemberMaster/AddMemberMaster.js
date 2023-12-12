@@ -42,19 +42,19 @@ const AddMemberMaster = (props) => {
     const [birthdayDate, setBirthdayDate] = useState('');
     const years = range(1900, new Date().getFullYear() + 1, 1);
     const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Jun",
+        "Jul",
+        "Agt",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Des",
+    ]
 
     function range(start, end, step) {
         const result = [];
@@ -469,10 +469,11 @@ const AddMemberMaster = (props) => {
                                                             justifyContent: "center",
                                                         }}
                                                     >
-                                                        <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                                        <Button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
                                                             {"<"}
-                                                        </button>
+                                                        </Button>
                                                         <select
+                                                            className="form-control"
                                                             value={new Date(date).getFullYear()}
                                                             onChange={({ target: { value } }) => changeYear(value)}
                                                         >
@@ -484,6 +485,7 @@ const AddMemberMaster = (props) => {
                                                         </select>
 
                                                         <select
+                                                            className="form-control"
                                                             value={months[new Date(date).getMonth()]}
                                                             onChange={({ target: { value } }) =>
                                                                 changeMonth(months.indexOf(value))
@@ -496,9 +498,9 @@ const AddMemberMaster = (props) => {
                                                             ))}
                                                         </select>
 
-                                                        <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                                        <Button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
                                                             {">"}
-                                                        </button>
+                                                        </Button>
                                                     </div>
                                                 )}
                                                 selected={birthdayDate}
