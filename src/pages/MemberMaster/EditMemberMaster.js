@@ -147,22 +147,22 @@ const EditMemberMaster = (props) => {
 
     useEffect(() => {
         if (appMemberData.status === '1') {
-            debugger
-            appEditMemberMasterValidInput.setFieldValue('memberId', appMemberData.data.result.memberId)
-            appEditMemberMasterValidInput.setFieldValue('memberName', appMemberData.data.result.memberName)
-            appEditMemberMasterValidInput.setFieldValue('memberFullName', appMemberData.data.result.memberFullName)
-            appEditMemberMasterValidInput.setFieldValue('birthday', appMemberData.data.result.birthday)
-            appEditMemberMasterValidInput.setFieldValue('email', appMemberData.data.result.email)
-            appEditMemberMasterValidInput.setFieldValue('hp', appMemberData.data.result.hp)
-            appEditMemberMasterValidInput.setFieldValue('password', appMemberData.data.result.password)
-            appEditMemberMasterValidInput.setFieldValue('locationId', appMemberData.data.result.locationId)
-            appEditMemberMasterValidInput.setFieldValue('positionCd', appMemberData.data.result.positionCd)
-            appEditMemberMasterValidInput.setFieldValue('levelCd', appMemberData.data.result.levelCd)
-            appEditMemberMasterValidInput.setFieldValue('levelName', appMemberData.data.result.levelName)
-            appEditMemberMasterValidInput.setFieldValue('gender', appMemberData.data.result.gender)
-            appEditMemberMasterValidInput.setFieldValue('status', appMemberData.data.result.status)
-            setAppPositionSearchLov(appMemberData.data.result.positionName)
-            setPreviewPhoto(appMemberData.data.result.profileUrl)
+            appEditMemberMasterValidInput.setFieldValue('memberId', appMemberData.data?.result.memberId)
+            appEditMemberMasterValidInput.setFieldValue('memberName', appMemberData.data?.result.memberName)
+            appEditMemberMasterValidInput.setFieldValue('memberFullName', appMemberData.data?.result.memberFullName)
+            appEditMemberMasterValidInput.setFieldValue('birthday', appMemberData.data?.result.birthday)
+            appEditMemberMasterValidInput.setFieldValue('email', appMemberData.data?.result.email)
+            appEditMemberMasterValidInput.setFieldValue('hp', appMemberData.data?.result.hp)
+            appEditMemberMasterValidInput.setFieldValue('password', appMemberData.data?.result.password)
+            appEditMemberMasterValidInput.setFieldValue('locationId', appMemberData.data?.result.locationId)
+            appEditMemberMasterValidInput.setFieldValue('positionCd', appMemberData.data?.result.positionCd)
+            appEditMemberMasterValidInput.setFieldValue('levelCd', appMemberData.data?.result.levelCd)
+            appEditMemberMasterValidInput.setFieldValue('levelName', appMemberData.data?.result.levelName)
+            appEditMemberMasterValidInput.setFieldValue('gender', appMemberData.data?.result.gender.toString())
+            appEditMemberMasterValidInput.setFieldValue('status', appMemberData.data?.result.status.toString())
+            setBirthdayDate(new Date(appMemberData.data?.result.birthday))
+            setAppPositionSearchLov(appMemberData.data?.result.positionName)
+            setPreviewPhoto(appMemberData.data?.result.profileUrl)
         } else {
             appEditMemberMasterValidInput.setFieldValue('locationId', props.appMemberLocationListData?.data?.list[0].locationId)
         }
@@ -179,7 +179,7 @@ const EditMemberMaster = (props) => {
             const reader = new FileReader();
             setPhoto(selectedFile)
             reader.onloadend = () => {
-                setPreviewPhoto(reader.result);
+                setPreviewPhoto(reader?.result);
             };
 
             reader.readAsDataURL(selectedFile);
@@ -809,7 +809,7 @@ const EditMemberMaster = (props) => {
                                                 marginTop: "2px",
                                             }}
                                         >
-                                            Password <span className="text-danger"> *</span>
+                                            Password
                                         </Label>
                                     </div>
                                     <div className="col-5" style={{ marginTop: "-8px" }}>

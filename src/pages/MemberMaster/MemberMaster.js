@@ -271,7 +271,7 @@ const MemberMaster = () => {
                                 </div>
 
                                 <div
-                                    className="col-12 pb-5"
+                                    className="col-12 pb-2"
                                     style={{
                                         display: "flex",
                                         flexDirection: "row",
