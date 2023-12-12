@@ -168,25 +168,25 @@ const AddMemberMaster = (props) => {
     const appLovPositionListColumns = [
         {
             dataField: "positionCd",
-            text: "Level Name",
+            text: "Kode Posisi",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "positionName",
-            text: "Level No",
+            text: "Nama Posisi",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "levelCd",
-            text: "Level No",
+            text: "Kode Level",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "levelName",
-            text: "Level Name",
+            text: "Nama Level",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -716,7 +716,7 @@ const AddMemberMaster = (props) => {
                                                 marginTop: "2px",
                                             }}
                                         >
-                                            Jenis Kelamin <span className="text-danger"> *</span>
+                                            Status <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8" style={{ marginTop: "-8px", display: 'flex', flexDirection: 'column' }}>
