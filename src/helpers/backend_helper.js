@@ -165,6 +165,6 @@ export const getMemberBE2 = req => postWithParam("/rest/MemberMasterRest/select"
 
 export const saveMemberBE = req => postUpload("/rest/MemberMasterRest/insert", req)
 
-export const editMemberBE = req => postWithParam("/rest/MemberMasterRest/update", req)
+export const editMemberBE = req => postUpload("/rest/MemberMasterRest/update", req)
 
 export const deleteMemberBE = req => postWithParam("/rest/MemberMasterRest/delete", req)
