@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 import {
     Button,
@@ -38,6 +38,31 @@ const AddMemberMaster = (props) => {
     useEffect(() => {
         dispatch(resetMessage())
     }, [dispatch])
+
+    const [birthdayDate, setBirthdayDate] = useState('');
+    const years = range(1900, new Date().getFullYear() + 1, 1);
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+
+    function range(start, end, step) {
+        const result = [];
+        for (let i = start; i < end; i += step) {
+            result.push(i);
+        }
+        return result;
+    }
 
     const appAddMemberMasterValidInput = useFormik({
         enableReinitialize: true,
@@ -98,7 +123,7 @@ const AddMemberMaster = (props) => {
 
             dispatch(addMemberMaster(formData));
         }
-    });
+    })
 
     useEffect(() => {
         if (props.appAddMemberMaster) {
@@ -134,9 +159,9 @@ const AddMemberMaster = (props) => {
         setPreviewPhoto('');
     };
 
-    const dateChanger = (selectedDate) => {
+    const dateChanger = (birthdayDate) => {
 
-        appAddMemberMasterValidInput.setFieldValue('birthday', selectedDate);
+        appAddMemberMasterValidInput.setFieldValue('birthday', birthdayDate);
 
     };
 
@@ -172,6 +197,10 @@ const AddMemberMaster = (props) => {
         appAddMemberMasterValidInput.setFieldValue("levelCd", row.levelCd)
         appAddMemberMasterValidInput.setFieldValue("levelName", row.levelName)
     }
+
+    useEffect(() => {
+        appAddMemberMasterValidInput.setFieldValue('birthday', birthdayDate)
+    }, [birthdayDate])
 
     return (
         <Container
@@ -367,28 +396,46 @@ const AddMemberMaster = (props) => {
                                             Jenis Kelamin <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
-                                    <div className="col-8" style={{ marginTop: "-8px", display: 'flex', gap: '12px' }}>
-                                        <label style={{ display: 'flex', gap: '4px' }}>
-                                            <Input
-                                                type="radio"
-                                                name="gender"
-                                                value="male"
-                                                checked={appAddMemberMasterValidInput.values.gender === 'male'}
-                                                onChange={() => appAddMemberMasterValidInput.setFieldValue('gender', 'male')}
-                                            />
-                                            Laki-laki
-                                        </label>
-                                        <label style={{ display: 'flex', gap: '4px' }}>
-                                            <Input
-                                                type="radio"
-                                                name="gender"
-                                                value="female"
-                                                checked={appAddMemberMasterValidInput.values.gender === 'female'}
-                                                onChange={() => appAddMemberMasterValidInput.setFieldValue('gender', 'female')}
-                                            />
-                                            Perempuan
-                                        </label>
-                                        <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.gender}</FormFeedback>
+                                    <div className="col-8" style={{ marginTop: "-8px", display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                            <label style={{ display: 'flex', gap: '4px' }}>
+                                                <Input
+                                                    type="radio"
+                                                    name="gender"
+                                                    value="1"
+                                                    checked={appAddMemberMasterValidInput.values.gender === '1'}
+                                                    onChange={() => appAddMemberMasterValidInput.setFieldValue('gender', '1')}
+                                                    invalid={appAddMemberMasterValidInput.touched.gender && appAddMemberMasterValidInput.errors.gender
+                                                        ? true : false
+                                                    }
+                                                />
+                                                Laki-laki
+                                            </label>
+                                            <label style={{ display: 'flex', gap: '4px' }}>
+                                                <Input
+                                                    type="radio"
+                                                    name="gender"
+                                                    value="2"
+                                                    checked={appAddMemberMasterValidInput.values.gender === '2'}
+                                                    onChange={() => appAddMemberMasterValidInput.setFieldValue('gender', '2')}
+                                                    invalid={appAddMemberMasterValidInput.touched.gender && appAddMemberMasterValidInput.errors.gender
+                                                        ? true : false
+                                                    }
+                                                />
+                                                Perempuan
+                                            </label>
+                                        </div>
+                                        {/* <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.gender}</FormFeedback> */}
+                                        {appAddMemberMasterValidInput.touched.gender && appAddMemberMasterValidInput.errors.gender && (
+                                            <div
+                                                style={{
+                                                    fontSize: '10.4px'
+                                                }}
+                                                className="text-danger"
+                                            >
+                                                Wajib diisi
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div
@@ -406,7 +453,77 @@ const AddMemberMaster = (props) => {
                                     </div>
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <div style={{ display: 'flex' }}>
+
                                             <DatePicker
+                                                ref={dateRef}
+                                                className={`form-control date-with-button ${appAddMemberMasterValidInput.touched.birthday && appAddMemberMasterValidInput.errors.birthday ? 'is-invalid' : ''}`}
+                                                dateFormat="yyyy-MM-dd"
+                                                renderCustomHeader={({
+                                                    date,
+                                                    changeYear,
+                                                    changeMonth,
+                                                    decreaseMonth,
+                                                    increaseMonth,
+                                                    prevMonthButtonDisabled,
+                                                    nextMonthButtonDisabled,
+                                                }) => (
+                                                    <div
+                                                        style={{
+                                                            margin: 10,
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                        }}
+                                                    >
+                                                        <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                                            {"<"}
+                                                        </button>
+                                                        <select
+                                                            value={new Date(date).getFullYear()}
+                                                            onChange={({ target: { value } }) => changeYear(value)}
+                                                        >
+                                                            {years.map((option) => (
+                                                                <option key={option} value={option}>
+                                                                    {option}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+
+                                                        <select
+                                                            value={months[new Date(date).getMonth()]}
+                                                            onChange={({ target: { value } }) =>
+                                                                changeMonth(months.indexOf(value))
+                                                            }
+                                                        >
+                                                            {months.map((option) => (
+                                                                <option key={option} value={option}>
+                                                                    {option}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+
+                                                        <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                                            {">"}
+                                                        </button>
+                                                    </div>
+                                                )}
+                                                selected={birthdayDate}
+                                                onChange={(date) => setBirthdayDate(date)}
+                                            />
+
+
+                                            {/* <input
+                                                ref={dateRef}
+                                                type="date"
+                                                className="form-control"
+                                                name="datePicker"
+                                                value={birthdayDate}
+                                                onChange={handleDateChange}
+                                                pattern="\d{4}-\d{2}-\d{2}"
+                                                onFocus={(e) => e.currentTarget.type = "date"} // Ensure the input type is 'date' when focused
+                                                onBlur={(e) => e.currentTarget.type = "text"}
+                                            /> */}
+
+                                            {/* <DatePicker
                                                 ref={dateRef}
                                                 className={`form-control date-with-button ${appAddMemberMasterValidInput.touched.birthday && appAddMemberMasterValidInput.errors.birthday ? 'is-invalid' : ''}`}
                                                 selected={appAddMemberMasterValidInput.values.birthday ? new Date(appAddMemberMasterValidInput.values.birthday) : ''}
@@ -420,7 +537,7 @@ const AddMemberMaster = (props) => {
                                                     appAddMemberMasterValidInput.touched.birthday && appAddMemberMasterValidInput.errors.birthday
                                                         ? true : false
                                                 }
-                                            />
+                                            /> */}
                                             <Button
                                                 style={{
                                                     borderTopLeftRadius: '0',
@@ -431,7 +548,16 @@ const AddMemberMaster = (props) => {
                                                 <span className="mdi mdi-calendar" />
                                             </Button>
                                         </div>
-                                        <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.birthday}</FormFeedback>
+                                        {appAddMemberMasterValidInput.touched.birthday && appAddMemberMasterValidInput.errors.birthday && (
+                                            <span
+                                                style={{
+                                                    fontSize: '10.4px'
+                                                }}
+                                                className="text-danger"
+                                            >
+                                                Wajib diisi
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div
@@ -593,28 +719,46 @@ const AddMemberMaster = (props) => {
                                             Jenis Kelamin <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
-                                    <div className="col-8" style={{ marginTop: "-8px", display: 'flex', gap: '12px' }}>
-                                        <label style={{ display: 'flex', gap: '4px' }}>
-                                            <Input
-                                                type="radio"
-                                                name="status"
-                                                value="1"
-                                                checked={appAddMemberMasterValidInput.values.status === '1'}
-                                                onChange={() => appAddMemberMasterValidInput.setFieldValue('status', '1')}
-                                            />
-                                            Kontrak
-                                        </label>
-                                        <label style={{ display: 'flex', gap: '4px' }}>
-                                            <Input
-                                                type="radio"
-                                                name="status"
-                                                value="2"
-                                                checked={appAddMemberMasterValidInput.values.status === '2'}
-                                                onChange={() => appAddMemberMasterValidInput.setFieldValue('status', '2')}
-                                            />
-                                            Tetap
-                                        </label>
-                                        <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.status}</FormFeedback>
+                                    <div className="col-8" style={{ marginTop: "-8px", display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                            <label style={{ display: 'flex', gap: '4px' }}>
+                                                <Input
+                                                    type="radio"
+                                                    name="status"
+                                                    value="1"
+                                                    checked={appAddMemberMasterValidInput.values.status === '1'}
+                                                    onChange={() => appAddMemberMasterValidInput.setFieldValue('status', '1')}
+                                                    invalid={appAddMemberMasterValidInput.touched.status && appAddMemberMasterValidInput.errors.status
+                                                        ? true : false
+                                                    }
+                                                />
+                                                Kontrak
+                                            </label>
+                                            <label style={{ display: 'flex', gap: '4px' }}>
+                                                <Input
+                                                    type="radio"
+                                                    name="status"
+                                                    value="2"
+                                                    checked={appAddMemberMasterValidInput.values.status === '2'}
+                                                    onChange={() => appAddMemberMasterValidInput.setFieldValue('status', '2')}
+                                                    invalid={appAddMemberMasterValidInput.touched.status && appAddMemberMasterValidInput.errors.status
+                                                        ? true : false
+                                                    }
+                                                />
+                                                Tetap
+                                            </label>
+                                            <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.status}</FormFeedback>
+                                        </div>
+                                        {appAddMemberMasterValidInput.touched.status && appAddMemberMasterValidInput.errors.status && (
+                                            <div
+                                                style={{
+                                                    fontSize: '10.4px'
+                                                }}
+                                                className="text-danger"
+                                            >
+                                                Wajib diisi
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div
