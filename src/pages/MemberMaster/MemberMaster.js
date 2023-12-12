@@ -300,7 +300,7 @@ const MemberMaster = () => {
                             </CardBody>
                         </Card>
                         <Button
-                            className="btn btn-danger my-5"
+                            className="btn btn-danger my-2"
                             onClick={() => {
                                 ReactSession.set('appDetailRecommendationData', "");
                                 history.go(-1)
@@ -320,6 +320,7 @@ const MemberMaster = () => {
                         setAppMemberMaster={setAppMemberMaster}
                         setAppAddMemberMaster={setAppAddMemberMaster}
                         setAppMemberMasterMsg={setAppMemberMasterMsg}
+                        setLoadingSpinner={setLoadingSpinner}
                     />
 
                     <EditMemberMaster
@@ -329,6 +330,7 @@ const MemberMaster = () => {
                         setAppMemberMaster={setAppMemberMaster}
                         setAppEditMemberMaster={setAppEditMemberMaster}
                         setAppMemberMasterMsg={setAppMemberMasterMsg}
+                        setLoadingSpinner={setLoadingSpinner}
                     />
 
                     <MsgModal

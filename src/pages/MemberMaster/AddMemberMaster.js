@@ -812,7 +812,7 @@ const AddMemberMaster = (props) => {
                 </CardBody>
             </Card>
             <Button
-                className="btn btn-danger my-5"
+                className="btn btn-danger m5-2"
                 onClick={() => {
                     props.setAppMemberMaster(true)
                     props.setAppAddMemberMaster(false)
@@ -822,9 +822,6 @@ const AddMemberMaster = (props) => {
                 <span className="mdi mdi-arrow-left" />
                 &nbsp;Kembali
             </Button>
-            <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
-                <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
-            </div>
         </Container >
     );
 };
@@ -835,6 +832,7 @@ AddMemberMaster.propTypes = {
     setAppMemberMaster: PropTypes.any,
     setAppAddMemberMaster: PropTypes.any,
     setAppMemberMasterMsg: PropTypes.any,
+    setLoadingSpinner: PropTypes.any,
 }
 
 export default AddMemberMaster;
