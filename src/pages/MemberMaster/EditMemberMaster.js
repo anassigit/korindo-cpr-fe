@@ -32,11 +32,12 @@ const EditMemberMaster = (props) => {
     const [photo, setPhoto] = useState(null)
     const [previewPhoto, setPreviewPhoto] = useState('')
 
-    const [appPositionSearchLov, setAppPositionSearchLov] = useState("");
-
     const appMemberData = useSelector((state) => {
         return state.memberMasterReducer.respGetMember2
     });
+
+    const [appPositionSearchLov, setAppPositionSearchLov] = useState('');
+    const [appLovParam, setAppLovParam] = useState({});
 
     useEffect(() => {
         dispatch(resetMessage())
@@ -80,6 +81,7 @@ const EditMemberMaster = (props) => {
             password: '',
             locationId: '',
             positionCd: '',
+            positionName: '',
             levelCd: '',
             levelName: '',
             gender: '',
@@ -94,7 +96,7 @@ const EditMemberMaster = (props) => {
             email: Yup.string().required("Wajib diisi"),
             hp: Yup.string().required("Wajib diisi"),
             locationId: Yup.string().required("Wajib diisi"),
-            positionCd: Yup.string().required("Wajib diisi"),
+            positionName: Yup.string().required("Wajib diisi"),
             levelCd: Yup.string().required("Wajib diisi"),
             gender: Yup.string().required("Wajib diisi"),
             status: Yup.string().required("Wajib diisi"),
@@ -146,6 +148,7 @@ const EditMemberMaster = (props) => {
 
     useEffect(() => {
         if (appMemberData.status === '1') {
+            debugger
             appEditMemberMasterValidInput.setFieldValue('memberId', appMemberData.data?.result.memberId)
             appEditMemberMasterValidInput.setFieldValue('memberName', appMemberData.data?.result.memberName)
             appEditMemberMasterValidInput.setFieldValue('memberFullName', appMemberData.data?.result.memberFullName)
@@ -155,6 +158,7 @@ const EditMemberMaster = (props) => {
             appEditMemberMasterValidInput.setFieldValue('password', appMemberData.data?.result.password)
             appEditMemberMasterValidInput.setFieldValue('locationId', appMemberData.data?.result.locationId)
             appEditMemberMasterValidInput.setFieldValue('positionCd', appMemberData.data?.result.positionCd)
+            appEditMemberMasterValidInput.setFieldValue('positionName', appMemberData.data?.result.positionName)
             appEditMemberMasterValidInput.setFieldValue('levelCd', appMemberData.data?.result.levelCd)
             appEditMemberMasterValidInput.setFieldValue('levelName', appMemberData.data?.result.levelName)
             appEditMemberMasterValidInput.setFieldValue('gender', appMemberData.data?.result.gender.toString())
@@ -235,6 +239,14 @@ const EditMemberMaster = (props) => {
     useEffect(() => {
         appEditMemberMasterValidInput.setFieldValue('birthday', birthdayDate)
     }, [birthdayDate])
+
+    useEffect(() => {
+        if (appEditMemberMasterValidInput.values.locationId) {
+            setAppLovParam({
+                locationId: appEditMemberMasterValidInput.values.locationId
+            })
+        }
+    }, [appEditMemberMasterValidInput.values.locationId])
 
     return (
         <Container
@@ -711,11 +723,14 @@ const EditMemberMaster = (props) => {
                                             fieldValue="positionName"
                                             stateSearchInput={appPositionSearchLov}
                                             stateSearchInputSet={setAppPositionSearchLov}
-                                            touchedLovField={appEditMemberMasterValidInput.touched.positionCd}
-                                            errorLovField={appEditMemberMasterValidInput.errors.positionCd}
+                                            touchedLovField={appEditMemberMasterValidInput.touched.positionName}
+                                            errorLovField={appEditMemberMasterValidInput.errors.positionName}
+                                            pParam={appLovParam}
                                         />
-                                        <FormFeedback type="invalid">{appEditMemberMasterValidInput.errors.positionCd}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditMemberMasterValidInput.errors.positionName}</FormFeedback>
                                     </div>
+                                    {console.log(appEditMemberMasterValidInput.errors.positionName)}
+                                    {console.log(appEditMemberMasterValidInput.values.positionName)}
                                 </div>
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
