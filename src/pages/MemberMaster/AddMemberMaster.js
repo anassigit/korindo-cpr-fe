@@ -129,6 +129,7 @@ const AddMemberMaster = (props) => {
         if (props.appAddMemberMaster) {
             appAddMemberMasterValidInput.resetForm()
             appAddMemberMasterValidInput.setFieldValue('locationId', props.appMemberLocationListData?.data?.list[0].locationId)
+            setBirthdayDate('')
             setAppPositionSearchLov("")
         }
     }, [props.appAddMemberMaster])
@@ -157,13 +158,7 @@ const AddMemberMaster = (props) => {
 
     const handleDeleteClick = () => {
         setPreviewPhoto('');
-    };
-
-    const dateChanger = (birthdayDate) => {
-
-        appAddMemberMasterValidInput.setFieldValue('birthday', birthdayDate);
-
-    };
+    }
 
     const appLovPositionListColumns = [
         {
