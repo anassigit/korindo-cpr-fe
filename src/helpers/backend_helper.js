@@ -168,3 +168,17 @@ export const saveMemberBE = req => postUpload("/rest/MemberMasterRest/insert", r
 export const editMemberBE = req => postUpload("/rest/MemberMasterRest/update", req)
 
 export const deleteMemberBE = req => postWithParam("/rest/MemberMasterRest/delete", req)
+
+// Maintain Role
+
+export const getRoleListBE = req => post("/rest/RoleMasterRest/getList", req)
+
+export const getRoleBE = req => postWithParam("/rest/RoleMasterRest/select", req)
+
+export const saveRoleBE = req => postWithParam("/rest/RoleMasterRest/insert", req)
+
+export const editRoleBE = req => postWithParam("/rest/RoleMasterRest/update", req)
+
+export const deleteRoleBE = req => postWithParam("/rest/RoleMasterRest/delete", req)
+
+export const getAccessListBE = req => post("/rest/RoleAccessMasterRest/getList", req)

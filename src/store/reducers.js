@@ -20,6 +20,8 @@ import settingMasterReducer from "./settingmaster/reducer"
 import stickerMasterReducer from "./stickermaster/reducer"
 import organizationReducer from "./organization/reducer"
 
+import maintainRoleReducer from "./maintainrole/reducer"
+
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -38,6 +40,8 @@ const rootReducer = combineReducers({
   settingMasterReducer,
   stickerMasterReducer,
   organizationReducer,
+  
+  maintainRoleReducer,
 })
 
 export default rootReducer

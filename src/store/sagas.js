@@ -16,6 +16,9 @@ import memberMasterSaga from "./membermaster/saga"
 import settingMasterSaga from "./settingmaster/saga"
 import stickerMasterSaga from "./stickermaster/saga"
 import organizationSaga from "./organization/saga"
+
+import maintainRoleSaga from "./maintainrole/saga"
+
 import menuSaga from "./menu/saga"
 
 export default function* rootSaga() {
@@ -36,5 +39,7 @@ export default function* rootSaga() {
     fork(settingMasterSaga),
     fork(stickerMasterSaga),
     fork(organizationSaga),
+
+    fork(maintainRoleSaga),
   ])
 }

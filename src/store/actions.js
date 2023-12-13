@@ -17,3 +17,5 @@ export * from "./membermaster/actions"
 export * from "./settingmaster/actions"
 export * from "./stickermaster/actions"
 export * from "./organization/actions"
+
+export * from "./maintainrole/actions"
