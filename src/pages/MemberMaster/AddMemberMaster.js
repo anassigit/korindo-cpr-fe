@@ -637,7 +637,7 @@ const AddMemberMaster = (props) => {
                                             invalid={appAddMemberMasterValidInput.touched.locationId && appAddMemberMasterValidInput.errors.locationId
                                                 ? true : false
                                             }
-                                            onChange={(e) => appAddMemberMasterValidInput.setFieldValue('locationId', e.target.value)}
+                                            onChange={(e) => appAddMemberMasterValidInput.setFieldValue('locationId', parseInt(e.target.value))}
                                         >
                                             {
                                                 props.appMemberLocationListData?.data?.list.map((item, index) => {

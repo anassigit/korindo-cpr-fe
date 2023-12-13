@@ -162,13 +162,12 @@ const EditMemberMaster = (props) => {
             appEditMemberMasterValidInput.setFieldValue('password', appMemberData.data?.result.password)
             appEditMemberMasterValidInput.setFieldValue('locationId', appMemberData.data?.result.locationId)
             appEditMemberMasterValidInput.setFieldValue('positionCd', appMemberData.data?.result.positionCd)
-            appEditMemberMasterValidInput.setFieldValue('positionName', appMemberData.data?.result.positionName)
             appEditMemberMasterValidInput.setFieldValue('levelCd', appMemberData.data?.result.levelCd)
             appEditMemberMasterValidInput.setFieldValue('levelName', appMemberData.data?.result.levelName)
             appEditMemberMasterValidInput.setFieldValue('gender', appMemberData.data?.result.gender.toString())
             appEditMemberMasterValidInput.setFieldValue('status', appMemberData.data?.result.status.toString())
+            appEditMemberMasterValidInput.setFieldValue('positionName', appMemberData.data?.result.positionName)
             setBirthdayDate(new Date(appMemberData.data?.result.birthday))
-            setAppPositionSearchLov(appMemberData.data?.result.positionName)
             setPreviewPhoto(appMemberData.data?.result.profileUrl)
         } else {
             appEditMemberMasterValidInput.setFieldValue('locationId', props.appMemberLocationListData?.data?.list[0].locationId)
@@ -253,6 +252,11 @@ const EditMemberMaster = (props) => {
         }
     }, [appEditMemberMasterValidInput.values.locationId])
 
+    useEffect(() => {
+        debugger
+        setAppPositionSearchLov(appEditMemberMasterValidInput.values.positionName)
+    }, [appEditMemberMasterValidInput.values.positionName])
+    
     return (
         <Container
             style={{ display: props.appEditMemberMaster ? 'block' : "none" }}
@@ -684,7 +688,7 @@ const EditMemberMaster = (props) => {
                                             invalid={appEditMemberMasterValidInput.touched.locationId && appEditMemberMasterValidInput.errors.locationId
                                                 ? true : false
                                             }
-                                            onChange={(e) => appEditMemberMasterValidInput.setFieldValue('locationId', e.target.value)}
+                                            onChange={(e) => appEditMemberMasterValidInput.setFieldValue('locationId', parseInt(e.target.value))}
                                         >
                                             {
                                                 props.appMemberLocationListData?.data?.list.map((item, index) => {
@@ -718,7 +722,7 @@ const EditMemberMaster = (props) => {
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <Lovv2
                                             title="Posisi"
-                                            keyFieldData="positionCd"
+                                            keyFieldData="positionName"
                                             columns={appLovPositionListColumns}
                                             getData={getPositionAndLevelLov}
                                             pageSize={10}
