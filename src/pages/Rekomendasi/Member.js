@@ -59,7 +59,8 @@ const Member = (props) => {
   useEffect(() => {
     ReactSession.set('offset', offset)
     ReactSession.set('limit', limit)
-    if (!props.searchEntered || selectedDeptData) {
+    debugger
+    if (!props.searchEntered && selectedDeptData) {
       dispatch(getMemberListData({
         "offset": offset,
         "limit": limit,

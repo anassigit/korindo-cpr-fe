@@ -212,22 +212,6 @@ const HistoryPemberian = () => {
                             <span className="mdi mdi-arrow-left" />
                             &nbsp;Kembali
                         </Button>
-                        <Button
-                            className="btn btn-warning my-3 mx-2"
-                            style={{
-                                backgroundColor: appHistoryPemberianData?.data?.recommend_type === "CAN" ? null : "#A9A9A9",
-                                borderColor: appHistoryPemberianData?.data?.recommend_type === "CAN" ? null : "#A9A9A9",
-                            }}
-                            disabled={appHistoryPemberianData?.data?.recommend_type === "CANNOT" ? true : false}
-                            onClick={() => {
-                                ReactSession.set('appDetailRecommendationData', "");
-                                const newMemberId = appDetailRecommendationData.memberId;
-                                history.push({ pathname: '/' + linkRekomendasi, state: { memberId: newMemberId } })
-                            }}
-                        >
-                            <span className="mdi mdi-star" />
-                            &nbsp;Berikan Bintang
-                        </Button>
                         <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                             <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
                         </div>
