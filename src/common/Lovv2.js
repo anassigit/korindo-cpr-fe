@@ -119,7 +119,8 @@ const Lov = props => {
       <InputGroup>
         <Input
           type="search"
-          disabled={props.inputDisabled ? true : false}
+          disabled
+          // ={props.inputDisabled ? true : false}
           // className="form-control"
           className={props.msgCustom ? "form-control is-invalid" : "form-control"}
           value={props.stateSearchInput}
