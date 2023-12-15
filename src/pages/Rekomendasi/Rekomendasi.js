@@ -182,12 +182,12 @@ const Rekomendasi = () => {
                       className="unselectable-two"
                       onClick={(e) => {
                         if (item.childList.length > 0) {
-                          setCollapser((prevCollapser) => {
-                            return {
-                              ...prevCollapser,
-                              [item.deptCd]: !prevCollapser[item.deptCd],
-                            };
-                          });
+                          // setCollapser((prevCollapser) => {
+                          //   return {
+                          //     ...prevCollapser,
+                          //     [item.deptCd]: !prevCollapser[item.deptCd],
+                          //   };
+                          // });
                         }
                         let orgCd = '';
                         orgCd = item.orgCd;

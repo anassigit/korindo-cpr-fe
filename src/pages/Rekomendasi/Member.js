@@ -59,7 +59,7 @@ const Member = (props) => {
   useEffect(() => {
     ReactSession.set('offset', offset)
     ReactSession.set('limit', limit)
-    debugger
+    
     if (!props.searchEntered && selectedDeptData) {
       dispatch(getMemberListData({
         "offset": offset,
@@ -176,7 +176,7 @@ const Member = (props) => {
                             {item.memberName}
                           </div>
                         </UncontrolledTooltip>
-                        <Col xs='2' style={{}}>{item.position}</Col>
+                        <Col xs='2' style={{}}>{item.positionName}</Col>
                         <Col
                           xs='4'
                           style={{
@@ -253,7 +253,7 @@ const Member = (props) => {
                             {item.memberName}
                           </div>
                         </UncontrolledTooltip>
-                        <Col xs='3' style={{}}>{item.position}</Col>
+                        <Col xs='3' style={{}}>{item.positionName}</Col>
                         <Col
                           xs='4'
                           style={{

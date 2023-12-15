@@ -58,7 +58,8 @@ const AddEmployeeOf = (props) => {
 
         initialValues: {
             memberId: '',
-            keyword: '',
+            memberName: '',
+            keywordId: '',
             locationId: '',
             filter: 'month',
             periodFrom: '',
@@ -68,6 +69,7 @@ const AddEmployeeOf = (props) => {
         },
         validationSchema: Yup.object().shape({
             memberId: Yup.string().required("Wajib diisi"),
+            memberName: Yup.string().required("Wajib diisi"),
             filter: Yup.string().required("Wajib diisi"),
             locationId: Yup.string().required("Wajib diisi"),
             periodFrom: Yup.string().required("Wajib diisi"),
@@ -82,11 +84,11 @@ const AddEmployeeOf = (props) => {
 
             dispatch(addEmployeeOf({
                 filter: values.filter,
-                keywordId: values.keyword,
+                keywordId: values.keywordId,
                 locationId: values.locationId,
                 periodFrom: dateFrom,
                 periodTo: dateTo,
-                iidnrp: values.memberId,
+                memberId: values.memberId,
                 description: values.description,
             }))
 
@@ -103,7 +105,7 @@ const AddEmployeeOf = (props) => {
     }, [props.appAddEmployeeOfMonYea])
 
     useEffect(() => {
-        appAddEmployeeValidInput.setFieldValue('keyword', appKeywordListData?.data?.month[0].keywordId)
+        appAddEmployeeValidInput.setFieldValue('keywordId', appKeywordListData?.data?.month[0].keywordId)
     }, [appKeywordListData])
 
     useEffect(() => {
@@ -149,19 +151,19 @@ const AddEmployeeOf = (props) => {
 
     const appLovCandidateListColumns = [
         {
-            dataField: "iidnrp",
+            dataField: "memberName",
             text: "Employee No",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "vfullname",
+            dataField: "memberName",
             text: "Employee Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "dept_nm",
+            dataField: "deptName",
             text: "Department Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -186,7 +188,8 @@ const AddEmployeeOf = (props) => {
     };
 
     const appCallBackEmployee = (row) => {
-        appAddEmployeeValidInput.setFieldValue("memberId", row.iidnrp)
+        appAddEmployeeValidInput.setFieldValue("memberId", row.memberId)
+        appAddEmployeeValidInput.setFieldValue("memberName", row.memberName)
         appAddEmployeeValidInput.setFieldValue("star", row.star)
     }
 
@@ -277,12 +280,12 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="select"
-                                            value={appAddEmployeeValidInput.values.keyword}
+                                            value={appAddEmployeeValidInput.values.keywordId}
                                             onChange={(e) =>
                                                 appAddEmployeeValidInput.setFieldValue("keyword", e.target.value)
                                             }
                                             invalid={
-                                                appAddEmployeeValidInput.touched.keyword && appAddEmployeeValidInput.errors.keyword
+                                                appAddEmployeeValidInput.touched.keywordId && appAddEmployeeValidInput.errors.keywordId
                                                     ? true : false
                                             }
                                         >
@@ -299,7 +302,7 @@ const AddEmployeeOf = (props) => {
                                                 )
                                             ) : (
                                                 Array.isArray(appKeywordListData?.data?.year) ? appKeywordListData?.data?.year.map((item, index) => (
-                                                    <option key={index} value={item.keyword}>
+                                                    <option key={index} value={item.keywordId}>
                                                         {item.keywordName}
                                                     </option>
                                                 ))
@@ -311,7 +314,7 @@ const AddEmployeeOf = (props) => {
                                                 )
                                             )}
                                         </Input>
-                                        <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.keyword}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.keywordId}</FormFeedback>
                                     </div>
                                 </div>
                                 <div
@@ -443,18 +446,18 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Lovv2
                                             title="Karyawan"
-                                            keyFieldData="iidnrp"
+                                            keyFieldData="memberId"
                                             columns={appLovCandidateListColumns}
                                             getData={getCandidateLov}
                                             pageSize={10}
                                             callbackFunc={appCallBackEmployee}
-                                            defaultSetInput="vfullname"
+                                            defaultSetInput="memberName"
                                             invalidData={appAddEmployeeValidInput}
-                                            fieldValue="vfullname"
+                                            fieldValue="memberName"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
-                                            touchedLovField={appAddEmployeeValidInput.touched.memberId}
-                                            errorLovField={appAddEmployeeValidInput.errors.memberId}
+                                            touchedLovField={appAddEmployeeValidInput.touched.memberName}
+                                            errorLovField={appAddEmployeeValidInput.errors.memberName}
                                             pParam={appLovParam}
                                         />
                                     </div>

@@ -65,19 +65,19 @@ const EditEmployeeOf = (props) => {
         enableReinitialize: true,
 
         initialValues: {
-            iidnrp: '',
-            keyword: '',
+            memberId: '',
+            keywordName: '',
             locationId: '',
             flag: '',
             periodFrom: '',
             periodTo: '',
             star: '',
             description: '',
-            vfullname: '',
+            memberName: '',
         },
         validationSchema: Yup.object().shape({
-            iidnrp: Yup.string().required("Wajib diisi"),
-            keyword: Yup.string().required("Wajib diisi"),
+            memberId: Yup.string().required("Wajib diisi"),
+            keywordName: Yup.string().required("Wajib diisi"),
             flag: Yup.string().required("Wajib diisi"),
             periodFrom: Yup.string().required("Wajib diisi"),
             periodTo: Yup.string().required("Wajib diisi"),
@@ -92,7 +92,7 @@ const EditEmployeeOf = (props) => {
                 locationId: values.locationId,
                 periodFrom: dateFrom,
                 periodTo: dateTo,
-                iidnrp: values.iidnrp,
+                memberId: values.memberId,
                 description: values.description,
             }))
             props.setAppEmployeeOfMonYeaMsg('')
@@ -115,15 +115,15 @@ const EditEmployeeOf = (props) => {
 
     useEffect(() => {
         if (appCandidateData.status === '1') {
-            appEditEmployeeValidInput.setFieldValue('iidnrp', appCandidateData?.data?.result.iidnrp)
-            appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
+            appEditEmployeeValidInput.setFieldValue('memberId', appCandidateData?.data?.result.memberId)
+            appEditEmployeeValidInput.setFieldValue('keywordName', appCandidateData?.data?.result.keywordName)
             appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
             appEditEmployeeValidInput.setFieldValue('locationId', appCandidateData?.data?.result.locationId)
             appEditEmployeeValidInput.setFieldValue('periodFrom', appCandidateData?.data?.result.periodFrom)
             appEditEmployeeValidInput.setFieldValue('periodTo', appCandidateData?.data?.result.periodTo)
             appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
             appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
-            setAppCandidateSearchLov(appCandidateData?.data?.result.vfullname)
+            setAppCandidateSearchLov(appCandidateData?.data?.result.memberName)
             setLoadingSpinner(false)
         }
 
@@ -149,7 +149,7 @@ const EditEmployeeOf = (props) => {
         });
 
         if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.locationId) {
-            appEditEmployeeValidInput.setFieldValue('iidnrp', '')
+            appEditEmployeeValidInput.setFieldValue('memberId', '')
             setAppCandidateSearchLov("")
         }
 
@@ -158,19 +158,19 @@ const EditEmployeeOf = (props) => {
 
     const appLovCandidateListColumns = [
         {
-            dataField: "iidnrp",
+            dataField: "memberId",
             text: "Employee No",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "vfullname",
+            dataField: "memberName",
             text: "Employee Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "dept_nm",
+            dataField: "deptName",
             text: "Department Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -195,7 +195,7 @@ const EditEmployeeOf = (props) => {
     };
 
     const appCallBackEmployee = (row) => {
-        appEditEmployeeValidInput.setFieldValue("iidnrp", row.iidnrp)
+        appEditEmployeeValidInput.setFieldValue("memberId", row.memberId)
         appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
 
@@ -282,7 +282,7 @@ const EditEmployeeOf = (props) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Keyword <span className="text-danger"> *</span>
+                                            keywordName <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -290,20 +290,20 @@ const EditEmployeeOf = (props) => {
                                             disabled
                                             type="select"
                                             style={{ color: '#495057' }}
-                                            value={appEditEmployeeValidInput.values.keyword}
+                                            value={appEditEmployeeValidInput.values.keywordName}
                                             onChange={(e) =>
-                                                appEditEmployeeValidInput.setFieldValue("keyword", e.target.value)
+                                                appEditEmployeeValidInput.setFieldValue("keywordName", e.target.value)
                                             }
                                             invalid={
-                                                appEditEmployeeValidInput.touched.keyword && appEditEmployeeValidInput.errors.keyword
+                                                appEditEmployeeValidInput.touched.keywordName && appEditEmployeeValidInput.errors.keywordName
                                                     ? true : false
                                             }
                                         >
-                                            <option value={appEditEmployeeValidInput.values.keyword}>
-                                                {appEditEmployeeValidInput.values.keyword}
+                                            <option value={appEditEmployeeValidInput.values.keywordName}>
+                                                {appEditEmployeeValidInput.values.keywordName}
                                             </option>
                                         </Input>
-                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.keyword}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.keywordName}</FormFeedback>
                                     </div>
                                 </div>
                                 <div
@@ -323,9 +323,13 @@ const EditEmployeeOf = (props) => {
                                         <Input
                                             type="select"
                                             value={appEditEmployeeValidInput.values.locationId}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 appEditEmployeeValidInput.setFieldValue("locationId", e.target.value)
-                                            }
+                                                appEditEmployeeValidInput.setFieldValue("memberId", '')
+                                                appEditEmployeeValidInput.setFieldValue("memberName", '')
+                                                appEditEmployeeValidInput.setFieldValue("star", '')
+                                                setAppCandidateSearchLov("")
+                                            }}
                                             invalid={
                                                 appEditEmployeeValidInput.touched.locationId && appEditEmployeeValidInput.errors.locationId
                                                     ? true : false
@@ -434,18 +438,18 @@ const EditEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Lovv2
                                             title="Karyawan"
-                                            keyFieldData="iidnrp"
+                                            keyFieldData="memberId"
                                             columns={appLovCandidateListColumns}
                                             getData={getCandidateLov}
                                             pageSize={10}
                                             callbackFunc={appCallBackEmployee}
-                                            defaultSetInput="vfullname"
+                                            defaultSetInput="memberName"
                                             invalidData={appEditEmployeeValidInput}
-                                            fieldValue="vfullname"
+                                            fieldValue="memberName"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
-                                            touchedLovField={appEditEmployeeValidInput.touched.iidnrp}
-                                            errorLovField={appEditEmployeeValidInput.errors.iidnrp}
+                                            touchedLovField={appEditEmployeeValidInput.touched.memberId}
+                                            errorLovField={appEditEmployeeValidInput.errors.memberId}
                                             pParam={appLovParam}
                                         />
                                     </div>

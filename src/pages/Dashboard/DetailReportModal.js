@@ -24,7 +24,7 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
     }, [appReportListData])
 
     const saveHandler = () => {
-        debugger
+        
         dispatch(addReport({
             recommendId: recommendId,
             jenisLapor: jenisLapor,

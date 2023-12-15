@@ -100,7 +100,7 @@ const AddMemberMaster = (props) => {
 
         onSubmit: (values) => {
             props.setAppMemberMasterMsg('')
-            debugger
+            
             const formData = new FormData();
             const birthday = new Date(values.birthday);
             const formattedBirthday = `${birthday.getFullYear()}-${(birthday.getMonth() + 1).toString().padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;

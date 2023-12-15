@@ -39,7 +39,7 @@ const ProfileMenu = props => {
 
 
   // useEffect(() => {
-  //   debugger
+    
   //   if (localStorage.getItem("user")) {
   //     const u = localStorage.getItem("user")
 

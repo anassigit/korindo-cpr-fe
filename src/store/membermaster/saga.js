@@ -82,7 +82,7 @@ function* fetchAddMember({ payload: req }) {
 
 function* fetchEditMember({ payload: req }) {
   try {
-    debugger
+    
     const response = yield call(editMemberBE, req)
     if (response.status == 1) {
       yield put(msgEdit(response))
