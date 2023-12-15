@@ -4,6 +4,7 @@ import { all, fork } from "redux-saga/effects"
 import AuthSaga from "./auth/login/saga"
 import LovSaga from "./lov/saga"
 import manualSaga from "./manual/saga"
+import historyPemberianSaga from "./historypemberian/saga"
 import rekomendasiSaga from "./rekomendasi/saga"
 import LayoutSaga from "./layout/saga"
 import dashboardSaga from "./dashboard/saga"
@@ -28,6 +29,7 @@ export default function* rootSaga() {
     fork(menuSaga),
     fork(LovSaga),
     fork(manualSaga),
+    fork(historyPemberianSaga),
     fork(rekomendasiSaga),
     fork(dashboardSaga),
     fork(employeeOfMonYeaSaga),

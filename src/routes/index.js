@@ -22,11 +22,13 @@ import UserManualPDF from "pages/UserManual/UserManualPDF"
 import StickerMaster from "pages/StickerMaster/StickerMaster"
 import MemberMaster from "pages/MemberMaster/MemberMaster"
 import MaintainRole from "pages/MaintainRole/MaintainRole"
+import HistoryPemberian from "pages/HistoryPemberian/HistoryPemberian"
 
 const authProtectedRoutes = [
 
   { path: "/home", component: Dashboard},
   { path: "/home/detail", component: DetailInfluencer},
+  { path: "/home/riwayatpemberian", component: HistoryPemberian},
   { path: "/korsoc000/forms/korsoc051", component: Rekomendasi},
   { path: "/korsoc000/forms/korsoc013", component: EmployeeOfMonYea},
   { path: "/korsoc000/forms/korsoc004", component: Organization},

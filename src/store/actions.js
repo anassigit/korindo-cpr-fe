@@ -6,6 +6,7 @@ export * from "./lov/actions"
 export * from "./menu/actions"
 
 export * from "./rekomendasi/actions"
+export * from "./historypemberian/actions"
 export * from "./manual/actions"
 export * from "./dashboard/actions"
 export * from "./employeeofmonyea/actions"

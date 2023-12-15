@@ -8,6 +8,7 @@ import Login from "./auth/login/reducer"
 import menuReducer from "./menu/reducer"
 import LovReducer from "./lov/reducer"
 import manualReducer from "./manual/reducer"
+import historyPemberianReducer from "./historypemberian/reducer"
 import rekomendasiReducer from "./rekomendasi/reducer"
 import dashboardReducer from "./dashboard/reducer"
 import employeeOfMonYeaReducer from "./employeeofmonyea/reducer"
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   menuReducer,
   LovReducer,
   manualReducer,
+  historyPemberianReducer,
   rekomendasiReducer,
   dashboardReducer,
   employeeOfMonYeaReducer,

@@ -121,7 +121,10 @@ const ProfileMenu = props => {
           </a>
 
           <div className="dropdown-divider" />
-          <a className="dropdown-item d-flex justify-content-between" style={{ width: "20rem" }}>
+          <a 
+            onClick={() => ReactSession.set('appDetailRecommendationData', memberId)}
+            href="/home/riwayatpemberian"
+            className="dropdown-item d-flex justify-content-between" style={{ width: "20rem" }}>
             <span style={{ fontSize: "14px" }}>Bintang yang diberikan</span>
             <div>
               <i className="bx bxs-star font-size-16 align-middle me-1 text-warning" />

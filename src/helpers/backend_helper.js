@@ -7,6 +7,8 @@ export const getInfoProfileBE = req => post("/MemberRest/getInfo", req)
 
 export const getMenuBE = req => post("rest/MainRest/getMenuList", req)
 
+export const getSendDetailRestBE = req => post("rest/MainRest/getSendDetail", req)
+
 export const getListMainRestBE = req => post("rest/MainRest/getList", req)
 
 export const getInfoMainRestBE = req => post("rest/MainRest/getInfo", req)
