@@ -59,7 +59,7 @@ const Member = (props) => {
   useEffect(() => {
     ReactSession.set('offset', offset)
     ReactSession.set('limit', limit)
-    
+    // debugger
     if (!props.searchEntered && selectedDeptData) {
       dispatch(getMemberListData({
         "offset": offset,
@@ -157,8 +157,11 @@ const Member = (props) => {
                             paddingRight: "1%"
                           }}
                         >{item.deptName ? item.deptName : item.deptName}</Col>
+                        {
+                          console.log(item)
+                        }
                         <Col xs='3'
-                          id={`memberId-${item.memberId.toString().replace(/\t/g, '')}`}
+                          id={`memberId-${index + 1}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -166,7 +169,7 @@ const Member = (props) => {
                             paddingRight: "1%"
                           }}
                         >{item.memberName ? item.memberName : item.memberName}</Col>
-                        <UncontrolledTooltip target={`memberId-${item.memberId.toString().replace(/\t/g, '')}`
+                        <UncontrolledTooltip target={`memberId-${index + 1}`
                         } placement='top'>
                           <img
                             width={'120px'}
@@ -236,7 +239,7 @@ const Member = (props) => {
 
                       <>
                         <Col xs='4'
-                          id={`memberId-${item.memberId.toString().replace(/\t/g, '')}`}
+                          id={`memberId-${index + 1}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -244,7 +247,7 @@ const Member = (props) => {
 
                           }}
                         >{item.memberName ? item.memberName : item.memberName}</Col>
-                        <UncontrolledTooltip target={`memberId-${item.memberId.toString().replace(/\t/g, '')}`} placement='top'>
+                        <UncontrolledTooltip target={`memberId-${index + 1}`} placement='top'>
                           <img
                             width={'120px'}
                             src={item.profileUrl}

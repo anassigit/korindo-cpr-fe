@@ -99,8 +99,6 @@ const Rekomendasi = () => {
     setSelectedDeptData(null)
     if (appSearchData.status === '1' && searchVal) {
       setMemberList(appSearchData)
-      setSearchEntered(true)
-      setSelectedDeptName(null)
       ReactSession.set('searchVal', searchVal)
     }
   }, [appSearchData])
@@ -130,6 +128,8 @@ const Rekomendasi = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       // Prevent the default form submission behavior
+      setSearchEntered(true)
+      setSelectedDeptName(null)
       e.preventDefault()
       setCurrentPage(1)
       dispatch(getSearchData({

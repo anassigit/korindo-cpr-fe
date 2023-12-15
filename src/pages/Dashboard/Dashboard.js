@@ -451,11 +451,11 @@ const Rekomendasi = () => {
                                                                         overflow: "hidden",
                                                                         width: "95%"
                                                                     }}
-                                                                    id={`tooltip-name-${index}-${item.memberId.toString().replace(/\t/g, '')}`}
+                                                                    id={`tooltip-name-${index}-${index + 1}`}
                                                                 >
                                                                     {item?.memberName}
                                                                 </div>
-                                                                <UncontrolledTooltip target={`tooltip-name-${index}-${item.memberId.toString().replace(/\t/g, '')}`}>
+                                                                <UncontrolledTooltip target={`tooltip-name-${index}-${index + 1}`}>
                                                                     {item.memberName}
                                                                 </UncontrolledTooltip>
                                                                 <div
