@@ -114,7 +114,6 @@ const EditEmployeeOf = (props) => {
     }, [props.appEditEmployeeOfMonYea])
 
     useEffect(() => {
-        debugger
         if (appCandidateData.status === '1') {
             appEditEmployeeValidInput.setFieldValue('iidnrp', appCandidateData?.data?.result.iidnrp)
             appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
