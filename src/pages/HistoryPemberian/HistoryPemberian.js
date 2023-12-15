@@ -187,7 +187,7 @@ const HistoryPemberian = () => {
                     <Container fluid>
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-star-circle"></span> History per Influencer
+                                <span className="mdi mdi-star-circle"></span> Riwayat Bintang Yang Diberikan
                             </CardHeader>
                             <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
                                 <TableCustom
