@@ -144,7 +144,7 @@ const AddEmployeeOf = (props) => {
         
         if (!formattedDateFrom && !formattedDateTo && !appAddEmployeeValidInput.values.locationId) {
             appAddEmployeeValidInput.setFieldValue('memberId', '')
-            setAppCandidateSearchLov("")
+            // setAppCandidateSearchLov("")
         }
 
     }, [appAddEmployeeValidInput.values]);
@@ -192,6 +192,20 @@ const AddEmployeeOf = (props) => {
         appAddEmployeeValidInput.setFieldValue("memberName", row.memberName)
         appAddEmployeeValidInput.setFieldValue("star", row.star)
     }
+
+    useEffect(() => {
+        if (appAddEmployeeValidInput.values.filter === 'year'){
+            appAddEmployeeValidInput.setFieldValue('keywordId', appKeywordListData?.data?.year[0].keywordId)
+        } else {
+            appAddEmployeeValidInput.setFieldValue('keywordId', appKeywordListData?.data?.month[0].keywordId)
+        }
+    }, [appAddEmployeeValidInput.values.filter])
+
+    useEffect(() => {
+        if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
+            setAppCandidateSearchLov("Mohon isi periode terlebih dahulu...")
+        }
+    }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo])
 
     return (
         <Container
@@ -282,7 +296,7 @@ const AddEmployeeOf = (props) => {
                                             type="select"
                                             value={appAddEmployeeValidInput.values.keywordId}
                                             onChange={(e) =>
-                                                appAddEmployeeValidInput.setFieldValue("keyword", e.target.value)
+                                                appAddEmployeeValidInput.setFieldValue("keywordId", e.target.value)
                                             }
                                             invalid={
                                                 appAddEmployeeValidInput.touched.keywordId && appAddEmployeeValidInput.errors.keywordId

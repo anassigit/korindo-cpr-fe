@@ -150,7 +150,7 @@ const EditEmployeeOf = (props) => {
 
         if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.locationId) {
             appEditEmployeeValidInput.setFieldValue('memberId', '')
-            setAppCandidateSearchLov("")
+            // setAppCandidateSearchLov("")
         }
 
     }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo, appEditEmployeeValidInput.values.locationId]);
@@ -198,6 +198,12 @@ const EditEmployeeOf = (props) => {
         appEditEmployeeValidInput.setFieldValue("memberId", row.memberId)
         appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
+
+    useEffect(() => {
+        if (!appEditEmployeeValidInput.values.periodFrom || !appEditEmployeeValidInput.values.periodTo) {
+            setAppCandidateSearchLov("Mohon isi periode terlebih dahulu...")
+        }
+    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo])
 
     return (
         <Container
