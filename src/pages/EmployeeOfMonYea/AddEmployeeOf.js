@@ -141,7 +141,7 @@ const AddEmployeeOf = (props) => {
             periodTo: formattedDateTo,
             locationId: appAddEmployeeValidInput.values.locationId,
         });
-        
+
         if (!formattedDateFrom && !formattedDateTo && !appAddEmployeeValidInput.values.locationId) {
             appAddEmployeeValidInput.setFieldValue('memberId', '')
             // setAppCandidateSearchLov("")
@@ -194,7 +194,7 @@ const AddEmployeeOf = (props) => {
     }
 
     useEffect(() => {
-        if (appAddEmployeeValidInput.values.filter === 'year'){
+        if (appAddEmployeeValidInput.values.filter === 'year') {
             appAddEmployeeValidInput.setFieldValue('keywordId', appKeywordListData?.data?.year[0].keywordId)
         } else {
             appAddEmployeeValidInput.setFieldValue('keywordId', appKeywordListData?.data?.month[0].keywordId)
@@ -202,10 +202,13 @@ const AddEmployeeOf = (props) => {
     }, [appAddEmployeeValidInput.values.filter])
 
     useEffect(() => {
+        debugger
         if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
             setAppCandidateSearchLov("Mohon isi periode terlebih dahulu...")
+        } else {
+            setAppCandidateSearchLov("")
         }
-    }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo])
+    }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo, props.appAddEmployeeOfMonYea])
 
     return (
         <Container
@@ -309,23 +312,23 @@ const AddEmployeeOf = (props) => {
                                                         {item.keywordName}
                                                     </option>
                                                 )) :
-                                                (
-                                                    <option>
+                                                    (
+                                                        <option>
 
-                                                    </option>
-                                                )
+                                                        </option>
+                                                    )
                                             ) : (
                                                 Array.isArray(appKeywordListData?.data?.year) ? appKeywordListData?.data?.year.map((item, index) => (
                                                     <option key={index} value={item.keywordId}>
                                                         {item.keywordName}
                                                     </option>
                                                 ))
-                                                :
-                                                (
-                                                    <option>
-                                                        
-                                                    </option>
-                                                )
+                                                    :
+                                                    (
+                                                        <option>
+
+                                                        </option>
+                                                    )
                                             )}
                                         </Input>
                                         <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.keywordId}</FormFeedback>
