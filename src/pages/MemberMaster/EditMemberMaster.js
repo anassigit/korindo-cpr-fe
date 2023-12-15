@@ -379,13 +379,13 @@ const EditMemberMaster = (props) => {
                                         <Input
                                             type="text"
                                             disabled
-                                            value={appEditMemberMasterValidInput.values.memberId}
+                                            value={appEditMemberMasterValidInput.values.memberId.toString().replace(/\t/g, '')}
                                             invalid={appEditMemberMasterValidInput.touched.memberId && appEditMemberMasterValidInput.errors.memberId
                                                 ? true : false
                                             }
                                             onChange={(e) => appEditMemberMasterValidInput.setFieldValue('memberId', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appEditMemberMasterValidInput.errors.memberId}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditMemberMasterValidInput.errors.memberId.toString().replace(/\t/g, '')}</FormFeedback>
                                     </div>
                                 </div>
                                 <div

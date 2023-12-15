@@ -453,8 +453,8 @@ const AddEmployeeOf = (props) => {
                                             fieldValue="vfullname"
                                             stateSearchInput={appCandidateSearchLov}
                                             stateSearchInputSet={setAppCandidateSearchLov}
-                                            touchedLovField={appAddEmployeeValidInput.touched.memberId}
-                                            errorLovField={appAddEmployeeValidInput.errors.memberId}
+                                            touchedLovField={appAddEmployeeValidInput.touched.memberId.toString().replace(/\t/g, '')}
+                                            errorLovField={appAddEmployeeValidInput.errors.memberId.toString().replace(/\t/g, '')}
                                             pParam={appLovParam}
                                         />
                                     </div>

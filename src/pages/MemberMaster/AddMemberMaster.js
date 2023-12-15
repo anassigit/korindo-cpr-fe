@@ -329,13 +329,13 @@ const AddMemberMaster = (props) => {
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <Input
                                             type="text"
-                                            value={appAddMemberMasterValidInput.values.memberId}
+                                            value={appAddMemberMasterValidInput.values.memberId.toString().replace(/\t/g, '')}
                                             invalid={appAddMemberMasterValidInput.touched.memberId && appAddMemberMasterValidInput.errors.memberId
                                                 ? true : false
                                             }
                                             onChange={(e) => appAddMemberMasterValidInput.setFieldValue('memberId', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.memberId}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.memberId.toString().replace(/\t/g, '')}</FormFeedback>
                                     </div>
                                 </div>
                                 <div
