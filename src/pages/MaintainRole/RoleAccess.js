@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Card, CardBody, CardHeader, Container } from 'reactstrap'
+import ApplicationRoleAccess from './ApplicationRoleAccess'
 
 const RoleAccess = (props) => {
 
-    const [tabAppRole, setTabAppRole] = useState(true)
+    const [tabAppRole, setTabAppRole] = useState(false)
     const [tabUserRole, setTabUserRole] = useState(false)
+
+    useEffect(() => {
+        if (props.appAccessRole) {
+            setTabAppRole(true)
+        } else {
+            setTabAppRole(false)
+        }
+    }, [props.appAccessRole])
 
     return (
         <Container
@@ -68,17 +77,36 @@ const RoleAccess = (props) => {
                                 backgroundColor: 'white'
                             }}
                         >
-                            
+                            {tabAppRole ?
+                                (
+                                    <ApplicationRoleAccess
+                                        tabAppRole={tabAppRole}
+                                        appMaintainRoleData={props.appMaintainRoleData}
+                                    />
+                                )
+                                :
+                                null
+                            }
                         </CardBody>
                     </Card>
                 </CardBody>
             </Card>
-
+            <Button
+                className="btn btn-danger my-3"
+                onClick={() => {
+                    props.setAppMaintainRole(true)
+                    props.setAppAccessRole(false)
+                }}
+            >
+                <span className="mdi mdi-arrow-left" />
+                &nbsp;Kembali
+            </Button>
         </Container>
     )
 }
 
 RoleAccess.propTypes = {
+    appMaintainRoleData: PropTypes.any,
     appAccessRole: PropTypes.any,
     setAppMaintainRole: PropTypes.any,
     setAppAccessRole: PropTypes.any,

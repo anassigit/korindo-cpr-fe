@@ -1,12 +1,14 @@
 import TableCustom from 'common/TableCustom'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Input } from 'reactstrap'
+import { Button, Input, UncontrolledTooltip } from 'reactstrap'
 import { getAccessListDataAction } from 'store/actions'
+import PropTypes from 'prop-types'
 
 const ApplicationRoleAccess = (props) => {
 
     const [searchVal, setSearchVal] = useState('')
+    const [roleId, setRoleId] = useState('')
 
     const appAccessRoleData = useSelector((state) => {
         return state.maintainRoleReducer.respGetAccessList
@@ -21,6 +23,7 @@ const ApplicationRoleAccess = (props) => {
         search:
         {
             search: searchVal,
+            roleId: props.appMaintainRoleData,
         }
     });
 
@@ -34,6 +37,13 @@ const ApplicationRoleAccess = (props) => {
                 search: searchVal,
             },
         }));
+    };
+
+    const handleEnterKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleClick();
+        }
     };
 
     const appAccessColumn = [
@@ -129,6 +139,20 @@ const ApplicationRoleAccess = (props) => {
         },
     ]
 
+    useEffect(() => {
+        if (props.tabAppRole) {
+            setAppAccessTabelSearch((prevState) => ({
+                ...prevState,
+                page: 1,
+                offset: 0,
+                search: {
+                    ...prevState.search,
+                    roleId: props.appMaintainRoleData.roleId,
+                },
+            }))
+        }
+    }, [props.tabAppRole])
+
     return (
         <React.Fragment>
             <div style={{
@@ -201,6 +225,7 @@ const ApplicationRoleAccess = (props) => {
 
 ApplicationRoleAccess.propTypes = {
     tabAppRole: PropTypes.any,
+    appMaintainRoleData: PropTypes.any,
 }
 
 export default ApplicationRoleAccess

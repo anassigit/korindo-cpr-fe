@@ -9,6 +9,7 @@ import {
   SAVE_ROLE
 } from "./actionTypes"
 import {
+  respGetAccessList,
   respGetRole,
   respGetRoleList
 } from "./actions"
@@ -16,6 +17,7 @@ import {
 import {
   deleteRoleBE,
   editRoleBE,
+  getAccessListBE,
   getRoleBE,
   getRoleListBE,
   saveRoleBE
@@ -38,15 +40,15 @@ function* fetchGetRoleList({ payload: req }) {
 
 function* fetchGetAccessList({ payload: req }) {
   try {
-    const response = yield call(getRoleListBE, req)
+    const response = yield call(getAccessListBE, req)
     if (response.status == 1) {
-      yield put(respGetRoleList(response))
+      yield put(respGetAccessList(response))
     } else {
-      yield put(respGetRoleList(response))
+      yield put(respGetAccessList(response))
     }
   } catch (error) {
     console.log(error);
-    yield put(respGetRoleList({ "status": 0, "message": "Error Get Data" }))
+    yield put(respGetAccessList({ "status": 0, "message": "Error Get Data" }))
   }
 }
 

@@ -89,7 +89,7 @@ const MaintainRole = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`detail-${cellData.roleId}`} className="mdi mdi-text-box-outline text-primary" onClick={() => preDetailMaintainRole()} />
+                        <a id={`detail-${cellData.roleId}`} className="mdi mdi-text-box-outline text-primary" onClick={() => preDetailMaintainRole(cellData)} />
                         <UncontrolledTooltip target={`detail-${cellData.roleId}`}>Detail</UncontrolledTooltip>
                     </React.Fragment>
                 )
@@ -149,6 +149,7 @@ const MaintainRole = () => {
     const preDetailMaintainRole = (data) => {
         setAppAccessRole(true)
         setAppMaintainRole(false)
+        setAppMaintainRoleData(data)
     }
 
     const toggleDeleteModal = (data) => {
@@ -331,6 +332,7 @@ const MaintainRole = () => {
                     />
 
                     <RoleAccess
+                        appMaintainRoleData={appMaintainRoleData}
                         appAccessRole={appAccessRole}
                         setAppMaintainRole={setAppMaintainRole}
                         setAppAccessRole={setAppAccessRole}
