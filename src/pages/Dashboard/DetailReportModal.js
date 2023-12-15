@@ -17,14 +17,20 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
         dispatch(getReportListData())
     }, [])
 
+    useEffect(() => {
+        if (appReportListData.status === '1') {
+            setJenisLapor(appReportListData?.data?.list[0].jenisLapor)
+        }
+    }, [appReportListData])
+
     const saveHandler = () => {
+        debugger
         dispatch(addReport({
             recommendId: recommendId,
-            jenis_lapor: jenisLapor,
+            jenisLapor: jenisLapor,
         }))
         toggle()
     }
-
 
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
@@ -36,15 +42,16 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
                 <Input
                     type='select'
                     value={jenisLapor}
-                    onChange={(e) => setJenisLapor(e.target.value)}
+                    onChange={(e) => {
+                        setJenisLapor(e.target.value)
+                    }}
                 >
                     {
                         appReportListData?.data?.list.map((item, index) => {
-
                             return (
                                 <option
                                     key={index}
-                                    value={item.jenis_lapor}
+                                    value={item.jenisLapor}
                                 >
                                     {item.description}
                                 </option>
