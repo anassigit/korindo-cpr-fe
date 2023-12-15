@@ -25,7 +25,7 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
         toggle()
     }
 
-    
+
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
             <ModalHeader toggle={toggle}>Lapor</ModalHeader>
@@ -38,7 +38,6 @@ const DetailReportModal = ({ modal, toggle, recommendId }) => {
                     value={jenisLapor}
                     onChange={(e) => setJenisLapor(e.target.value)}
                 >
-                    <option value="">Pilih Jenis Laporan</option>
                     {
                         appReportListData?.data?.list.map((item, index) => {
 

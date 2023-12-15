@@ -157,7 +157,7 @@ const Member = (props) => {
                           }}
                         >{item.deptName ? item.deptName : item.deptName}</Col>
                         <Col xs='3'
-                          id={`memberId-${item.memberId}`}
+                          id={`memberId-${item.memberId.toString().replace(/\t/g, '')}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -165,7 +165,8 @@ const Member = (props) => {
                             paddingRight: "1%"
                           }}
                         >{item.memberName ? item.memberName : item.memberName}</Col>
-                        <UncontrolledTooltip target={`memberId-${item.memberId}`} placement='top'>
+                        <UncontrolledTooltip target={`memberId-${item.memberId.toString().replace(/\t/g, '')}`
+                        } placement='top'>
                           <img
                             width={'120px'}
                             src={item.profileUrl}
@@ -234,7 +235,7 @@ const Member = (props) => {
 
                       <>
                         <Col xs='4'
-                          id={`memberId-${item.memberId}`}
+                          id={`memberId-${item.memberId.toString().replace(/\t/g, '')}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -242,7 +243,7 @@ const Member = (props) => {
 
                           }}
                         >{item.memberName ? item.memberName : item.memberName}</Col>
-                        <UncontrolledTooltip target={`memberId-${item.memberId}`} placement='top'>
+                        <UncontrolledTooltip target={`memberId-${item.memberId.toString().replace(/\t/g, '')}`} placement='top'>
                           <img
                             width={'120px'}
                             src={item.profileUrl}

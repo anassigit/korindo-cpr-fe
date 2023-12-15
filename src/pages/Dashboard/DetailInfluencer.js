@@ -205,7 +205,7 @@ const DetailInfluencer = (props) => {
                             </CardHeader>
                             <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
                                 <TableCustom
-                                    keyField={"id"}
+                                    keyField={"recommendId"}
                                     columns={appDetailInfluencerColumn}
                                     redukResponse={appDetailInfluencerData}
                                     appdata={appDetailInfluencerData.data != null && appDetailInfluencerData.data.list ? appDetailInfluencerData.data.list : []}

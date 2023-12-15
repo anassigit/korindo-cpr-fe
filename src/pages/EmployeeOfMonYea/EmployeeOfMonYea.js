@@ -147,10 +147,10 @@ const EmployeeOfMonYea = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.id}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
-                        <a id={`delete-${cellData.id}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.id}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.id}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.awardId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`delete-${cellData.awardId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.awardId}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.awardId}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -213,8 +213,8 @@ const EmployeeOfMonYea = () => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.id) {
-            setAwardId(data.id)
+        if (data.awardId) {
+            setAwardId(data.awardId)
         }
     }
 

@@ -88,7 +88,7 @@ const EditEmployeeOf = (props) => {
             let dateFrom = formatDate(values.periodFrom)
             let dateTo = formatDate(values.periodTo)
             dispatch(editEmployeeOf({
-                award_id: props.appEmployeeOfMonYeaData.id,
+                award_id: props.appEmployeeOfMonYeaData.awardId,
                 locationId: values.location_id,
                 periodFrom: dateFrom,
                 periodTo: dateTo,
@@ -104,7 +104,7 @@ const EditEmployeeOf = (props) => {
             setAppCandidateSearchLov("")
             dispatch(getKeywordListData())
             dispatch(getLocationListData())
-            dispatch(getCandidateData({ award_id: props.appEmployeeOfMonYeaData.id }))
+            dispatch(getCandidateData({ award_id: props.appEmployeeOfMonYeaData.awardId }))
             setLovOneRender(0)
             setLoadingSpinner(true)
         } else {

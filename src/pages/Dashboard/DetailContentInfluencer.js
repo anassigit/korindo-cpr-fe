@@ -27,14 +27,14 @@ const DetailContentInfluencer = ({ modal, toggle, recommendData }) => {
                 </div>
                 <Input
                     disabled
-                    value={recommendData?.name}
+                    value={recommendData?.memberName}
                 />
                 <div className='my-2' style={{ fontWeight: "bold" }}>
                     Compliment
                 </div>
                 <Input
                     disabled
-                    value={recommendData?.sticker}
+                    value={recommendData?.stickerName}
                 />
                 <div className='my-2' style={{ fontWeight: "bold" }}>
                     Komentar
