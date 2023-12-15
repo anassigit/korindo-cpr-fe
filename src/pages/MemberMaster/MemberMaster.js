@@ -160,7 +160,7 @@ const MemberMaster = () => {
 
     const toggleApply = () => {
         setAppMemberMasterMsg('')
-        dispatch(deleteMemberMaster({ memberId: memberId }))
+        dispatch(deleteMemberMaster({ memberId: memberId.toString().replace(/\t/g, '') }))
         setModal(!modal)
         setLoadingSpinner(true)
     }

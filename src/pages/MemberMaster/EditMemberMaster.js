@@ -380,7 +380,7 @@ const EditMemberMaster = (props) => {
                                             type="text"
                                             disabled
                                             value={appEditMemberMasterValidInput.values.memberId.toString().replace(/\t/g, '')}
-                                            invalid={appEditMemberMasterValidInput.touched.memberId && appEditMemberMasterValidInput.errors.memberId
+                                            invalid={appEditMemberMasterValidInput.touched.memberId.toString().replace(/\t/g, '') && appEditMemberMasterValidInput.errors.memberId
                                                 ? true : false
                                             }
                                             onChange={(e) => appEditMemberMasterValidInput.setFieldValue('memberId', e.target.value)}

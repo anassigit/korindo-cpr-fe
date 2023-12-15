@@ -176,7 +176,7 @@ const DetailInfluencer = (props) => {
                 ...prevState,
                 search: {
                     ...prevState.search,
-                    memberId: appDetailRecommendationData.memberId ? appDetailRecommendationData.memberId : appDetailRecommendationData,
+                    memberId: appDetailRecommendationData.memberId.toString().replace(/\t/g, '') ? appDetailRecommendationData.memberId.toString().replace(/\t/g, '') : appDetailRecommendationData,
                 }
             }));
         }

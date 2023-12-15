@@ -330,7 +330,7 @@ const AddMemberMaster = (props) => {
                                         <Input
                                             type="text"
                                             value={appAddMemberMasterValidInput.values.memberId.toString().replace(/\t/g, '')}
-                                            invalid={appAddMemberMasterValidInput.touched.memberId && appAddMemberMasterValidInput.errors.memberId
+                                            invalid={appAddMemberMasterValidInput.touched.memberId.toString().replace(/\t/g, '') && appAddMemberMasterValidInput.errors.memberId
                                                 ? true : false
                                             }
                                             onChange={(e) => appAddMemberMasterValidInput.setFieldValue('memberId', e.target.value)}
