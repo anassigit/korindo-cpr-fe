@@ -34,8 +34,8 @@ const Member = (props) => {
   }, [appMemberList2])
 
   useEffect(() => {
-    if (history.location.state && history.location.state.memberId) {
-      setMemberId(history.location.state.memberId)
+    if (history.location.state && history.location.state.memberId.toString().replace(/\t/g, '')) {
+      setMemberId(history.location.state.memberId.toString().replace(/\t/g, ''))
       setIsAdd(true)
       setModalRekomendasi(true)
     }
@@ -196,7 +196,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId)
+                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
                                   }}
                                 >
                                   Beri Bintang
@@ -212,7 +212,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId)
+                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
                                   }}
                                 >
                                   Beri Bintang
@@ -275,7 +275,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId)
+                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
                                   }}
                                 >
                                   Beri Bintang
@@ -291,7 +291,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId)
+                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
                                   }}
                                 >
                                   Beri Bintang

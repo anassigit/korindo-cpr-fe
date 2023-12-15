@@ -108,8 +108,8 @@ const TabAddKaryawan = (props) => {
   }, [props.selectedDeptData])
 
   const toggle = (data) => {
-    if (data?.memberId) {
-      setMemberId(data.memberId)
+    if (data?.memberId.toString().replace(/\t/g, '')) {
+      setMemberId(data.memberId.toString().replace(/\t/g, ''))
     } else {
       setMemberId(null)
       setSelectedDeptData2({})
@@ -133,8 +133,8 @@ const TabAddKaryawan = (props) => {
   }
 
   const toggleDeleteModal = (data) => {
-    if (data?.memberId) {
-      setMemberId(data.memberId)
+    if (data?.memberId.toString().replace(/\t/g, '')) {
+      setMemberId(data.memberId.toString().replace(/\t/g, ''))
     } else {
       setMemberId(null)
       setSelectedDeptData2({})

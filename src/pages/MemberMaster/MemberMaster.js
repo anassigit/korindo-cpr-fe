@@ -153,8 +153,8 @@ const MemberMaster = () => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.memberId) {
-            setmemberId(data.memberId)
+        if (data.memberId.toString().replace(/\t/g, '')) {
+            setmemberId(data.memberId.toString().replace(/\t/g, ''))
         }
     }
 

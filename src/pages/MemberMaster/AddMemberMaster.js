@@ -105,7 +105,7 @@ const AddMemberMaster = (props) => {
             const birthday = new Date(values.birthday);
             const formattedBirthday = `${birthday.getFullYear()}-${(birthday.getMonth() + 1).toString().padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
 
-            formData.append('memberId', values.memberId);
+            formData.append('memberId', values.memberId.toString().replace(/\t/g, ''));
             formData.append('memberFullName', values.memberFullName);
             formData.append('memberName', values.memberName);
             formData.append('birthday', formattedBirthday);
