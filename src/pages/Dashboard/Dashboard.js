@@ -451,11 +451,11 @@ const Rekomendasi = () => {
                                                                         overflow: "hidden",
                                                                         width: "95%"
                                                                     }}
-                                                                    id={`tooltip-name-${index}-${item.memberId}`}
+                                                                    id={`tooltip-name-${index}-${item.memberId.toString().replace(/\t/g, '')}`}
                                                                 >
                                                                     {item?.memberName}
                                                                 </div>
-                                                                <UncontrolledTooltip target={`tooltip-name-${index}-${item.memberId}`}>
+                                                                <UncontrolledTooltip target={`tooltip-name-${index}-${item.memberId.toString().replace(/\t/g, '')}`}>
                                                                     {item.memberName}
                                                                 </UncontrolledTooltip>
                                                                 <div
@@ -657,11 +657,11 @@ const Rekomendasi = () => {
                                                                             overflow: "hidden",
                                                                             width: "95%"
                                                                         }}
-                                                                        id={`tooltip-name-${key}-${row.memberId}`}
+                                                                        id={`tooltip-name-${key}-${row.memberId.toString().replace(/\t/g, '')}`}
                                                                     >
                                                                         {row.memberName}
                                                                     </div>
-                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.memberId}`}>
+                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.memberId.toString().replace(/\t/g, '')}`}>
                                                                         {row.memberName}
                                                                     </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.deptName}</div>
@@ -909,12 +909,12 @@ const Rekomendasi = () => {
                                                                             overflow: "hidden",
                                                                             width: "95%"
                                                                         }}
-                                                                        id={`tooltip-name-${key}-${row.memberId}`}
+                                                                        id={`tooltip-name-${key}-${row.memberId.toString().replace(/\t/g, '')}`}
                                                                     >
                                                                         {row.memberName}
                                                                     </div>
 
-                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.memberId}`}>
+                                                                    <UncontrolledTooltip target={`tooltip-name-${key}-${row.memberId.toString().replace(/\t/g, '')}`}>
                                                                         {row.memberName}
                                                                     </UncontrolledTooltip>
                                                                     <div className="text-primary" style={{ fontSize: "16px", textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden", width: "100%" }}>{row.deptName}</div>
