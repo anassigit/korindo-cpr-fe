@@ -67,7 +67,7 @@ const EditEmployeeOf = (props) => {
         initialValues: {
             iidnrp: '',
             keyword: '',
-            location_id: '',
+            locationId: '',
             flag: '',
             periodFrom: '',
             periodTo: '',
@@ -88,8 +88,8 @@ const EditEmployeeOf = (props) => {
             let dateFrom = formatDate(values.periodFrom)
             let dateTo = formatDate(values.periodTo)
             dispatch(editEmployeeOf({
-                award_id: props.appEmployeeOfMonYeaData.awardId,
-                locationId: values.location_id,
+                awardId: props.appEmployeeOfMonYeaData.awardId,
+                locationId: values.locationId,
                 periodFrom: dateFrom,
                 periodTo: dateTo,
                 iidnrp: values.iidnrp,
@@ -104,7 +104,7 @@ const EditEmployeeOf = (props) => {
             setAppCandidateSearchLov("")
             dispatch(getKeywordListData())
             dispatch(getLocationListData())
-            dispatch(getCandidateData({ award_id: props.appEmployeeOfMonYeaData.awardId }))
+            dispatch(getCandidateData({ awardId: props.appEmployeeOfMonYeaData.awardId }))
             setLovOneRender(0)
             setLoadingSpinner(true)
         } else {
@@ -114,12 +114,12 @@ const EditEmployeeOf = (props) => {
     }, [props.appEditEmployeeOfMonYea])
 
     useEffect(() => {
-
+        debugger
         if (appCandidateData.status === '1') {
             appEditEmployeeValidInput.setFieldValue('iidnrp', appCandidateData?.data?.result.iidnrp)
             appEditEmployeeValidInput.setFieldValue('keyword', appCandidateData?.data?.result.keyword)
             appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
-            appEditEmployeeValidInput.setFieldValue('location_id', appCandidateData?.data?.result.locationId)
+            appEditEmployeeValidInput.setFieldValue('locationId', appCandidateData?.data?.result.locationId)
             appEditEmployeeValidInput.setFieldValue('periodFrom', appCandidateData?.data?.result.periodFrom)
             appEditEmployeeValidInput.setFieldValue('periodTo', appCandidateData?.data?.result.periodTo)
             appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
@@ -146,15 +146,15 @@ const EditEmployeeOf = (props) => {
         setAppLovParam({
             periodFrom: formattedDateFrom,
             periodTo: formattedDateTo,
-            locationId: appEditEmployeeValidInput.values.location_id,
+            locationId: appEditEmployeeValidInput.values.locationId,
         });
 
-        if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.location_id) {
+        if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.locationId) {
             appEditEmployeeValidInput.setFieldValue('iidnrp', '')
             setAppCandidateSearchLov("")
         }
 
-    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo, appEditEmployeeValidInput.values.location_id]);
+    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo, appEditEmployeeValidInput.values.locationId]);
 
 
     const appLovCandidateListColumns = [
@@ -323,12 +323,12 @@ const EditEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="select"
-                                            value={appEditEmployeeValidInput.values.location_id}
+                                            value={appEditEmployeeValidInput.values.locationId}
                                             onChange={(e) =>
-                                                appEditEmployeeValidInput.setFieldValue("location_id", e.target.value)
+                                                appEditEmployeeValidInput.setFieldValue("locationId", e.target.value)
                                             }
                                             invalid={
-                                                appEditEmployeeValidInput.touched.location_id && appEditEmployeeValidInput.errors.location_id
+                                                appEditEmployeeValidInput.touched.locationId && appEditEmployeeValidInput.errors.locationId
                                                     ? true : false
                                             }
                                         >
@@ -340,7 +340,7 @@ const EditEmployeeOf = (props) => {
                                                 ))
                                             }
                                         </Input>
-                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.location_id}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditEmployeeValidInput.errors.locationId}</FormFeedback>
                                     </div>
                                 </div>
 

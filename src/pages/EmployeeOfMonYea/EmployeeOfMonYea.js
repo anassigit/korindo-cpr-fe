@@ -113,7 +113,7 @@ const EmployeeOfMonYea = () => {
 
         },
         {
-            dataField: "keyword",
+            dataField: "keywordName",
             text: "Keyword",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -220,7 +220,7 @@ const EmployeeOfMonYea = () => {
 
     const toggleApply = () => {
         setAppEmployeeOfMonYeaMsg('')
-        dispatch(deleteEmployeeOf({ award_id: awardId }))
+        dispatch(deleteEmployeeOf({ awardId: awardId }))
         setModal(!modal)
         setLoadingSpinner(true)
     }

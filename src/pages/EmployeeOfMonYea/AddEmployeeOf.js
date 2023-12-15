@@ -59,7 +59,7 @@ const AddEmployeeOf = (props) => {
         initialValues: {
             memberId: '',
             keyword: '',
-            location_id: '',
+            locationId: '',
             filter: 'month',
             periodFrom: '',
             periodTo: '',
@@ -69,7 +69,7 @@ const AddEmployeeOf = (props) => {
         validationSchema: Yup.object().shape({
             memberId: Yup.string().required("Wajib diisi"),
             filter: Yup.string().required("Wajib diisi"),
-            location_id: Yup.string().required("Wajib diisi"),
+            locationId: Yup.string().required("Wajib diisi"),
             periodFrom: Yup.string().required("Wajib diisi"),
             periodTo: Yup.string().required("Wajib diisi"),
         }),
@@ -82,8 +82,8 @@ const AddEmployeeOf = (props) => {
 
             dispatch(addEmployeeOf({
                 filter: values.filter,
-                keyword_id: values.keyword,
-                locationId: values.location_id,
+                keywordId: values.keyword,
+                locationId: values.locationId,
                 periodFrom: dateFrom,
                 periodTo: dateTo,
                 iidnrp: values.memberId,
@@ -103,11 +103,11 @@ const AddEmployeeOf = (props) => {
     }, [props.appAddEmployeeOfMonYea])
 
     useEffect(() => {
-        appAddEmployeeValidInput.setFieldValue('keyword', appKeywordListData?.data?.month[0].keyword_Id)
+        appAddEmployeeValidInput.setFieldValue('keyword', appKeywordListData?.data?.month[0].keywordId)
     }, [appKeywordListData])
 
     useEffect(() => {
-        appAddEmployeeValidInput.setFieldValue('location_id', appLocationListData?.data?.list[0].locationId)
+        appAddEmployeeValidInput.setFieldValue('locationId', appLocationListData?.data?.list[0].locationId)
     }, [appLocationListData])
 
     useEffect(() => {
@@ -137,10 +137,10 @@ const AddEmployeeOf = (props) => {
         setAppLovParam({
             periodFrom: formattedDateFrom,
             periodTo: formattedDateTo,
-            locationId: appAddEmployeeValidInput.values.location_id,
+            locationId: appAddEmployeeValidInput.values.locationId,
         });
         
-        if (!formattedDateFrom && !formattedDateTo && !appAddEmployeeValidInput.values.location_id) {
+        if (!formattedDateFrom && !formattedDateTo && !appAddEmployeeValidInput.values.locationId) {
             appAddEmployeeValidInput.setFieldValue('memberId', '')
             setAppCandidateSearchLov("")
         }
@@ -288,7 +288,7 @@ const AddEmployeeOf = (props) => {
                                         >
                                             {appAddEmployeeValidInput.values.filter === "month" ? (
                                                 Array.isArray(appKeywordListData?.data?.month) ? appKeywordListData?.data?.month.map((item, index) => (
-                                                    <option key={index} value={item.keyword_Id}>
+                                                    <option key={index} value={item.keywordId}>
                                                         {item.keywordName}
                                                     </option>
                                                 )) :
@@ -330,12 +330,12 @@ const AddEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <Input
                                             type="select"
-                                            value={appAddEmployeeValidInput.values.location_id}
+                                            value={appAddEmployeeValidInput.values.locationId}
                                             onChange={(e) =>
-                                                appAddEmployeeValidInput.setFieldValue("location_id", e.target.value)
+                                                appAddEmployeeValidInput.setFieldValue("locationId", e.target.value)
                                             }
                                             invalid={
-                                                appAddEmployeeValidInput.touched.location_id && appAddEmployeeValidInput.errors.location_id
+                                                appAddEmployeeValidInput.touched.locationId && appAddEmployeeValidInput.errors.locationId
                                                     ? true : false
                                             }
                                         >
@@ -347,7 +347,7 @@ const AddEmployeeOf = (props) => {
                                                 ))
                                             }
                                         </Input>
-                                        <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.location_id}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddEmployeeValidInput.errors.locationId}</FormFeedback>
                                     </div>
                                 </div>
 
