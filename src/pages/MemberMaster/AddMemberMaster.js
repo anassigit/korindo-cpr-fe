@@ -105,7 +105,7 @@ const AddMemberMaster = (props) => {
             const birthday = new Date(values.birthday);
             const formattedBirthday = `${birthday.getFullYear()}-${(birthday.getMonth() + 1).toString().padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
 
-            formData.append('memberId', values.memberId.toString().replace(/\t/g, ''));
+            formData.append('memberId', values.memberId);
             formData.append('memberFullName', values.memberFullName);
             formData.append('memberName', values.memberName);
             formData.append('birthday', formattedBirthday);
@@ -329,13 +329,13 @@ const AddMemberMaster = (props) => {
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <Input
                                             type="text"
-                                            value={appAddMemberMasterValidInput.values.memberId.toString().replace(/\t/g, '')}
-                                            invalid={appAddMemberMasterValidInput.touched.memberId.toString().replace(/\t/g, '') && appAddMemberMasterValidInput.errors.memberId
+                                            value={appAddMemberMasterValidInput.values.memberId}
+                                            invalid={appAddMemberMasterValidInput.touched.memberId && appAddMemberMasterValidInput.errors.memberId
                                                 ? true : false
                                             }
                                             onChange={(e) => appAddMemberMasterValidInput.setFieldValue('memberId', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.memberId.toString().replace(/\t/g, '')}</FormFeedback>
+                                        <FormFeedback type="invalid">{appAddMemberMasterValidInput.errors.memberId}</FormFeedback>
                                     </div>
                                 </div>
                                 <div

@@ -34,8 +34,8 @@ const Member = (props) => {
   }, [appMemberList2])
 
   useEffect(() => {
-    if (history.location.state && history.location.state.memberId.toString().replace(/\t/g, '')) {
-      setMemberId(history.location.state.memberId.toString().replace(/\t/g, ''))
+    if (history.location.state && history.location.state.memberId) {
+      setMemberId(history.location.state.memberId)
       setIsAdd(true)
       setModalRekomendasi(true)
     }
@@ -157,7 +157,7 @@ const Member = (props) => {
                           }}
                         >{item.deptName ? item.deptName : item.deptName}</Col>
                         <Col xs='3'
-                          id={`memberId-${item.memberId.toString().replace(/\t/g, '')}`}
+                          id={`memberId-${item.memberId}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -165,7 +165,7 @@ const Member = (props) => {
                             paddingRight: "1%"
                           }}
                         >{item.memberName ? item.memberName : item.memberName}</Col>
-                        <UncontrolledTooltip target={`memberId-${item.memberId.toString().replace(/\t/g, '')}`
+                        <UncontrolledTooltip target={`memberId-${item.memberId}`
                         } placement='top'>
                           <img
                             width={'120px'}
@@ -196,7 +196,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang
@@ -212,7 +212,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang
@@ -235,7 +235,7 @@ const Member = (props) => {
 
                       <>
                         <Col xs='4'
-                          id={`memberId-${item.memberId.toString().replace(/\t/g, '')}`}
+                          id={`memberId-${item.memberId}`}
                           style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -243,7 +243,7 @@ const Member = (props) => {
 
                           }}
                         >{item.memberName ? item.memberName : item.memberName}</Col>
-                        <UncontrolledTooltip target={`memberId-${item.memberId.toString().replace(/\t/g, '')}`} placement='top'>
+                        <UncontrolledTooltip target={`memberId-${item.memberId}`} placement='top'>
                           <img
                             width={'120px'}
                             src={item.profileUrl}
@@ -275,7 +275,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang
@@ -291,7 +291,7 @@ const Member = (props) => {
                                   onClick={() => {
                                     setIsAdd(true)
                                     setModalRekomendasi(true)
-                                    setMemberId(item.memberId.toString().replace(/\t/g, ''))
+                                    setMemberId(item.memberId)
                                   }}
                                 >
                                   Beri Bintang

@@ -111,7 +111,7 @@ const EditMemberMaster = (props) => {
             const birthday = new Date(values.birthday);
             const formattedBirthday = `${birthday.getFullYear()}-${(birthday.getMonth() + 1).toString().padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
 
-            formData.append('memberId', values.memberId.toString().replace(/\t/g, ''));
+            formData.append('memberId', values.memberId);
             formData.append('memberFullName', values.memberFullName);
             formData.append('memberName', values.memberName);
             formData.append('birthday', formattedBirthday);
@@ -153,7 +153,7 @@ const EditMemberMaster = (props) => {
     useEffect(() => {
         if (appMemberData.status === '1') {
             debugger
-            appEditMemberMasterValidInput.setFieldValue('memberId', appMemberData.data?.result.memberId.toString().replace(/\t/g, ''))
+            appEditMemberMasterValidInput.setFieldValue('memberId', appMemberData.data?.result.memberId)
             appEditMemberMasterValidInput.setFieldValue('memberName', appMemberData.data?.result.memberName)
             appEditMemberMasterValidInput.setFieldValue('memberFullName', appMemberData.data?.result.memberFullName)
             appEditMemberMasterValidInput.setFieldValue('birthday', appMemberData.data?.result.birthday)
@@ -379,13 +379,13 @@ const EditMemberMaster = (props) => {
                                         <Input
                                             type="text"
                                             disabled
-                                            value={appEditMemberMasterValidInput.values.memberId.toString().replace(/\t/g, '')}
-                                            invalid={appEditMemberMasterValidInput.touched.memberId.toString().replace(/\t/g, '') && appEditMemberMasterValidInput.errors.memberId
+                                            value={appEditMemberMasterValidInput.values.memberId}
+                                            invalid={appEditMemberMasterValidInput.touched.memberId && appEditMemberMasterValidInput.errors.memberId
                                                 ? true : false
                                             }
                                             onChange={(e) => appEditMemberMasterValidInput.setFieldValue('memberId', e.target.value)}
                                         />
-                                        <FormFeedback type="invalid">{appEditMemberMasterValidInput.errors.memberId.toString().replace(/\t/g, '')}</FormFeedback>
+                                        <FormFeedback type="invalid">{appEditMemberMasterValidInput.errors.memberId}</FormFeedback>
                                     </div>
                                 </div>
                                 <div

@@ -20,7 +20,7 @@ function* fetchGetInfoProfile({ payload: req }) {
   try {
     const response = yield call(getInfoProfileBE, req)
     localStorage.setItem("user", response?.data?.memberName);
-    localStorage.setItem("memberId", response?.data?.memberId.toString().replace(/\t/g, ''));
+    localStorage.setItem("memberId", response?.data?.memberId);
     localStorage.setItem("profileUrl", response?.data?.profileUrl);
     
     const res = yield call(getMenuBE)

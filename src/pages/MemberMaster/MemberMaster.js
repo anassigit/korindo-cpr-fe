@@ -153,14 +153,14 @@ const MemberMaster = () => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.memberId.toString().replace(/\t/g, '')) {
-            setmemberId(data.memberId.toString().replace(/\t/g, ''))
+        if (data.memberId) {
+            setmemberId(data.memberId)
         }
     }
 
     const toggleApply = () => {
         setAppMemberMasterMsg('')
-        dispatch(deleteMemberMaster({ memberId: memberId.toString().replace(/\t/g, '') }))
+        dispatch(deleteMemberMaster({ memberId: memberId }))
         setModal(!modal)
         setLoadingSpinner(true)
     }
