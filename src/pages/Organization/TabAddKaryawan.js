@@ -77,7 +77,7 @@ const TabAddKaryawan = (props) => {
       formatter: (cellContent, cellData) => {
         return (
           <React.Fragment>
-            <svg id={`move-${item.memberId.toString().replace(/\t/g, '')}`} onClick={() => {
+            <svg id={`move-${cellData.memberId.toString().replace(/\t/g, '')}`} onClick={() => {
               setIsAdd(false)
               toggle(cellData)
             }}
