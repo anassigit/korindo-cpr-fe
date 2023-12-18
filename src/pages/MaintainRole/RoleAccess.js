@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Card, CardBody, CardHeader, Container } from 'reactstrap'
 import ApplicationRoleAccess from './ApplicationRoleAccess'
+import UserRoleAccess from './UserRoleAccess'
 
 const RoleAccess = (props) => {
 
     const [tabAppRole, setTabAppRole] = useState(false)
+    const [appAddAccessRole, setAppAddAccessRole] = useState(false)
+    
     const [tabUserRole, setTabUserRole] = useState(false)
 
     useEffect(() => {
@@ -18,7 +21,7 @@ const RoleAccess = (props) => {
 
     return (
         <Container
-            style={{ display: props.appAccessRole ? 'block' : "none" }}
+            // style={{ display: props.appAccessRole ? 'block' : "none" }}
             fluid
         >
             <Card style={{ marginBottom: 0 }}>
@@ -31,13 +34,14 @@ const RoleAccess = (props) => {
                         display: 'flex'
                     }}>
                         <button
-                            className={`btn btn${tabAppRole ? '' : '-outline'}-primary`}
+                            className={`btn btn${tabAppRole || appAddAccessRole ? '' : '-outline'}-primary`}
                             style={{
                                 borderRadius: '.25rem .25rem 0 0',
                                 marginBottom: '-1px'
                             }}
                             onClick={() => {
                                 setTabAppRole(true)
+                                setAppAddAccessRole(false)
                                 setTabUserRole(false)
                             }}
                         >
@@ -51,6 +55,7 @@ const RoleAccess = (props) => {
                             }}
                             onClick={() => {
                                 setTabAppRole(false)
+                                setAppAddAccessRole(false)
                                 setTabUserRole(true)
                             }}
                         >
@@ -70,23 +75,25 @@ const RoleAccess = (props) => {
                                 borderLeft: '1px solid #A084DC',
                             }}
                         >
-                            {tabAppRole ? 'Data Application Role' : 'Data User Role'}
+                            {tabAppRole || appAddAccessRole ? 'Data Application Role' : 'Data User Role'}
                         </CardHeader>
                         <CardBody
                             style={{
                                 backgroundColor: 'white'
                             }}
                         >
-                            {tabAppRole ?
-                                (
-                                    <ApplicationRoleAccess
-                                        tabAppRole={tabAppRole}
-                                        appMaintainRoleData={props.appMaintainRoleData}
-                                    />
-                                )
-                                :
-                                null
-                            }
+                            <ApplicationRoleAccess
+                                tabAppRole={tabAppRole}
+                                setTabAppRole={setTabAppRole}
+                                appAddAccessRole={appAddAccessRole}
+                                setAppAddAccessRole={setAppAddAccessRole}
+                                appMaintainRoleData={props.appMaintainRoleData}
+                                setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
+                            />
+                            <UserRoleAccess
+                                tabUserRole={tabUserRole}
+                                appMaintainRoleData={props.appMaintainRoleData}
+                            />
                         </CardBody>
                     </Card>
                 </CardBody>
@@ -96,6 +103,8 @@ const RoleAccess = (props) => {
                 onClick={() => {
                     props.setAppMaintainRole(true)
                     props.setAppAccessRole(false)
+                    setTabAppRole(false)
+                    setTabUserRole(false)
                 }}
             >
                 <span className="mdi mdi-arrow-left" />

@@ -1,9 +1,12 @@
 import {
+  DELETE_APPLICATION_ROLE_ACCESS,
   DELETE_ROLE,
+  EDIT_APPLICATION_ROLE_ACCESS,
   EDIT_ROLE,
   GET_ACCESS_LIST_ROLE,
   GET_LIST_ROLE,
   GET_ROLE,
+  GET_USER_LIST_ROLE,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
@@ -11,6 +14,8 @@ import {
   RESP_GET_ACCESS_LIST_ROLE,
   RESP_GET_ROLE,
   RESP_GET_ROLE_LIST,
+  RESP_GET_USER_LIST_ROLE,
+  SAVE_APPLICATION_ROLE_ACCESS,
   SAVE_ROLE
 } from "./actionTypes"
 
@@ -34,6 +39,16 @@ export const respGetAccessList = resp => ({
   payload: resp,
 })
 
+export const getUserRoleListDataAction = (req) => ({
+  type: GET_USER_LIST_ROLE,
+  payload: req,
+})
+
+export const respGetUserRoleList = resp => ({
+  type: RESP_GET_USER_LIST_ROLE,
+  payload: resp,
+})
+
 export const getRoleDataAction = (req) => ({
   type: GET_ROLE,
   payload: req,
@@ -49,13 +64,28 @@ export const addRole = (req) => ({
   payload: req,
 })
 
+export const addApplicationRoleAccess = (req) => ({
+  type: SAVE_APPLICATION_ROLE_ACCESS,
+  payload: req,
+})
+
 export const editRole = (req) => ({
   type: EDIT_ROLE,
   payload: req,
 })
 
+export const editApplicationRoleAccess = (req) => ({
+  type: EDIT_APPLICATION_ROLE_ACCESS,
+  payload: req,
+})
+
 export const deleteRole = (req) => ({
   type: DELETE_ROLE,
+  payload: req,
+})
+
+export const deleteApplicationRoleAccess = (req) => ({
+  type: DELETE_APPLICATION_ROLE_ACCESS,
   payload: req,
 })
 

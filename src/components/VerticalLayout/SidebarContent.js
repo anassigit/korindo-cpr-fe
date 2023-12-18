@@ -103,7 +103,19 @@ const SidebarContent = props => {
   function renderMenuItem(item) {
     return (
       <li key={item.menuId}>
-        <a href={"/" + item.path} className={item.childList ? "has-arrow" : ""}>
+        <a
+          onClick={() => {
+
+            ReactSession.remove("currentPage")
+
+            ReactSession.remove('selectedMemberData')
+            ReactSession.remove('selectedDeptData')
+            ReactSession.remove('selectedDeptName')
+            ReactSession.remove('collapser')
+            ReactSession.remove('offset')
+            ReactSession.remove('limit')
+          }}
+          href={"/" + item.path} className={item.childList ? "has-arrow" : ""}>
           {item.icon && <i className={props.t("mdi " + item.icon)}></i>}
           <span>{props.t(item.menuName)}</span>
         </a>
@@ -125,14 +137,14 @@ const SidebarContent = props => {
               <a href="/home" onClick={() => {
                 ReactSession.remove('appDetailRecommendationData')
                 ReactSession.remove("currentPage")
-  
+
                 ReactSession.remove('selectedMemberData')
                 ReactSession.remove('selectedDeptData')
                 ReactSession.remove('selectedDeptName')
                 ReactSession.remove('collapser')
                 ReactSession.remove('offset')
                 ReactSession.remove('limit')
-  
+
               }}>
                 <i className="mdi mdi-home" />
                 <span>{props.t("Home")}</span>

@@ -65,7 +65,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
     const appMemberForAddColumn = [
         {
             dataField: "memberId",
-            text: "Member ID",
+            text: "Karyawan ID",
             sort: true,
             headerStyle: { textAlign: 'center', backgroundColor: 'white' },
             events: {
@@ -323,7 +323,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
 
     return (
         <Modal size={isAdd ? 'lg' : 'md'} isOpen={modal} toggle={toggle} backdrop="static">
-            <ModalHeader toggle={toggle}>Pilih {isAdd ? 'Member' : 'Department'}</ModalHeader>
+            <ModalHeader toggle={toggle}>Pilih {isAdd ? 'Karyawan' : 'Department'}</ModalHeader>
             <ModalBody
                 style={{
                     padding: '16px 16px 0 16px',

@@ -15,12 +15,18 @@ import {
   GET_LIST_LEVEL,
   RESP_GET_LEVEL_LIST,
   GET_ACCESS_LIST_ROLE,
-  RESP_GET_ACCESS_LIST_ROLE
+  RESP_GET_ACCESS_LIST_ROLE,
+  GET_USER_LIST_ROLE,
+  RESP_GET_USER_LIST_ROLE,
+  SAVE_APPLICATION_ROLE_ACCESS,
+  EDIT_APPLICATION_ROLE_ACCESS,
+  DELETE_APPLICATION_ROLE_ACCESS
 } from "./actionTypes"
 
 const INIT_STATE = {
   respGetRoleList: {},
   respGetAccessList: {},
+  respGetUserRoleList: {},
   respGetRole: {},
   msgAdd: '',
   msgEdit: '',
@@ -48,6 +54,15 @@ const maintainRoleReducer = (state = INIT_STATE, action) => {
         ...state,
         respGetAccessList: action.payload,
       }
+    case GET_USER_LIST_ROLE:
+      return {
+        ...state,
+      }
+    case RESP_GET_USER_LIST_ROLE:
+      return {
+        ...state,
+        respGetUserRoleList: action.payload,
+      }
     case GET_ROLE:
       return {
         ...state,
@@ -66,6 +81,18 @@ const maintainRoleReducer = (state = INIT_STATE, action) => {
         ...state,
       }
     case DELETE_ROLE:
+      return {
+        ...state,
+      }
+    case SAVE_APPLICATION_ROLE_ACCESS:
+      return {
+        ...state,
+      }
+    case EDIT_APPLICATION_ROLE_ACCESS:
+      return {
+        ...state,
+      }
+    case DELETE_APPLICATION_ROLE_ACCESS:
       return {
         ...state,
       }

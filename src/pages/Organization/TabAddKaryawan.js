@@ -47,7 +47,7 @@ const TabAddKaryawan = (props) => {
   const appMemberColumn = [
     {
       dataField: "memberId",
-      text: "Member ID",
+      text: "Karyawan ID",
       sort: true,
       style: { textAlign: 'center' },
       headerStyle: { textAlign: 'center' },

@@ -59,7 +59,7 @@ const Member = (props) => {
   useEffect(() => {
     ReactSession.set('offset', offset)
     ReactSession.set('limit', limit)
-    // debugger
+    debugger
     if (!props.searchEntered && selectedDeptData) {
       dispatch(getMemberListData({
         "offset": offset,
@@ -105,7 +105,7 @@ const Member = (props) => {
       <div style={{ overflow: "auto", height: "100%" }}>
         <span className="mdi mdi-domain" style={{ marginRight: "12px", paddingLeft: '12px' }}></span>
         <span>
-          {props.selectedDeptName ? props.selectedDeptName : 'Member List'}
+          {props.selectedDeptName ? props.selectedDeptName : 'Karyawan List'}
         </span>
         <div style={{ width: "100%", position: "relative", marginTop: "8px" }}>
           <Row className="text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em", paddingTop: "2%", paddingBottom: "2%", display: "flex", justifyContent: "center", alignItems: "center" }}>

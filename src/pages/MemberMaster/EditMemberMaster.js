@@ -263,7 +263,7 @@ const EditMemberMaster = (props) => {
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-plus"></span> Tambah Member Master
+                    <span className="mdi mdi-plus"></span> Tambah Karyawan Master
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form

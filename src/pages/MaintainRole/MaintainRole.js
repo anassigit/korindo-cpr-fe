@@ -331,13 +331,16 @@ const MaintainRole = () => {
                         setAppMaintainRoleMsg={setAppMaintainRoleMsg}
                     />
 
-                    <RoleAccess
-                        appMaintainRoleData={appMaintainRoleData}
-                        appAccessRole={appAccessRole}
-                        setAppMaintainRole={setAppMaintainRole}
-                        setAppAccessRole={setAppAccessRole}
-                        setAppMaintainRoleMsg={setAppMaintainRoleMsg}
-                    />
+                    {
+                        appAccessRole &&
+                        <RoleAccess
+                            appMaintainRoleData={appMaintainRoleData}
+                            appAccessRole={appAccessRole}
+                            setAppMaintainRole={setAppMaintainRole}
+                            setAppAccessRole={setAppAccessRole}
+                            setAppMaintainRoleMsg={setAppMaintainRoleMsg}
+                        />
+                    }
 
                     <MsgModal
                         toggle={toggleDeleteModal}

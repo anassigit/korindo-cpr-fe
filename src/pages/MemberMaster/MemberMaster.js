@@ -73,14 +73,14 @@ const MemberMaster = () => {
     const appMemberColumn = [
         {
             dataField: "memberId",
-            text: "Kode Member",
+            text: "Kode Karyawan",
             sort: true,
             style: { textAlign: 'center' },
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "memberName",
-            text: "Nama Member",
+            text: "Nama Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -230,7 +230,7 @@ const MemberMaster = () => {
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-source-branch"></span> Master Member
+                                <span className="mdi mdi-source-branch"></span> Master Karyawan
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                                 <div style={{

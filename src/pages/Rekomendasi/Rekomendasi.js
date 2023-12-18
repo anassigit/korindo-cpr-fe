@@ -74,6 +74,7 @@ const Rekomendasi = () => {
     ReactSession.remove('collapser')
     ReactSession.remove('offset')
     ReactSession.remove('limit')
+    setSelectedDeptData('')
 
     dispatch(getDeptData())
     setLoadingSpinner(true)
