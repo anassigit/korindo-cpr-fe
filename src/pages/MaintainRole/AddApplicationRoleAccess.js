@@ -67,98 +67,91 @@ const AddApplicationRoleAccess = (props) => {
             style={{ display: props.appAddAccessRole ? 'block' : "none" }}
             fluid
         >
-            <Card style={{ marginBottom: 0 }}>
-                <CardHeader>
-                    <span className="mdi mdi-plus"></span> Tambah Role
-                </CardHeader>
-                <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
-                    <Form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            appAddRoleValidInput.handleSubmit();
-                            return false
-                        }}
+            <Form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    appAddRoleValidInput.handleSubmit();
+                    return false
+                }}
+            >
+                <FormGroup>
+                    <div
+                        className="col-4"
                     >
-                        <FormGroup>
-                            <div
-                                className="col-4"
-                            >
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
+                        <div
+                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                        >
 
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                            }}
-                                        >
-                                            Kode Role <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8">
-                                        <Input
-                                            type="text"
-                                            value={appAddRoleValidInput.values.roleId}
-                                            invalid={appAddRoleValidInput.touched.roleId && appAddRoleValidInput.errors.roleId
-                                                ? true : false
-                                            }
-                                            onChange={(e) => appAddRoleValidInput.setFieldValue('roleId', e.target.value)}
-                                        />
-                                        <FormFeedback type="invalid">{appAddRoleValidInput.errors.roleId}</FormFeedback>
-                                    </div>
-                                </div>
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                            <div className="col-4">
+                                <Label
+                                    style={{
+                                        marginTop: "4px",
+                                    }}
                                 >
-
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                            }}
-                                        >
-                                            Role Name <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8">
-                                        <Input
-                                            type="text"
-                                            value={appAddRoleValidInput.values.roleName}
-                                            invalid={appAddRoleValidInput.touched.roleName && appAddRoleValidInput.errors.roleName
-                                                ? true : false
-                                            }
-                                            onChange={(e) => appAddRoleValidInput.setFieldValue('roleName', e.target.value)}
-                                        />
-                                        <FormFeedback type="invalid">{appAddRoleValidInput.errors.roleName}</FormFeedback>
-                                    </div>
-                                </div>
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                                whiteSpace: 'nowrap',
-                                            }}
-                                        >
-                                        </Label>
-                                    </div>
-                                    <div className="col-8">
-                                        <Button
-                                            type="submit"
-                                        >
-                                            Submit
-                                        </Button>
-                                    </div>
-                                </div>
-
+                                    Kode Role <span className="text-danger"> *</span>
+                                </Label>
                             </div>
-                        </FormGroup>
-                    </Form>
-                </CardBody>
-            </Card>
+                            <div className="col-8">
+                                <Input
+                                    type="text"
+                                    value={appAddRoleValidInput.values.roleId}
+                                    invalid={appAddRoleValidInput.touched.roleId && appAddRoleValidInput.errors.roleId
+                                        ? true : false
+                                    }
+                                    onChange={(e) => appAddRoleValidInput.setFieldValue('roleId', e.target.value)}
+                                />
+                                <FormFeedback type="invalid">{appAddRoleValidInput.errors.roleId}</FormFeedback>
+                            </div>
+                        </div>
+                        <div
+                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                        >
+
+                            <div className="col-4">
+                                <Label
+                                    style={{
+                                        marginTop: "4px",
+                                    }}
+                                >
+                                    Role Name <span className="text-danger"> *</span>
+                                </Label>
+                            </div>
+                            <div className="col-8">
+                                <Input
+                                    type="text"
+                                    value={appAddRoleValidInput.values.roleName}
+                                    invalid={appAddRoleValidInput.touched.roleName && appAddRoleValidInput.errors.roleName
+                                        ? true : false
+                                    }
+                                    onChange={(e) => appAddRoleValidInput.setFieldValue('roleName', e.target.value)}
+                                />
+                                <FormFeedback type="invalid">{appAddRoleValidInput.errors.roleName}</FormFeedback>
+                            </div>
+                        </div>
+                        <div
+                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                        >
+                            <div className="col-4">
+                                <Label
+                                    style={{
+                                        marginTop: "4px",
+                                        whiteSpace: 'nowrap',
+                                    }}
+                                >
+                                </Label>
+                            </div>
+                            <div className="col-8">
+                                <Button
+                                    type="submit"
+                                >
+                                    Submit
+                                </Button>
+                            </div>
+                        </div>
+
+                    </div>
+                </FormGroup>
+            </Form>
             <Button
                 className="btn btn-danger my-3"
                 onClick={() => {

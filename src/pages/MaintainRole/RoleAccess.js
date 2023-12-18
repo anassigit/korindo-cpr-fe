@@ -75,7 +75,7 @@ const RoleAccess = (props) => {
                                 borderLeft: '1px solid #A084DC',
                             }}
                         >
-                            {tabAppRole || appAddAccessRole ? 'Data Application Role' : 'Data User Role'}
+                            {tabAppRole ? 'Data Application Role' : appAddAccessRole ? 'Tambah Application Role' : 'Data User Role'}
                         </CardHeader>
                         <CardBody
                             style={{
