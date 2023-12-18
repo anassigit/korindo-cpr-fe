@@ -10,6 +10,9 @@ export const RESP_GET_USER_LIST_ROLE = "RESP_GET_USER_LIST_ROLE"
 export const GET_ROLE = "GET_ROLE"
 export const RESP_GET_ROLE = "RESP_GET_ROLE"
 
+export const GET_ACCESS_ROLE = "GET_ACCESS_ROLE"
+export const RESP_GET_ACCESS_ROLE = "RESP_GET_ACCESS_ROLE"
+
 export const SAVE_ROLE = "SAVE_ROLE"
 export const EDIT_ROLE = "EDIT_ROLE"
 export const DELETE_ROLE = "DELETE_ROLE"

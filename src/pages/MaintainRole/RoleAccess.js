@@ -8,7 +8,7 @@ const RoleAccess = (props) => {
 
     const [tabAppRole, setTabAppRole] = useState(false)
     const [appAddAccessRole, setAppAddAccessRole] = useState(false)
-    
+
     const [tabUserRole, setTabUserRole] = useState(false)
 
     useEffect(() => {
@@ -98,18 +98,23 @@ const RoleAccess = (props) => {
                     </Card>
                 </CardBody>
             </Card>
-            <Button
-                className="btn btn-danger my-3"
-                onClick={() => {
-                    props.setAppMaintainRole(true)
-                    props.setAppAccessRole(false)
-                    setTabAppRole(false)
-                    setTabUserRole(false)
-                }}
-            >
-                <span className="mdi mdi-arrow-left" />
-                &nbsp;Kembali
-            </Button>
+            {
+                !appAddAccessRole &&
+                (
+                    <Button
+                        className="btn btn-danger my-3"
+                        onClick={() => {
+                            props.setAppMaintainRole(true)
+                            props.setAppAccessRole(false)
+                            setTabAppRole(false)
+                            setTabUserRole(false)
+                        }}
+                    >
+                        <span className="mdi mdi-arrow-left" />
+                        &nbsp;Kembali
+                    </Button>
+                )
+            }
         </Container>
     )
 }

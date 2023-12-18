@@ -22,7 +22,7 @@ const ApplicationRoleAccess = (props) => {
         search:
         {
             search: searchVal,
-            roleId: props.appMaintainRoleData,
+            roleId: '',
         }
     });
 
@@ -30,7 +30,6 @@ const ApplicationRoleAccess = (props) => {
         setAppAccessTabelSearch((prevState) => ({
             ...prevState,
             page: 1,
-            offset: 0,
             search: {
                 ...prevState.search,
                 search: searchVal,
@@ -126,7 +125,7 @@ const ApplicationRoleAccess = (props) => {
     ]
 
     useEffect(() => {
-        if (props.tabAppRole) {
+        if (props.tabAppRole && props.appMaintainRoleData) {
             setAppAccessTabelSearch((prevState) => ({
                 ...prevState,
                 search: {
@@ -135,7 +134,7 @@ const ApplicationRoleAccess = (props) => {
                 },
             }))
         }
-    }, [props.tabAppRole])
+    }, [props.tabAppRole, props.appMaintainRoleData])
 
     const appPreAddApplication = () => {
         props.setTabAppRole(false)
@@ -220,6 +219,7 @@ const ApplicationRoleAccess = (props) => {
                 setAppAddAccessRole={props.setAppAddAccessRole}
                 setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
                 setTabAppRole={props.setTabAppRole}
+                appMaintainRoleData={props.appMaintainRoleData}
             />
         </>
     )

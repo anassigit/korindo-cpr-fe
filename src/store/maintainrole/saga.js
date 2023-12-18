@@ -6,7 +6,9 @@ import {
   EDIT_APPLICATION_ROLE_ACCESS,
   EDIT_ROLE,
   GET_ACCESS_LIST_ROLE,
+  GET_ACCESS_ROLE,
   GET_LIST_ROLE,
+  GET_MENU_ROLE_LIST,
   GET_ROLE,
   GET_USER_LIST_ROLE,
   SAVE_APPLICATION_ROLE_ACCESS,
@@ -14,6 +16,8 @@ import {
 } from "./actionTypes"
 import {
   respGetAccessList,
+  respGetAccessRole,
+  respGetMenuRoleList,
   respGetRole,
   respGetRoleList,
   respGetUserRoleList
@@ -25,6 +29,8 @@ import {
   editAccessRoleBE,
   editRoleBE,
   getAccessListBE,
+  getAccessRoleBE,
+  getMenuListBE,
   getRoleBE,
   getRoleListBE,
   getUserRoleListBE,
@@ -86,6 +92,20 @@ function* fetchGetRole({ payload: req }) {
   } catch (error) {
     console.log(error);
     yield put(respGetRole({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
+function* fetchGetAccessRole({ payload: req }) {
+  try {
+    const response = yield call(getAccessRoleBE, req)
+    if (response.status == 1) {
+      yield put(respGetAccessRole(response))
+    } else {
+      yield put(respGetAccessRole(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respGetAccessRole({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
@@ -180,6 +200,7 @@ function* maintainRoleSaga() {
   yield takeEvery(GET_USER_LIST_ROLE, fetchGetUserRoleList)
 
   yield takeEvery(GET_ROLE, fetchGetRole)
+  yield takeEvery(GET_ACCESS_ROLE, fetchGetAccessRole)
 
   yield takeEvery(SAVE_ROLE, fetchAddRole)
   yield takeEvery(EDIT_ROLE, fetchEditRole)

@@ -22,7 +22,7 @@ const UserRoleAccess = (props) => {
         search:
         {
             search: searchVal,
-            roleId: props.appMaintainRoleData,
+            roleId: props.appMaintainRoleData.roleId,
         }
     });
 

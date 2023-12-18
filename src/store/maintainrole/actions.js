@@ -4,14 +4,19 @@ import {
   EDIT_APPLICATION_ROLE_ACCESS,
   EDIT_ROLE,
   GET_ACCESS_LIST_ROLE,
+  GET_ACCESS_ROLE,
   GET_LIST_ROLE,
+  GET_MENU_ROLE_LIST,
   GET_ROLE,
+  GET_ROLE_ACCESS_ROLE,
   GET_USER_LIST_ROLE,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
   RESP_GET_ACCESS_LIST_ROLE,
+  RESP_GET_ACCESS_ROLE,
+  RESP_GET_MENU_ROLE_LIST,
   RESP_GET_ROLE,
   RESP_GET_ROLE_LIST,
   RESP_GET_USER_LIST_ROLE,
@@ -56,6 +61,16 @@ export const getRoleDataAction = (req) => ({
 
 export const respGetRole = resp => ({
   type: RESP_GET_ROLE,
+  payload: resp,
+})
+
+export const getAccessRoleDataAction = (req) => ({
+  type: GET_ACCESS_ROLE,
+  payload: req,
+})
+
+export const respGetAccessRole = resp => ({
+  type: RESP_GET_ACCESS_ROLE,
   payload: resp,
 })
 
