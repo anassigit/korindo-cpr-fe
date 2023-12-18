@@ -86,11 +86,11 @@ const MaintainRole = () => {
             text: "Detail",
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center', fontSize: '16px' },
-            formatter: (cellContent, cellData) => {
+            formatter: (cellContent, cellData, index) => {
                 return (
                     <React.Fragment>
-                        <a id={`detail-${cellData.roleId}`} className="mdi mdi-text-box-outline text-primary" onClick={() => preDetailMaintainRole(cellData)} />
-                        <UncontrolledTooltip target={`detail-${cellData.roleId}`}>Detail</UncontrolledTooltip>
+                        <a id={`detail-${index + 1}`} className="mdi mdi-text-box-outline text-primary" onClick={() => preDetailMaintainRole(cellData)} />
+                        <UncontrolledTooltip target={`detail-${index + 1}`}>Detail</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -99,13 +99,13 @@ const MaintainRole = () => {
             text: "Actions",
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center', fontSize: '16px' },
-            formatter: (cellContent, cellData) => {
+            formatter: (cellContent, cellData, index) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.roleId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditMaintainRole(cellData)} />
-                        <a id={`delete-${cellData.roleId}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.roleId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.roleId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${index + 1}`} className="mdi mdi-pencil text-primary" onClick={() => preEditMaintainRole(cellData)} />
+                        <a id={`delete-${index + 1}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${index + 1}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${index + 1}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
