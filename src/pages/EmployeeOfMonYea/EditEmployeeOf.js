@@ -202,8 +202,7 @@ const EditEmployeeOf = (props) => {
     useEffect(() => {
         if (!appEditEmployeeValidInput.values.periodFrom || !appEditEmployeeValidInput.values.periodTo) {
             setAppCandidateSearchLov("Mohon isi periode terlebih dahulu...")
-        } else {
-            setAppCandidateSearchLov("")
+            appEditEmployeeValidInput.setFieldValue("star", '')
         }
     }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo])
 
