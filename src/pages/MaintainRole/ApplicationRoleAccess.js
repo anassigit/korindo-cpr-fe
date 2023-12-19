@@ -197,8 +197,6 @@ const ApplicationRoleAccess = (props) => {
         }
     }, [appMessageEdit]);
 
-
-
     useEffect(() => {
         if (props.tabAppRole && props.appMaintainRoleData) {
             setAppAccessTabelSearch((prevState) => ({

@@ -1,4 +1,5 @@
 import Lovv2 from 'common/Lovv2';
+import MsgModal from 'components/Common/MsgModal';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -11,6 +12,8 @@ const TabAddOrganisasi = (props) => {
 
   const dispatch = useDispatch()
   const [onlyTabAdd, setOnlyTabAdd] = useState(false)
+  
+  const [modal, setModal] = useState(false)
 
   const appMsgAdd = useSelector((state) => {
     return state.organizationReducer.msgAdd
@@ -127,6 +130,21 @@ const TabAddOrganisasi = (props) => {
 
     }
   }, [appMsgDelete])
+
+  const toggleDeleteModal = (str) => {
+    setModal(!modal)
+  }
+
+  const toggleApply = () => {
+    props.setLoadingSpinner(true)
+    props.setAppOrganizationMsg('')
+    setOnlyTabAdd(true)
+    dispatch(deleteMappingDept({
+      orgCd: props.selectedDeptData.orgCd
+    }))
+    setModal(!modal)
+    // setLoadingSpinner(true)
+  }
 
   return (
     <React.Fragment>
@@ -301,12 +319,7 @@ const TabAddOrganisasi = (props) => {
                 </Button>
                 <Button className='btn-danger'
                   onClick={() => {
-                    props.setLoadingSpinner(true)
-                    props.setAppOrganizationMsg('')
-                    setOnlyTabAdd(true)
-                    dispatch(deleteMappingDept({
-                      orgCd: props.selectedDeptData.orgCd
-                    }))
+                    toggleDeleteModal('delete')
                   }}
                 >
                   Delete
@@ -316,6 +329,13 @@ const TabAddOrganisasi = (props) => {
           </FormGroup>
         </Form>)
       }
+
+      <MsgModal
+        toggle={toggleDeleteModal}
+        toggleApply={toggleApply}
+        modal={modal}
+        message={'Apakah anda yakin untuk menghapus ini?'}
+      />
     </React.Fragment>
 
   )

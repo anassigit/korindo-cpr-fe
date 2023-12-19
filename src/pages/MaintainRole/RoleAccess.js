@@ -99,6 +99,7 @@ const RoleAccess = (props) => {
                             />
                             <UserRoleAccess
                                 tabUserRole={tabUserRole}
+                                setTabUserRole={setTabUserRole}
                                 appAddUserRole={appAddUserRole}
                                 setAppAddUserRole={setAppAddUserRole}
                                 appEditUserRole={appEditUserRole}
