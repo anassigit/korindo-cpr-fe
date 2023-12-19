@@ -188,7 +188,7 @@ const MaintainRole = () => {
 
         if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
-            if (appMessageAdd.status === '1') {
+            if (appMessageAdd.status === '1' && appAddMaintainRole) {
                 setAppMaintainRole(true);
                 setAppAddMaintainRole(false);
             }
@@ -206,7 +206,7 @@ const MaintainRole = () => {
 
         if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
-            if (appMessageEdit.status === '1') {
+            if (appMessageEdit.status === '1' && appEditMaintainRole) {
                 setAppMaintainRole(true);
                 setAppEditMaintainRole(false);
             }
@@ -218,7 +218,6 @@ const MaintainRole = () => {
             setAppMaintainRoleMsg(messageToUpdate);
         }
     }, [appMessageEdit]);
-
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -339,6 +338,7 @@ const MaintainRole = () => {
                             setAppMaintainRole={setAppMaintainRole}
                             setAppAccessRole={setAppAccessRole}
                             setAppMaintainRoleMsg={setAppMaintainRoleMsg}
+                            setLoadingSpinner={setLoadingSpinner}
                         />
                     }
 

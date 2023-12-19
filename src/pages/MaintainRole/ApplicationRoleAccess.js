@@ -1,6 +1,6 @@
 import TableCustom from 'common/TableCustom'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input, UncontrolledTooltip } from 'reactstrap'
 import { getAccessListDataAction } from 'store/actions'
 import PropTypes from 'prop-types'
@@ -8,10 +8,19 @@ import AddApplicationRoleAccess from './AddApplicationRoleAccess'
 
 const ApplicationRoleAccess = (props) => {
 
+    const dispatch = useDispatch()
+
     const [searchVal, setSearchVal] = useState('')
     const appAccessRoleData = useSelector((state) => {
         return state.maintainRoleReducer.respGetAccessList
     })
+
+    const appMessageDelete = useSelector((state) => state.maintainRoleReducer.msgDelete);
+    const appMessageAdd = useSelector((state) => state.maintainRoleReducer.msgAdd);
+
+    const appMessageEdit = useSelector((state) => {
+        return state.maintainRoleReducer.msgEdit
+    });
 
     const [appAccessTabelSearch, setAppAccessTabelSearch] = useState({
         page: 1,
@@ -49,6 +58,7 @@ const ApplicationRoleAccess = (props) => {
             dataField: "menuId",
             text: "Kode Role",
             sort: true,
+            hidden: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
@@ -123,6 +133,61 @@ const ApplicationRoleAccess = (props) => {
             }
         },
     ]
+    
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageDelete.status === '1' || appMessageDelete.status === '0') {
+            messageToUpdate = appMessageDelete;
+            if (appMessageDelete.status === '1') {
+                // Additional logic for appMessageDelete with status '1'
+            }
+        }
+
+        if (messageToUpdate) {
+            props.setLoadingSpinner(false);
+            dispatch(getAccessListDataAction(appAccessTabelSearch));
+            props.setAppMaintainRoleMsg(messageToUpdate);
+        }
+    }, [appMessageDelete]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
+            messageToUpdate = appMessageAdd;
+            if (appMessageAdd.status === '1' && props.appAddAccessRole) {
+                props.setTabAppRole(true);
+                props.setAppAddAccessRole(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            props.setLoadingSpinner(false);
+            dispatch(getAccessListDataAction(appAccessTabelSearch));
+            props.setAppMaintainRoleMsg(messageToUpdate);
+        }
+    }, [appMessageAdd]);
+
+    useEffect(() => {
+        let messageToUpdate;
+
+        if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
+            messageToUpdate = appMessageEdit;
+            if (appMessageEdit.status === '1' && props.appEditAccessRole) {
+                props.setTabAppRole(true);
+                props.setAppEditAccessRole(false);
+            }
+        }
+
+        if (messageToUpdate) {
+            props.setLoadingSpinner(false);
+            dispatch(getAccessListDataAction(appAccessTabelSearch));
+            props.setAppMaintainRoleMsg(messageToUpdate);
+        }
+    }, [appMessageEdit]);
+
+
 
     useEffect(() => {
         if (props.tabAppRole && props.appMaintainRoleData) {
@@ -230,8 +295,11 @@ ApplicationRoleAccess.propTypes = {
     setTabAppRole: PropTypes.any,
     appAddAccessRole: PropTypes.any,
     setAppAddAccessRole: PropTypes.any,
+    appEditAccessRole: PropTypes.any,
+    setAppEditAccessRole: PropTypes.any,
     appMaintainRoleData: PropTypes.any,
     setAppMaintainRoleMsg: PropTypes.any,
+    setLoadingSpinner: PropTypes.any,
 }
 
 export default ApplicationRoleAccess

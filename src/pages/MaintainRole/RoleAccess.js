@@ -8,6 +8,7 @@ const RoleAccess = (props) => {
 
     const [tabAppRole, setTabAppRole] = useState(false)
     const [appAddAccessRole, setAppAddAccessRole] = useState(false)
+    const [appEditAccessRole, setAppEditAccessRole] = useState(false)
 
     const [tabUserRole, setTabUserRole] = useState(false)
 
@@ -87,12 +88,17 @@ const RoleAccess = (props) => {
                                 setTabAppRole={setTabAppRole}
                                 appAddAccessRole={appAddAccessRole}
                                 setAppAddAccessRole={setAppAddAccessRole}
+                                appEditAccessRole={appEditAccessRole}
+                                setAppEditAccessRole={setAppEditAccessRole}
                                 appMaintainRoleData={props.appMaintainRoleData}
                                 setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
+                                setLoadingSpinner={props.setLoadingSpinner}
                             />
                             <UserRoleAccess
                                 tabUserRole={tabUserRole}
                                 appMaintainRoleData={props.appMaintainRoleData}
+                                setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
+                                setLoadingSpinner={props.setLoadingSpinner}
                             />
                         </CardBody>
                     </Card>
@@ -125,6 +131,7 @@ RoleAccess.propTypes = {
     setAppMaintainRole: PropTypes.any,
     setAppAccessRole: PropTypes.any,
     setAppMaintainRoleMsg: PropTypes.any,
+    setLoadingSpinner: PropTypes.any,
 }
 
 export default RoleAccess

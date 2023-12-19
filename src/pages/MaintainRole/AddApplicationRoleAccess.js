@@ -88,13 +88,17 @@ const AddApplicationRoleAccess = (props) => {
         }),
 
         onSubmit: (values) => {
-            props.setTabAppRoleMsg('')
+            props.setAppMaintainRoleMsg('')
+
+
+            let startDate = formatDate(values.startDate)
+            let endDate = formatDate(values.endDate)
 
             dispatch(addApplicationRoleAccess({
                 roleId: values.roleId,
                 menuId: values.menuId,
-                startDate: values.startDate,
-                endDate: values.endDate,
+                startDate: startDate,
+                endDate: endDate,
                 create: values.create,
                 read: values.read,
                 update: values.update,
@@ -104,6 +108,16 @@ const AddApplicationRoleAccess = (props) => {
 
         }
     });
+
+    const formatDate = (date) => {
+        if (date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        return '';
+    };
 
     useEffect(() => {
         if (props.appAddAccessRole) {
@@ -651,7 +665,7 @@ const AddApplicationRoleAccess = (props) => {
 AddApplicationRoleAccess.propTypes = {
     appAddAccessRole: PropTypes.any,
     setAppAddAccessRole: PropTypes.any,
-    setTabAppRoleMsg: PropTypes.any,
+    setAppMaintainRoleMsg: PropTypes.any,
     setTabAppRole: PropTypes.any,
     appMaintainRoleData: PropTypes.any,
 }
