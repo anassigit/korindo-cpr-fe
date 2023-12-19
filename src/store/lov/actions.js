@@ -4,6 +4,7 @@ import {
   LOV_LEVEL,
   LOV_MENU_ROLE_LIST,
   LOV_POSITION_AND_LEVEL,
+  LOV_USER_ROLE_LIST,
   MSG_LOV
 } from "./actionTypes"
 
@@ -29,6 +30,11 @@ export const getPositionAndLevelLov = (req) => ({
 
 export const getMenuRoleLov = (req) => ({
   type: LOV_MENU_ROLE_LIST,
+  payload: req,
+})
+
+export const getUserRoleLov = (req) => ({
+  type: LOV_USER_ROLE_LIST,
   payload: req,
 })
 

@@ -24,6 +24,9 @@ import {
   RESP_GET_ACCESS_ROLE,
   GET_ACCESS_ROLE,
   RESP_GET_MENU_ROLE_LIST,
+  SAVE_APPLICATION_ROLE_USER,
+  EDIT_APPLICATION_ROLE_USER,
+  DELETE_APPLICATION_ROLE_USER,
   GET_MENU_ROLE_LIST
 } from "./actionTypes"
 
@@ -107,6 +110,18 @@ const maintainRoleReducer = (state = INIT_STATE, action) => {
         ...state,
       }
     case DELETE_APPLICATION_ROLE_ACCESS:
+      return {
+        ...state,
+      }
+    case SAVE_APPLICATION_ROLE_USER:
+      return {
+        ...state,
+      }
+    case EDIT_APPLICATION_ROLE_USER:
+      return {
+        ...state,
+      }
+    case DELETE_APPLICATION_ROLE_USER:
       return {
         ...state,
       }

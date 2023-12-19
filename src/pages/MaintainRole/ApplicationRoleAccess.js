@@ -2,18 +2,28 @@ import TableCustom from 'common/TableCustom'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input, UncontrolledTooltip } from 'reactstrap'
-import { getAccessListDataAction } from 'store/actions'
+import { deleteApplicationRoleAccess, getAccessListDataAction } from 'store/actions'
 import PropTypes from 'prop-types'
 import AddApplicationRoleAccess from './AddApplicationRoleAccess'
+import EditApplicationRoleAccess from './EditApplicationRoleAccess'
+import MsgModal from 'components/Common/MsgModal'
+import { deleteAccessRoleBE } from 'helpers/backend_helper'
 
 const ApplicationRoleAccess = (props) => {
 
     const dispatch = useDispatch()
 
     const [searchVal, setSearchVal] = useState('')
+
+    const [modal, setModal] = useState(false)
+
+    const [menuId, setMenuId] = useState('')
+
     const appAccessRoleData = useSelector((state) => {
         return state.maintainRoleReducer.respGetAccessList
     })
+
+    const [appAccessData, setAppAccessData] = useState({})
 
     const appMessageDelete = useSelector((state) => state.maintainRoleReducer.msgDelete);
     const appMessageAdd = useSelector((state) => state.maintainRoleReducer.msgAdd);
@@ -124,7 +134,7 @@ const ApplicationRoleAccess = (props) => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.roleId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditMaintainRole(cellData)} />
+                        <a id={`edit-${cellData.roleId}`} className="mdi mdi-pencil text-primary" onClick={() => appPreEditApplication(cellData)} />
                         <a id={`delete-${cellData.roleId}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${cellData.roleId}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${cellData.roleId}`}>Delete</UncontrolledTooltip>
@@ -133,7 +143,7 @@ const ApplicationRoleAccess = (props) => {
             }
         },
     ]
-    
+
     useEffect(() => {
         let messageToUpdate;
 
@@ -204,6 +214,29 @@ const ApplicationRoleAccess = (props) => {
     const appPreAddApplication = () => {
         props.setTabAppRole(false)
         props.setAppAddAccessRole(true)
+    }
+
+    const appPreEditApplication = (data) => {
+        props.setTabAppRole(false)
+        props.setAppEditAccessRole(true)
+        setAppAccessData(data)
+    }
+
+    const toggleDeleteModal = (data) => {
+        setModal(!modal)
+        if (data.roleId) {
+            setMenuId(data.menuId)
+        }
+    }
+
+    const toggleApply = () => {
+        props.setAppMaintainRoleMsg('')
+        dispatch(deleteApplicationRoleAccess({
+            roleId: props.appMaintainRoleData.roleId,
+            menuId: menuId,
+        }))
+        setModal(!modal)
+        props.setLoadingSpinner(true)
     }
 
     return (
@@ -285,6 +318,21 @@ const ApplicationRoleAccess = (props) => {
                 setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
                 setTabAppRole={props.setTabAppRole}
                 appMaintainRoleData={props.appMaintainRoleData}
+            />
+            <EditApplicationRoleAccess
+                appEditAccessRole={props.appEditAccessRole}
+                setAppEditAccessRole={props.setAppEditAccessRole}
+                setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
+                setTabAppRole={props.setTabAppRole}
+                appMaintainRoleData={props.appMaintainRoleData}
+                appAccessData={appAccessData}
+            />
+
+            <MsgModal
+                toggle={toggleDeleteModal}
+                toggleApply={toggleApply}
+                modal={modal}
+                message={'Apakah anda yakin untuk menghapus ini?'}
             />
         </>
     )

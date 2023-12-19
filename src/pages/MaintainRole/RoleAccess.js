@@ -11,6 +11,8 @@ const RoleAccess = (props) => {
     const [appEditAccessRole, setAppEditAccessRole] = useState(false)
 
     const [tabUserRole, setTabUserRole] = useState(false)
+    const [appAddUserRole, setAppAddUserRole] = useState(false)
+    const [appEditUserRole, setAppEditUserRole] = useState(false)
 
     useEffect(() => {
         if (props.appAccessRole) {
@@ -35,7 +37,7 @@ const RoleAccess = (props) => {
                         display: 'flex'
                     }}>
                         <button
-                            className={`btn btn${tabAppRole || appAddAccessRole ? '' : '-outline'}-primary`}
+                            className={`btn btn${tabAppRole || appAddAccessRole || appEditAccessRole ? '' : '-outline'}-primary`}
                             style={{
                                 borderRadius: '.25rem .25rem 0 0',
                                 marginBottom: '-1px'
@@ -43,6 +45,7 @@ const RoleAccess = (props) => {
                             onClick={() => {
                                 setTabAppRole(true)
                                 setAppAddAccessRole(false)
+                                setAppEditAccessRole(false)
                                 setTabUserRole(false)
                             }}
                         >
@@ -96,6 +99,10 @@ const RoleAccess = (props) => {
                             />
                             <UserRoleAccess
                                 tabUserRole={tabUserRole}
+                                appAddUserRole={appAddUserRole}
+                                setAppAddUserRole={setAppAddUserRole}
+                                appEditUserRole={appEditUserRole}
+                                setAppEditUserRole={setAppEditUserRole}
                                 appMaintainRoleData={props.appMaintainRoleData}
                                 setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
                                 setLoadingSpinner={props.setLoadingSpinner}
@@ -105,7 +112,7 @@ const RoleAccess = (props) => {
                 </CardBody>
             </Card>
             {
-                !appAddAccessRole &&
+                !(appAddAccessRole || appEditAccessRole)  &&
                 (
                     <Button
                         className="btn btn-danger my-3"

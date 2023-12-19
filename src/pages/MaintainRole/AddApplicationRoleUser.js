@@ -16,7 +16,7 @@ import {
     Label,
     Spinner
 } from "reactstrap";
-import { addApplicationRoleAccess, addRole, getMenuRoleLov, resetMessage } from "store/actions";
+import { addApplicationRoleUser, addRole, getUserRoleLov, resetMessage } from "store/actions";
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
@@ -24,11 +24,11 @@ import Lovv2 from "common/Lovv2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const AddApplicationRoleAccess = (props) => {
+const AddApplicationRoleUser = (props) => {
 
     const dispatch = useDispatch()
 
-    const [appMenuSearchLov, setAppMenuSearchLov] = useState("");
+    const [appMemberSearchLov, setAppMemberSearchLov] = useState("");
     const dateRef1 = useRef(null);
     const dateRef2 = useRef(null);
 
@@ -65,26 +65,16 @@ const AddApplicationRoleAccess = (props) => {
 
         initialValues: {
             roleId: '',
-            menuId: '',
-            menuName: '',
+            memberId: '',
+            memberName: '',
             startDate: '',
             endDate: '',
-            create: false,
-            read: false,
-            update: false,
-            print: false,
-            delete: false,
         },
         validationSchema: Yup.object().shape({
             roleId: Yup.string().required("Wajib diisi"),
-            menuId: Yup.string().required("Wajib diisi"),
+            memberId: Yup.string().required("Wajib diisi"),
             startDate: Yup.string().required("Wajib diisi"),
             endDate: Yup.string().required("Wajib diisi"),
-            // create: Yup.string().required("Wajib diisi"),
-            // read: Yup.string().required("Wajib diisi"),
-            // update: Yup.string().required("Wajib diisi"),
-            // print: Yup.string().required("Wajib diisi"),
-            // delete : Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
@@ -94,16 +84,11 @@ const AddApplicationRoleAccess = (props) => {
             let startDate = formatDate(values.startDate)
             let endDate = formatDate(values.endDate)
 
-            dispatch(addApplicationRoleAccess({
+            dispatch(addApplicationRoleUser({
                 roleId: values.roleId,
-                menuId: values.menuId,
+                memberId: values.memberId,
                 startDate: startDate,
                 endDate: endDate,
-                create: values.create,
-                read: values.read,
-                update: values.update,
-                print: values.print,
-                delete: values.delete,
             }))
 
         }
@@ -126,25 +111,25 @@ const AddApplicationRoleAccess = (props) => {
         }
     }, [props.appAddAccessRole])
 
-    const appLovMenuListColumns = [
+    const appLovMemberListColumns = [
         {
-            dataField: "menuId",
-            text: "Menu ID",
+            dataField: "memberId",
+            text: "Member ID",
             sort: true,
             style: { textAlign: 'center' },
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "menuName",
-            text: "Menu Name",
+            dataField: "memberName",
+            text: "Member Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
     ]
 
-    const appCallBackMenu = (row) => {
-        appAddApplicationRoleValidInput.setFieldValue("menuId", row.menuId)
-        appAddApplicationRoleValidInput.setFieldValue("menuName", row.menuName)
+    const appCallBackEmployee = (row) => {
+        appAddApplicationRoleValidInput.setFieldValue("memberId", row.memberId)
+        appAddApplicationRoleValidInput.setFieldValue("memberName", row.memberName)
     }
 
     const dateChanger = (name, selectedDate) => {
@@ -217,26 +202,26 @@ const AddApplicationRoleAccess = (props) => {
                                         marginTop: "4px",
                                     }}
                                 >
-                                    Kode Menu <span className="text-danger"> *</span>
+                                    Kode Karyawan <span className="text-danger"> *</span>
                                 </Label>
                             </div>
                             <div className="col-8">
                                 <Lovv2
-                                    title="Kode Menu"
-                                    keyFieldData="menuId"
-                                    columns={appLovMenuListColumns}
-                                    getData={getMenuRoleLov}
+                                    title="Kode Karyawan"
+                                    keyFieldData="memberId"
+                                    columns={appLovMemberListColumns}
+                                    getData={getUserRoleLov}
                                     pageSize={10}
-                                    callbackFunc={appCallBackMenu}
-                                    defaultSetInput="menuId"
+                                    callbackFunc={appCallBackEmployee}
+                                    defaultSetInput="memberId"
                                     invalidData={appAddApplicationRoleValidInput}
-                                    fieldValue="menuId"
-                                    stateSearchInput={appMenuSearchLov}
-                                    stateSearchInputSet={setAppMenuSearchLov}
-                                    touchedLovField={appAddApplicationRoleValidInput.touched.menuId}
-                                    errorLovField={appAddApplicationRoleValidInput.errors.menuId}
+                                    fieldValue="memberId"
+                                    stateSearchInput={appMemberSearchLov}
+                                    stateSearchInputSet={setAppMemberSearchLov}
+                                    touchedLovField={appAddApplicationRoleValidInput.touched.memberId}
+                                    errorLovField={appAddApplicationRoleValidInput.errors.memberId}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.menuId}</FormFeedback>
+                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.memberId}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -249,146 +234,22 @@ const AddApplicationRoleAccess = (props) => {
                                         marginTop: "4px",
                                     }}
                                 >
-                                    Nama Menu <span className="text-danger"> *</span>
+                                    Nama Karyawan <span className="text-danger"> *</span>
                                 </Label>
                             </div>
                             <div className="col-8">
                                 <Input
                                     disabled
                                     type="text"
-                                    value={appAddApplicationRoleValidInput.values.menuName}
-                                    invalid={appAddApplicationRoleValidInput.touched.menuName && appAddApplicationRoleValidInput.errors.menuName
+                                    value={appAddApplicationRoleValidInput.values.memberName}
+                                    invalid={appAddApplicationRoleValidInput.touched.memberName && appAddApplicationRoleValidInput.errors.memberName
                                         ? true : false
                                     }
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.menuName}</FormFeedback>
+                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.memberName}</FormFeedback>
                             </div>
                         </div>
-                        <div
-                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                        >
-
-                            <div className="col-4">
-                                <Label
-                                    style={{
-                                        marginTop: "4px",
-                                    }}
-                                >
-                                    Create <span className="text-danger"> *</span>
-                                </Label>
-                            </div>
-                            <div className="col-8">
-                                <Input
-                                    type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.create}
-                                    invalid={appAddApplicationRoleValidInput.touched.create && appAddApplicationRoleValidInput.errors.create
-                                        ? true : false
-                                    }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('create', !appAddApplicationRoleValidInput.values.create)}
-                                />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.create}</FormFeedback>
-                            </div>
-                        </div>
-                        <div
-                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                        >
-
-                            <div className="col-4">
-                                <Label
-                                    style={{
-                                        marginTop: "4px",
-                                    }}
-                                >
-                                    Read <span className="text-danger"> *</span>
-                                </Label>
-                            </div>
-                            <div className="col-8">
-                                <Input
-                                    type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.read}
-                                    invalid={appAddApplicationRoleValidInput.touched.read && appAddApplicationRoleValidInput.errors.read
-                                        ? true : false
-                                    }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('read', !appAddApplicationRoleValidInput.values.read)}
-                                />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.read}</FormFeedback>
-                            </div>
-                        </div>
-                        <div
-                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                        >
-
-                            <div className="col-4">
-                                <Label
-                                    style={{
-                                        marginTop: "4px",
-                                    }}
-                                >
-                                    Update <span className="text-danger"> *</span>
-                                </Label>
-                            </div>
-                            <div className="col-8">
-                                <Input
-                                    type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.update}
-                                    invalid={appAddApplicationRoleValidInput.touched.update && appAddApplicationRoleValidInput.errors.update
-                                        ? true : false
-                                    }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('update', !appAddApplicationRoleValidInput.values.update)}
-                                />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.update}</FormFeedback>
-                            </div>
-                        </div>
-                        <div
-                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                        >
-
-                            <div className="col-4">
-                                <Label
-                                    style={{
-                                        marginTop: "4px",
-                                    }}
-                                >
-                                    Delete <span className="text-danger"> *</span>
-                                </Label>
-                            </div>
-                            <div className="col-8">
-                                <Input
-                                    type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.delete}
-                                    invalid={appAddApplicationRoleValidInput.touched.delete && appAddApplicationRoleValidInput.errors.delete
-                                        ? true : false
-                                    }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('delete', !appAddApplicationRoleValidInput.values.delete)}
-                                />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.delete}</FormFeedback>
-                            </div>
-                        </div>
-                        <div
-                            className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                        >
-
-                            <div className="col-4">
-                                <Label
-                                    style={{
-                                        marginTop: "4px",
-                                    }}
-                                >
-                                    Print <span className="text-danger"> *</span>
-                                </Label>
-                            </div>
-                            <div className="col-8">
-                                <Input
-                                    type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.print}
-                                    invalid={appAddApplicationRoleValidInput.touched.print && appAddApplicationRoleValidInput.errors.print
-                                        ? true : false
-                                    }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('print', !appAddApplicationRoleValidInput.values.print)}
-                                />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.print}</FormFeedback>
-                            </div>
-                        </div>
+                       
                         <div
                             className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                         >
@@ -662,7 +523,7 @@ const AddApplicationRoleAccess = (props) => {
     );
 };
 
-AddApplicationRoleAccess.propTypes = {
+AddApplicationRoleUser.propTypes = {
     appAddAccessRole: PropTypes.any,
     setAppAddAccessRole: PropTypes.any,
     setAppMaintainRoleMsg: PropTypes.any,
@@ -670,4 +531,4 @@ AddApplicationRoleAccess.propTypes = {
     appMaintainRoleData: PropTypes.any,
 }
 
-export default AddApplicationRoleAccess;
+export default AddApplicationRoleUser;

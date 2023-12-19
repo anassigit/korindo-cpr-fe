@@ -1,14 +1,14 @@
 import {
   DELETE_APPLICATION_ROLE_ACCESS,
+  DELETE_APPLICATION_ROLE_USER,
   DELETE_ROLE,
   EDIT_APPLICATION_ROLE_ACCESS,
+  EDIT_APPLICATION_ROLE_USER,
   EDIT_ROLE,
   GET_ACCESS_LIST_ROLE,
   GET_ACCESS_ROLE,
   GET_LIST_ROLE,
-  GET_MENU_ROLE_LIST,
   GET_ROLE,
-  GET_ROLE_ACCESS_ROLE,
   GET_USER_LIST_ROLE,
   MSG_ADD,
   MSG_DELETE,
@@ -16,11 +16,11 @@ import {
   RESET_MESSAGE,
   RESP_GET_ACCESS_LIST_ROLE,
   RESP_GET_ACCESS_ROLE,
-  RESP_GET_MENU_ROLE_LIST,
   RESP_GET_ROLE,
   RESP_GET_ROLE_LIST,
   RESP_GET_USER_LIST_ROLE,
   SAVE_APPLICATION_ROLE_ACCESS,
+  SAVE_APPLICATION_ROLE_USER,
   SAVE_ROLE
 } from "./actionTypes"
 
@@ -84,6 +84,11 @@ export const addApplicationRoleAccess = (req) => ({
   payload: req,
 })
 
+export const addApplicationRoleUser = (req) => ({
+  type: SAVE_APPLICATION_ROLE_USER,
+  payload: req,
+})
+
 export const editRole = (req) => ({
   type: EDIT_ROLE,
   payload: req,
@@ -94,6 +99,11 @@ export const editApplicationRoleAccess = (req) => ({
   payload: req,
 })
 
+export const editApplicationRoleUser = (req) => ({
+  type: EDIT_APPLICATION_ROLE_USER,
+  payload: req,
+})
+
 export const deleteRole = (req) => ({
   type: DELETE_ROLE,
   payload: req,
@@ -101,6 +111,11 @@ export const deleteRole = (req) => ({
 
 export const deleteApplicationRoleAccess = (req) => ({
   type: DELETE_APPLICATION_ROLE_ACCESS,
+  payload: req,
+})
+
+export const deleteApplicationRoleUser = (req) => ({
+  type: DELETE_APPLICATION_ROLE_USER,
   payload: req,
 })
 

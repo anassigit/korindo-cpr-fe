@@ -16,7 +16,7 @@ import {
     Label,
     Spinner
 } from "reactstrap";
-import { addApplicationRoleAccess, addRole, getMenuRoleLov, resetMessage } from "store/actions";
+import { editApplicationRoleAccess, editRole, getMenuRoleLov, resetMessage } from "store/actions";
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
@@ -24,11 +24,10 @@ import Lovv2 from "common/Lovv2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const AddApplicationRoleAccess = (props) => {
+const EditApplicationRoleAccess = (props) => {
 
     const dispatch = useDispatch()
 
-    const [appMenuSearchLov, setAppMenuSearchLov] = useState("");
     const dateRef1 = useRef(null);
     const dateRef2 = useRef(null);
 
@@ -60,7 +59,7 @@ const AddApplicationRoleAccess = (props) => {
         dispatch(resetMessage())
     }, [dispatch])
 
-    const appAddApplicationRoleValidInput = useFormik({
+    const appEditApplicationRoleValidInput = useFormik({
         enableReinitialize: true,
 
         initialValues: {
@@ -94,7 +93,7 @@ const AddApplicationRoleAccess = (props) => {
             let startDate = formatDate(values.startDate)
             let endDate = formatDate(values.endDate)
 
-            dispatch(addApplicationRoleAccess({
+            dispatch(editApplicationRoleAccess({
                 roleId: values.roleId,
                 menuId: values.menuId,
                 startDate: startDate,
@@ -120,40 +119,35 @@ const AddApplicationRoleAccess = (props) => {
     };
 
     useEffect(() => {
-        if (props.appAddAccessRole) {
-            appAddApplicationRoleValidInput.resetForm()
-            appAddApplicationRoleValidInput.setFieldValue('roleId', props.appMaintainRoleData.roleId)
+        if (props.appEditAccessRole) {
+            const startDate = new Date(props.appAccessData.startDate);
+            const endDate = new Date(props.appAccessData.endDate);
+            appEditApplicationRoleValidInput.resetForm()
+            appEditApplicationRoleValidInput.setFieldValue('roleId', props.appMaintainRoleData.roleId)
+            appEditApplicationRoleValidInput.setFieldValue('menuId', props.appAccessData.menuId)
+            appEditApplicationRoleValidInput.setFieldValue('menuName', props.appAccessData.menuName)
+            appEditApplicationRoleValidInput.setFieldValue('startDate', startDate)
+            appEditApplicationRoleValidInput.setFieldValue('endDate', endDate)
+            appEditApplicationRoleValidInput.setFieldValue('create', props.appAccessData.create)
+            appEditApplicationRoleValidInput.setFieldValue('read', props.appAccessData.read)
+            appEditApplicationRoleValidInput.setFieldValue('update', props.appAccessData.update)
+            appEditApplicationRoleValidInput.setFieldValue('print', props.appAccessData.print)
+            appEditApplicationRoleValidInput.setFieldValue('delete', props.appAccessData.delete)
         }
-    }, [props.appAddAccessRole])
+    }, [props.appEditAccessRole])
 
-    const appLovMenuListColumns = [
-        {
-            dataField: "menuId",
-            text: "Menu ID",
-            sort: true,
-            style: { textAlign: 'center' },
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "menuName",
-            text: "Menu Name",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-    ]
-
-    const appCallBackMenu = (row) => {
-        appAddApplicationRoleValidInput.setFieldValue("menuId", row.menuId)
-        appAddApplicationRoleValidInput.setFieldValue("menuName", row.menuName)
+    const appCallBackEmployee = (row) => {
+        appEditApplicationRoleValidInput.setFieldValue("menuId", row.menuId)
+        appEditApplicationRoleValidInput.setFieldValue("menuName", row.menuName)
     }
 
     const dateChanger = (name, selectedDate) => {
 
         if (name === 'from') {
-            appAddApplicationRoleValidInput.setFieldValue('startDate', selectedDate);
+            appEditApplicationRoleValidInput.setFieldValue('startDate', selectedDate);
 
         } else if (name === 'to') {
-            appAddApplicationRoleValidInput.setFieldValue('endDate', selectedDate);
+            appEditApplicationRoleValidInput.setFieldValue('endDate', selectedDate);
         }
 
     };
@@ -168,13 +162,13 @@ const AddApplicationRoleAccess = (props) => {
 
     return (
         <Container
-            style={{ display: props.appAddAccessRole ? 'block' : "none" }}
+            style={{ display: props.appEditAccessRole ? 'block' : "none" }}
             fluid
         >
             <Form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    appAddApplicationRoleValidInput.handleSubmit();
+                    appEditApplicationRoleValidInput.handleSubmit();
                     return false
                 }}
             >
@@ -199,12 +193,12 @@ const AddApplicationRoleAccess = (props) => {
                                 <Input
                                     disabled
                                     type="text"
-                                    value={appAddApplicationRoleValidInput.values.roleId}
-                                    invalid={appAddApplicationRoleValidInput.touched.roleId && appAddApplicationRoleValidInput.errors.roleId
+                                    value={appEditApplicationRoleValidInput.values.roleId}
+                                    invalid={appEditApplicationRoleValidInput.touched.roleId && appEditApplicationRoleValidInput.errors.roleId
                                         ? true : false
                                     }
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.roleId}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.roleId}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -221,22 +215,11 @@ const AddApplicationRoleAccess = (props) => {
                                 </Label>
                             </div>
                             <div className="col-8">
-                                <Lovv2
-                                    title="Kode Menu"
-                                    keyFieldData="menuId"
-                                    columns={appLovMenuListColumns}
-                                    getData={getMenuRoleLov}
-                                    pageSize={10}
-                                    callbackFunc={appCallBackMenu}
-                                    defaultSetInput="menuId"
-                                    invalidData={appAddApplicationRoleValidInput}
-                                    fieldValue="menuId"
-                                    stateSearchInput={appMenuSearchLov}
-                                    stateSearchInputSet={setAppMenuSearchLov}
-                                    touchedLovField={appAddApplicationRoleValidInput.touched.menuId}
-                                    errorLovField={appAddApplicationRoleValidInput.errors.menuId}
+                                <Input
+                                    disabled
+                                    value={appEditApplicationRoleValidInput.values.menuId}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.menuId}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.menuId}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -256,12 +239,12 @@ const AddApplicationRoleAccess = (props) => {
                                 <Input
                                     disabled
                                     type="text"
-                                    value={appAddApplicationRoleValidInput.values.menuName}
-                                    invalid={appAddApplicationRoleValidInput.touched.menuName && appAddApplicationRoleValidInput.errors.menuName
+                                    value={appEditApplicationRoleValidInput.values.menuName}
+                                    invalid={appEditApplicationRoleValidInput.touched.menuName && appEditApplicationRoleValidInput.errors.menuName
                                         ? true : false
                                     }
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.menuName}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.menuName}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -280,13 +263,14 @@ const AddApplicationRoleAccess = (props) => {
                             <div className="col-8">
                                 <Input
                                     type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.create}
-                                    invalid={appAddApplicationRoleValidInput.touched.create && appAddApplicationRoleValidInput.errors.create
+                                    checked={appEditApplicationRoleValidInput.values.create}
+                                    value={appEditApplicationRoleValidInput.values.create}
+                                    invalid={appEditApplicationRoleValidInput.touched.create && appEditApplicationRoleValidInput.errors.create
                                         ? true : false
                                     }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('create', !appAddApplicationRoleValidInput.values.create)}
+                                    onChange={(e) => appEditApplicationRoleValidInput.setFieldValue('create', !appEditApplicationRoleValidInput.values.create)}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.create}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.create}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -305,13 +289,14 @@ const AddApplicationRoleAccess = (props) => {
                             <div className="col-8">
                                 <Input
                                     type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.read}
-                                    invalid={appAddApplicationRoleValidInput.touched.read && appAddApplicationRoleValidInput.errors.read
+                                    checked={appEditApplicationRoleValidInput.values.read}
+                                    value={appEditApplicationRoleValidInput.values.read}
+                                    invalid={appEditApplicationRoleValidInput.touched.read && appEditApplicationRoleValidInput.errors.read
                                         ? true : false
                                     }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('read', !appAddApplicationRoleValidInput.values.read)}
+                                    onChange={(e) => appEditApplicationRoleValidInput.setFieldValue('read', !appEditApplicationRoleValidInput.values.read)}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.read}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.read}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -330,13 +315,14 @@ const AddApplicationRoleAccess = (props) => {
                             <div className="col-8">
                                 <Input
                                     type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.update}
-                                    invalid={appAddApplicationRoleValidInput.touched.update && appAddApplicationRoleValidInput.errors.update
+                                    checked={appEditApplicationRoleValidInput.values.update}
+                                    value={appEditApplicationRoleValidInput.values.update}
+                                    invalid={appEditApplicationRoleValidInput.touched.update && appEditApplicationRoleValidInput.errors.update
                                         ? true : false
                                     }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('update', !appAddApplicationRoleValidInput.values.update)}
+                                    onChange={(e) => appEditApplicationRoleValidInput.setFieldValue('update', !appEditApplicationRoleValidInput.values.update)}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.update}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.update}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -355,13 +341,14 @@ const AddApplicationRoleAccess = (props) => {
                             <div className="col-8">
                                 <Input
                                     type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.delete}
-                                    invalid={appAddApplicationRoleValidInput.touched.delete && appAddApplicationRoleValidInput.errors.delete
+                                    checked={appEditApplicationRoleValidInput.values.delete}
+                                    value={appEditApplicationRoleValidInput.values.delete}
+                                    invalid={appEditApplicationRoleValidInput.touched.delete && appEditApplicationRoleValidInput.errors.delete
                                         ? true : false
                                     }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('delete', !appAddApplicationRoleValidInput.values.delete)}
+                                    onChange={(e) => appEditApplicationRoleValidInput.setFieldValue('delete', !appEditApplicationRoleValidInput.values.delete)}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.delete}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.delete}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -380,13 +367,14 @@ const AddApplicationRoleAccess = (props) => {
                             <div className="col-8">
                                 <Input
                                     type="checkbox"
-                                    value={appAddApplicationRoleValidInput.values.print}
-                                    invalid={appAddApplicationRoleValidInput.touched.print && appAddApplicationRoleValidInput.errors.print
+                                    checked={appEditApplicationRoleValidInput.values.print}
+                                    value={appEditApplicationRoleValidInput.values.print}
+                                    invalid={appEditApplicationRoleValidInput.touched.print && appEditApplicationRoleValidInput.errors.print
                                         ? true : false
                                     }
-                                    onChange={(e) => appAddApplicationRoleValidInput.setFieldValue('print', !appAddApplicationRoleValidInput.values.print)}
+                                    onChange={(e) => appEditApplicationRoleValidInput.setFieldValue('print', !appEditApplicationRoleValidInput.values.print)}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.print}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.print}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -407,9 +395,9 @@ const AddApplicationRoleAccess = (props) => {
                                 <div style={{ display: 'flex' }}>
                                     <DatePicker
                                         ref={dateRef1}
-                                        className={`form-control date-with-button ${appAddApplicationRoleValidInput.touched.startDate && appAddApplicationRoleValidInput.errors.startDate ? 'is-invalid' : ''}`}
+                                        className={`form-control date-with-button ${appEditApplicationRoleValidInput.touched.startDate && appEditApplicationRoleValidInput.errors.startDate ? 'is-invalid' : ''}`}
                                         dateFormat="yyyy-MM-dd"
-                                        maxDate={appAddApplicationRoleValidInput.values.endDate && new Date(appAddApplicationRoleValidInput.values.endDate)}
+                                        maxDate={appEditApplicationRoleValidInput.values.endDate && new Date(appEditApplicationRoleValidInput.values.endDate)}
                                         renderCustomHeader={({
                                             date,
                                             changeYear,
@@ -478,7 +466,7 @@ const AddApplicationRoleAccess = (props) => {
                                                 </Button>
                                             </div>
                                         )}
-                                        selected={appAddApplicationRoleValidInput.values.startDate}
+                                        selected={appEditApplicationRoleValidInput.values.startDate}
                                         onChange={(tglMulai) =>
                                             dateChanger('from', tglMulai ? tglMulai : null)
                                         }
@@ -494,8 +482,8 @@ const AddApplicationRoleAccess = (props) => {
                                         <span className="mdi mdi-calendar" />
                                     </Button>
                                 </div>
-                                {appAddApplicationRoleValidInput.touched.startDate && appAddApplicationRoleValidInput.errors.startDate && (
-                                    <div id="date-invalid">{appAddApplicationRoleValidInput.errors.startDate}</div>
+                                {appEditApplicationRoleValidInput.touched.startDate && appEditApplicationRoleValidInput.errors.startDate && (
+                                    <div id="date-invalid">{appEditApplicationRoleValidInput.errors.startDate}</div>
                                 )}
                             </div>
                         </div>
@@ -517,9 +505,9 @@ const AddApplicationRoleAccess = (props) => {
                                 <div style={{ display: 'flex' }}>
                                     <DatePicker
                                         ref={dateRef2}
-                                        className={`form-control date-with-button ${appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
+                                        className={`form-control date-with-button ${appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
                                         dateFormat="yyyy-MM-dd"
-                                        minDate={appAddApplicationRoleValidInput.values.startDate && new Date(appAddApplicationRoleValidInput.values.startDate)}
+                                        minDate={appEditApplicationRoleValidInput.values.startDate && new Date(appEditApplicationRoleValidInput.values.startDate)}
                                         renderCustomHeader={({
                                             date,
                                             changeYear,
@@ -588,23 +576,23 @@ const AddApplicationRoleAccess = (props) => {
                                                 </Button>
                                             </div>
                                         )}
-                                        selected={appAddApplicationRoleValidInput.values.endDate}
+                                        selected={appEditApplicationRoleValidInput.values.endDate}
                                         onChange={(tglSelesai) =>
                                             dateChanger('to', tglSelesai ? tglSelesai : null)
                                         }
                                     />
                                     {/* <DatePicker
                                         ref={dateRef2}
-                                        className={`form-control date-with-button ${appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
-                                        minDate={appAddApplicationRoleValidInput.values.startDate && new Date(appAddApplicationRoleValidInput.values.startDate)}
-                                        selected={appAddApplicationRoleValidInput.values.endDate ? new Date(appAddApplicationRoleValidInput.values.endDate) : ''}
+                                        className={`form-control date-with-button ${appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
+                                        minDate={appEditApplicationRoleValidInput.values.startDate && new Date(appEditApplicationRoleValidInput.values.startDate)}
+                                        selected={appEditApplicationRoleValidInput.values.endDate ? new Date(appEditApplicationRoleValidInput.values.endDate) : ''}
                                         onChange={(tglSelesai) =>
                                             dateChanger('to', tglSelesai ? tglSelesai : null)
                                         }
-                                        isClearable={appAddApplicationRoleValidInput.values.endDate === '' ? false : true}
+                                        isClearable={appEditApplicationRoleValidInput.values.endDate === '' ? false : true}
                                         dateFormat="yyyy-MM-dd"
                                         ariaInvalid={
-                                            appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate
+                                            appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate
                                                 ? true : false
                                         }
                                     /> */}
@@ -618,8 +606,8 @@ const AddApplicationRoleAccess = (props) => {
                                         <span className="mdi mdi-calendar" />
                                     </Button>
                                 </div>
-                                {appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate && (
-                                    <div id="date-invalid">{appAddApplicationRoleValidInput.errors.endDate}</div>
+                                {appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate && (
+                                    <div id="date-invalid">{appEditApplicationRoleValidInput.errors.endDate}</div>
                                 )}
                             </div>
                         </div>
@@ -651,7 +639,7 @@ const AddApplicationRoleAccess = (props) => {
                 className="btn btn-danger my-2"
                 onClick={() => {
                     props.setTabAppRole(true)
-                    props.setAppAddAccessRole(false)
+                    props.setAppEditAccessRole(false)
 
                 }}
             >
@@ -662,12 +650,13 @@ const AddApplicationRoleAccess = (props) => {
     );
 };
 
-AddApplicationRoleAccess.propTypes = {
-    appAddAccessRole: PropTypes.any,
-    setAppAddAccessRole: PropTypes.any,
+EditApplicationRoleAccess.propTypes = {
+    appEditAccessRole: PropTypes.any,
+    setAppEditAccessRole: PropTypes.any,
     setAppMaintainRoleMsg: PropTypes.any,
     setTabAppRole: PropTypes.any,
     appMaintainRoleData: PropTypes.any,
+    appAccessData: PropTypes.any,
 }
 
-export default AddApplicationRoleAccess;
+export default EditApplicationRoleAccess;

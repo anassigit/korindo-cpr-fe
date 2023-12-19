@@ -189,7 +189,13 @@ const UserRoleAccess = (props) => {
 
 UserRoleAccess.propTypes = {
     tabUserRole: PropTypes.any,
+    appAddUserRole: PropTypes.any,
+    setAppAddUserRole: PropTypes.any,
+    appEditUserRole: PropTypes.any,
+    setAppEditUserRole: PropTypes.any,
+    setAppMaintainRoleMsg: PropTypes.any,
     appMaintainRoleData: PropTypes.any,
+    setLoadingSpinner: PropTypes.any,
 }
 
 export default UserRoleAccess

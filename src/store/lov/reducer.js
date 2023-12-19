@@ -4,6 +4,7 @@ import {
   LOV_LEVEL,
   LOV_MENU_ROLE_LIST,
   LOV_POSITION_AND_LEVEL,
+  LOV_USER_ROLE_LIST,
   MSG_LOV
 } from "./actionTypes"
 
@@ -31,6 +32,10 @@ const getLovData = (state = INIT_STATE, action) => {
         ...state,
       }
     case LOV_MENU_ROLE_LIST:
+      return {
+        ...state,
+      }
+    case LOV_USER_ROLE_LIST:
       return {
         ...state,
       }

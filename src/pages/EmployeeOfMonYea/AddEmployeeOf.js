@@ -204,7 +204,7 @@ const AddEmployeeOf = (props) => {
     useEffect(() => {
         debugger
         if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
-            setAppCandidateSearchLov(<b>Mohon isi periode terlebih dahulu...</b>)
+            setAppCandidateSearchLov('Mohon isi periode terlebih dahulu...')
             appAddEmployeeValidInput.setFieldValue('star', '')
         } else {
             setAppCandidateSearchLov("")

@@ -2,8 +2,10 @@ import { call, put, takeEvery } from "redux-saga/effects"
 
 import {
   DELETE_APPLICATION_ROLE_ACCESS,
+  DELETE_APPLICATION_ROLE_USER,
   DELETE_ROLE,
   EDIT_APPLICATION_ROLE_ACCESS,
+  EDIT_APPLICATION_ROLE_USER,
   EDIT_ROLE,
   GET_ACCESS_LIST_ROLE,
   GET_ACCESS_ROLE,
@@ -12,6 +14,7 @@ import {
   GET_ROLE,
   GET_USER_LIST_ROLE,
   SAVE_APPLICATION_ROLE_ACCESS,
+  SAVE_APPLICATION_ROLE_USER,
   SAVE_ROLE
 } from "./actionTypes"
 import {
@@ -26,8 +29,10 @@ import {
 import {
   deleteAccessRoleBE,
   deleteRoleBE,
+  deleteUserRoleBE,
   editAccessRoleBE,
   editRoleBE,
+  editUserRoleBE,
   getAccessListBE,
   getAccessRoleBE,
   getMenuListBE,
@@ -35,7 +40,8 @@ import {
   getRoleListBE,
   getUserRoleListBE,
   saveAccessRoleBE,
-  saveRoleBE
+  saveRoleBE,
+  saveUserRoleBE
 } from "helpers/backend_helper"
 import { msgAdd, msgDelete, msgEdit } from "store/actions"
 
@@ -193,6 +199,48 @@ function* fetchDeleteAccessRole({ payload: req }) {
   }
 }
 
+function* fetchAddAccessRoleUser({ payload: req }) {
+  try {
+    const response = yield call(saveUserRoleBE, req)
+    if (response.status == 1) {
+      yield put(msgAdd(response))
+    } else {
+      yield put(msgAdd(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgAdd({ "status": 0, "message": "Error Save Data" }))
+  }
+}
+
+function* fetchEditAccessRoleUser({ payload: req }) {
+  try {
+    const response = yield call(editUserRoleBE, req)
+    if (response.status == 1) {
+      yield put(msgEdit(response))
+    } else {
+      yield put(msgEdit(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgEdit({ "status": 0, "message": "Error Edit Data" }))
+  }
+}
+
+function* fetchDeleteAccessRoleUser({ payload: req }) {
+  try {
+    const response = yield call(deleteUserRoleBE, req)
+    if (response.status == 1) {
+      yield put(msgDelete(response))
+    } else {
+      yield put(msgDelete(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(msgDelete({ "status": 0, "message": "Error Delete Data" }))
+  }
+}
+
 function* maintainRoleSaga() {
 
   yield takeEvery(GET_LIST_ROLE, fetchGetRoleList)
@@ -209,6 +257,10 @@ function* maintainRoleSaga() {
   yield takeEvery(SAVE_APPLICATION_ROLE_ACCESS, fetchAddAccessRole)
   yield takeEvery(EDIT_APPLICATION_ROLE_ACCESS, fetchEditAccessRole)
   yield takeEvery(DELETE_APPLICATION_ROLE_ACCESS, fetchDeleteAccessRole)
+
+  yield takeEvery(SAVE_APPLICATION_ROLE_USER, fetchAddAccessRoleUser)
+  yield takeEvery(EDIT_APPLICATION_ROLE_USER, fetchEditAccessRoleUser)
+  yield takeEvery(DELETE_APPLICATION_ROLE_USER, fetchDeleteAccessRoleUser)
 
 }
 
