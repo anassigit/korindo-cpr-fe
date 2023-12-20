@@ -219,12 +219,12 @@ const DetailInfluencer = (props) => {
                         <Button
                             className="btn btn-danger my-3"
                             onClick={() => {
-                                ReactSession.set('appDetailRecommendationData', "");
+                                // ReactSession.set('appDetailRecommendationData', "");
                                 history.push('/home')
                             }}
                         >
-                            <span className="mdi mdi-arrow-left" />
-                            &nbsp;Kembali
+                            <span className="mdi mdi-home" />
+                            &nbsp; Home
                         </Button>
                         <Button
                             className="btn btn-warning my-3 mx-2"
