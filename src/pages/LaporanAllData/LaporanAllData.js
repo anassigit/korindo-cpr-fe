@@ -1,5 +1,5 @@
 import RootPageCustom from "common/RootPageCustom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ReactSession } from 'react-client-session';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -18,12 +18,19 @@ import '../../config';
 import { getLaporanAllData } from "store/actions";
 import TableCustom from "common/TableCustom";
 import TableCustom2 from "common/TableCustom2";
+import DatePicker from "react-datepicker";
 
 const LaporanAllData = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const dateRef1 = useRef(null);
+    const dateRef2 = useRef(null);
+
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    
     const [searchVal, setSearchVal] = useState('')
 
     const [appLaporanAllDataPage, setAppLaporanAllDataPage] = useState(true)
@@ -32,6 +39,31 @@ const LaporanAllData = () => {
     const appLaporanAllData = useSelector((state) => {
         return state.laporanAllDataReducer.respGetLaporanAllData
     })
+
+    const years = range(1900, 2199 + 1, 1);
+    const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Jun",
+        "Jul",
+        "Agt",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Des",
+    ]
+
+    function range(start, end, step) {
+        const result = [];
+        for (let i = start; i < end; i += step) {
+            result.push(i);
+        }
+        return result;
+    }
+
 
     const [appLaporanAllDataTabelSearch, setAppLaporanAllDataTabelSearch] = useState({
         page: 1,
@@ -60,96 +92,96 @@ const LaporanAllData = () => {
             dataField: "fromDeptName",
             text: "Dari Div",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
         },
         {
             dataField: "fromPositionName",
             text: "Dari Jabatan",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
         },
         {
             dataField: "fromMemberId",
             text: "Dari Nik",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
         },
         {
             dataField: "fromMemberName",
             text: "Dari Nama",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
         },
         {
             dataField: "fromAge",
             text: "Dari Usia",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
         },
         {
             dataField: "fromGender",
             text: "Dari Jenis Kelamin",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
         },
         {
             dataField: "toDeptName",
             text: "Ke Div",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
         },
         {
             dataField: "toPositionName",
             text: "Ke Jabatan",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
         },
         {
             dataField: "toMemberId",
             text: "Ke Nik",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
         },
         {
             dataField: "toMemberName",
             text: "Ke Nama",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
         },
         {
             dataField: "toAge",
             text: "Ke Usia",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
         },
         {
             dataField: "toGender",
             text: "Ke Jenis Kelamin",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4'  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
         },
         {
             dataField: "stickerName",
             text: "Penghargaan",
             sort: true,
-            headerStyle: { textAlign: 'center', },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
         },
         {
             dataField: "comment",
             text: "Komentar",
             sort: true,
-            headerStyle: { textAlign: 'center',  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
         },
         {
             dataField: "star",
             text: "Nilai Poin",
             sort: true,
-            headerStyle: { textAlign: 'center',  },
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
         },
         {
             dataField: "action",
             text: "Action",
-            headerStyle: { textAlign: 'center',  },
+            headerStyle: { textAlign: 'center', },
             formatter: (row, rowData, rowIndex) => {
                 return (
                     <a style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', gap: '12px', margin: '0 25px 0 25px' }}>
@@ -179,11 +211,15 @@ const LaporanAllData = () => {
     }, [appLaporanAllData, appLaporanAllDataTabelSearch])
 
     useEffect(() => {
-        if(appLaporanAllDataTabelSearch) {
+        if (appLaporanAllDataTabelSearch) {
             setLoadingSpinner(true)
         }
 
     }, [appLaporanAllDataTabelSearch])
+
+    const handleDateClick1 = () => {
+        dateRef1.current.setOpen(true)
+    };
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -200,41 +236,211 @@ const LaporanAllData = () => {
                                 <span className="mdi mdi-file-chart"></span> Laporan All Data
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
-                                <div style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                }}
+
+                                <div
+                                    className="col-12 pb-2"
+                                    style={{
+                                        display: 'flex',
+                                        gap: '12px',
+                                    }}
                                 >
                                     <div
-                                        className="col-lg-6 pb-2"
+                                        className="col-2"
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            gap: "18px",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        Lokasi
+                                        <Input
+                                            type="select"
+                                            value={searchVal}
+                                            onChange={(e) => setSearchVal(e.target.value)}
+                                        // onKeyDown={handleEnterKeyPress}
+                                        />
+                                    </div>
+                                    <div
+                                        className="col-2"
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            gap: "18px",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        Kode Organisasi
+                                        <Input
+                                            type="select"
+                                            value={searchVal}
+                                            onChange={(e) => setSearchVal(e.target.value)}
+                                        // onKeyDown={handleEnterKeyPress}
+                                        />
+                                    </div>
+                                    <div
+                                        className="col-2"
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            gap: "18px",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        Nik
+                                        <Input
+                                            type="select"
+                                            value={searchVal}
+                                            onChange={(e) => setSearchVal(e.target.value)}
+                                        // onKeyDown={handleEnterKeyPress}
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                    className="pb-2"
+                                >
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            width: '80%',
+                                            gap: '12px',
+                                        }}
                                     >
                                         <div
-                                            className="col-lg-5"
                                             style={{
+                                                width: '25.8%',
                                                 display: "flex",
                                                 flexDirection: "row",
-                                                gap: "12px",
-                                                justifyContent: "center",
                                                 alignItems: "center",
                                             }}
                                         >
-                                            Search
+                                            <div style={{
+                                                width: '30%'
+                                            }}>
+                                                Periode Start <span className="text-danger">*</span>
+                                            </div>
+                                            <div style={{ display: 'flex' }}>
+                                                <DatePicker
+                                                    ref={dateRef1}
+                                                    className={`form-control date-with-button`}
+                                                    dateFormat="yyyy-MM-dd"
+                                                    maxDate={startDate && new Date(startDate)}
+                                                    renderCustomHeader={({
+                                                        date,
+                                                        changeYear,
+                                                        changeMonth,
+                                                        decreaseMonth,
+                                                        increaseMonth,
+                                                        prevMonthButtonDisabled,
+                                                        nextMonthButtonDisabled,
+                                                    }) => (
+                                                        <div
+                                                            style={{
+                                                                margin: 10,
+                                                                display: "flex",
+                                                                justifyContent: "center",
+                                                            }}
+                                                        >
+                                                            <Button
+                                                                style={{
+                                                                    borderTopRightRadius: '0',
+                                                                    borderBottomRightRadius: '0',
+                                                                }}
+                                                                onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                                                {"<"}
+                                                            </Button>
+                                                            <select
+                                                                style={{
+                                                                    borderTopLeftRadius: '0',
+                                                                    borderBottomLeftRadius: '0',
+                                                                }}
+                                                                className="form-control"
+                                                                value={new Date(date).getFullYear()}
+                                                                onChange={({ target: { value } }) => changeYear(value)}
+                                                            >
+                                                                {years.map((option) => (
+                                                                    <option key={option} value={option}>
+                                                                        {option}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+
+                                                            <select
+                                                                style={{
+                                                                    borderTopRightRadius: '0',
+                                                                    borderBottomRightRadius: '0',
+                                                                }}
+                                                                className="form-control"
+                                                                value={months[new Date(date).getMonth()]}
+                                                                onChange={({ target: { value } }) =>
+                                                                    changeMonth(months.indexOf(value))
+                                                                }
+                                                            >
+                                                                {months.map((option) => (
+                                                                    <option key={option} value={option}>
+                                                                        {option}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+
+                                                            <Button
+                                                                style={{
+                                                                    borderTopLeftRadius: '0',
+                                                                    borderBottomLeftRadius: '0',
+                                                                }}
+                                                                onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                                                {">"}
+                                                            </Button>
+                                                        </div>
+                                                    )}
+                                                    selected={startDate}
+                                                    onChange={(tglMulai) =>
+                                                        dateChanger('from', tglMulai ? tglMulai : null)
+                                                    }
+                                                />
+
+                                                <Button
+                                                    style={{
+                                                        borderTopLeftRadius: '0',
+                                                        borderBottomLeftRadius: '0',
+                                                    }}
+                                                    onClick={handleDateClick1}
+                                                >
+                                                    <span className="mdi mdi-calendar" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style={{
+                                                width: '25.8%',
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <div style={{
+                                                width: '40%'
+                                            }}>
+                                                Periode End <span className="text-danger">*</span>
+                                            </div>
                                             <Input
-                                                type="search"
+                                                type="select"
                                                 value={searchVal}
                                                 onChange={(e) => setSearchVal(e.target.value)}
                                             // onKeyDown={handleEnterKeyPress}
                                             />
-                                            <Button
-                                                onClick={() => {
-                                                    handleClick()
-                                                }}
-                                            >
-                                                Cari
-                                            </Button>
                                         </div>
                                     </div>
+                                    <Button>
+                                        <span className="mdi mdi-file-pdf" /> Download Excel
+                                    </Button>
                                 </div>
 
                                 <TableCustom2
