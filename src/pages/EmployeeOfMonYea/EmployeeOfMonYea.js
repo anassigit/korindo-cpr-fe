@@ -1,5 +1,6 @@
 import RootPageCustom from "common/RootPageCustom";
 import TableCustom from "common/TableCustom";
+import MsgModal from "components/Common/MsgModal";
 import React, { useEffect, useState } from "react";
 import { ReactSession } from 'react-client-session';
 import { useDispatch, useSelector } from "react-redux";
@@ -9,22 +10,18 @@ import {
     Card,
     CardBody,
     CardHeader,
-    Col,
     Container,
     Input,
     Label,
-    Row,
     Spinner,
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
+import { deleteEmployeeOf, getListData, getYearListData, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { deleteEmployeeOf, getListData, getYearListData, resetMessage } from "store/actions";
-import TableCustom2 from "common/TableCustom2";
 import AddEmployeeOf from "./AddEmployeeOf";
 import EditEmployeeOf from "./EditEmployeeOf";
-import MsgModal from "components/Common/MsgModal";
 
 const EmployeeOfMonYea = () => {
 

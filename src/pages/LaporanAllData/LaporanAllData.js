@@ -17,6 +17,7 @@ import '../../assets/scss/custom.scss';
 import '../../config';
 import { getLaporanAllData } from "store/actions";
 import TableCustom from "common/TableCustom";
+import TableCustom2 from "common/TableCustom2";
 
 const LaporanAllData = () => {
 
@@ -41,7 +42,7 @@ const LaporanAllData = () => {
         search:
         {
             periodFrom: '2023-12-01',
-            periodTo: '2023-12-30',
+            periodTo: '2023-12-05',
             memberId: '',
             locationId: '1',
             orgCd: '',
@@ -52,107 +53,106 @@ const LaporanAllData = () => {
         {
             dataField: "write_time",
             text: "Tgl",
-            hidden: true,
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
         },
         {
             dataField: "fromDeptName",
             text: "Div",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
         },
         {
             dataField: "fromPositionName",
             text: "Jabatan",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
         },
         {
             dataField: "fromMemberId",
             text: "Nik",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
         },
         {
             dataField: "fromMemberName",
             text: "Nama",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
         },
         {
             dataField: "fromAge",
             text: "Usia",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
         },
         {
             dataField: "fromGender",
             text: "Jenis Kelamin",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4'  },
         },
         {
             dataField: "toDeptName",
             text: "Div",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#7BD3EA', borderColor: '#7BD3EA'  },
         },
         {
             dataField: "toPositionName",
             text: "Jabatan",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#7BD3EA', borderColor: '#7BD3EA'  },
         },
         {
             dataField: "toMemberId",
             text: "Nik",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#7BD3EA', borderColor: '#7BD3EA'  },
         },
         {
             dataField: "toMemberName",
             text: "Nama",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#7BD3EA', borderColor: '#7BD3EA'  },
         },
         {
             dataField: "toAge",
             text: "Usia",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#7BD3EA', borderColor: '#7BD3EA'  },
         },
         {
             dataField: "toGender",
             text: "Jenis Kelamin",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', backgroundColor: '#7BD3EA', borderColor: '#7BD3EA'  },
         },
         {
             dataField: "stickerName",
             text: "Penghargaan",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', },
         },
         {
             dataField: "comment",
             text: "Komentar",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center',  },
         },
         {
             dataField: "star",
             text: "Nilai Poin",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center',  },
         },
         {
             dataField: "action",
             text: "Action",
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center',  },
             formatter: (row, rowData, rowIndex) => {
                 return (
-                    <div style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', gap: '12px', margin: '0 25px 0 25px' }}>
+                    <a style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', gap: '12px', margin: '0 25px 0 25px' }}>
                         <span
                             onClick={() => toggleModalContent(rowData)}
                             id={`viewtooltip-action-${rowIndex}`}
@@ -161,7 +161,7 @@ const LaporanAllData = () => {
                         <UncontrolledTooltip placement="top" target={`viewtooltip-action-${rowIndex}`}>
                             Detail
                         </UncontrolledTooltip>
-                    </div>
+                    </a>
                 )
             }
         },
@@ -169,7 +169,21 @@ const LaporanAllData = () => {
 
     useEffect(() => {
         // dispatch(getLaporanAllData)
+        setLoadingSpinner(true)
     }, [])
+
+    useEffect(() => {
+        if (appLaporanAllData.status === '1' || appLaporanAllData.status === '0') {
+            setLoadingSpinner(false)
+        }
+    }, [appLaporanAllData, appLaporanAllDataTabelSearch])
+
+    useEffect(() => {
+        if(appLaporanAllDataTabelSearch) {
+            setLoadingSpinner(true)
+        }
+
+    }, [appLaporanAllDataTabelSearch])
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -223,7 +237,7 @@ const LaporanAllData = () => {
                                     </div>
                                 </div>
 
-                                <TableCustom
+                                <TableCustom2
                                     keyField={(row) => `${row.fromMemberId}-${row.toMemberId}`}
                                     columns={appLaporanAllDataColumn}
                                     redukResponse={appLaporanAllData}
