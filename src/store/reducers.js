@@ -23,6 +23,8 @@ import organizationReducer from "./organization/reducer"
 
 import maintainRoleReducer from "./maintainrole/reducer"
 
+import laporanAllDataReducer from "./laporanalldata/reducer"
+
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -44,6 +46,8 @@ const rootReducer = combineReducers({
   organizationReducer,
   
   maintainRoleReducer,
+
+  laporanAllDataReducer,
 })
 
 export default rootReducer

@@ -204,3 +204,7 @@ export const saveUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/ins
 export const editUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/update", req)
 
 export const deleteUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/delete", req)
+
+// Laporan
+
+export const getLaporanAllDataBE = req => post("/rest/ReportRest/getAllList", req)

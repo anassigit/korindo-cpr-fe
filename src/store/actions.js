@@ -20,3 +20,5 @@ export * from "./stickermaster/actions"
 export * from "./organization/actions"
 
 export * from "./maintainrole/actions"
+
+export * from "./laporanalldata/actions"

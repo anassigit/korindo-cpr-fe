@@ -23,6 +23,7 @@ import StickerMaster from "pages/StickerMaster/StickerMaster"
 import MemberMaster from "pages/MemberMaster/MemberMaster"
 import MaintainRole from "pages/MaintainRole/MaintainRole"
 import HistoryPemberian from "pages/HistoryPemberian/HistoryPemberian"
+import LaporanAllData from "pages/LaporanAllData/LaporanAllData"
 
 const authProtectedRoutes = [
 
@@ -41,6 +42,8 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc007", component: MemberMaster},
 
   { path: "/korsoc000/forms/korsoc003", component: MaintainRole},
+
+  { path: "/korsoc000/forms/korsoc102", component: LaporanAllData},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},
   { path: "/korsoc000/forms/korsoc411", component: UserManualVideo},
