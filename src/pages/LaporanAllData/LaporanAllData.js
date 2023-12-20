@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { getLaporanAllData } from "store/actions";
+import { getLaporanAllData, getLocationAllData } from "store/actions";
 import TableCustom from "common/TableCustom";
 import TableCustom2 from "common/TableCustom2";
 import DatePicker from "react-datepicker";
@@ -30,14 +30,19 @@ const LaporanAllData = () => {
 
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
-    
+
     const [searchVal, setSearchVal] = useState('')
+    const [locationId, setLocationId] = useState('')
 
     const [appLaporanAllDataPage, setAppLaporanAllDataPage] = useState(true)
     const [loadingSpinner, setLoadingSpinner] = useState(false)
 
     const appLaporanAllData = useSelector((state) => {
         return state.laporanAllDataReducer.respGetLaporanAllData
+    })
+
+    const appLocationAllData = useSelector((state) => {
+        return state.laporanAllDataReducer.respGetLocationAllData
     })
 
     const years = range(1900, 2199 + 1, 1);
@@ -200,8 +205,8 @@ const LaporanAllData = () => {
     ]
 
     useEffect(() => {
-        // dispatch(getLaporanAllData)
         setLoadingSpinner(true)
+        dispatch(getLocationAllData())
     }, [])
 
     useEffect(() => {
@@ -214,8 +219,25 @@ const LaporanAllData = () => {
         if (appLaporanAllDataTabelSearch) {
             setLoadingSpinner(true)
         }
-
     }, [appLaporanAllDataTabelSearch])
+
+    useEffect(() => {
+        let locationData = appLocationAllData?.data?.list
+        if (locationData) {
+            if (locationData.length > 0) {
+                setLocationId(locationData[0].locationId)
+                setAppLaporanAllDataTabelSearch((prevState) => {
+                    return ({
+                        ...prevState,
+                        search: {
+                            ...prevState.search,
+                            locationId: locationData[0].locationId
+                        }
+                    })
+                })
+            }
+        }
+    }, [appLocationAllData])
 
     const handleDateClick1 = () => {
         dateRef1.current.setOpen(true)
@@ -260,7 +282,20 @@ const LaporanAllData = () => {
                                             value={searchVal}
                                             onChange={(e) => setSearchVal(e.target.value)}
                                         // onKeyDown={handleEnterKeyPress}
-                                        />
+                                        >
+                                            {
+                                                appLocationAllData?.data?.list && appLocationAllData?.data?.list.map((item, index) => {
+                                                    return (
+                                                        <option
+                                                            key={index}
+                                                            value={item.locationId}
+                                                        >
+                                                            {item.locationName}
+                                                        </option>
+                                                    )
+                                                })
+                                            }
+                                        </Input>
                                     </div>
                                     <div
                                         className="col-2"
@@ -274,7 +309,7 @@ const LaporanAllData = () => {
                                     >
                                         Kode Organisasi
                                         <Input
-                                            type="select"
+                                            type="search"
                                             value={searchVal}
                                             onChange={(e) => setSearchVal(e.target.value)}
                                         // onKeyDown={handleEnterKeyPress}
@@ -292,7 +327,7 @@ const LaporanAllData = () => {
                                     >
                                         Nik
                                         <Input
-                                            type="select"
+                                            type="search"
                                             value={searchVal}
                                             onChange={(e) => setSearchVal(e.target.value)}
                                         // onKeyDown={handleEnterKeyPress}
@@ -426,16 +461,100 @@ const LaporanAllData = () => {
                                             }}
                                         >
                                             <div style={{
-                                                width: '40%'
+                                                width: '30%'
                                             }}>
                                                 Periode End <span className="text-danger">*</span>
                                             </div>
-                                            <Input
-                                                type="select"
-                                                value={searchVal}
-                                                onChange={(e) => setSearchVal(e.target.value)}
-                                            // onKeyDown={handleEnterKeyPress}
-                                            />
+                                            <div style={{ display: 'flex' }}>
+                                                <DatePicker
+                                                    ref={dateRef1}
+                                                    className={`form-control date-with-button`}
+                                                    dateFormat="yyyy-MM-dd"
+                                                    maxDate={startDate && new Date(startDate)}
+                                                    renderCustomHeader={({
+                                                        date,
+                                                        changeYear,
+                                                        changeMonth,
+                                                        decreaseMonth,
+                                                        increaseMonth,
+                                                        prevMonthButtonDisabled,
+                                                        nextMonthButtonDisabled,
+                                                    }) => (
+                                                        <div
+                                                            style={{
+                                                                margin: 10,
+                                                                display: "flex",
+                                                                justifyContent: "center",
+                                                            }}
+                                                        >
+                                                            <Button
+                                                                style={{
+                                                                    borderTopRightRadius: '0',
+                                                                    borderBottomRightRadius: '0',
+                                                                }}
+                                                                onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                                                {"<"}
+                                                            </Button>
+                                                            <select
+                                                                style={{
+                                                                    borderTopLeftRadius: '0',
+                                                                    borderBottomLeftRadius: '0',
+                                                                }}
+                                                                className="form-control"
+                                                                value={new Date(date).getFullYear()}
+                                                                onChange={({ target: { value } }) => changeYear(value)}
+                                                            >
+                                                                {years.map((option) => (
+                                                                    <option key={option} value={option}>
+                                                                        {option}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+
+                                                            <select
+                                                                style={{
+                                                                    borderTopRightRadius: '0',
+                                                                    borderBottomRightRadius: '0',
+                                                                }}
+                                                                className="form-control"
+                                                                value={months[new Date(date).getMonth()]}
+                                                                onChange={({ target: { value } }) =>
+                                                                    changeMonth(months.indexOf(value))
+                                                                }
+                                                            >
+                                                                {months.map((option) => (
+                                                                    <option key={option} value={option}>
+                                                                        {option}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+
+                                                            <Button
+                                                                style={{
+                                                                    borderTopLeftRadius: '0',
+                                                                    borderBottomLeftRadius: '0',
+                                                                }}
+                                                                onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                                                {">"}
+                                                            </Button>
+                                                        </div>
+                                                    )}
+                                                    selected={startDate}
+                                                    onChange={(tglMulai) =>
+                                                        dateChanger('from', tglMulai ? tglMulai : null)
+                                                    }
+                                                />
+
+                                                <Button
+                                                    style={{
+                                                        borderTopLeftRadius: '0',
+                                                        borderBottomLeftRadius: '0',
+                                                    }}
+                                                    onClick={handleDateClick1}
+                                                >
+                                                    <span className="mdi mdi-calendar" />
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
                                     <Button>

@@ -208,3 +208,5 @@ export const deleteUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/d
 // Laporan
 
 export const getLaporanAllDataBE = req => post("/rest/ReportRest/getAllList", req)
+
+export const getLocationAllDataBE = req => post("/rest/ReportRest/getLocationList", req)
