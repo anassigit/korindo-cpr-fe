@@ -117,6 +117,12 @@ const LaporanAllData = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
+            dataField: "toAge",
+            text: "Usia",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
             dataField: "toGender",
             text: "Jenis Kelamin",
             sort: true,
@@ -124,7 +130,7 @@ const LaporanAllData = () => {
         },
         {
             dataField: "stickerName",
-            text: "Sticker",
+            text: "Penghargaan",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -135,50 +141,10 @@ const LaporanAllData = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "toAge",
-            text: "Usia",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
             dataField: "star",
             text: "Nilai Poin",
             sort: true,
             headerStyle: { textAlign: 'center' },
-        },
-        {
-            // dataField: "action",
-            text: "Action",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-            style: { minWidth: "30vw", maxWidth: "25vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" },
-            formatter: (row, rowData, rowIndex) => {
-                return (
-                    <React.Fragment>
-                        <span id={`viewtooltip-${rowIndex}`}>{row}</span>
-                        <UncontrolledTooltip placement="bottom-start" target={`viewtooltip-${rowIndex}`}>
-                            {row}
-                        </UncontrolledTooltip>
-
-                    </React.Fragment>
-                )
-            }
-        },
-        {
-            dataField: "stickerName",
-            text: "Compliments",
-            headerStyle: { textAlign: 'center' },
-            formatter: (row, rowData, rowIndex) => {
-                return (
-                    <React.Fragment>
-                        <span id={`viewtooltip-stickerName-${rowIndex}`}>{row}</span>
-                        <UncontrolledTooltip placement="bottom-start" target={`viewtooltip-stickerName-${rowIndex}`}>
-                            {row}
-                        </UncontrolledTooltip>
-
-                    </React.Fragment>
-                )
-            }
         },
         {
             dataField: "action",
