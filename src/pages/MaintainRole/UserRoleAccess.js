@@ -1,14 +1,22 @@
 import TableCustom from 'common/TableCustom'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input, UncontrolledTooltip } from 'reactstrap'
-import { getUserRoleListDataAction } from 'store/actions'
+import { deleteApplicationRoleUser, getUserRoleListDataAction } from 'store/actions'
 import PropTypes from 'prop-types'
 import AddApplicationRoleUser from './AddApplicationRoleUser'
+import EditApplicationRoleUser from './EditApplicationRoleUser'
+import MsgModal from 'components/Common/MsgModal'
 
 const UserRoleAccess = (props) => {
 
+    const dispatch = useDispatch()
+
     const [searchVal, setSearchVal] = useState('')
+    const [appSelectedRole, setAppSelectedRole] = useState({})
+    
+    const [modal, setModal] = useState(false)
+    const [memberId, setMemberId] = useState('')
 
     const appUserRoleData = useSelector((state) => {
         return state.maintainRoleReducer.respGetUserRoleList
@@ -30,7 +38,7 @@ const UserRoleAccess = (props) => {
         search:
         {
             search: searchVal,
-            roleId: props.appMaintainRoleData.roleId,
+            roleId: '',
         }
     });
 
@@ -98,7 +106,7 @@ const UserRoleAccess = (props) => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.roleId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditMaintainRole(cellData)} />
+                        <a id={`edit-${cellData.roleId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditUserRole(cellData)} />
                         <a id={`delete-${cellData.roleId}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${cellData.roleId}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${cellData.roleId}`}>Delete</UncontrolledTooltip>
@@ -133,7 +141,7 @@ const UserRoleAccess = (props) => {
 
         if (messageToUpdate) {
             props.setLoadingSpinner(false);
-            dispatch(getUserRoleListDataAction(appAccessTabelSearch));
+            dispatch(getUserRoleListDataAction(appUserRoleTabelSearch));
             props.setAppMaintainRoleMsg(messageToUpdate);
         }
     }, [appMessageDelete]);
@@ -151,7 +159,7 @@ const UserRoleAccess = (props) => {
 
         if (messageToUpdate) {
             props.setLoadingSpinner(false);
-            dispatch(getUserRoleListDataAction(appAccessTabelSearch));
+            dispatch(getUserRoleListDataAction(appUserRoleTabelSearch));
             props.setAppMaintainRoleMsg(messageToUpdate);
         }
     }, [appMessageAdd]);
@@ -169,11 +177,38 @@ const UserRoleAccess = (props) => {
 
         if (messageToUpdate) {
             props.setLoadingSpinner(false);
-            dispatch(getUserRoleListDataAction(appAccessTabelSearch));
+            dispatch(getUserRoleListDataAction(appUserRoleTabelSearch));
             props.setAppMaintainRoleMsg(messageToUpdate);
         }
     }, [appMessageEdit]);
 
+    const appPreAddUserRole = () => {
+        props.setTabUserRole(false)
+        props.setAppAddUserRole(true)
+    }
+
+    const preEditUserRole = (data) => {
+        setAppSelectedRole(data)
+        props.setTabUserRole(false)
+        props.setAppEditUserRole(true)
+    }
+
+    const toggleDeleteModal = (data) => {
+        setModal(!modal)
+        if (data.roleId) {
+            setMemberId(data.memberId)
+        }
+    }
+
+    const toggleApply = () => {
+        props.setAppMaintainRoleMsg('')
+        dispatch(deleteApplicationRoleUser({
+            roleId: props.appMaintainRoleData.roleId,
+            memberId: memberId,
+        }))
+        setModal(!modal)
+        props.setLoadingSpinner(true)
+    }
 
     return (
         <>
@@ -230,7 +265,7 @@ const UserRoleAccess = (props) => {
                     }}
                 >
                     <Button
-                        onClick={() => preAddMaintainRole()}
+                        onClick={() => appPreAddUserRole()}
                     >
                         <span className="mdi mdi-plus" /> Tambah
                     </Button>
@@ -247,14 +282,30 @@ const UserRoleAccess = (props) => {
                     redukCall={getUserRoleListDataAction}
                 />
             </div>
-{/* 
+
             <AddApplicationRoleUser
-                appAddAccessRole={props.appAddAccessRole}
-                setAppAddAccessRole={props.setAppAddAccessRole}
+                appAddUserRole={props.appAddUserRole}
+                setAppAddUserRole={props.setAppAddUserRole}
                 setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
-                setTabAppRole={props.setTabAppRole}
+                setTabUserRole={props.setTabUserRole}
                 appMaintainRoleData={props.appMaintainRoleData}
-            /> */}
+            />
+
+            <EditApplicationRoleUser
+                appEditUserRole={props.appEditUserRole}
+                setAppEditUserRole={props.setAppEditUserRole}
+                setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
+                setTabUserRole={props.setTabUserRole}
+                appMaintainRoleData={props.appMaintainRoleData}
+                appSelectedRole={appSelectedRole}
+            />
+
+            <MsgModal
+                toggle={toggleDeleteModal}
+                toggleApply={toggleApply}
+                modal={modal}
+                message={'Apakah anda yakin untuk menghapus ini?'}
+            />
         </>
     )
 }

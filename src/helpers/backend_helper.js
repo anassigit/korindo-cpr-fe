@@ -197,7 +197,7 @@ export const deleteAccessRoleBE = req => postWithParam("/rest/RoleAccessMasterRe
 
 export const getUserRoleListBE = req => post("/rest/UserRoleMasterRest/getList", req)
 
-export const getMemberRoleListBE = req => post("/rest/RoleAccessMasterRest/getMemberList", req)
+export const getMemberRoleListBE = req => post("/rest/UserRoleMasterRest/getMemberList", req)
 
 export const saveUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/insert", req)
 

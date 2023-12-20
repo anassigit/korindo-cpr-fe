@@ -16,7 +16,7 @@ import {
     Label,
     Spinner
 } from "reactstrap";
-import { addApplicationRoleUser, addRole, getUserRoleLov, resetMessage } from "store/actions";
+import { editApplicationRoleUser, editRole, getUserRoleLov, resetMessage } from "store/actions";
 import * as Yup from "yup";
 import '../../assets/scss/custom.scss';
 import '../../config';
@@ -24,7 +24,7 @@ import Lovv2 from "common/Lovv2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const AddApplicationRoleUser = (props) => {
+const EditApplicationRoleUser = (props) => {
 
     const dispatch = useDispatch()
 
@@ -60,7 +60,7 @@ const AddApplicationRoleUser = (props) => {
         dispatch(resetMessage())
     }, [dispatch])
 
-    const appAddApplicationRoleValidInput = useFormik({
+    const appEditApplicationRoleValidInput = useFormik({
         enableReinitialize: true,
 
         initialValues: {
@@ -84,7 +84,7 @@ const AddApplicationRoleUser = (props) => {
             let startDate = formatDate(values.startDate)
             let endDate = formatDate(values.endDate)
 
-            dispatch(addApplicationRoleUser({
+            dispatch(editApplicationRoleUser({
                 roleId: values.roleId,
                 memberId: values.memberId,
                 startDate: startDate,
@@ -105,11 +105,19 @@ const AddApplicationRoleUser = (props) => {
     };
 
     useEffect(() => {
-        if (props.appAddUserRole) {
-            appAddApplicationRoleValidInput.resetForm()
-            appAddApplicationRoleValidInput.setFieldValue('roleId', props.appMaintainRoleData.roleId)
+        if (props.appEditUserRole) {
+            debugger
+
+            let startDate = new Date(props.appSelectedRole.startDate)
+            let endDate = new Date(props.appSelectedRole.endDate)
+            appEditApplicationRoleValidInput.resetForm()
+            appEditApplicationRoleValidInput.setFieldValue('roleId', props.appSelectedRole.roleId)
+            appEditApplicationRoleValidInput.setFieldValue('memberId', props.appSelectedRole.memberId)
+            appEditApplicationRoleValidInput.setFieldValue('memberName', props.appSelectedRole.memberName)
+            appEditApplicationRoleValidInput.setFieldValue('startDate', startDate)
+            appEditApplicationRoleValidInput.setFieldValue('endDate', endDate)
         }
-    }, [props.appAddUserRole])
+    }, [props.appEditUserRole])
 
     const appLovMemberListColumns = [
         {
@@ -128,17 +136,17 @@ const AddApplicationRoleUser = (props) => {
     ]
 
     const appCallBackEmployee = (row) => {
-        appAddApplicationRoleValidInput.setFieldValue("memberId", row.memberId)
-        appAddApplicationRoleValidInput.setFieldValue("memberName", row.memberName)
+        appEditApplicationRoleValidInput.setFieldValue("memberId", row.memberId)
+        appEditApplicationRoleValidInput.setFieldValue("memberName", row.memberName)
     }
 
     const dateChanger = (name, selectedDate) => {
 
         if (name === 'from') {
-            appAddApplicationRoleValidInput.setFieldValue('startDate', selectedDate);
+            appEditApplicationRoleValidInput.setFieldValue('startDate', selectedDate);
 
         } else if (name === 'to') {
-            appAddApplicationRoleValidInput.setFieldValue('endDate', selectedDate);
+            appEditApplicationRoleValidInput.setFieldValue('endDate', selectedDate);
         }
 
     };
@@ -153,13 +161,13 @@ const AddApplicationRoleUser = (props) => {
 
     return (
         <Container
-            style={{ display: props.appAddUserRole ? 'block' : "none" }}
+            style={{ display: props.appEditUserRole ? 'block' : "none" }}
             fluid
         >
             <Form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    appAddApplicationRoleValidInput.handleSubmit();
+                    appEditApplicationRoleValidInput.handleSubmit();
                     return false
                 }}
             >
@@ -184,12 +192,12 @@ const AddApplicationRoleUser = (props) => {
                                 <Input
                                     disabled
                                     type="text"
-                                    value={appAddApplicationRoleValidInput.values.roleId}
-                                    invalid={appAddApplicationRoleValidInput.touched.roleId && appAddApplicationRoleValidInput.errors.roleId
+                                    value={appEditApplicationRoleValidInput.values.roleId}
+                                    invalid={appEditApplicationRoleValidInput.touched.roleId && appEditApplicationRoleValidInput.errors.roleId
                                         ? true : false
                                     }
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.roleId}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.roleId}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -206,22 +214,11 @@ const AddApplicationRoleUser = (props) => {
                                 </Label>
                             </div>
                             <div className="col-8">
-                                <Lovv2
-                                    title="Kode Karyawan"
-                                    keyFieldData="memberId"
-                                    columns={appLovMemberListColumns}
-                                    getData={getUserRoleLov}
-                                    pageSize={10}
-                                    callbackFunc={appCallBackEmployee}
-                                    defaultSetInput="memberId"
-                                    invalidData={appAddApplicationRoleValidInput}
-                                    fieldValue="memberId"
-                                    stateSearchInput={appMemberSearchLov}
-                                    stateSearchInputSet={setAppMemberSearchLov}
-                                    touchedLovField={appAddApplicationRoleValidInput.touched.memberId}
-                                    errorLovField={appAddApplicationRoleValidInput.errors.memberId}
+                                <Input
+                                    disabled
+                                    value={appEditApplicationRoleValidInput.values.memberId}
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.memberId}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.memberId}</FormFeedback>
                             </div>
                         </div>
                         <div
@@ -241,15 +238,15 @@ const AddApplicationRoleUser = (props) => {
                                 <Input
                                     disabled
                                     type="text"
-                                    value={appAddApplicationRoleValidInput.values.memberName}
-                                    invalid={appAddApplicationRoleValidInput.touched.memberName && appAddApplicationRoleValidInput.errors.memberName
+                                    value={appEditApplicationRoleValidInput.values.memberName}
+                                    invalid={appEditApplicationRoleValidInput.touched.memberName && appEditApplicationRoleValidInput.errors.memberName
                                         ? true : false
                                     }
                                 />
-                                <FormFeedback type="invalid">{appAddApplicationRoleValidInput.errors.memberName}</FormFeedback>
+                                <FormFeedback type="invalid">{appEditApplicationRoleValidInput.errors.memberName}</FormFeedback>
                             </div>
                         </div>
-                       
+
                         <div
                             className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                         >
@@ -268,9 +265,9 @@ const AddApplicationRoleUser = (props) => {
                                 <div style={{ display: 'flex' }}>
                                     <DatePicker
                                         ref={dateRef1}
-                                        className={`form-control date-with-button ${appAddApplicationRoleValidInput.touched.startDate && appAddApplicationRoleValidInput.errors.startDate ? 'is-invalid' : ''}`}
+                                        className={`form-control date-with-button ${appEditApplicationRoleValidInput.touched.startDate && appEditApplicationRoleValidInput.errors.startDate ? 'is-invalid' : ''}`}
                                         dateFormat="yyyy-MM-dd"
-                                        maxDate={appAddApplicationRoleValidInput.values.endDate && new Date(appAddApplicationRoleValidInput.values.endDate)}
+                                        maxDate={appEditApplicationRoleValidInput.values.endDate && new Date(appEditApplicationRoleValidInput.values.endDate)}
                                         renderCustomHeader={({
                                             date,
                                             changeYear,
@@ -339,7 +336,7 @@ const AddApplicationRoleUser = (props) => {
                                                 </Button>
                                             </div>
                                         )}
-                                        selected={appAddApplicationRoleValidInput.values.startDate}
+                                        selected={appEditApplicationRoleValidInput.values.startDate}
                                         onChange={(tglMulai) =>
                                             dateChanger('from', tglMulai ? tglMulai : null)
                                         }
@@ -355,8 +352,8 @@ const AddApplicationRoleUser = (props) => {
                                         <span className="mdi mdi-calendar" />
                                     </Button>
                                 </div>
-                                {appAddApplicationRoleValidInput.touched.startDate && appAddApplicationRoleValidInput.errors.startDate && (
-                                    <div id="date-invalid">{appAddApplicationRoleValidInput.errors.startDate}</div>
+                                {appEditApplicationRoleValidInput.touched.startDate && appEditApplicationRoleValidInput.errors.startDate && (
+                                    <div id="date-invalid">{appEditApplicationRoleValidInput.errors.startDate}</div>
                                 )}
                             </div>
                         </div>
@@ -378,9 +375,9 @@ const AddApplicationRoleUser = (props) => {
                                 <div style={{ display: 'flex' }}>
                                     <DatePicker
                                         ref={dateRef2}
-                                        className={`form-control date-with-button ${appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
+                                        className={`form-control date-with-button ${appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
                                         dateFormat="yyyy-MM-dd"
-                                        minDate={appAddApplicationRoleValidInput.values.startDate && new Date(appAddApplicationRoleValidInput.values.startDate)}
+                                        minDate={appEditApplicationRoleValidInput.values.startDate && new Date(appEditApplicationRoleValidInput.values.startDate)}
                                         renderCustomHeader={({
                                             date,
                                             changeYear,
@@ -449,23 +446,23 @@ const AddApplicationRoleUser = (props) => {
                                                 </Button>
                                             </div>
                                         )}
-                                        selected={appAddApplicationRoleValidInput.values.endDate}
+                                        selected={appEditApplicationRoleValidInput.values.endDate}
                                         onChange={(tglSelesai) =>
                                             dateChanger('to', tglSelesai ? tglSelesai : null)
                                         }
                                     />
                                     {/* <DatePicker
                                         ref={dateRef2}
-                                        className={`form-control date-with-button ${appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
-                                        minDate={appAddApplicationRoleValidInput.values.startDate && new Date(appAddApplicationRoleValidInput.values.startDate)}
-                                        selected={appAddApplicationRoleValidInput.values.endDate ? new Date(appAddApplicationRoleValidInput.values.endDate) : ''}
+                                        className={`form-control date-with-button ${appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate ? 'is-invalid' : ''}`}
+                                        minDate={appEditApplicationRoleValidInput.values.startDate && new Date(appEditApplicationRoleValidInput.values.startDate)}
+                                        selected={appEditApplicationRoleValidInput.values.endDate ? new Date(appEditApplicationRoleValidInput.values.endDate) : ''}
                                         onChange={(tglSelesai) =>
                                             dateChanger('to', tglSelesai ? tglSelesai : null)
                                         }
-                                        isClearable={appAddApplicationRoleValidInput.values.endDate === '' ? false : true}
+                                        isClearable={appEditApplicationRoleValidInput.values.endDate === '' ? false : true}
                                         dateFormat="yyyy-MM-dd"
                                         ariaInvalid={
-                                            appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate
+                                            appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate
                                                 ? true : false
                                         }
                                     /> */}
@@ -479,8 +476,8 @@ const AddApplicationRoleUser = (props) => {
                                         <span className="mdi mdi-calendar" />
                                     </Button>
                                 </div>
-                                {appAddApplicationRoleValidInput.touched.endDate && appAddApplicationRoleValidInput.errors.endDate && (
-                                    <div id="date-invalid">{appAddApplicationRoleValidInput.errors.endDate}</div>
+                                {appEditApplicationRoleValidInput.touched.endDate && appEditApplicationRoleValidInput.errors.endDate && (
+                                    <div id="date-invalid">{appEditApplicationRoleValidInput.errors.endDate}</div>
                                 )}
                             </div>
                         </div>
@@ -512,7 +509,7 @@ const AddApplicationRoleUser = (props) => {
                 className="btn btn-danger my-2"
                 onClick={() => {
                     props.setTabUserRole(true)
-                    props.setAppAddUserRole(false)
+                    props.setAppEditUserRole(false)
 
                 }}
             >
@@ -523,12 +520,13 @@ const AddApplicationRoleUser = (props) => {
     );
 };
 
-AddApplicationRoleUser.propTypes = {
-    appAddUserRole: PropTypes.any,
-    setAppAddUserRole: PropTypes.any,
+EditApplicationRoleUser.propTypes = {
+    appEditUserRole: PropTypes.any,
+    setAppEditUserRole: PropTypes.any,
     setAppMaintainRoleMsg: PropTypes.any,
     setTabUserRole: PropTypes.any,
     appMaintainRoleData: PropTypes.any,
+    appSelectedRole: PropTypes.any,
 }
 
-export default AddApplicationRoleUser;
+export default EditApplicationRoleUser;

@@ -52,14 +52,15 @@ const RoleAccess = (props) => {
                             Application Role
                         </button>
                         <button
-                            className={`btn btn${tabUserRole ? '' : '-outline'}-primary`}
+                            className={`btn btn${tabUserRole || appAddUserRole || appEditUserRole ? '' : '-outline'}-primary`}
                             style={{
                                 borderRadius: '.25rem .25rem 0 0',
                                 marginBottom: '-1px'
                             }}
                             onClick={() => {
                                 setTabAppRole(false)
-                                setAppAddAccessRole(false)
+                                setAppAddUserRole(false)
+                                setAppEditUserRole(false)
                                 setTabUserRole(true)
                             }}
                         >
@@ -79,7 +80,7 @@ const RoleAccess = (props) => {
                                 borderLeft: '1px solid #A084DC',
                             }}
                         >
-                            {tabAppRole ? 'Data Application Role' : appAddAccessRole ? 'Tambah Application Role' : 'Data User Role'}
+                            {tabAppRole ? 'Data Application Role' : appAddAccessRole ? 'Tambah Application Role' : appEditAccessRole ? 'Ubah Application Role' : appAddUserRole ? 'Tambah User Role' : 'Data User Role'}
                         </CardHeader>
                         <CardBody
                             style={{
@@ -113,7 +114,7 @@ const RoleAccess = (props) => {
                 </CardBody>
             </Card>
             {
-                !(appAddAccessRole || appEditAccessRole)  &&
+                !(appAddAccessRole || appEditAccessRole || appAddUserRole || appEditUserRole) &&
                 (
                     <Button
                         className="btn btn-danger my-3"
