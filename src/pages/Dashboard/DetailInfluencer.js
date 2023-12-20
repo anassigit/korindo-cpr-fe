@@ -220,7 +220,7 @@ const DetailInfluencer = (props) => {
                             className="btn btn-danger my-3"
                             onClick={() => {
                                 ReactSession.set('appDetailRecommendationData', "");
-                                history.go(-1)
+                                history.push('/home')
                             }}
                         >
                             <span className="mdi mdi-arrow-left" />

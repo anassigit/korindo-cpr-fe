@@ -49,6 +49,7 @@ const ApplicationRoleAccess = (props) => {
         setAppAccessTabelSearch((prevState) => ({
             ...prevState,
             page: 1,
+            offset: 0,
             search: {
                 ...prevState.search,
                 search: searchVal,
@@ -88,31 +89,26 @@ const ApplicationRoleAccess = (props) => {
         {
             dataField: "create",
             text: "Create",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "read",
             text: "Read",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "update",
             text: "Update",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "delete",
             text: "Delete",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "print",
             text: "Print",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {

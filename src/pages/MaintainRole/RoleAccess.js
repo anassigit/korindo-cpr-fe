@@ -46,6 +46,8 @@ const RoleAccess = (props) => {
                                 setTabAppRole(true)
                                 setAppAddAccessRole(false)
                                 setAppEditAccessRole(false)
+                                setAppAddUserRole(false)
+                                setAppEditUserRole(false)
                                 setTabUserRole(false)
                             }}
                         >
@@ -59,6 +61,8 @@ const RoleAccess = (props) => {
                             }}
                             onClick={() => {
                                 setTabAppRole(false)
+                                setAppAddAccessRole(false)
+                                setAppEditAccessRole(false)
                                 setAppAddUserRole(false)
                                 setAppEditUserRole(false)
                                 setTabUserRole(true)
