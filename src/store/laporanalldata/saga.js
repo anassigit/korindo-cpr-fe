@@ -60,6 +60,7 @@ function* fetchGetDeptAllData({ payload: req }) {
 
 function* fetchdownloadExcelAllData({ payload: req }) {
   try {
+    debugger
     yield call(downloadAllData, req)
   } catch (error) {
     console.log(error);

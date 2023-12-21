@@ -4,9 +4,9 @@ import { ReactSession } from 'react-client-session';
 
 //apply base url for axios
 var API_URL = "http://localhost:9013/cpr";
-if(process.env.REACT_APP_APIKEY === "development"){
+if (process.env.REACT_APP_APIKEY === "development") {
   API_URL = "http://192.168.0.29:9013/cpr";
-}else if(process.env.REACT_APP_APIKEY === "production"){
+} else if (process.env.REACT_APP_APIKEY === "production") {
   API_URL = "http://10.10.20.94:9002/cpr";
 }
 
@@ -26,12 +26,12 @@ export async function postLogin(url, data, config = {}) {
     .then(response => response.data);
 }
 
-export async function get(url, data, config ={}) {
+export async function get(url, data, config = {}) {
   axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");
   return await axiosApi.get(url, data, { ...config })
-  .then(function (response) {
-    return responseError(response);
-  })
+    .then(function (response) {
+      return responseError(response);
+    })
 }
 
 export async function getWithParam(url, data, config = { responseType: 'blob' }) {
@@ -70,76 +70,78 @@ export async function post(url, data, config = {}) {
     })
 }
 
-function responseError(response){
-  if(response.data.status != "1"){
+function responseError(response) {
+  if (response.data.status != "1") {
     if (response.data.data != null) {
       return response.data;
     } else {
-        if (response.data.message != null) {
-          if(response.data.message == "Invalid Token"){
-            localStorage.setItem("authUser", "")
-            localStorage.setItem("user", "")
-            localStorage.setItem("menu", "")
-            document.getElementById("reloginForm").style.display = "block";
-            // response.data.listmessage = []
-            response.data.status = "1"
-            // window.location.href = "/login";
-            return response.data;
-          }else{
-            return response.data;
-          }
+      if (response.data.message != null) {
+        if (response.data.message == "Invalid Token") {
+          localStorage.setItem("authUser", "")
+          localStorage.setItem("user", "")
+          localStorage.setItem("menu", "")
+          document.getElementById("reloginForm").style.display = "block";
+          // response.data.listmessage = []
+          response.data.status = "1"
+          // window.location.href = "/login";
+          return response.data;
+        } else {
+          return response.data;
         }
+      }
     }
-  }else{
+  } else {
     return response.data;
   }
 }
 
-export async function getWithXls(url, data, config ={responseType: 'blob'}) {
+export async function getWithXls(url, data, config = { responseType: 'blob' }) {
   axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");
-  let token = localStorage.getItem("authUser"); 
-  return await axiosApi.get(url+"?KOR_TOKEN="+encodeURIComponent(token)+"&"+$.param(data), { ...config })
-  .then(
-    response => {
-      if (response.status == 200) {
-        debugger        
-        // let filename = response.headers['content-disposition']
-        // .split(';')
-        // .find(n => n.includes('filename='))
-        // .replace('filename=', '')
-        // .trim();
-        // console.log(filename)
-        let url = window.URL.createObjectURL(new Blob([response.data]));   
-        saveAs(url, data.fileName);
-      } else {
-         return responseError(response);
-      }
-      
-  })
+  let token = localStorage.getItem("authUser");
+  return await axiosApi.get(url + "?KOR_TOKEN=" + encodeURIComponent(token) + "&" + $.param(data), { ...config })
+    .then(
+      response => {
+        if (response.status == 200) {
+          // let filename = response.headers['content-disposition']
+          // .split(';')
+          // .find(n => n.includes('filename='))
+          // .replace('filename=', '')
+          // .trim();
+          // console.log(filename)
+          // let url = window.URL.createObjectURL(new Blob([response.data]));
+          // saveAs(url, data.fileName);
+          const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); 
+          const url = window.URL.createObjectURL(blob);
+          saveAs(url, data.fileName);
+        } else {
+          return responseError(response);
+        }
+
+      })
 }
 
-export async function getWithPdf(url, data, config ={responseType: 'blob'}) {
+export async function getWithPdf(url, data, config = { responseType: 'blob' }) {
   axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");
-  let token = localStorage.getItem("authUser"); 
-  return await axiosApi.get(url+"?KOR_TOKEN="+encodeURIComponent(token)+"&"+$.param(data), { ...config })
-  .then(
-    response => {
-      if (response.status == 200) {
-        console.log(response.headers)
-        // let filename = response.headers['content-disposition']
-        // console.log(filename)
-        let url = window.URL.createObjectURL(new Blob([response.data]));   
-        saveAs(url, data.file_name);
-      } else {
-         return responseError(response);
-      }
-      
-  })
+  let token = localStorage.getItem("authUser");
+  return await axiosApi.get(url + "?KOR_TOKEN=" + encodeURIComponent(token) + "&" + $.param(data), { ...config })
+    .then(
+      response => {
+        if (response.status == 200) {
+          console.log(response.headers)
+          // let filename = response.headers['content-disposition']
+          // console.log(filename)
+          let url = window.URL.createObjectURL(new Blob([response.data]));
+          saveAs(url, data.file_name);
+        } else {
+          return responseError(response);
+        }
+
+      })
 }
 
-export async function postUpload(url, data, config ={}) {
+export async function postUpload(url, data, config = {}) {
   axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");
-  
+
   return axiosApi
     .post(url, data, { ...config },)
     .then(function (response) {

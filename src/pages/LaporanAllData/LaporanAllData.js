@@ -700,6 +700,11 @@ const LaporanAllData = () => {
                                     </Button>
 
                                     <Button
+                                        disabled={!(startDate && endDate)}
+                                        style={{
+                                            backgroundColor: startDate && endDate ? null : "#A9A9A9",
+                                            borderColor:  startDate && endDate ? null : "#A9A9A9",
+                                        }}
                                         onClick={
                                             async () => {
                                                 try {
@@ -711,7 +716,7 @@ const LaporanAllData = () => {
                                                         "memberId": memberId,
                                                         "fileName": 'Laporan All Data',
                                                     };
-                                                    await dispatch(downloadAllDataAction(indexed_array));
+                                                    dispatch(downloadAllDataAction(indexed_array));
                                                 } catch (error) {
                                                     console.log(error)
                                                 }
