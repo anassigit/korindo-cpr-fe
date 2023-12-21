@@ -226,13 +226,13 @@ const LaporanAllData = () => {
         },
         {
             dataField: "memberName",
-            text: "Employee Name",
+            text: "Nama Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "deptName",
-            text: "Department Name",
+            text: "Departemen",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -329,6 +329,13 @@ const LaporanAllData = () => {
         setMemberId(row.memberId)
     }
 
+    useEffect(() => {
+        setAppCandidateSearchLov('')
+        setAppLovParam({
+            orgCd: orgCd
+        })
+    }, [orgCd])
+
     // const handleOrgRef = () => {
     //     orgRef.current.click()
     // }
@@ -405,7 +412,9 @@ const LaporanAllData = () => {
                                                 style={{ borderTopRightRadius: '0', borderBottomRightRadius: '0' }}
                                                 type="search"
                                                 value={orgCd}
-                                                onChange={(e) => setOrgCd(e.target.value)}
+                                                onChange={(e) => {
+                                                    setOrgCd(e.target.value)
+                                                }}
                                             // onKeyDown={handleEnterKeyPress}
                                             />
                                             <Button
@@ -703,10 +712,11 @@ const LaporanAllData = () => {
                                         disabled={!(startDate && endDate)}
                                         style={{
                                             backgroundColor: startDate && endDate ? null : "#A9A9A9",
-                                            borderColor:  startDate && endDate ? null : "#A9A9A9",
+                                            borderColor: startDate && endDate ? null : "#A9A9A9",
                                         }}
                                         onClick={
                                             async () => {
+                                                setLoadingSpinner(true)
                                                 try {
                                                     var indexed_array = {
                                                         "periodFrom": formatDate(startDate),
