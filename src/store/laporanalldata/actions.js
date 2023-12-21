@@ -1,7 +1,10 @@
 import {
+  DOWNLOAD_ALL_DATA,
+  GET_DEPT_ALL_DATA,
   GET_LAPORAN_ALL_DATA,
   GET_LOCATION_ALL_DATA,
   RESET_MESSAGE,
+  RESP_GET_DEPT_ALL_DATA,
   RESP_GET_LAPORAN_ALL_DATA,
   RESP_GET_LOCATION_ALL_DATA
 } from "./actionTypes"
@@ -23,6 +26,21 @@ export const getLocationAllData = (req) => ({
 
 export const respGetLocationAllData = resp => ({
   type: RESP_GET_LOCATION_ALL_DATA,
+  payload: resp,
+})
+
+export const getDeptAllData = (req) => ({
+  type: GET_DEPT_ALL_DATA,
+  payload: req,
+})
+
+export const respGetDeptAllData = resp => ({
+  type: RESP_GET_DEPT_ALL_DATA,
+  payload: resp,
+})
+
+export const downloadAllDataAction = resp => ({
+  type: DOWNLOAD_ALL_DATA,
   payload: resp,
 })
 

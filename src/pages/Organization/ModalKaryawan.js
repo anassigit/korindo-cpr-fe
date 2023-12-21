@@ -434,6 +434,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                             any: '',
                         },
                     }))
+                    setSelectedMemberData(null)
                     toggle()
                 }}>
                     Close

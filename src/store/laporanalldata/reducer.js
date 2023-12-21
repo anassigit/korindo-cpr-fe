@@ -1,7 +1,10 @@
 import {
+  DOWNLOAD_ALL_DATA,
+  GET_DEPT_ALL_DATA,
   GET_LAPORAN_ALL_DATA,
   GET_LOCATION_ALL_DATA,
   RESET_MESSAGE,
+  RESP_GET_DEPT_ALL_DATA,
   RESP_GET_LAPORAN_ALL_DATA,
   RESP_GET_LOCATION_ALL_DATA
 } from "./actionTypes"
@@ -9,6 +12,7 @@ import {
 const INIT_STATE = {
   respGetLaporanAllData: {},
   respGetLocationAllData: {},
+  respGetDeptAllData: {},
 }
 
 const laporanAllDataReducer = (state = INIT_STATE, action) => {
@@ -31,6 +35,19 @@ const laporanAllDataReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         respGetLocationAllData: action.payload,
+      }
+    case GET_DEPT_ALL_DATA:
+      return {
+        ...state,
+      }
+    case RESP_GET_DEPT_ALL_DATA:
+      return {
+        ...state,
+        respGetDeptAllData: action.payload,
+      }
+    case DOWNLOAD_ALL_DATA:
+      return {
+        ...state,
       }
     case RESET_MESSAGE:
       return {

@@ -15,15 +15,20 @@ import {
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { getLaporanAllData, getLocationAllData } from "store/actions";
+import { downloadAllDataAction, getDeptAllData, getLaporanAllData, getLocationAllData } from "store/actions";
 import TableCustom from "common/TableCustom";
 import TableCustom2 from "common/TableCustom2";
 import DatePicker from "react-datepicker";
+import ModalDept from "./ModalDept";
 
 const LaporanAllData = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
+
+    const [modal, setModal] = useState()
+
+    const orgRef = useRef(null);
 
     const dateRef1 = useRef(null);
     const dateRef2 = useRef(null);
@@ -31,7 +36,8 @@ const LaporanAllData = () => {
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
 
-    const [searchVal, setSearchVal] = useState('')
+    const [orgCd, setOrgCd] = useState('')
+    const [memberId, setMemberId] = useState('')
     const [locationId, setLocationId] = useState('')
 
     const [appLaporanAllDataPage, setAppLaporanAllDataPage] = useState(true)
@@ -78,11 +84,11 @@ const LaporanAllData = () => {
         order: "",
         search:
         {
-            periodFrom: '2023-12-01',
-            periodTo: '2023-12-05',
-            memberId: '',
-            locationId: '1',
-            orgCd: '',
+            periodFrom: startDate,
+            periodTo: endDate,
+            memberId: memberId,
+            locationId: locationId,
+            orgCd: orgCd,
         }
     })
 
@@ -183,30 +189,31 @@ const LaporanAllData = () => {
             sort: true,
             headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
         },
-        {
-            dataField: "action",
-            text: "Action",
-            headerStyle: { textAlign: 'center', },
-            formatter: (row, rowData, rowIndex) => {
-                return (
-                    <a style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', gap: '12px', margin: '0 25px 0 25px' }}>
-                        <span
-                            onClick={() => toggleModalContent(rowData)}
-                            id={`viewtooltip-action-${rowIndex}`}
-                            className="mdi mdi-text-box-outline text-primary"
-                        />
-                        <UncontrolledTooltip placement="top" target={`viewtooltip-action-${rowIndex}`}>
-                            Detail
-                        </UncontrolledTooltip>
-                    </a>
-                )
-            }
-        },
+        // {
+        //     dataField: "action",
+        //     text: "Action",
+        //     headerStyle: { textAlign: 'center', },
+        //     formatter: (row, rowData, rowIndex) => {
+        //         return (
+        //             <a style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', gap: '12px', margin: '0 25px 0 25px' }}>
+        //                 <span
+        //                     onClick={() => toggleModalContent(rowData)}
+        //                     id={`viewtooltip-action-${rowIndex}`}
+        //                     className="mdi mdi-text-box-outline text-primary"
+        //                 />
+        //                 <UncontrolledTooltip placement="top" target={`viewtooltip-action-${rowIndex}`}>
+        //                     Detail
+        //                 </UncontrolledTooltip>
+        //             </a>
+        //         )
+        //     }
+        // },
     ]
 
     useEffect(() => {
         setLoadingSpinner(true)
         dispatch(getLocationAllData())
+        dispatch(getDeptAllData())
     }, [])
 
     useEffect(() => {
@@ -241,7 +248,53 @@ const LaporanAllData = () => {
 
     const handleDateClick1 = () => {
         dateRef1.current.setOpen(true)
+    }
+
+    const handleDateClick2 = () => {
+        dateRef2.current.setOpen(true)
+    }
+
+    const toggle = () => {
+        setOrgCd(null)
+        setModal(!modal)
+    }
+
+    const toggleApply = () => {
+        setModal(!modal)
+        // setAppLaporanAllDataTabelSearch((prevState) => {
+        //     return ({
+        //         ...prevState,
+        //         search: {
+        //             ...prevState.search,
+        //             orgCd: orgCd
+        //         }
+        //     })
+        // })
+    }
+
+    const dateChanger = (name, selectedDate) => {
+
+        if (name === 'from') {
+            setStartDate(selectedDate)
+
+        } else if (name === 'to') {
+            setEndDate(selectedDate)
+        }
     };
+
+    const formatDate = (date) => {
+        if (date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        return '';
+    };
+
+    // const handleOrgRef = () => {
+    //     orgRef.current.click()
+    // }
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -279,8 +332,8 @@ const LaporanAllData = () => {
                                         Lokasi
                                         <Input
                                             type="select"
-                                            value={searchVal}
-                                            onChange={(e) => setSearchVal(e.target.value)}
+                                            value={locationId}
+                                            onChange={(e) => setLocationId(e.target.value)}
                                         // onKeyDown={handleEnterKeyPress}
                                         >
                                             {
@@ -308,12 +361,22 @@ const LaporanAllData = () => {
                                         }}
                                     >
                                         Kode Organisasi
-                                        <Input
-                                            type="search"
-                                            value={searchVal}
-                                            onChange={(e) => setSearchVal(e.target.value)}
-                                        // onKeyDown={handleEnterKeyPress}
-                                        />
+                                        <div style={{ width: '100%', display: 'flex' }}>
+                                            <Input
+                                                ref={orgRef}
+                                                style={{ borderTopRightRadius: '0', borderBottomRightRadius: '0' }}
+                                                type="search"
+                                                value={orgCd}
+                                                onChange={(e) => setOrgCd(e.target.value)}
+                                            // onKeyDown={handleEnterKeyPress}
+                                            />
+                                            <Button
+                                                onClick={toggle}
+                                                style={{ borderTopLeftRadius: '0', borderBottomLeftRadius: '0' }}
+                                            >
+                                                <span className="mdi mdi-magnify" />
+                                            </Button>
+                                        </div>
                                     </div>
                                     <div
                                         className="col-2"
@@ -328,8 +391,8 @@ const LaporanAllData = () => {
                                         Nik
                                         <Input
                                             type="search"
-                                            value={searchVal}
-                                            onChange={(e) => setSearchVal(e.target.value)}
+                                            value={memberId}
+                                            onChange={(e) => setMemberId(e.target.value)}
                                         // onKeyDown={handleEnterKeyPress}
                                         />
                                     </div>
@@ -366,7 +429,7 @@ const LaporanAllData = () => {
                                                     ref={dateRef1}
                                                     className={`form-control date-with-button`}
                                                     dateFormat="yyyy-MM-dd"
-                                                    maxDate={startDate && new Date(startDate)}
+                                                    maxDate={endDate && new Date(endDate)}
                                                     renderCustomHeader={({
                                                         date,
                                                         changeYear,
@@ -467,10 +530,10 @@ const LaporanAllData = () => {
                                             </div>
                                             <div style={{ display: 'flex' }}>
                                                 <DatePicker
-                                                    ref={dateRef1}
+                                                    ref={dateRef2}
                                                     className={`form-control date-with-button`}
                                                     dateFormat="yyyy-MM-dd"
-                                                    maxDate={startDate && new Date(startDate)}
+                                                    minDate={startDate && new Date(startDate)}
                                                     renderCustomHeader={({
                                                         date,
                                                         changeYear,
@@ -539,9 +602,9 @@ const LaporanAllData = () => {
                                                             </Button>
                                                         </div>
                                                     )}
-                                                    selected={startDate}
-                                                    onChange={(tglMulai) =>
-                                                        dateChanger('from', tglMulai ? tglMulai : null)
+                                                    selected={endDate}
+                                                    onChange={(tglSelesai) =>
+                                                        dateChanger('to', tglSelesai ? tglSelesai : null)
                                                     }
                                                 />
 
@@ -550,14 +613,60 @@ const LaporanAllData = () => {
                                                         borderTopLeftRadius: '0',
                                                         borderBottomLeftRadius: '0',
                                                     }}
-                                                    onClick={handleDateClick1}
+                                                    onClick={handleDateClick2}
                                                 >
                                                     <span className="mdi mdi-calendar" />
                                                 </Button>
                                             </div>
                                         </div>
                                     </div>
-                                    <Button>
+                                </div>
+                                <div
+                                    className="pb-2"
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between'
+                                    }}
+                                >
+                                    <Button
+                                        onClick={() => {
+                                            setAppLaporanAllDataTabelSearch({
+                                                page: 1,
+                                                limit: 10,
+                                                offset: 0,
+                                                sort: "",
+                                                order: "",
+                                                search:
+                                                {
+                                                    periodFrom: formatDate(startDate),
+                                                    periodTo: formatDate(endDate),
+                                                    memberId: memberId,
+                                                    locationId: locationId,
+                                                    orgCd: orgCd,
+                                                }
+                                            })
+                                        }}
+                                    >
+                                        <span className="mdi mdi-magnify" /> Search
+                                    </Button>
+
+                                    <Button
+                                        onClick={
+                                            async () => {
+                                                try {
+                                                    var indexed_array = {
+                                                        "periodFrom": formatDate(startDate),
+                                                        "periodTo": formatDate(endDate),
+                                                        "locationId": locationId,
+                                                        "orgCd": orgCd,
+                                                        "memberId": memberId,
+                                                    };
+                                                    await dispatch(downloadAllDataAction(indexed_array));
+                                                } catch (error) {
+                                                    console.log(error)
+                                                }
+                                            }}
+                                    >
                                         <span className="mdi mdi-file-pdf" /> Download Excel
                                     </Button>
                                 </div>
@@ -589,6 +698,13 @@ const LaporanAllData = () => {
                         </div>
                     </Container>
 
+                    <ModalDept
+                        modal={modal}
+                        toggle={toggle}
+                        toggleApply={toggleApply}
+                        orgCd={orgCd}
+                        setOrgCd={setOrgCd}
+                    />
                     {/* <MsgModal
                         toggle={toggleDeleteModal}
                         toggleApply={toggleApply}

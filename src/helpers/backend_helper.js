@@ -210,3 +210,7 @@ export const deleteUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/d
 export const getLaporanAllDataBE = req => post("/rest/ReportRest/getAllList", req)
 
 export const getLocationAllDataBE = req => post("/rest/ReportRest/getLocationList", req)
+
+export const getDeptAllDataBE = req => post("/rest/ReportRest/getDept", req)
+
+export const downloadAllData = req => getWithXls("/rest/ReportRest/excelDownloadAllData", req)
