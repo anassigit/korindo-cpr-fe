@@ -98,19 +98,19 @@ function responseError(response){
 export async function getWithXls(url, data, config ={responseType: 'blob'}) {
   axiosApi.defaults.headers.common["KOR_TOKEN"] = localStorage.getItem("authUser");
   let token = localStorage.getItem("authUser"); 
-  return await axiosApi.post(url+"?KOR_TOKEN="+encodeURIComponent(token)+"&"+$.param(data), { ...config })
+  return await axiosApi.get(url+"?KOR_TOKEN="+encodeURIComponent(token)+"&"+$.param(data), { ...config })
   .then(
     response => {
       if (response.status == 200) {
         debugger        
-        let filename = response.headers['content-disposition']
+        // let filename = response.headers['content-disposition']
         // .split(';')
-        .find(n => n.includes('filename='))
-        .replace('filename=', '')
-        .trim();
-        console.log(filename)
+        // .find(n => n.includes('filename='))
+        // .replace('filename=', '')
+        // .trim();
+        // console.log(filename)
         let url = window.URL.createObjectURL(new Blob([response.data]));   
-        saveAs(url, filename);
+        saveAs(url, data.fileName);
       } else {
          return responseError(response);
       }

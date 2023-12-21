@@ -214,3 +214,5 @@ export const getLocationAllDataBE = req => post("/rest/ReportRest/getLocationLis
 export const getDeptAllDataBE = req => post("/rest/ReportRest/getDept", req)
 
 export const downloadAllData = req => getWithXls("/rest/ReportRest/excelDownloadAllData", req)
+
+export const getLovMemberListBE = req => post("/rest/ReportRest/getMemberList", req)

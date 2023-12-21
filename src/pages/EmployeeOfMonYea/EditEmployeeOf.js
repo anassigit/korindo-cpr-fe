@@ -159,7 +159,7 @@ const EditEmployeeOf = (props) => {
     const appLovCandidateListColumns = [
         {
             dataField: "memberId",
-            text: "Employee No",
+            text: "Nik",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },

@@ -151,7 +151,7 @@ const AddEmployeeOf = (props) => {
 
     const appLovCandidateListColumns = [
         {
-            dataField: "memberName",
+            dataField: "memberId",
             text: "Employee No",
             sort: true,
             headerStyle: { textAlign: 'center' },

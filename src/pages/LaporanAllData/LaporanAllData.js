@@ -15,11 +15,13 @@ import {
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { downloadAllDataAction, getDeptAllData, getLaporanAllData, getLocationAllData } from "store/actions";
+import { downloadAllDataAction, getDeptAllData, getLaporanAllData, getLocationAllData, getMemberListLov } from "store/actions";
 import TableCustom from "common/TableCustom";
 import TableCustom2 from "common/TableCustom2";
 import DatePicker from "react-datepicker";
 import ModalDept from "./ModalDept";
+import Lovv2 from "common/Lovv2";
+import { downloadAllData } from "helpers/backend_helper";
 
 const LaporanAllData = () => {
 
@@ -39,6 +41,11 @@ const LaporanAllData = () => {
     const [orgCd, setOrgCd] = useState('')
     const [memberId, setMemberId] = useState('')
     const [locationId, setLocationId] = useState('')
+
+    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
+    const [appLovParam, setAppLovParam] = useState({
+        orgCd: ''
+    });
 
     const [appLaporanAllDataPage, setAppLaporanAllDataPage] = useState(true)
     const [loadingSpinner, setLoadingSpinner] = useState(false)
@@ -210,6 +217,32 @@ const LaporanAllData = () => {
         // },
     ]
 
+    const appLovCandidateListColumns = [
+        {
+            dataField: "memberName",
+            text: "Nik",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "memberName",
+            text: "Employee Name",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "deptName",
+            text: "Department Name",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "positionName",
+            text: "Jabatan",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+    ]
     useEffect(() => {
         setLoadingSpinner(true)
         dispatch(getLocationAllData())
@@ -292,6 +325,10 @@ const LaporanAllData = () => {
         return '';
     };
 
+    const appCallBackEmployee = (row) => {
+        setMemberId(row.memberId)
+    }
+
     // const handleOrgRef = () => {
     //     orgRef.current.click()
     // }
@@ -363,6 +400,7 @@ const LaporanAllData = () => {
                                         Kode Organisasi
                                         <div style={{ width: '100%', display: 'flex' }}>
                                             <Input
+                                                disabled
                                                 ref={orgRef}
                                                 style={{ borderTopRightRadius: '0', borderBottomRightRadius: '0' }}
                                                 type="search"
@@ -389,11 +427,22 @@ const LaporanAllData = () => {
                                         }}
                                     >
                                         Nik
-                                        <Input
-                                            type="search"
-                                            value={memberId}
-                                            onChange={(e) => setMemberId(e.target.value)}
-                                        // onKeyDown={handleEnterKeyPress}
+
+                                        <Lovv2
+                                            title="Karyawan"
+                                            keyFieldData="memberId"
+                                            columns={appLovCandidateListColumns}
+                                            getData={getMemberListLov}
+                                            pageSize={10}
+                                            callbackFunc={appCallBackEmployee}
+                                            defaultSetInput="memberId"
+                                            // invalidData={appAddEmployeeValidInput}
+                                            fieldValue="memberId"
+                                            stateSearchInput={appCandidateSearchLov}
+                                            stateSearchInputSet={setAppCandidateSearchLov}
+                                            // touchedLovField={appAddEmployeeValidInput.touched.memberName}
+                                            // errorLovField={appAddEmployeeValidInput.errors.memberName}
+                                            pParam={appLovParam}
                                         />
                                     </div>
                                 </div>
@@ -660,6 +709,7 @@ const LaporanAllData = () => {
                                                         "locationId": locationId,
                                                         "orgCd": orgCd,
                                                         "memberId": memberId,
+                                                        "fileName": 'Laporan All Data',
                                                     };
                                                     await dispatch(downloadAllDataAction(indexed_array));
                                                 } catch (error) {

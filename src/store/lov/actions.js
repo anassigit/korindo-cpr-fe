@@ -2,6 +2,7 @@ import {
   LOV_CANDIDATE,
   LOV_DEPT_LIST_ORG,
   LOV_LEVEL,
+  LOV_MEMBER_LIST,
   LOV_MENU_ROLE_LIST,
   LOV_POSITION_AND_LEVEL,
   LOV_USER_ROLE_LIST,
@@ -35,6 +36,11 @@ export const getMenuRoleLov = (req) => ({
 
 export const getUserRoleLov = (req) => ({
   type: LOV_USER_ROLE_LIST,
+  payload: req,
+})
+
+export const getMemberListLov = (req) => ({
+  type: LOV_MEMBER_LIST,
   payload: req,
 })
 
