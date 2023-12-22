@@ -116,7 +116,7 @@ const Lov = props => {
 
   return (
     <>
-      <InputGroup>
+      <InputGroup style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%' }} >
         <Input
           type="search"
           disabled
@@ -128,6 +128,15 @@ const Lov = props => {
           onKeyDown={onKeyDown}
           invalid={props.touchedLovField && props.errorLovField ? true : false}
         />
+        {
+          props.stateSearchInput && !props.stateSearchInput.toLowerCase().includes('mohon isi') ? (
+            <a
+              className="mdi mdi-close text-danger"
+              style={{ position: 'absolute', right: 50, }}
+              onClick={() => props.stateSearchInputSet('')}
+            />
+          ) : null
+        }
         <span className="input-group-append">
           <Button
             type="button"

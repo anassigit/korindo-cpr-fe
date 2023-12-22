@@ -361,7 +361,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                                 borderRadius: '0 5px 5px 0'
                                             }}
                                         >
-                                            <span className='mdi mdi-magnify' />
+                                            <span className='fas fa-search' />
                                             {/* <span>
                                                 Terpilih
                                             </span> */}

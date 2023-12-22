@@ -6,6 +6,7 @@ import {
   GET_LAPORAN_ALL_DATA, GET_LOCATION_ALL_DATA
 } from "./actionTypes"
 import {
+  respDownload,
   respGetDeptAllData,
   respGetLaporanAllData, respGetLocationAllData
 } from "./actions"
@@ -60,8 +61,10 @@ function* fetchGetDeptAllData({ payload: req }) {
 
 function* fetchdownloadExcelAllData({ payload: req }) {
   try {
-    debugger
-    yield call(downloadAllData, req)
+    const response = yield call(downloadAllData, req)
+    if (response === undefined) {
+      yield put(respDownload('Success'))
+    }
   } catch (error) {
     console.log(error);
   }

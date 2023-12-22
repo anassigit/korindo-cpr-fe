@@ -38,6 +38,8 @@ const LaporanAllData = () => {
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
 
+    const [tempOrgCd, setTempOrgCd] = useState('')
+
     const [orgCd, setOrgCd] = useState('')
     const [memberId, setMemberId] = useState('')
     const [locationId, setLocationId] = useState('')
@@ -56,6 +58,10 @@ const LaporanAllData = () => {
 
     const appLocationAllData = useSelector((state) => {
         return state.laporanAllDataReducer.respGetLocationAllData
+    })
+
+    const downloadStatus = useSelector((state) => {
+        return state.laporanAllDataReducer.respDownload
     })
 
     const years = range(1900, 2199 + 1, 1);
@@ -179,6 +185,12 @@ const LaporanAllData = () => {
             headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
         },
         {
+            dataField: "star",
+            text: "Nilai Poin",
+            sort: true,
+            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
+        },
+        {
             dataField: "stickerName",
             text: "Penghargaan",
             sort: true,
@@ -187,12 +199,6 @@ const LaporanAllData = () => {
         {
             dataField: "comment",
             text: "Komentar",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
-        },
-        {
-            dataField: "star",
-            text: "Nilai Poin",
             sort: true,
             headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
         },
@@ -256,6 +262,12 @@ const LaporanAllData = () => {
     }, [appLaporanAllData, appLaporanAllDataTabelSearch])
 
     useEffect(() => {
+        if (downloadStatus === 'Success') {
+            setLoadingSpinner(false)
+        }
+    }, [downloadStatus])
+
+    useEffect(() => {
         if (appLaporanAllDataTabelSearch) {
             setLoadingSpinner(true)
         }
@@ -288,21 +300,12 @@ const LaporanAllData = () => {
     }
 
     const toggle = () => {
-        setOrgCd(null)
         setModal(!modal)
     }
 
     const toggleApply = () => {
         setModal(!modal)
-        // setAppLaporanAllDataTabelSearch((prevState) => {
-        //     return ({
-        //         ...prevState,
-        //         search: {
-        //             ...prevState.search,
-        //             orgCd: orgCd
-        //         }
-        //     })
-        // })
+        setOrgCd(tempOrgCd)
     }
 
     const dateChanger = (name, selectedDate) => {
@@ -406,22 +409,29 @@ const LaporanAllData = () => {
                                     >
                                         Kode Organisasi
                                         <div style={{ width: '100%', display: 'flex' }}>
-                                            <Input
-                                                disabled
-                                                ref={orgRef}
-                                                style={{ borderTopRightRadius: '0', borderBottomRightRadius: '0' }}
-                                                type="search"
-                                                value={orgCd}
-                                                onChange={(e) => {
-                                                    setOrgCd(e.target.value)
-                                                }}
-                                            // onKeyDown={handleEnterKeyPress}
-                                            />
+                                            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                                <Input
+                                                    disabled
+                                                    ref={orgRef}
+                                                    style={{ borderTopRightRadius: '0', borderBottomRightRadius: '0', marginBottom: 0 }}
+                                                    type="search"
+                                                    value={orgCd}
+                                                />
+                                                {
+                                                    orgCd && (
+                                                        <a
+                                                            className="mdi mdi-close text-danger"
+                                                            style={{ position: 'absolute', right: 8, }}
+                                                            onClick={() => setOrgCd('')}
+                                                        />
+                                                    )
+                                                }
+                                            </div>
                                             <Button
                                                 onClick={toggle}
                                                 style={{ borderTopLeftRadius: '0', borderBottomLeftRadius: '0' }}
                                             >
-                                                <span className="mdi mdi-magnify" />
+                                                <span className="fas fa-search" />
                                             </Button>
                                         </div>
                                     </div>
@@ -431,28 +441,28 @@ const LaporanAllData = () => {
                                             display: "flex",
                                             flexDirection: "row",
                                             gap: "18px",
-                                            justifyContent: "center",
                                             alignItems: "center",
                                         }}
                                     >
                                         Nik
-
-                                        <Lovv2
-                                            title="Karyawan"
-                                            keyFieldData="memberId"
-                                            columns={appLovCandidateListColumns}
-                                            getData={getMemberListLov}
-                                            pageSize={10}
-                                            callbackFunc={appCallBackEmployee}
-                                            defaultSetInput="memberId"
-                                            // invalidData={appAddEmployeeValidInput}
-                                            fieldValue="memberId"
-                                            stateSearchInput={appCandidateSearchLov}
-                                            stateSearchInputSet={setAppCandidateSearchLov}
-                                            // touchedLovField={appAddEmployeeValidInput.touched.memberName}
-                                            // errorLovField={appAddEmployeeValidInput.errors.memberName}
-                                            pParam={appLovParam}
-                                        />
+                                        <div style={{ width: '70%' }}>
+                                            <Lovv2
+                                                title="Karyawan"
+                                                keyFieldData="memberId"
+                                                columns={appLovCandidateListColumns}
+                                                getData={getMemberListLov}
+                                                pageSize={10}
+                                                callbackFunc={appCallBackEmployee}
+                                                defaultSetInput="memberId"
+                                                // invalidData={appAddEmployeeValidInput}
+                                                fieldValue="memberId"
+                                                stateSearchInput={appCandidateSearchLov}
+                                                stateSearchInputSet={setAppCandidateSearchLov}
+                                                // touchedLovField={appAddEmployeeValidInput.touched.memberName}
+                                                // errorLovField={appAddEmployeeValidInput.errors.memberName}
+                                                pParam={appLovParam}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div
@@ -705,7 +715,7 @@ const LaporanAllData = () => {
                                             })
                                         }}
                                     >
-                                        <span className="mdi mdi-magnify" /> Search
+                                        <span className="fas fa-search" /> Search
                                     </Button>
 
                                     <Button
@@ -769,6 +779,8 @@ const LaporanAllData = () => {
                         toggleApply={toggleApply}
                         orgCd={orgCd}
                         setOrgCd={setOrgCd}
+                        tempOrgCd={tempOrgCd}
+                        setTempOrgCd={setTempOrgCd}
                     />
                     {/* <MsgModal
                         toggle={toggleDeleteModal}

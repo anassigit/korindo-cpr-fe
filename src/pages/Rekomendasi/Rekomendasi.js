@@ -335,7 +335,7 @@ const Rekomendasi = () => {
           <Container fluid>
             <Card style={{ marginBottom: 0 }}>
               <CardHeader>
-                <span className="mdi mdi-magnify"></span> Pilih Karyawan
+                <span className="fas fa-search"></span> Pilih Karyawan
               </CardHeader>
               <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
                 <Row

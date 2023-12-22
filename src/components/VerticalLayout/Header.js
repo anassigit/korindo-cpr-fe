@@ -166,7 +166,7 @@ const Header = props => {
                             />
                             <div className="input-group-append">
                               <button className="btn btn-dark" type="submit">
-                                <i className="mdi mdi-magnify" />
+                                <i className="fas fa-search" />
                               </button>
                             </div>
                           </div>
@@ -182,7 +182,7 @@ const Header = props => {
                 className="btn header-item noti-icon "
                 id="page-header-search-dropdown"
               >
-                <i className="mdi mdi-magnify" />
+                <i className="fas fa-search" />
               </button>
               <div
                 className={
@@ -203,7 +203,7 @@ const Header = props => {
                       />
                       <div className="input-group-append">
                         <button className="btn btn-primary" type="submit">
-                          <i className="mdi mdi-magnify" />
+                          <i className="fas fa-search" />
                         </button>
                       </div>
                     </div>

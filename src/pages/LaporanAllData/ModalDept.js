@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Row, UncontrolledTooltip } from 'reactstrap';
 import '../../assets/scss/custom/modal/modal.css';
 
-const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
+const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd, tempOrgCd, setTempOrgCd }) => {
 
     const dispatch = useDispatch()
 
@@ -12,6 +12,7 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
         "1": true,
         "2": true,
     })
+
     const [selectedDeptName, setSelectedDeptName] = useState()
 
     const appDeptListData = useSelector((state) => {
@@ -19,7 +20,7 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
     })
 
 
-    const CollapsibleList = ({ data, collapser, setCollapser, orgCd, setOrgCd, setSelectedDeptName, depth = 0 }) => {
+    const CollapsibleList = ({ data, collapser, setCollapser, tempOrgCd, setTempOrgCd, setSelectedDeptName, depth = 0 }) => {
 
         const currentDepth = depth + 1;
         const paddingLeft = `${currentDepth * 0.8}vw`;
@@ -37,7 +38,7 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
                                         overflow: "hidden",
                                         whiteSpace: "nowrap",
                                         textOverflow: "ellipsis",
-                                        border: orgCd === item.orgCd ? '1px solid #A084DC75' : '',
+                                        border: tempOrgCd === item.orgCd ? '1px solid #A084DC75' : '',
                                         borderRadius: '5px',
                                     }}>
                                         {item.childList.length > 0 ? (
@@ -75,7 +76,7 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
                                                 //         };
                                                 //     });
                                                 // }
-                                                setOrgCd(item.orgCd);
+                                                setTempOrgCd(item.orgCd);
                                                 setSelectedDeptName(item.deptName);
                                             }}
                                         >
@@ -99,8 +100,8 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
                                         data={item.childList}
                                         collapser={collapser}
                                         setCollapser={setCollapser}
-                                        orgCd={orgCd}
-                                        setOrgCd={setOrgCd}
+                                        tempOrgCd={tempOrgCd}
+                                        setTempOrgCd={setTempOrgCd}
                                         setSelectedDeptName={setSelectedDeptName}
                                         depth={currentDepth}
                                     />
@@ -136,12 +137,12 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
                                         <a
                                             style={{
                                                 color: "#4c4c4c",
-                                                fontWeight: collapser[data.orgCd] || orgCd.orgCd === data.orgCd ? "bold" : "normal",
+                                                fontWeight: tempOrgCd === data.orgCd ? "bold" : "normal",
                                                 cursor: "pointer",
                                             }}
                                             className="unselectable-two"
                                             onClick={(e) => {
-                                                setOrgCd(data);
+                                                setTempOrgCd(data);
                                                 setSelectedDeptName(data.deptName);
                                             }}
                                         >
@@ -170,8 +171,8 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
                                         data={data.childList}
                                         collapser={collapser}
                                         setCollapser={setCollapser}
-                                        orgCd={orgCd}
-                                        setOrgCd={setOrgCd}
+                                        tempOrgCd={tempOrgCd}
+                                        setTempOrgCd={setTempOrgCd}
                                         setSelectedDeptName={setSelectedDeptName}
                                         depth={currentDepth}
                                     />
@@ -189,8 +190,8 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
         data: PropTypes.any,
         collapser: PropTypes.any,
         setCollapser: PropTypes.any,
-        orgCd: PropTypes.any,
-        setOrgCd: PropTypes.any,
+        tempOrgCd: PropTypes.any,
+        setTempOrgCd: PropTypes.any,
         setSelectedDeptName: PropTypes.any,
         depth: PropTypes.any,
     };
@@ -209,8 +210,8 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd }) => {
                     data={appDeptListData?.data?.result}
                     collapser={collapser}
                     setCollapser={setCollapser}
-                    orgCd={orgCd}
-                    setOrgCd={setOrgCd}
+                    tempOrgCd={tempOrgCd}
+                    setTempOrgCd={setTempOrgCd}
                     setSelectedDeptName={setSelectedDeptName}
                 />
             </ModalBody>
@@ -240,6 +241,8 @@ ModalDept.propTypes = {
     toggleApply: PropTypes.any,
     orgCd: PropTypes.any,
     setOrgCd: PropTypes.any,
+    tempOrgCd: PropTypes.any,
+    setTempOrgCd: PropTypes.any,
 };
 
 export default ModalDept;

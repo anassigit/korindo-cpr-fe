@@ -4,6 +4,7 @@ import {
   GET_LAPORAN_ALL_DATA,
   GET_LOCATION_ALL_DATA,
   RESET_MESSAGE,
+  RESP_DOWNLOAD,
   RESP_GET_DEPT_ALL_DATA,
   RESP_GET_LAPORAN_ALL_DATA,
   RESP_GET_LOCATION_ALL_DATA
@@ -13,6 +14,7 @@ const INIT_STATE = {
   respGetLaporanAllData: {},
   respGetLocationAllData: {},
   respGetDeptAllData: {},
+  respDownload: '',
 }
 
 const laporanAllDataReducer = (state = INIT_STATE, action) => {
@@ -49,9 +51,15 @@ const laporanAllDataReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
       }
+    case RESP_DOWNLOAD:
+      return {
+        ...state,
+        respDownload: action.payload,
+      }
     case RESET_MESSAGE:
       return {
         ...state,
+        respDownload: '',
         // msgAdd: '',
         // msgEdit: '',
         // msgDelete: '',

@@ -4,6 +4,7 @@ import {
   GET_LAPORAN_ALL_DATA,
   GET_LOCATION_ALL_DATA,
   RESET_MESSAGE,
+  RESP_DOWNLOAD,
   RESP_GET_DEPT_ALL_DATA,
   RESP_GET_LAPORAN_ALL_DATA,
   RESP_GET_LOCATION_ALL_DATA
@@ -39,8 +40,13 @@ export const respGetDeptAllData = resp => ({
   payload: resp,
 })
 
-export const downloadAllDataAction = resp => ({
+export const downloadAllDataAction = req => ({
   type: DOWNLOAD_ALL_DATA,
+  payload: req,
+})
+
+export const respDownload = resp => ({
+  type: RESP_DOWNLOAD,
   payload: resp,
 })
 
