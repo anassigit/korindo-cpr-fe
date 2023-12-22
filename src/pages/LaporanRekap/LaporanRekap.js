@@ -114,80 +114,67 @@ const LaporanRekap = () => {
         {
             dataField: "num",
             text: "Rank",
-            sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
             dataField: "deptName",
             text: "Divisi",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "positionName",
             text: "Jabatan",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "memberId",
             text: "Nik",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "memberName",
             text: "Nama",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "age",
             text: "Usia",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "gender",
             text: "Jenis Kelamin",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "recvStarCount",
             text: "Jumlah Aktual Bintang Yang Diterima",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "recvStar",
             text: "Nilai Poin",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "sendStar",
             text: "Bintang Terkirim",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "strDeptRate",
             text: "Partisipasi Div",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "deptRate",
             text: "% Partisipan Div",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "totalScore",
             text: "Total Poin",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
     ]
@@ -196,25 +183,21 @@ const LaporanRekap = () => {
         {
             dataField: "memberName",
             text: "Nik",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "memberName",
             text: "Nama Karyawan",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "deptName",
             text: "Departemen",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
             dataField: "positionName",
             text: "Jabatan",
-            sort: true,
             headerStyle: { textAlign: 'center' },
         },
     ]

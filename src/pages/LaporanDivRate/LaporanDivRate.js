@@ -102,26 +102,22 @@ const LaporanDivRate = () => {
         {
             dataField: "orgCd",
             text: "Div",
-            sort: true,
             hidden: true,
             headerStyle: { textAlign: 'center', },
         },
         {
             dataField: "deptName",
             text: "Div",
-            sort: true,
             headerStyle: { textAlign: 'center', },
         },
         {
             dataField: "strDeptRate",
             text: "Partisipasi Div",
-            sort: true,
             headerStyle: { textAlign: 'center', },
         },
         {
             dataField: "deptRate",
             text: "% Partisipan Div",
-            sort: true,
             headerStyle: { textAlign: 'center', },
         },
     ]
