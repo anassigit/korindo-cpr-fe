@@ -61,6 +61,7 @@ function* fetchGetDeptAllData({ payload: req }) {
 
 function* fetchdownloadExcelAllData({ payload: req }) {
   try {
+    yield put(respDownload(''))
     const response = yield call(downloadAllData, req)
     if (response === undefined) {
       yield put(respDownload('Success'))

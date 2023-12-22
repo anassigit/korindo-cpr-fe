@@ -11,11 +11,12 @@ import {
     Container,
     Input,
     Spinner,
+    UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { downloadAllDataAction, getDeptAllData, getLaporanAllData, getLocationAllData, getMemberListLov } from "store/actions";
+import { downloadAllDataAction, getDeptAllData, getLaporanAllData, getLocationAllData, getMemberListLov, resetMessage } from "store/actions";
 import TableCustom from "common/TableCustom";
 import TableCustom2 from "common/TableCustom2";
 import DatePicker from "react-datepicker";
@@ -34,6 +35,10 @@ const LaporanAllData = () => {
 
     const dateRef1 = useRef(null);
     const dateRef2 = useRef(null);
+
+    const [searchClick, setSearchClick] = useState(false)
+
+    const [appLaporanAllDataMsg, setAppLaporanAllDataMsg] = useState('')
 
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
@@ -249,6 +254,7 @@ const LaporanAllData = () => {
             headerStyle: { textAlign: 'center' },
         },
     ]
+
     useEffect(() => {
         setLoadingSpinner(true)
         dispatch(getLocationAllData())
@@ -256,10 +262,17 @@ const LaporanAllData = () => {
     }, [])
 
     useEffect(() => {
-        if (appLaporanAllData.status === '1' || appLaporanAllData.status === '0') {
-            setLoadingSpinner(false)
+        dispatch(resetMessage())
+    }, [dispatch])
+
+    useEffect(() => {
+        if (appLaporanAllData.status === '0' && searchClick) {
+            setAppLaporanAllDataMsg(appLaporanAllData)
+        } else if (appLaporanAllData.status === '1' && searchClick){
+            setAppLaporanAllDataMsg('')
         }
-    }, [appLaporanAllData, appLaporanAllDataTabelSearch])
+        setLoadingSpinner(false)
+    }, [appLaporanAllData])
 
     useEffect(() => {
         if (downloadStatus === 'Success') {
@@ -343,12 +356,14 @@ const LaporanAllData = () => {
     //     orgRef.current.click()
     // }
 
+    console.log(appLaporanAllDataMsg)
+
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
-                    {/* {appLaporanAllDataMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLaporanAllDataMsg("") }} color={appLaporanAllDataMsg?.status == "1" ? "success" : "danger"}>
-                        {typeof appLaporanAllDataMsg == 'string' ? null : appLaporanAllDataMsg?.message}</UncontrolledAlert> : null} */}
+                    {appLaporanAllDataMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLaporanAllDataMsg("") }} color={ "danger"}>
+                        {typeof appLaporanAllDataMsg == 'string' ? null : appLaporanAllDataMsg?.message}</UncontrolledAlert> : null}
                     <Container
                         style={{ display: appLaporanAllDataPage ? 'block' : "none" }}
                         fluid
@@ -698,6 +713,7 @@ const LaporanAllData = () => {
                                 >
                                     <Button
                                         onClick={() => {
+                                            setSearchClick(true)
                                             setAppLaporanAllDataTabelSearch({
                                                 page: 1,
                                                 limit: 10,
