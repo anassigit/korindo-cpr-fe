@@ -216,3 +216,11 @@ export const getDeptAllDataBE = req => post("/rest/ReportRest/getDept", req)
 export const downloadAllData = req => getWithXls("/rest/ReportRest/excelDownloadAllData", req)
 
 export const getLovMemberListBE = req => post("/rest/ReportRest/getMemberList", req)
+
+export const downloadRekap = req => getWithXls("/rest/ReportRest/excelDownloadSummery", req)
+
+export const getLaporanRekapBE = req => post("/rest/ReportRest/getSummeryList", req)
+
+export const downloadDivRate = req => getWithXls("/rest/ReportRest/excelDownloadDivRate", req)
+
+export const getLaporanDivRateBE = req => post("/rest/ReportRest/getDivRateList", req)

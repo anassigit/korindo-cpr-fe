@@ -24,6 +24,8 @@ import organizationReducer from "./organization/reducer"
 import maintainRoleReducer from "./maintainrole/reducer"
 
 import laporanAllDataReducer from "./laporanalldata/reducer"
+import laporanRekapReducer from "./laporanrekap/reducer"
+import laporanDivRateReducer from "./laporandivrate/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -48,6 +50,8 @@ const rootReducer = combineReducers({
   maintainRoleReducer,
 
   laporanAllDataReducer,
+  laporanRekapReducer,
+  laporanDivRateReducer,
 })
 
 export default rootReducer

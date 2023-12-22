@@ -24,6 +24,7 @@ import MemberMaster from "pages/MemberMaster/MemberMaster"
 import MaintainRole from "pages/MaintainRole/MaintainRole"
 import HistoryPemberian from "pages/HistoryPemberian/HistoryPemberian"
 import LaporanAllData from "pages/LaporanAllData/LaporanAllData"
+import LaporanRekap from "pages/LaporanRekap/LaporanRekap"
 
 const authProtectedRoutes = [
 
@@ -44,6 +45,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc003", component: MaintainRole},
 
   { path: "/korsoc000/forms/korsoc102", component: LaporanAllData},
+  { path: "/korsoc000/forms/korsoc103", component: LaporanRekap},
   
   { path: "/korsoc000/forms/korsoc400", component: Manual},
   { path: "/korsoc000/forms/korsoc411", component: UserManualVideo},
