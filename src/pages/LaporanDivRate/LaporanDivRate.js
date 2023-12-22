@@ -1,6 +1,9 @@
+import Lovv2 from "common/Lovv2";
 import RootPageCustom from "common/RootPageCustom";
+import TableCustom2 from "common/TableCustom2";
 import React, { useEffect, useRef, useState } from "react";
 import { ReactSession } from 'react-client-session';
+import DatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
@@ -11,25 +14,16 @@ import {
     Container,
     Input,
     Spinner,
-    UncontrolledAlert,
-    UncontrolledTooltip
+    UncontrolledAlert
 } from "reactstrap";
+import { downloadDivRateAction, getDeptDivRate, getLaporanDivRate, getLocationDivRate, getMemberListLov, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import { downloadDivRateAction, getDeptDivRate, getLaporanDivRate, getLocationDivRate, getMemberListLov, resetMessage } from "store/actions";
-import TableCustom from "common/TableCustom";
-import TableCustom2 from "common/TableCustom2";
-import DatePicker from "react-datepicker";
-import ModalDept from "./ModalDept";
-import Lovv2 from "common/Lovv2";
-import { downloadDivRate } from "helpers/backend_helper";
 
 const LaporanDivRate = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
-
-    const [modal, setModal] = useState()
 
     const orgRef = useRef(null);
 
@@ -42,12 +36,6 @@ const LaporanDivRate = () => {
 
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
-
-    const [tempOrgCd, setTempOrgCd] = useState('')
-
-    const [orgCd, setOrgCd] = useState('')
-    const [memberId, setMemberId] = useState('')
-    const [locationId, setLocationId] = useState('')
 
     const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
     const [appLovParam, setAppLovParam] = useState({
@@ -104,161 +92,42 @@ const LaporanDivRate = () => {
         {
             periodFrom: startDate,
             periodTo: endDate,
-            memberId: memberId,
-            locationId: locationId,
-            orgCd: orgCd,
+
+
+
         }
     })
 
     const appLaporanDivRateColumn = [
         {
-            dataField: "write_time",
-            text: "Tgl",
+            dataField: "orgCd",
+            text: "Div",
             sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
-        },
-        {
-            dataField: "fromDeptName",
-            text: "Dari Div",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
-        },
-        {
-            dataField: "fromPositionName",
-            text: "Dari Jabatan",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
-        },
-        {
-            dataField: "fromMemberId",
-            text: "Dari Nik",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
-        },
-        {
-            dataField: "fromMemberName",
-            text: "Dari Nama",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
-        },
-        {
-            dataField: "fromAge",
-            text: "Dari Usia",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
-        },
-        {
-            dataField: "fromGender",
-            text: "Dari Jenis Kelamin",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#F6F7C4', borderColor: '#F6F7C4' },
-        },
-        {
-            dataField: "toDeptName",
-            text: "Ke Div",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
-        },
-        {
-            dataField: "toPositionName",
-            text: "Ke Jabatan",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
-        },
-        {
-            dataField: "toMemberId",
-            text: "Ke Nik",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
-        },
-        {
-            dataField: "toMemberName",
-            text: "Ke Nama",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
-        },
-        {
-            dataField: "toAge",
-            text: "Ke Usia",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
-        },
-        {
-            dataField: "toGender",
-            text: "Ke Jenis Kelamin",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFDEB4', borderColor: '#FFDEB4' },
-        },
-        {
-            dataField: "star",
-            text: "Nilai Poin",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
-        },
-        {
-            dataField: "stickerName",
-            text: "Penghargaan",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
-        },
-        {
-            dataField: "comment",
-            text: "Komentar",
-            sort: true,
-            headerStyle: { textAlign: 'center', backgroundColor: '#FFA1A1', borderColor: '#FFA1A1' },
-        },
-        // {
-        //     dataField: "action",
-        //     text: "Action",
-        //     headerStyle: { textAlign: 'center', },
-        //     formatter: (row, rowData, rowIndex) => {
-        //         return (
-        //             <a style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', gap: '12px', margin: '0 25px 0 25px' }}>
-        //                 <span
-        //                     onClick={() => toggleModalContent(rowData)}
-        //                     id={`viewtooltip-action-${rowIndex}`}
-        //                     className="mdi mdi-text-box-outline text-primary"
-        //                 />
-        //                 <UncontrolledTooltip placement="top" target={`viewtooltip-action-${rowIndex}`}>
-        //                     Detail
-        //                 </UncontrolledTooltip>
-        //             </a>
-        //         )
-        //     }
-        // },
-    ]
-
-    const appLovCandidateListColumns = [
-        {
-            dataField: "memberName",
-            text: "Nik",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "memberName",
-            text: "Nama Karyawan",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
+            hidden: true,
+            headerStyle: { textAlign: 'center', },
         },
         {
             dataField: "deptName",
-            text: "Departemen",
+            text: "Div",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', },
         },
         {
-            dataField: "positionName",
-            text: "Jabatan",
+            dataField: "strDeptRate",
+            text: "Partisipasi Div",
             sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center', },
+        },
+        {
+            dataField: "deptRate",
+            text: "% Partisipan Div",
+            sort: true,
+            headerStyle: { textAlign: 'center', },
         },
     ]
 
     useEffect(() => {
         setLoadingSpinner(true)
-        dispatch(getLocationDivRate())
-        dispatch(getDeptDivRate())
     }, [])
 
     useEffect(() => {
@@ -268,7 +137,7 @@ const LaporanDivRate = () => {
     useEffect(() => {
         if (appLaporanDivRate.status === '0' && searchClick) {
             setAppLaporanDivRateMsg(appLaporanDivRate)
-        } else if (appLaporanDivRate.status === '1' && searchClick){
+        } else if (appLaporanDivRate.status === '1' && searchClick) {
             setAppLaporanDivRateMsg('')
         }
         setLoadingSpinner(false)
@@ -286,39 +155,12 @@ const LaporanDivRate = () => {
         }
     }, [appLaporanDivRateTabelSearch])
 
-    useEffect(() => {
-        let locationData = appLocationDivRate?.data?.list
-        if (locationData) {
-            if (locationData.length > 0) {
-                setLocationId(locationData[0].locationId)
-                setAppLaporanDivRateTabelSearch((prevState) => {
-                    return ({
-                        ...prevState,
-                        search: {
-                            ...prevState.search,
-                            locationId: locationData[0].locationId
-                        }
-                    })
-                })
-            }
-        }
-    }, [appLocationDivRate])
-
     const handleDateClick1 = () => {
         dateRef1.current.setOpen(true)
     }
 
     const handleDateClick2 = () => {
         dateRef2.current.setOpen(true)
-    }
-
-    const toggle = () => {
-        setModal(!modal)
-    }
-
-    const toggleApply = () => {
-        setModal(!modal)
-        setOrgCd(tempOrgCd)
     }
 
     const dateChanger = (name, selectedDate) => {
@@ -340,18 +182,6 @@ const LaporanDivRate = () => {
         }
         return '';
     };
-
-    const appCallBackEmployee = (row) => {
-        setMemberId(row.memberId)
-    }
-
-    useEffect(() => {
-        setAppCandidateSearchLov('')
-        setAppLovParam({
-            orgCd: orgCd
-        })
-    }, [orgCd])
-
     // const handleOrgRef = () => {
     //     orgRef.current.click()
     // }
@@ -362,7 +192,7 @@ const LaporanDivRate = () => {
         <RootPageCustom msgStateGet={null} msgStateSet={null}
             componentJsx={
                 <React.Fragment>
-                    {appLaporanDivRateMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLaporanDivRateMsg("") }} color={ "danger"}>
+                    {appLaporanDivRateMsg !== "" ? <UncontrolledAlert toggle={() => { setAppLaporanDivRateMsg("") }} color={"danger"}>
                         {typeof appLaporanDivRateMsg == 'string' ? null : appLaporanDivRateMsg?.message}</UncontrolledAlert> : null}
                     <Container
                         style={{ display: appLaporanDivRatePage ? 'block' : "none" }}
@@ -374,112 +204,6 @@ const LaporanDivRate = () => {
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
 
-                                <div
-                                    className="col-12 pb-2"
-                                    style={{
-                                        display: 'flex',
-                                        gap: '12px',
-                                    }}
-                                >
-                                    <div
-                                        className="col-2"
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            gap: "18px",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        Lokasi
-                                        <Input
-                                            type="select"
-                                            value={locationId}
-                                            onChange={(e) => setLocationId(e.target.value)}
-                                        // onKeyDown={handleEnterKeyPress}
-                                        >
-                                            {
-                                                appLocationDivRate?.data?.list && appLocationDivRate?.data?.list.map((item, index) => {
-                                                    return (
-                                                        <option
-                                                            key={index}
-                                                            value={item.locationId}
-                                                        >
-                                                            {item.locationName}
-                                                        </option>
-                                                    )
-                                                })
-                                            }
-                                        </Input>
-                                    </div>
-                                    <div
-                                        className="col-2"
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            gap: "18px",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        Kode Organisasi
-                                        <div style={{ width: '100%', display: 'flex' }}>
-                                            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                                                <Input
-                                                    disabled
-                                                    ref={orgRef}
-                                                    style={{ borderTopRightRadius: '0', borderBottomRightRadius: '0', marginBottom: 0 }}
-                                                    type="search"
-                                                    value={orgCd}
-                                                />
-                                                {
-                                                    orgCd && (
-                                                        <a
-                                                            className="mdi mdi-close text-danger"
-                                                            style={{ position: 'absolute', right: 8, }}
-                                                            onClick={() => setOrgCd('')}
-                                                        />
-                                                    )
-                                                }
-                                            </div>
-                                            <Button
-                                                onClick={toggle}
-                                                style={{ borderTopLeftRadius: '0', borderBottomLeftRadius: '0' }}
-                                            >
-                                                <span className="fas fa-search" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="col-2"
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            gap: "18px",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        Nik
-                                        <div style={{ width: '70%' }}>
-                                            <Lovv2
-                                                title="Karyawan"
-                                                keyFieldData="memberId"
-                                                columns={appLovCandidateListColumns}
-                                                getData={getMemberListLov}
-                                                pageSize={10}
-                                                callbackFunc={appCallBackEmployee}
-                                                defaultSetInput="memberId"
-                                                // invalidData={appAddEmployeeValidInput}
-                                                fieldValue="memberId"
-                                                stateSearchInput={appCandidateSearchLov}
-                                                stateSearchInputSet={setAppCandidateSearchLov}
-                                                // touchedLovField={appAddEmployeeValidInput.touched.memberName}
-                                                // errorLovField={appAddEmployeeValidInput.errors.memberName}
-                                                pParam={appLovParam}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
                                 <div
                                     style={{
                                         display: 'flex',
@@ -724,9 +448,6 @@ const LaporanDivRate = () => {
                                                 {
                                                     periodFrom: formatDate(startDate),
                                                     periodTo: formatDate(endDate),
-                                                    memberId: memberId,
-                                                    locationId: locationId,
-                                                    orgCd: orgCd,
                                                 }
                                             })
                                         }}
@@ -789,21 +510,6 @@ const LaporanDivRate = () => {
                         </div>
                     </Container>
 
-                    <ModalDept
-                        modal={modal}
-                        toggle={toggle}
-                        toggleApply={toggleApply}
-                        orgCd={orgCd}
-                        setOrgCd={setOrgCd}
-                        tempOrgCd={tempOrgCd}
-                        setTempOrgCd={setTempOrgCd}
-                    />
-                    {/* <MsgModal
-                        toggle={toggleDeleteModal}
-                        toggleApply={toggleApply}
-                        modal={modal}
-                        message={'Apakah anda yakin untuk menghapus ini?'}
-                    /> */}
                 </React.Fragment>
             }
         />
