@@ -464,10 +464,7 @@ const LaporanDivRate = () => {
                                                     var indexed_array = {
                                                         "periodFrom": formatDate(startDate),
                                                         "periodTo": formatDate(endDate),
-                                                        "locationId": locationId,
-                                                        "orgCd": orgCd,
-                                                        "memberId": memberId,
-                                                        "fileName": 'Laporan All Data',
+                                                        "fileName": 'Laporan DivRate',
                                                     };
                                                     dispatch(downloadDivRateAction(indexed_array));
                                                 } catch (error) {
