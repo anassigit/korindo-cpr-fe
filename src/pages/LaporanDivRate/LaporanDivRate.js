@@ -196,7 +196,7 @@ const LaporanDivRate = () => {
                     >
                         <Card style={{ marginBottom: 0 }}>
                             <CardHeader>
-                                <span className="mdi mdi-file-chart"></span> Laporan All Data
+                                <span className="mdi mdi-file-chart"></span> Laporan Div Rate
                             </CardHeader>
                             <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
 
