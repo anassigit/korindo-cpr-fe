@@ -205,6 +205,21 @@ export const editUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/upd
 
 export const deleteUserRoleBE = req => postWithParam("/rest/UserRoleMasterRest/delete", req)
 
+// Maintain Menu
+
+export const getMaintainMenuListBE = req => post("/rest/MenuMasterRest/getList", req)
+
+export const getMaintainMenuBE = req => postWithParam("/rest/MenuMasterRest/select", req)
+
+export const getLovParentMenuListBE = req => post("/rest/MenuMasterRest/getParentList", req)
+
+export const saveMenuBE = req => postWithParam("/rest/MenuMasterRest/insert", req)
+
+export const editMenuBE = req => postWithParam("/rest/MenuMasterRest/update", req)
+
+export const deleteMenuBE = req => postWithParam("/rest/MenuMasterRest/delete", req)
+
+
 // Laporan
 
 export const getLaporanAllDataBE = req => post("/rest/ReportRest/getAllList", req)

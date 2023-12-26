@@ -20,6 +20,7 @@ export * from "./stickermaster/actions"
 export * from "./organization/actions"
 
 export * from "./maintainrole/actions"
+export * from "./maintainmenu/actions"
 
 export * from "./laporanalldata/actions"
 export * from "./laporanrekap/actions"

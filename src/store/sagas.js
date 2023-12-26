@@ -24,6 +24,7 @@ import menuSaga from "./menu/saga"
 import laporanAllDataSaga from "./laporanalldata/saga"
 import laporanRekapSaga from "./laporanrekap/saga"
 import laporanDivRateSaga from "./laporandivrate/saga"
+import maintainMenuSaga from "./maintainmenu/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -46,6 +47,7 @@ export default function* rootSaga() {
     fork(organizationSaga),
 
     fork(maintainRoleSaga),
+    fork(maintainMenuSaga),
 
     fork(laporanAllDataSaga),
     fork(laporanRekapSaga),

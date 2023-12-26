@@ -22,6 +22,7 @@ import stickerMasterReducer from "./stickermaster/reducer"
 import organizationReducer from "./organization/reducer"
 
 import maintainRoleReducer from "./maintainrole/reducer"
+import maintainMenuReducer from "./maintainmenu/reducer"
 
 import laporanAllDataReducer from "./laporanalldata/reducer"
 import laporanRekapReducer from "./laporanrekap/reducer"
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   organizationReducer,
   
   maintainRoleReducer,
+  maintainMenuReducer,
 
   laporanAllDataReducer,
   laporanRekapReducer,

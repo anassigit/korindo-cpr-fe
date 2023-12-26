@@ -26,6 +26,7 @@ import HistoryPemberian from "pages/HistoryPemberian/HistoryPemberian"
 import LaporanAllData from "pages/LaporanAllData/LaporanAllData"
 import LaporanRekap from "pages/LaporanRekap/LaporanRekap"
 import LaporanDivRate from "pages/LaporanDivRate/LaporanDivRate"
+import MaintainMenu from "pages/MaintainMenu/MaintainMenu"
 
 const authProtectedRoutes = [
 
@@ -43,6 +44,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc006", component: StickerMaster},
   { path: "/korsoc000/forms/korsoc007", component: MemberMaster},
 
+  { path: "/korsoc000/forms/korsoc002", component: MaintainMenu},
   { path: "/korsoc000/forms/korsoc003", component: MaintainRole},
 
   { path: "/korsoc000/forms/korsoc101", component: LaporanDivRate},

@@ -3,6 +3,7 @@ import {
   LOV_DEPT_LIST_ORG,
   LOV_LEVEL,
   LOV_MEMBER_LIST,
+  LOV_MENU_PARENT_LIST,
   LOV_MENU_ROLE_LIST,
   LOV_POSITION_AND_LEVEL,
   LOV_USER_ROLE_LIST,
@@ -41,6 +42,10 @@ const getLovData = (state = INIT_STATE, action) => {
         ...state,
       }
     case LOV_MEMBER_LIST:
+      return {
+        ...state,
+      }
+    case LOV_MENU_PARENT_LIST:
       return {
         ...state,
       }
