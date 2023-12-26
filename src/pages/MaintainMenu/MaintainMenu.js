@@ -47,10 +47,6 @@ const MaintainMenu = () => {
         return state.maintainMenuReducer.respGetMenuList
     });
 
-    const appMenuLocationListData = useSelector((state) => {
-        return state.maintainMenuReducer.respGetLocationList5
-    });
-
     const appMessageDelete = useSelector((state) => state.maintainMenuReducer.msgDelete);
     const appMessageAdd = useSelector((state) => state.maintainMenuReducer.msgAdd);
 
@@ -350,7 +346,6 @@ const MaintainMenu = () => {
                     </Container>
 
                     <AddMaintainMenu
-                        appMenuLocationListData={appMenuLocationListData}
                         appAddMaintainMenu={appAddMaintainMenu}
                         setAppMaintainMenu={setAppMaintainMenu}
                         setAppAddMaintainMenu={setAppAddMaintainMenu}
@@ -359,7 +354,6 @@ const MaintainMenu = () => {
                     />
 
                     <EditMaintainMenu
-                        appMenuLocationListData={appMenuLocationListData}
                         appMaintainMenuData={appMaintainMenuData}
                         appEditMaintainMenu={appEditMaintainMenu}
                         setAppMaintainMenu={setAppMaintainMenu}

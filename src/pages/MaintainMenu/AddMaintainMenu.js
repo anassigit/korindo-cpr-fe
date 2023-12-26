@@ -141,33 +141,6 @@ const AddMaintainMenu = (props) => {
         setPreviewPhoto('');
     }
 
-    const appLovPositionListColumns = [
-        {
-            dataField: "positionCd",
-            text: "Kode Posisi",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "positionName",
-            text: "Nama Posisi",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "levelCd",
-            text: "Kode Level",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "levelName",
-            text: "Nama Level",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-    ]
-
     const appLovMenuListColumns = [
         {
             dataField: "menuId",
@@ -695,7 +668,6 @@ const AddMaintainMenu = (props) => {
 };
 
 AddMaintainMenu.propTypes = {
-    appMenuLocationListData: PropTypes.any,
     appAddMaintainMenu: PropTypes.any,
     setAppMaintainMenu: PropTypes.any,
     setAppAddMaintainMenu: PropTypes.any,
