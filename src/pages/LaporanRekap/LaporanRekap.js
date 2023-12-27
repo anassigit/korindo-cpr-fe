@@ -410,6 +410,7 @@ const LaporanRekap = () => {
                                         <div style={{ width: '70%' }}>
                                             <Lovv2
                                                 title="Karyawan"
+                                                sortBy="memberName"
                                                 keyFieldData="memberId"
                                                 columns={appLovCandidateListColumns}
                                                 getData={getMemberListLov}

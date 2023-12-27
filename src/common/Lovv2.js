@@ -74,7 +74,12 @@ const Lov = props => {
   }, [props.stateSearchInput])
 
   useEffect(() => {
-    setReq({ page: 1, limit: props.pageSize, offset: 0, sort: props.fieldValue, order: "asc", search: { any: searchValModal, param: props.pParam } });
+    if (props.sortBy) {
+      setReq({ page: 1, limit: props.pageSize, offset: 0, sort: props.sortBy, order: "asc", search: { any: searchValModal, param: props.pParam } });
+      
+    } else {
+      setReq({ page: 1, limit: props.pageSize, offset: 0, sort: props.fieldValue, order: "asc", search: { any: searchValModal, param: props.pParam } });
+    }
     // if(props.onChangeFunc != null){
     //   props.onChangeFunc(searchValModal);
     // }
@@ -243,6 +248,7 @@ const Lov = props => {
 
 Lov.propTypes = {
   title: PropTypes.string,
+  sortBy: PropTypes.string,
   columns: PropTypes.array,
   getData: PropTypes.func,
   pageSize: PropTypes.number,
