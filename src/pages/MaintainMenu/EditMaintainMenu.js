@@ -128,8 +128,7 @@ const EditMaintainMenu = (props) => {
 
     useEffect(() => {
         if (selectedMaintainMenu.status === '1') {
-            setAppMenuSearchLov(props.appMaintainMenuData?.menuModuleId)
-
+            setAppMenuSearchLov(props.appMaintainMenuData?.parentMenuId)
             appEditMaintainMenuValidInput.setFieldValue('menuId', selectedMaintainMenu.data.result?.menuId)
             appEditMaintainMenuValidInput.setFieldValue('menuName', selectedMaintainMenu.data.result?.menuName)
             appEditMaintainMenuValidInput.setFieldValue('modulId', selectedMaintainMenu.data.result?.menuModuleId)
