@@ -103,7 +103,7 @@ const MemberMaster = () => {
             formatter: (cellContent, cellData, index) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${index}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`edit-${index}`} className="mdi mdi-pencil text-primary" onClick={() => preEditApp(cellData)} />
                         <a id={`delete-${index}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${index}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${index}`}>Delete</UncontrolledTooltip>
@@ -140,12 +140,12 @@ const MemberMaster = () => {
         }));
     };
 
-    const preAddEmployeeOf = () => {
+    const preAddApp = () => {
         setAppAddMemberMaster(true)
         setAppMemberMaster(false)
     }
 
-    const preEditEmployeeOf = (data) => {
+    const preEditApp = (data) => {
         setAppEditMemberMaster(true)
         setAppMemberMaster(false)
         setAppMemberMasterData(data)
@@ -281,7 +281,7 @@ const MemberMaster = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddEmployeeOf()}
+                                        onClick={() => preAddApp()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>

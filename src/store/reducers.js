@@ -28,6 +28,8 @@ import laporanAllDataReducer from "./laporanalldata/reducer"
 import laporanRekapReducer from "./laporanrekap/reducer"
 import laporanDivRateReducer from "./laporandivrate/reducer"
 
+import managementBoardReducer from "./managementboard/reducer"
+
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -54,6 +56,8 @@ const rootReducer = combineReducers({
   laporanAllDataReducer,
   laporanRekapReducer,
   laporanDivRateReducer,
+
+  managementBoardReducer,
 })
 
 export default rootReducer

@@ -144,7 +144,7 @@ const EmployeeOfMonYea = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.awardId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`edit-${cellData.awardId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditApp(cellData)} />
                         <a id={`delete-${cellData.awardId}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${cellData.awardId}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${cellData.awardId}`}>Delete</UncontrolledTooltip>
@@ -197,12 +197,12 @@ const EmployeeOfMonYea = () => {
         }));
     };
 
-    const preAddEmployeeOf = () => {
+    const preAddApp = () => {
         setAppAddEmployeeOfMonYea(true)
         setAppEmployeeOfMonYea(false)
     }
 
-    const preEditEmployeeOf = (data) => {
+    const preEditApp = (data) => {
         setAppEditEmployeeOfMonYea(true)
         setAppEmployeeOfMonYea(false)
         setAppEmployeeOfMonYeaData(data)
@@ -419,7 +419,7 @@ const EmployeeOfMonYea = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddEmployeeOf()}
+                                        onClick={() => preAddApp()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>

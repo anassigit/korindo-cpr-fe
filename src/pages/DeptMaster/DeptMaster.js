@@ -93,7 +93,7 @@ const DeptMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.deptCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`edit-${cellData.deptCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditApp(cellData)} />
                         <a id={`delete-${cellData.deptCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${cellData.deptCd}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${cellData.deptCd}`}>Delete</UncontrolledTooltip>
@@ -126,12 +126,12 @@ const DeptMaster = () => {
         }));
     };
 
-    const preAddEmployeeOf = () => {
+    const preAddApp = () => {
         setAppAddDeptMaster(true)
         setAppDeptMaster(false)
     }
 
-    const preEditEmployeeOf = (data) => {
+    const preEditApp = (data) => {
         setAppEditDeptMaster(true)
         setAppDeptMaster(false)
         setAppDeptMasterData(data)
@@ -267,7 +267,7 @@ const DeptMaster = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddEmployeeOf()}
+                                        onClick={() => preAddApp()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>

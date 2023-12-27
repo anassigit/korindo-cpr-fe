@@ -134,7 +134,7 @@ const MaintainMenu = () => {
             formatter: (cellContent, cellData, index) => {
                 return (
                     <div style={{ display: 'flex', gap: '1vw', justifyContent: 'center' }}>
-                        <a id={`edit-${index}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`edit-${index}`} className="mdi mdi-pencil text-primary" onClick={() => preEditApp(cellData)} />
                         <a id={`delete-${index}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${index}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${index}`}>Delete</UncontrolledTooltip>
@@ -171,12 +171,12 @@ const MaintainMenu = () => {
         }));
     };
 
-    const preAddEmployeeOf = () => {
+    const preAddApp = () => {
         setAppAddMaintainMenu(true)
         setAppMaintainMenu(false)
     }
 
-    const preEditEmployeeOf = (data) => {
+    const preEditApp = (data) => {
         setAppEditMaintainMenu(true)
         setAppMaintainMenu(false)
         setAppMaintainMenuData(data)
@@ -312,7 +312,7 @@ const MaintainMenu = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddEmployeeOf()}
+                                        onClick={() => preAddApp()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>

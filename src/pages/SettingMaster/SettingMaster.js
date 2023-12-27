@@ -119,7 +119,7 @@ const SettingMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.itemCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`edit-${cellData.itemCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditApp(cellData)} />
                         <UncontrolledTooltip target={`edit-${cellData.itemCd}`}>Edit</UncontrolledTooltip>
                     </React.Fragment>
                 )
@@ -153,12 +153,12 @@ const SettingMaster = () => {
         }));
     };
 
-    const preAddEmployeeOf = () => {
+    const preAddApp = () => {
         setAppAddSettingMaster(true)
         setAppSettingMaster(false)
     }
 
-    const preEditEmployeeOf = (data) => {
+    const preEditApp = (data) => {
         setAppEditSettingMaster(true)
         setAppSettingMaster(false)
         setAppSettingMasterData(data)
@@ -272,7 +272,7 @@ const SettingMaster = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddEmployeeOf()}
+                                        onClick={() => preAddApp()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>

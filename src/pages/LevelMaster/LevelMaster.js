@@ -97,7 +97,7 @@ const LevelMaster = () => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.levelCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditEmployeeOf(cellData)} />
+                        <a id={`edit-${cellData.levelCd}`} className="mdi mdi-pencil text-primary" onClick={() => preEditApp(cellData)} />
                         <a id={`delete-${cellData.levelCd}`} className="mdi mdi-delete text-danger" onClick={() => toggleDeleteModal(cellData)} />
                         <UncontrolledTooltip target={`edit-${cellData.levelCd}`}>Edit</UncontrolledTooltip>
                         <UncontrolledTooltip target={`delete-${cellData.levelCd}`}>Delete</UncontrolledTooltip>
@@ -134,12 +134,12 @@ const LevelMaster = () => {
         }));
     };
 
-    const preAddEmployeeOf = () => {
+    const preAddApp = () => {
         setAppAddLevelMaster(true)
         setAppLevelMaster(false)
     }
 
-    const preEditEmployeeOf = (data) => {
+    const preEditApp = (data) => {
         setAppEditLevelMaster(true)
         setAppLevelMaster(false)
         setAppLevelMasterData(data)
@@ -275,7 +275,7 @@ const LevelMaster = () => {
                                     }}
                                 >
                                     <Button
-                                        onClick={() => preAddEmployeeOf()}
+                                        onClick={() => preAddApp()}
                                     >
                                         <span className="mdi mdi-plus" /> Tambah
                                     </Button>

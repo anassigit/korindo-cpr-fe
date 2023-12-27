@@ -25,3 +25,5 @@ export * from "./maintainmenu/actions"
 export * from "./laporanalldata/actions"
 export * from "./laporanrekap/actions"
 export * from "./laporandivrate/actions"
+
+export * from "./managementboard/actions"

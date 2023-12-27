@@ -239,3 +239,14 @@ export const getLaporanRekapBE = req => post("/rest/ReportRest/getSummeryList", 
 export const downloadDivRate = req => getWithXls("/rest/ReportRest/excelDownloadDivRate", req)
 
 export const getLaporanDivRateBE = req => post("/rest/ReportRest/getDivRateList", req)
+
+// Management Board
+
+
+// Maintain Menu
+
+export const getMaintainReportListBE = req => post("/rest/ManagementBoardRest/getList", req)
+
+export const getLocationReportBE = req => post("/rest/ManagementBoardRest/getLocationList", req)
+
+export const editReportBE = req => postWithParam("/rest/ManagementBoardRest/update", req)

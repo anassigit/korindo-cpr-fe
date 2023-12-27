@@ -19,12 +19,14 @@ import stickerMasterSaga from "./stickermaster/saga"
 import organizationSaga from "./organization/saga"
 
 import maintainRoleSaga from "./maintainrole/saga"
+import maintainMenuSaga from "./maintainmenu/saga"
 
 import menuSaga from "./menu/saga"
 import laporanAllDataSaga from "./laporanalldata/saga"
 import laporanRekapSaga from "./laporanrekap/saga"
 import laporanDivRateSaga from "./laporandivrate/saga"
-import maintainMenuSaga from "./maintainmenu/saga"
+
+import managementBoardSaga from "./managementboard/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -52,5 +54,7 @@ export default function* rootSaga() {
     fork(laporanAllDataSaga),
     fork(laporanRekapSaga),
     fork(laporanDivRateSaga),
+    
+    fork(managementBoardSaga),
   ])
 }
