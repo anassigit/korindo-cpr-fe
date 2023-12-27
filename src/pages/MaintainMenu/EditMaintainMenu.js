@@ -134,6 +134,7 @@ const EditMaintainMenu = (props) => {
             appEditMaintainMenuValidInput.setFieldValue('menuName', selectedMaintainMenu.data.result?.menuName)
             appEditMaintainMenuValidInput.setFieldValue('modulId', selectedMaintainMenu.data.result?.menuModuleId)
             appEditMaintainMenuValidInput.setFieldValue('parentMenuId', selectedMaintainMenu.data.result?.parentMenuId)
+            appEditMaintainMenuValidInput.setFieldValue('parentMenuName', selectedMaintainMenu.data.result?.parentMenuName)
             appEditMaintainMenuValidInput.setFieldValue('menuPath', selectedMaintainMenu.data.result?.menuPath)
             appEditMaintainMenuValidInput.setFieldValue('menuFrom', new Date(selectedMaintainMenu.data.result?.menuFrom))
             appEditMaintainMenuValidInput.setFieldValue('menuTo', new Date(selectedMaintainMenu.data.result?.menuTo))
