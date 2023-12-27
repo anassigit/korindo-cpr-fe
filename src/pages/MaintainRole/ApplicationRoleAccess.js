@@ -140,6 +140,17 @@ const ApplicationRoleAccess = (props) => {
         },
     ]
 
+    const [counter, setCounter] = useState(0)
+
+    useEffect(() => {
+        if (appAccessRoleData.status === '1') {
+            setCounter(null)
+        } else if (appAccessRoleData.status === '0' && counter != null){
+            getAccessListDataAction(appAccessTabelSearch)
+            setCounter(counter + 1)
+        }
+    }, [appAccessRoleData, counter])
+
     useEffect(() => {
         let messageToUpdate;
 
