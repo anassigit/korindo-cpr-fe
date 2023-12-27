@@ -41,7 +41,7 @@ const ModalDept = ({ modal, toggle, toggleApply, orgCd, setOrgCd, tempOrgCd, set
                                         border: tempOrgCd === item.orgCd ? '1px solid #A084DC75' : '',
                                         borderRadius: '5px',
                                     }}>
-                                        {item.childList.length > 0 ? (
+                                        {Array.isArray(item.childList) && item.childList?.length > 0 ? (
                                             <span
                                                 className={collapser[item.orgCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                                 onClick={() => {
