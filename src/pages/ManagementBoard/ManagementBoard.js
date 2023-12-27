@@ -1,5 +1,6 @@
 import RootPageCustom from "common/RootPageCustom";
 import TableCustom from "common/TableCustom";
+import MsgModal from "components/Common/MsgModal";
 import React, { useEffect, useState } from "react";
 import { ReactSession } from 'react-client-session';
 import { useDispatch, useSelector } from "react-redux";
@@ -15,10 +16,9 @@ import {
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
-import { editMaintainMenu, getReportListDataAction, getStatusReport, resetMessage } from "store/actions";
+import { editMaintainReport, getReportListDataAction, getStatusReport, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
-import MsgModal from "components/Common/MsgModal";
 // import EditManagementBoard from "./EditManagementBoard";
 
 const ManagementBoard = () => {
@@ -96,7 +96,7 @@ const ManagementBoard = () => {
         },
         {
             dataField: "toMemberName",
-            text: "Pemberi Bintang",
+            text: "Penerima Bintang",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -182,7 +182,7 @@ const ManagementBoard = () => {
 
     const toggleApply = () => {
         setAppManagementBoardMsg('')
-        dispatch(editMaintainMenu({
+        dispatch(editMaintainReport({
             reportId: parseInt(appManagementBoardData.reportId),
             statusId: parseInt(statusId),
         }))

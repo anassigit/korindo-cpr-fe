@@ -76,7 +76,7 @@ const Lov = props => {
   useEffect(() => {
     if (props.sortBy) {
       setReq({ page: 1, limit: props.pageSize, offset: 0, sort: props.sortBy, order: "asc", search: { any: searchValModal, param: props.pParam } });
-      
+
     } else {
       setReq({ page: 1, limit: props.pageSize, offset: 0, sort: props.fieldValue, order: "asc", search: { any: searchValModal, param: props.pParam } });
     }
@@ -187,23 +187,28 @@ const Lov = props => {
         </div>
         <div className="modal-body">
 
-          <InputGroup>
-            <input
-              type="search"
-              className="form-control"
-              value={searchValModal}
-              onChange={(e) => setSearchValModal(e.target.value)}
-            />
-            <span className="input-group-append">
-              <Button
-                type="button"
-                onClick={() => dispatch(props.getData(req))}
-                color="primary"
-              >
-                <i className="fas fa-search" />
-              </Button>
-            </span>
-          </InputGroup>
+          {
+            props.hasNoSearch ? null :
+              (
+                <InputGroup>
+                  <input
+                    type="search"
+                    className="form-control"
+                    value={searchValModal}
+                    onChange={(e) => setSearchValModal(e.target.value)}
+                  />
+                  <span className="input-group-append">
+                    <Button
+                      type="button"
+                      onClick={() => dispatch(props.getData(req))}
+                      color="primary"
+                    >
+                      <i className="fas fa-search" />
+                    </Button>
+                  </span>
+                </InputGroup>
+              )
+          }
           <br />
           <BootstrapTable
             wrapperClasses="table-responsive"
@@ -266,6 +271,7 @@ Lov.propTypes = {
   msgCustom: PropTypes.any,
   setMsgCustom: PropTypes.any,
   pParam: PropTypes.any,
+  hasNoSearch: PropTypes.any,
 }
 
 export default Lov

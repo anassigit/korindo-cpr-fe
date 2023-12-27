@@ -212,6 +212,7 @@ const AddMaintainMenu = (props) => {
                                             stateSearchInputSet={setAppMenuSearchLov}
                                             touchedLovField={appAddMaintainMenuValidInput.touched.parentMenuId}
                                             errorLovField={appAddMaintainMenuValidInput.errors.parentMenuId}
+                                            hasNoSearch={true}
                                         />
                                         <FormFeedback type="invalid">{appAddMaintainMenuValidInput.errors.parentMenuId}</FormFeedback>
                                     </div>

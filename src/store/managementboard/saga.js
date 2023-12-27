@@ -48,7 +48,6 @@ function* fetchGetStatusReport({ payload: req }) {
 
 function* fetchEditReport({ payload: req }) {
   try {
-    
     const response = yield call(editReportBE, req)
     if (response.status == 1) {
       yield put(msgEdit(response))
