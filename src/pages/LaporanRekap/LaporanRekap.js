@@ -181,7 +181,7 @@ const LaporanRekap = () => {
 
     const appLovCandidateListColumns = [
         {
-            dataField: "memberName",
+            dataField: "memberId",
             text: "Nik",
             headerStyle: { textAlign: 'center' },
         },

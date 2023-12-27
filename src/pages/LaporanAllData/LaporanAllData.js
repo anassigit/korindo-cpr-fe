@@ -230,7 +230,7 @@ const LaporanAllData = () => {
 
     const appLovCandidateListColumns = [
         {
-            dataField: "memberName",
+            dataField: "memberId",
             text: "Nik",
             sort: true,
             headerStyle: { textAlign: 'center' },
