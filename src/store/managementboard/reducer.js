@@ -1,16 +1,16 @@
 import {
   EDIT_REPORT,
   GET_LIST_REPORT2,
-  GET_LOCATION_REPORT,
+  GET_STATUS_REPORT,
   MSG_EDIT,
   RESET_MESSAGE,
-  RESP_GET_LOCATION_REPORT,
+  RESP_GET_STATUS_REPORT,
   RESP_GET_REPORT_LIST2
 } from "./actionTypes"
 
 const INIT_STATE = {
   respGetReportList2: {},
-  respGetLocationReport: {},
+  respGetStatusReport: {},
   msgEdit: '',
 }
 
@@ -26,14 +26,14 @@ const managementBoardReducer = (state = INIT_STATE, action) => {
         ...state,
         respGetReportList2: action.payload,
       }
-    case GET_LOCATION_REPORT:
+    case GET_STATUS_REPORT:
       return {
         ...state,
       }
-    case RESP_GET_LOCATION_REPORT:
+    case RESP_GET_STATUS_REPORT:
       return {
         ...state,
-        respGetLocationReport: action.payload,
+        respGetStatusReport: action.payload,
       }
     case EDIT_REPORT:
       return {

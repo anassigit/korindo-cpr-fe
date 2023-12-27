@@ -2,13 +2,13 @@ import {
   DELETE_REPORT,
   EDIT_REPORT,
   GET_LIST_REPORT2,
-  GET_LOCATION_REPORT,
+  GET_STATUS_REPORT,
   GET_REPORT2,
   MSG_ADD,
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
-  RESP_GET_LOCATION_REPORT,
+  RESP_GET_STATUS_REPORT,
   RESP_GET_REPORT2,
   RESP_GET_REPORT_LIST2,
   SAVE_REPORT
@@ -24,13 +24,13 @@ export const respGetReportList2 = resp => ({
   payload: resp,
 })
 
-export const getLocationReport = (req) => ({
-  type: GET_LOCATION_REPORT,
+export const getStatusReport = (req) => ({
+  type: GET_STATUS_REPORT,
   payload: req,
 })
 
-export const respGetLocationReport = resp => ({
-  type: RESP_GET_LOCATION_REPORT,
+export const respGetStatusReport = resp => ({
+  type: RESP_GET_STATUS_REPORT,
   payload: resp,
 })
 

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Spinner } from 'reactstrap';
 import '../../assets/scss/custom/modal/modal.css'
-const MsgModal = ({ modal, toggle, message, toggleApply }) => {
+const MsgModal = ({ title, modal, toggle, message, toggleApply }) => {
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop="static">
-            <ModalHeader toggle={toggle}>Message</ModalHeader>
+            <ModalHeader toggle={toggle}>{title ? title : 'Message'}</ModalHeader>
             <ModalBody>
                 {message === null ? (
                     <div className='d-flex justify-content-center'>
@@ -39,6 +39,7 @@ const MsgModal = ({ modal, toggle, message, toggleApply }) => {
 };
 
 MsgModal.propTypes = {
+    title: PropTypes.any,
     modal: PropTypes.any,
     toggle: PropTypes.any,
     toggleApply: PropTypes.any,

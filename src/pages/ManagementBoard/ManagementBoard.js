@@ -15,9 +15,10 @@ import {
     UncontrolledAlert,
     UncontrolledTooltip
 } from "reactstrap";
-import { getReportListDataAction, resetMessage } from "store/actions";
+import { editMaintainMenu, getReportListDataAction, getStatusReport, resetMessage } from "store/actions";
 import '../../assets/scss/custom.scss';
 import '../../config';
+import MsgModal from "components/Common/MsgModal";
 // import EditManagementBoard from "./EditManagementBoard";
 
 const ManagementBoard = () => {
@@ -31,15 +32,17 @@ const ManagementBoard = () => {
     const [searchVal, setSearchVal] = useState("")
 
     const [appManagementBoard, setAppManagementBoard] = useState(true)
-    const [appAddManagementBoard, setAppAddManagementBoard] = useState(false)
-    const [appEditManagementBoard, setAppEditManagementBoard] = useState(false)
+    const [modal, setModal] = useState(false)
 
     const [appManagementBoardData, setAppManagementBoardData] = useState({})
-
-    const [reportId, setreportId] = useState('')
+    const [statusId, setStatusId] = useState('')
 
     const appReportListData = useSelector((state) => {
         return state.managementBoardReducer.respGetReportList2
+    });
+
+    const appStatusListData = useSelector((state) => {
+        return state.managementBoardReducer.respGetStatusReport
     });
 
     const appMessageEdit = useSelector((state) => {
@@ -74,12 +77,6 @@ const ManagementBoard = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "reportName",
-            text: "Nama Report",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
             dataField: "statusName",
             text: "Status",
             sort: true,
@@ -88,12 +85,6 @@ const ManagementBoard = () => {
         {
             dataField: "complainMemberName",
             text: "Reporter",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "fromMemberName",
-            text: "Pemberi Bintang",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -137,7 +128,7 @@ const ManagementBoard = () => {
     ]
 
     useEffect(() => {
-
+        dispatch(getStatusReport())
     }, [])
 
     useEffect(() => {
@@ -163,9 +154,12 @@ const ManagementBoard = () => {
         }));
     };
     const preEditApp = (data) => {
-        setAppEditManagementBoard(true)
-        setAppManagementBoard(false)
-        setAppManagementBoardData(data)
+        setModal(!modal)
+        if (data.reportId) {
+            setAppManagementBoardData(data)
+        } else {
+            setAppManagementBoardData(null)
+        }
     }
 
     useEffect(() => {
@@ -175,7 +169,7 @@ const ManagementBoard = () => {
             messageToUpdate = appMessageEdit;
             if (appMessageEdit.status === '1') {
                 setAppManagementBoard(true);
-                setAppEditManagementBoard(false);
+                setModal(false);
             }
         }
 
@@ -185,6 +179,22 @@ const ManagementBoard = () => {
             setAppManagementBoardMsg(messageToUpdate);
         }
     }, [appMessageEdit]);
+
+    const toggleApply = () => {
+        setAppManagementBoardMsg('')
+        dispatch(editMaintainMenu({
+            reportId: parseInt(appManagementBoardData.reportId),
+            statusId: parseInt(statusId),
+        }))
+        setModal(!modal)
+        setLoadingSpinner(true)
+    }
+
+    useEffect(() => {
+        if (appStatusListData.status === '1') {
+            setStatusId(appStatusListData?.data?.list[0].statusId)
+        }
+    }, [appStatusListData])
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -265,14 +275,36 @@ const ManagementBoard = () => {
                         </div>
                     </Container>
 
-                    {/* <EditManagementBoard
-                        appManagementBoardData={appManagementBoardData}
-                        appEditManagementBoard={appEditManagementBoard}
-                        setAppManagementBoard={setAppManagementBoard}
-                        setAppEditManagementBoard={setAppEditManagementBoard}
-                        setAppManagementBoardMsg={setAppManagementBoardMsg}
-                        setLoadingSpinner={setLoadingSpinner}
-                    />  */}
+                    <MsgModal
+                        title={'Edit Status Laporan'}
+                        toggle={preEditApp}
+                        toggleApply={toggleApply}
+                        modal={modal}
+                        message={
+                            <>
+                                <div className="pb-2">
+                                    <b style={{ fontSize: '14px' }}>Pilih Keyword</b>
+                                </div>
+                                <Input
+                                    type="select"
+                                    value={statusId}
+                                    onChange={(e) => setStatusId(e.target.value)}
+                                >
+                                    {
+                                        Array.isArray(appStatusListData?.data?.list) ? appStatusListData.data.list.map((item, index) => (
+                                            <option
+                                                key={item.statusId}
+                                                value={item.statusId}
+                                            >
+                                                {item.statusName}
+                                            </option>
+                                        ))
+                                            : null
+                                    }
+                                </Input>
+                            </>
+                        }
+                    />
 
                 </React.Fragment>
             }

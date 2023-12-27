@@ -247,6 +247,6 @@ export const getLaporanDivRateBE = req => post("/rest/ReportRest/getDivRateList"
 
 export const getMaintainReportListBE = req => post("/rest/ManagementBoardRest/getList", req)
 
-export const getLocationReportBE = req => post("/rest/ManagementBoardRest/getLocationList", req)
+export const getStatusReportBE = req => post("/rest/ManagementBoardRest/getStatusList", req)
 
 export const editReportBE = req => postWithParam("/rest/ManagementBoardRest/update", req)

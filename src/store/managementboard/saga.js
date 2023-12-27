@@ -3,16 +3,16 @@ import { call, put, takeEvery } from "redux-saga/effects"
 import {
   EDIT_REPORT,
   GET_LIST_REPORT2,
-  GET_LOCATION_REPORT
+  GET_STATUS_REPORT
 } from "./actionTypes"
 import {
-  respGetLocationReport,
+  respGetStatusReport,
   respGetReportList2
 } from "./actions"
 
 import {
   editReportBE,
-  getLocationReportBE,
+  getStatusReportBE,
   getMaintainReportBE,
   getMaintainReportListBE
 } from "helpers/backend_helper"
@@ -32,17 +32,17 @@ function* fetchGetReportList({ payload: req }) {
   }
 }
 
-function* fetchGetLocationReport({ payload: req }) {
+function* fetchGetStatusReport({ payload: req }) {
   try {
-    const response = yield call(getLocationReportBE, req)
+    const response = yield call(getStatusReportBE, req)
     if (response.status == 1) {
-      yield put(respGetLocationReport(response))
+      yield put(respGetStatusReport(response))
     } else {
-      yield put(respGetLocationReport(response))
+      yield put(respGetStatusReport(response))
     }
   } catch (error) {
     console.log(error);
-    yield put(respGetLocationReport({ "status": 0, "message": "Error Get Data" }))
+    yield put(respGetStatusReport({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
@@ -65,7 +65,7 @@ function* managementBoardSaga() {
 
   yield takeEvery(GET_LIST_REPORT2, fetchGetReportList)
 
-  yield takeEvery(GET_LOCATION_REPORT, fetchGetLocationReport)
+  yield takeEvery(GET_STATUS_REPORT, fetchGetStatusReport)
 
   yield takeEvery(EDIT_REPORT, fetchEditReport)
 
