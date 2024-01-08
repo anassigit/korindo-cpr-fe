@@ -18,6 +18,7 @@ import { getOrganizationListData } from "store/organization/actions"
 import TabAddOrganisasi from "./TabAddOrganisasi"
 import TabAddKaryawan from "./TabAddKaryawan"
 import TabEditOrganisasi from "./TabEditOrganisasi"
+import ConfirmModal from "components/Common/ConfirmModal"
 
 const Organization = () => {
 
@@ -26,6 +27,9 @@ const Organization = () => {
   const [appTabAdd, setAppTabAdd] = useState(true)
   const [appTabEdit, setAppTabEdit] = useState(false)
   const [appTabAddKaryawan, setAppAddKaryawan] = useState(false)
+
+  const [modal, setModal] = useState(false)
+  const [isYes, setIsYes] = useState(false)
 
   const [loadingSpinner, setLoadingSpinner] = useState(false)
   const [appOrganizationMsg, setAppOrganizationMsg] = useState('')
@@ -269,7 +273,10 @@ const Organization = () => {
       setAppTabEdit(false)
       setAppAddKaryawan(true)
     }
+  }
 
+  const toggle = () => {
+    setModal(!modal)
   }
 
   return (
@@ -377,8 +384,17 @@ const Organization = () => {
                           setAppOrganizationMsg={setAppOrganizationMsg}
                           setLoadingSpinner={setLoadingSpinner}
                         />
+                        <ConfirmModal
+                          modal={modal}
+                          setIsYes={setIsYes}
+                          toggle={toggle}
+                          message={'Ketika diterapkan, semua skor akan diatur ulang, dan ini membutuhkan waktu yang cukup lama. Apakah Anda yakin ingin melanjutkan?'}
+                        />
                       </div>
                     </Container>
+                    <Button className="m-3 btn-danger" style={{ position: 'absolute', bottom: '0' }} onClick={toggle}>
+                      Atur Ulang Organisasi
+                    </Button>
                   </Col>
                 </Row>
               </CardBody>
