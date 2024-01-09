@@ -145,6 +145,8 @@ export const getMemberListOrgBE = req => post("rest/OrganizationMasterRest/getMe
 
 export const getMemberListForAddBE = req => post("rest/OrganizationMasterRest/getMemberListForAdd", req)
 
+export const resetScoreOrgBE = req => post("rest/OrganizationMasterRest/ResetScore", req)
+
 export const saveMappingDeptBE = req => postWithParam("rest/OrganizationMasterRest/mappingDept", req)
 
 export const saveMappingMemberBE = req => postWithParam("rest/OrganizationMasterRest/mappingMember", req)

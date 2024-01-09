@@ -14,7 +14,7 @@ import '../../assets/scss/custom.scss'
 import PropTypes from 'prop-types'
 import RootPageCustom from '../../common/RootPageCustom'
 import '../../config'
-import { getOrganizationListData } from "store/organization/actions"
+import { getOrganizationListData, resetScoreOrganization } from "store/organization/actions"
 import TabAddOrganisasi from "./TabAddOrganisasi"
 import TabAddKaryawan from "./TabAddKaryawan"
 import TabEditOrganisasi from "./TabEditOrganisasi"
@@ -46,9 +46,9 @@ const Organization = () => {
   })
 
   const appOrganizationListData = useSelector((state) => state.organizationReducer.respGetOrganizationList)
+  const resetScoreOrganizationData = useSelector((state) => state.organizationReducer.respResetScoreOrganization)
 
   useEffect(() => {
-
     dispatch(getOrganizationListData())
     setLoadingSpinner(true)
   }, [])
@@ -78,6 +78,18 @@ const Organization = () => {
       setSelectedDeptData(ReactSession.get('selectedDeptData'))
     }
   }, [selectedDeptData])
+
+  useEffect(() => {
+    setLoadingSpinner(false)
+  }, [resetScoreOrganizationData])
+
+  useEffect(() => {
+    if (isYes) {
+      dispatch(resetScoreOrganization())
+      setLoadingSpinner(true)
+      setIsYes(false)
+    }
+  }, [isYes])
 
   const CollapsibleList = ({ data, collapser, setCollapser, selectedDeptData, setSelectedDeptData, setSelectedDeptName, depth = 0 }) => {
 

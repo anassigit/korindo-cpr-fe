@@ -5,13 +5,14 @@ import {
   DELETE_MAPPING_MEMBER,
   EDIT_MAPPING_DEPT,
   EDIT_MAPPING_MEMBER,
-  GET_DEPT_LIST_ORG, GET_MEMBER_LIST_FOR_ADD, GET_MEMBER_LIST_ORG, GET_ORGANIZATION_LIST, SAVE_MAPPING_DEPT, SAVE_MAPPING_MEMBER
+  GET_DEPT_LIST_ORG, GET_MEMBER_LIST_FOR_ADD, GET_MEMBER_LIST_ORG, GET_ORGANIZATION_LIST, RESET_SCORE_ORGANIZATION, SAVE_MAPPING_DEPT, SAVE_MAPPING_MEMBER
 } from "./actionTypes"
 import {
   respGetDeptListOrg,
   respGetMemberListForAdd,
   respGetMemberListOrg,
-  respGetOrganizationList
+  respGetOrganizationList,
+  respResetScoreOrganization
 } from "./actions"
 
 import {
@@ -20,6 +21,7 @@ import {
   editMappingDeptBE,
   editMappingMemberBE,
   getDeptListOrgBE, getMemberListForAddBE, getMemberListOrgBE, getOrganizationListBE,
+  resetScoreOrgBE,
   saveMappingDeptBE,
   saveMappingMemberBE
 } from "helpers/backend_helper"
@@ -78,6 +80,20 @@ function* fetchGetMemberListForAdd({ payload: req }) {
   } catch (error) {
     console.log(error);
     yield put(respGetMemberListForAdd({ "status": 0, "message": "Error Get Data" }))
+  }
+}
+
+function* fetchResetScoreOrganization({ payload: req }) {
+  try {
+    const response = yield call(resetScoreOrgBE, req)
+    if (response.status == 1) {
+      yield put(respResetScoreOrganization(response))
+    } else {
+      yield put(respResetScoreOrganization(response))
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(respResetScoreOrganization({ "status": 0, "message": "Error Get Data" }))
   }
 }
 
@@ -171,6 +187,7 @@ function* organizationSaga() {
   yield takeEvery(GET_ORGANIZATION_LIST, fetchGetOrganizationList)
   yield takeEvery(GET_MEMBER_LIST_ORG, fetchGetMemberList)
   yield takeEvery(GET_MEMBER_LIST_FOR_ADD, fetchGetMemberListForAdd)
+  yield takeEvery(RESET_SCORE_ORGANIZATION, fetchResetScoreOrganization)
   yield takeEvery(SAVE_MAPPING_DEPT, fetchSaveMappingDept)
   yield takeEvery(SAVE_MAPPING_MEMBER, fetchSaveMappingMember)
   yield takeEvery(EDIT_MAPPING_DEPT, fetchEditMappingDept)

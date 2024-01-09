@@ -11,10 +11,12 @@ import {
   MSG_DELETE,
   MSG_EDIT,
   RESET_MESSAGE,
+  RESET_SCORE_ORGANIZATION,
   RESP_GET_DEPT_LIST_ORG,
   RESP_GET_MEMBER_LIST_FOR_ADD,
   RESP_GET_MEMBER_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
+  RESP_RESET_SCORE_ORGANIZATION,
   SAVE_MAPPING_DEPT,
   SAVE_MAPPING_MEMBER
 } from "./actionTypes"
@@ -24,6 +26,7 @@ const INIT_STATE = {
   respGetOrganizationList: {},
   respGetMemberListOrg: {},
   respGetMemberListForAdd: {},
+  respResetScoreOrganization: {},
   msgAdd: '',
   msgEdit: '',
   msgDelete: '',
@@ -67,6 +70,15 @@ const organizationReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         respGetMemberListForAdd: action.payload,
+      }
+    case RESET_SCORE_ORGANIZATION:
+      return {
+        ...state,
+      }
+    case RESP_RESET_SCORE_ORGANIZATION:
+      return {
+        ...state,
+        respResetScoreOrganization: action.payload,
       }
     case SAVE_MAPPING_DEPT:
       return {

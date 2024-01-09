@@ -16,7 +16,9 @@ import {
   RESP_GET_MEMBER_LIST_ORG,
   RESP_GET_ORGANIZATION_LIST,
   SAVE_MAPPING_DEPT,
-  SAVE_MAPPING_MEMBER
+  SAVE_MAPPING_MEMBER,
+  RESET_SCORE_ORGANIZATION,
+  RESP_RESET_SCORE_ORGANIZATION
 } from "./actionTypes"
 
 export const getDeptListOrg = resp => ({
@@ -56,6 +58,16 @@ export const getMemberListForAdd = (req) => ({
 
 export const respGetMemberListForAdd = resp => ({
   type: RESP_GET_MEMBER_LIST_FOR_ADD,
+  payload: resp,
+})
+
+export const resetScoreOrganization = (req) => ({
+  type: RESET_SCORE_ORGANIZATION,
+  payload: req,
+})
+
+export const respResetScoreOrganization = resp => ({
+  type: RESP_RESET_SCORE_ORGANIZATION,
   payload: resp,
 })
 
