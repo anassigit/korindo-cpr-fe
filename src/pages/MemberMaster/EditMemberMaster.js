@@ -689,6 +689,8 @@ const EditMemberMaster = (props) => {
                                             }
                                             onChange={(e) => {
                                                 setAppPositionSearchLov('')
+                                                appEditMemberMasterValidInput.setFieldValue('positionCd', '')
+                                                appEditMemberMasterValidInput.setFieldValue('levelName', '')
                                                 appEditMemberMasterValidInput.setFieldValue('locationId', parseInt(e.target.value))
                                             }}
                                         >
