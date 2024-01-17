@@ -182,7 +182,9 @@ const Rekomendasi = () => {
                         setSelectedDeptName(item.deptName)
                         ReactSession.set('selectedDeptData', orgCd)
                         setSearchEntered(false)
-                        setLoadingSpinner(true)
+                        if (selectedDeptData !== item.orgCd) {
+                          setLoadingSpinner(true)
+                        }
                       }}
                     >
                       &nbsp;
@@ -265,7 +267,10 @@ const Rekomendasi = () => {
                         setSelectedDeptName(data.deptName);
                         ReactSession.set('selectedDeptData', orgCd);
                         setSearchEntered(false)
-                        setLoadingSpinner(true)
+
+                        if (selectedDeptData !== orgCd) {
+                          setLoadingSpinner(true)
+                        }
                       }}
                     >
                       &nbsp;
