@@ -100,7 +100,7 @@ const AddMemberMaster = (props) => {
 
         onSubmit: (values) => {
             props.setAppMemberMasterMsg('')
-            
+
             const formData = new FormData();
             const birthday = new Date(values.birthday);
             const formattedBirthday = `${birthday.getFullYear()}-${(birthday.getMonth() + 1).toString().padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
@@ -637,7 +637,10 @@ const AddMemberMaster = (props) => {
                                             invalid={appAddMemberMasterValidInput.touched.locationId && appAddMemberMasterValidInput.errors.locationId
                                                 ? true : false
                                             }
-                                            onChange={(e) => appAddMemberMasterValidInput.setFieldValue('locationId', parseInt(e.target.value))}
+                                            onChange={(e) => {
+                                                setAppPositionSearchLov('')
+                                                appAddMemberMasterValidInput.setFieldValue('locationId', parseInt(e.target.value))
+                                            }}
                                         >
                                             {
                                                 props.appMemberLocationListData?.data?.list.map((item, index) => {

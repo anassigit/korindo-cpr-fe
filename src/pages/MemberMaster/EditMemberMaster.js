@@ -106,7 +106,7 @@ const EditMemberMaster = (props) => {
         onSubmit: (values) => {
             props.setAppMemberMasterMsg('')
             props.setLoadingSpinner(true)
-            
+
             const formData = new FormData();
             const birthday = new Date(values.birthday);
             const formattedBirthday = `${birthday.getFullYear()}-${(birthday.getMonth() + 1).toString().padStart(2, '0')}-${birthday.getDate().toString().padStart(2, '0')}`;
@@ -152,7 +152,7 @@ const EditMemberMaster = (props) => {
 
     useEffect(() => {
         if (appMemberData.status === '1') {
-            
+
             appEditMemberMasterValidInput.setFieldValue('memberId', appMemberData.data?.result.memberId)
             appEditMemberMasterValidInput.setFieldValue('memberName', appMemberData.data?.result.memberName)
             appEditMemberMasterValidInput.setFieldValue('memberFullName', appMemberData.data?.result.memberFullName)
@@ -255,7 +255,7 @@ const EditMemberMaster = (props) => {
     useEffect(() => {
         setAppPositionSearchLov(appEditMemberMasterValidInput.values.positionName)
     }, [appEditMemberMasterValidInput.values.positionName])
-    
+
     return (
         <Container
             style={{ display: props.appEditMemberMaster ? 'block' : "none" }}
@@ -687,7 +687,10 @@ const EditMemberMaster = (props) => {
                                             invalid={appEditMemberMasterValidInput.touched.locationId && appEditMemberMasterValidInput.errors.locationId
                                                 ? true : false
                                             }
-                                            onChange={(e) => appEditMemberMasterValidInput.setFieldValue('locationId', parseInt(e.target.value))}
+                                            onChange={(e) => {
+                                                setAppPositionSearchLov('')
+                                                appEditMemberMasterValidInput.setFieldValue('locationId', parseInt(e.target.value))
+                                            }}
                                         >
                                             {
                                                 props.appMemberLocationListData?.data?.list.map((item, index) => {

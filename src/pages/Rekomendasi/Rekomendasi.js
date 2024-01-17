@@ -190,12 +190,13 @@ const Rekomendasi = () => {
                           //   };
                           // });
                         }
-                        let orgCd = '';
-                        orgCd = item.orgCd;
-                        ReactSession.remove('selectedMemberData');
-                        setSelectedDeptData(orgCd);
-                        setSelectedDeptName(item.deptName);
-                        ReactSession.set('selectedDeptData', orgCd);
+                        let orgCd = ''
+                        orgCd = item.orgCd
+                        ReactSession.remove('selectedMemberData')
+                        setSelectedDeptData(orgCd)
+                        setSelectedDeptName(item.deptName)
+                        ReactSession.set('selectedDeptData', orgCd)
+                        setSearchEntered(false)
                       }}
                     >
                       &nbsp;
@@ -277,6 +278,7 @@ const Rekomendasi = () => {
                         setSelectedDeptData(orgCd);
                         setSelectedDeptName(data.deptName);
                         ReactSession.set('selectedDeptData', orgCd);
+                        setSearchEntered(false)
                       }}
                     >
                       &nbsp;
