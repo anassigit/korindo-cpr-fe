@@ -68,6 +68,7 @@ const Rekomendasi = () => {
   }, [dispatch])
 
   useEffect(() => {
+    debugger
     if (appDeptData.status == '1') {
       setLoadingSpinner(false)
     } else if (appDeptData.status == '0') {
@@ -80,16 +81,18 @@ const Rekomendasi = () => {
   }, [selectedDeptName])
 
   useEffect(() => {
+    debugger
     setSelectedDeptData(null)
     if (appSearchData.status === '1' && searchVal) {
       setLoadingSpinner(false)
       setMemberList(appSearchData)
       ReactSession.set('searchVal', searchVal)
+    } else if (appSearchData.status === '0') {
+      setLoadingSpinner(false)
     }
   }, [appSearchData])
 
   useEffect(() => {
-
     if (selectedDeptData) {
       setSearchEntered(false)
       ReactSession.set('collapser', collapser)
@@ -114,6 +117,7 @@ const Rekomendasi = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       // Prevent the default form submission behavior
+      setLoadingSpinner(true)
       setSearchEntered(true)
       setSelectedDeptName(null)
       e.preventDefault()
@@ -420,6 +424,7 @@ const Rekomendasi = () => {
                       currentPage={currentPage}
                       searchEntered={searchEntered}
                       setLoadingSpinner={setLoadingSpinner}
+                      appSearchData={appSearchData}
                     />
                   </Col>
                   <Col
