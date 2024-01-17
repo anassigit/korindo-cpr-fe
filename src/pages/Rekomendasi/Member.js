@@ -31,6 +31,12 @@ const Member = (props) => {
 
   useEffect(() => {
     props.setMemberList(appMemberList2)
+    if (appMemberList2.status === '1'){
+      props.setLoadingSpinner(false)
+    }
+    if (appMemberList2.status === '0'){
+      props.setLoadingSpinner(false)
+    }
   }, [appMemberList2])
 
   useEffect(() => {
@@ -59,7 +65,6 @@ const Member = (props) => {
   useEffect(() => {
     ReactSession.set('offset', offset)
     ReactSession.set('limit', limit)
-    debugger
     if (!props.searchEntered && selectedDeptData) {
       dispatch(getMemberListData({
         "offset": offset,
@@ -392,6 +397,7 @@ Member.propTypes = {
   setCurrentPage: PropTypes.any,
   currentPage: PropTypes.any,
   searchEntered: PropTypes.any,
+  setLoadingSpinner: PropTypes.any,
 };
 
 export default Member;

@@ -49,23 +49,6 @@ const Rekomendasi = () => {
 
   useEffect(() => {
 
-    // if (ReactSession.get('collapser')) {
-    //   setCollapser(ReactSession.get('collapser'))
-    // }
-    // if (ReactSession.get('selectedDeptData')) {
-    //   setSelectedDeptData(ReactSession.get('selectedDeptData'))
-    // }
-    // if (ReactSession.get('selectedMemberData')) {
-    //   setSelectedMemberData(ReactSession.get('selectedMemberData'))
-    // }
-
-    // if (ReactSession.get('selectedDeptData')) {
-    // }
-
-    // if (ReactSession.get('selectedDeptName')) {
-    //   setSelectedDeptName(ReactSession.get('selectedDeptName'))
-    // }
-
     ReactSession.remove("currentPage")
 
     ReactSession.remove('selectedMemberData')
@@ -99,6 +82,7 @@ const Rekomendasi = () => {
   useEffect(() => {
     setSelectedDeptData(null)
     if (appSearchData.status === '1' && searchVal) {
+      setLoadingSpinner(false)
       setMemberList(appSearchData)
       ReactSession.set('searchVal', searchVal)
     }
@@ -118,6 +102,7 @@ const Rekomendasi = () => {
 
   useEffect(() => {
     if (searchEntered === true) {
+      setLoadingSpinner(true)
       setOffset(0)
       setLimit(10)
       setCurrentPage(1)
@@ -197,6 +182,7 @@ const Rekomendasi = () => {
                         setSelectedDeptName(item.deptName)
                         ReactSession.set('selectedDeptData', orgCd)
                         setSearchEntered(false)
+                        setLoadingSpinner(true)
                       }}
                     >
                       &nbsp;
@@ -279,6 +265,7 @@ const Rekomendasi = () => {
                         setSelectedDeptName(data.deptName);
                         ReactSession.set('selectedDeptData', orgCd);
                         setSearchEntered(false)
+                        setLoadingSpinner(true)
                       }}
                     >
                       &nbsp;
@@ -427,6 +414,7 @@ const Rekomendasi = () => {
                       setCurrentPage={setCurrentPage}
                       currentPage={currentPage}
                       searchEntered={searchEntered}
+                      setLoadingSpinner={setLoadingSpinner}
                     />
                   </Col>
                   <Col
