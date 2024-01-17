@@ -726,7 +726,7 @@ const EditMemberMaster = (props) => {
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
                                         <Lovv2
                                             title="Posisi"
-                                            keyFieldData="positionName"
+                                            keyFieldData="positionCd"
                                             columns={appLovPositionListColumns}
                                             getData={getPositionAndLevelLov}
                                             pageSize={10}
