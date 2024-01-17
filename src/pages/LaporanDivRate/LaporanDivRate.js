@@ -34,6 +34,8 @@ const LaporanDivRate = () => {
 
     const [appLaporanDivRateMsg, setAppLaporanDivRateMsg] = useState('')
 
+    const [locationId, setLocationId] = useState('')
+
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
 
@@ -92,9 +94,7 @@ const LaporanDivRate = () => {
         {
             periodFrom: startDate,
             periodTo: endDate,
-
-
-
+            locationId: locationId,
         }
     })
 
@@ -124,6 +124,7 @@ const LaporanDivRate = () => {
 
     useEffect(() => {
         setLoadingSpinner(true)
+        dispatch(getLocationDivRate())
     }, [])
 
     useEffect(() => {
@@ -178,11 +179,14 @@ const LaporanDivRate = () => {
         }
         return '';
     };
-    // const handleOrgRef = () => {
-    //     orgRef.current.click()
-    // }
 
-    console.log(appLaporanDivRateMsg)
+    useEffect(() => {
+        if (appLocationDivRate.status === '1') {
+            setLocationId(appLocationDivRate.data.list[0].locationId)
+        } else {
+            setLocationId('')
+        }
+    }, [appLocationDivRate])
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
@@ -214,6 +218,40 @@ const LaporanDivRate = () => {
                                             gap: '12px',
                                         }}
                                     >
+                                        <div
+                                            style={{
+                                                width: '22.8%',
+                                                display: 'flex',
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <div style={{
+                                                width: '30%',
+                                            }}>
+                                                Lokasi <span className="text-danger">*</span>
+                                            </div>
+                                            <div
+                                                style={{
+                                                    width: '60%',
+                                                }}
+                                            >
+                                                <Input
+                                                    type="select"
+                                                    value={locationId}
+                                                    onChange={(e) => setLocationId(e.target.value)}
+                                                >
+                                                    {
+                                                        appLocationDivRate?.data?.list.map((item, index) => {
+                                                            return (
+                                                                <option key={index} value={item.locationId}>
+                                                                    {item.locationName}
+                                                                </option>
+                                                            )
+                                                        })
+                                                    }
+                                                </Input>
+                                            </div>
+                                        </div>
                                         <div
                                             style={{
                                                 width: '25.8%',
@@ -434,6 +472,7 @@ const LaporanDivRate = () => {
                                     <Button
                                         onClick={() => {
                                             setSearchClick(true)
+                                            setAppLaporanDivRateMsg('')
                                             setAppLaporanDivRateTabelSearch({
                                                 page: 1,
                                                 limit: 10,
@@ -444,6 +483,7 @@ const LaporanDivRate = () => {
                                                 {
                                                     periodFrom: formatDate(startDate),
                                                     periodTo: formatDate(endDate),
+                                                    locationId: locationId,
                                                 }
                                             })
                                         }}
@@ -464,6 +504,7 @@ const LaporanDivRate = () => {
                                                     var indexed_array = {
                                                         "periodFrom": formatDate(startDate),
                                                         "periodTo": formatDate(endDate),
+                                                        locationId: locationId,
                                                         "fileName": 'Laporan DivRate',
                                                     };
                                                     dispatch(downloadDivRateAction(indexed_array));
