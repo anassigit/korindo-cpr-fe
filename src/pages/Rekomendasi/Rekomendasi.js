@@ -367,6 +367,7 @@ const Rekomendasi = () => {
                   <Col sm={2} md={2}>
                     <Button className="btn btn-primary rounded-0 px-4" style={{ border: "1px solid #BBB" }} onClick={() => {
                       setCurrentPage(1)
+                      setSearchEntered(false)
                       dispatch(getSearchData({
                         "offset": 0,
                         "limit": 10,
