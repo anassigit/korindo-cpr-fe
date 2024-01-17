@@ -207,6 +207,12 @@ const AddMemberMaster = (props) => {
         }
     }, [appAddMemberMasterValidInput.values.locationId])
 
+    useEffect(() => {
+        if (appPositionSearchLov === '') {
+            appAddMemberMasterValidInput.setFieldValue('levelName', '')
+        }
+    }, [appPositionSearchLov])
+
     return (
         <Container
             style={{ display: props.appAddMemberMaster ? 'block' : "none" }}

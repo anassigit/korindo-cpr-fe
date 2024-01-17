@@ -253,8 +253,15 @@ const EditMemberMaster = (props) => {
     }, [appEditMemberMasterValidInput.values.locationId])
 
     useEffect(() => {
+        if (appPositionSearchLov === '') {
+            appEditMemberMasterValidInput.setFieldValue('levelName', '')
+            
+        }
+    }, [appPositionSearchLov])
+
+    useEffect(() => {
         setAppPositionSearchLov(appEditMemberMasterValidInput.values.positionName)
-    }, [appEditMemberMasterValidInput.values.positionName])
+    }, [appEditMemberMasterValidInput.values.positionName, props.appEditMemberMaster])
 
     return (
         <Container
@@ -742,8 +749,6 @@ const EditMemberMaster = (props) => {
                                         />
                                         <FormFeedback type="invalid">{appEditMemberMasterValidInput.errors.positionName}</FormFeedback>
                                     </div>
-                                    {console.log(appEditMemberMasterValidInput.errors.positionName)}
-                                    {console.log(appEditMemberMasterValidInput.values.positionName)}
                                 </div>
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
