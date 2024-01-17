@@ -172,7 +172,7 @@ const EditMemberMaster = (props) => {
         } else {
             appEditMemberMasterValidInput.setFieldValue('locationId', props.appMemberLocationListData?.data?.list[0].locationId)
         }
-    }, [appMemberData])
+    }, [appMemberData, props.appEditMemberMaster])
 
     const handleFileClick = () => {
         fileInputRef.current.click();
