@@ -47,18 +47,16 @@ const EditEmployeeOf = (props) => {
 
     const formatDate = (date) => {
         if (date) {
-            // Check if the input date is already in "yyyy-mm-dd" format
             const isAlreadyFormatted = /^\d{4}-\d{2}-\d{2}$/.test(date);
 
             if (!isAlreadyFormatted) {
-                // If not, proceed with formatting
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
                 const day = String(date.getDate()).padStart(2, '0');
                 return `${year}-${month}-${day}`;
             }
         }
-        return date; // Return the input date if already formatted or if it's falsy
+        return date
     };
 
     const appEditEmployeeValidInput = useFormik({
@@ -121,7 +119,7 @@ const EditEmployeeOf = (props) => {
             appEditEmployeeValidInput.setFieldValue('locationId', appCandidateData?.data?.result.locationId)
             appEditEmployeeValidInput.setFieldValue('periodFrom', appCandidateData?.data?.result.periodFrom)
             appEditEmployeeValidInput.setFieldValue('periodTo', appCandidateData?.data?.result.periodTo)
-            appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
+            // appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
             appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
             setAppCandidateSearchLov(appCandidateData?.data?.result.memberName)
             setLoadingSpinner(false)
@@ -175,12 +173,12 @@ const EditEmployeeOf = (props) => {
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
-        {
-            dataField: "star",
-            text: "Jumlah",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
+        // {
+        //     dataField: "star",
+        //     text: "Jumlah",
+        //     sort: true,
+        //     headerStyle: { textAlign: 'center' },
+        // },
     ]
 
     const dateChanger = (name, selectedDate) => {
@@ -196,15 +194,15 @@ const EditEmployeeOf = (props) => {
 
     const appCallBackEmployee = (row) => {
         appEditEmployeeValidInput.setFieldValue("memberId", row.memberId)
-        appEditEmployeeValidInput.setFieldValue("star", row.star)
+        // appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
 
-    useEffect(() => {
-        if (!appEditEmployeeValidInput.values.periodFrom || !appEditEmployeeValidInput.values.periodTo) {
-            setAppCandidateSearchLov("Mohon isi periode terlebih dahulu...")
-            appEditEmployeeValidInput.setFieldValue("star", '')
-        }
-    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo])
+    // useEffect(() => {
+    //     if (!appEditEmployeeValidInput.values.periodFrom || !appEditEmployeeValidInput.values.periodTo) {
+    //         setAppCandidateSearchLov("Mohon isi periode terlebih dahulu...")
+    //         appEditEmployeeValidInput.setFieldValue("star", '')
+    //     }
+    // }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo])
 
     return (
         <Container
@@ -365,7 +363,7 @@ const EditEmployeeOf = (props) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Periode From <span className="text-danger"> *</span>
+                                            Tgl Tampilan Dari <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -402,7 +400,7 @@ const EditEmployeeOf = (props) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Periode To <span className="text-danger"> *</span>
+                                            Tgl Tampilan Sampai <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -461,7 +459,7 @@ const EditEmployeeOf = (props) => {
                                         />
                                     </div>
                                 </div>
-                                <div
+                                {/* <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
@@ -481,7 +479,7 @@ const EditEmployeeOf = (props) => {
                                             value={appEditEmployeeValidInput.values.star}
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >

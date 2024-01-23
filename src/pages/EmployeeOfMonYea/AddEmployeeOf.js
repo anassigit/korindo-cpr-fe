@@ -168,12 +168,12 @@ const AddEmployeeOf = (props) => {
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
-        {
-            dataField: "star",
-            text: "Jumlah",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
+        // {
+        //     dataField: "star",
+        //     text: "Jumlah",
+        //     sort: true,
+        //     headerStyle: { textAlign: 'center' },
+        // },
     ]
 
     const dateChanger = (name, selectedDate) => {
@@ -190,7 +190,6 @@ const AddEmployeeOf = (props) => {
     const appCallBackEmployee = (row) => {
         appAddEmployeeValidInput.setFieldValue("memberId", row.memberId)
         appAddEmployeeValidInput.setFieldValue("memberName", row.memberName)
-        appAddEmployeeValidInput.setFieldValue("star", row.star)
     }
 
     useEffect(() => {
@@ -201,15 +200,15 @@ const AddEmployeeOf = (props) => {
         }
     }, [appAddEmployeeValidInput.values.filter])
 
-    useEffect(() => {
-        debugger
-        if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
-            setAppCandidateSearchLov('Mohon isi periode terlebih dahulu...')
-            appAddEmployeeValidInput.setFieldValue('star', '')
-        } else {
-            setAppCandidateSearchLov("")
-        }
-    }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo, props.appAddEmployeeOfMonYea])
+    // useEffect(() => {
+    //     debugger
+    //     if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
+    //         setAppCandidateSearchLov('Mohon isi periode terlebih dahulu...')
+    //         appAddEmployeeValidInput.setFieldValue('star', '')
+    //     } else {
+    //         setAppCandidateSearchLov("")
+    //     }
+    // }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo, props.appAddEmployeeOfMonYea])
 
     return (
         <Container
@@ -383,7 +382,7 @@ const AddEmployeeOf = (props) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Periode From <span className="text-danger"> *</span>
+                                            Tgl Tampilan Dari <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -420,7 +419,7 @@ const AddEmployeeOf = (props) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Periode To <span className="text-danger"> *</span>
+                                            Tgl Tampilan Sampai <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -480,7 +479,7 @@ const AddEmployeeOf = (props) => {
                                         />
                                     </div>
                                 </div>
-                                <div
+                                {/* <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
@@ -500,7 +499,7 @@ const AddEmployeeOf = (props) => {
                                             value={appAddEmployeeValidInput.values.star}
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
