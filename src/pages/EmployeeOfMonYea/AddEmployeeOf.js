@@ -200,15 +200,13 @@ const AddEmployeeOf = (props) => {
         }
     }, [appAddEmployeeValidInput.values.filter])
 
-    // useEffect(() => {
-    //     debugger
-    //     if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
-    //         setAppCandidateSearchLov('Mohon isi periode terlebih dahulu...')
-    //         appAddEmployeeValidInput.setFieldValue('star', '')
-    //     } else {
-    //         setAppCandidateSearchLov("")
-    //     }
-    // }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo, props.appAddEmployeeOfMonYea])
+    useEffect(() => {
+        if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
+            setAppCandidateSearchLov('')
+        } else {
+            setAppCandidateSearchLov("")
+        }
+    }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo, props.appAddEmployeeOfMonYea])
 
     return (
         <Container
