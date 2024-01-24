@@ -36,7 +36,8 @@ const Rekomendasi = () => {
     const history = useHistory()
 
     const [linkRekomendasi, setLinkRekomendasi] = useState();
-    const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [loadingSpinner1, setLoadingSpinner1] = useState(false)
+    const [loadingSpinner2, setLoadingSpinner2] = useState(false)
 
     const [appDashboardPage, setAppDashboardPage] = useState(true)
 
@@ -67,16 +68,25 @@ const Rekomendasi = () => {
         dispatch(getBestOfMonthListData())
         dispatch(getBestOfYearListData())
         dispatch(getMenuData())
-        setLoadingSpinner(true)
+        setLoadingSpinner1(true)
+        setLoadingSpinner2(true)
     }, [])
 
     useEffect(() => {
         if (appBestlistData.status === '1') {
-            setLoadingSpinner(false)
+            setLoadingSpinner2(false)
         } else if (appBestlistData.status === '0') {
-            setLoadingSpinner(false)
+            setLoadingSpinner2(false)
         }
     }, [appBestlistData])
+
+    useEffect(() => {
+        if (appListData.status === '1') {
+            setLoadingSpinner1(false)
+        } else if (appListData.status === '0') {
+            setLoadingSpinner1(false)
+        }
+    }, [appListData])
 
     useEffect(() => {
         const foundRow = Array.isArray(menu?.data?.list) ? menu?.data?.list.find((row) => row.menuId === 'KORTRN001') : null
@@ -284,6 +294,11 @@ const Rekomendasi = () => {
                                         gap: "16px",
                                     }}
                                 >
+                                    <div className="spinner-wrapper" style={{ display: loadingSpinner2 ? "block" : "none", zIndex: "9999", position: "absolute", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                                            <Spinner style={{ padding: "24px", display: "block", position: "flex", justifyContent: 'center', alignItems: 'center' }} color="primary" />
+                                        </div>
+                                    </div>
                                     {
                                         Array.isArray(appBestlistData?.data?.list) && appBestlistData?.data?.list.length > 0 ?
                                             appBestlistData?.data?.list.map((item, index) => {
@@ -361,6 +376,11 @@ const Rekomendasi = () => {
                                     </div>
                                 </CardHeader>
                                 <CardBody className="bg-light" style={{ padding: 0, margin: 0, border: "1px solid #BBB" }}>
+                                    <div className="spinner-wrapper" style={{ display: loadingSpinner1 ? "block" : "none", zIndex: "9999", position: "absolute", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                                            <Spinner style={{ padding: "24px", display: "block", position: "flex", justifyContent: 'center', alignItems: 'center' }} color="primary" />
+                                        </div>
+                                    </div>
                                     <Row
                                         className="py-2 m-2 d-flex justify-content-center align-items-center"
                                         style={{ gap: "25px", height: "370px" }}
@@ -388,7 +408,7 @@ const Rekomendasi = () => {
                                                                 justifyContent: "center",
                                                                 alignItems: "center",
                                                                 height: "100%",
-                                                                position: "relative", // Add relative positioning to the container
+                                                                position: "relative",
                                                             }}
                                                         >
                                                             <div
@@ -1012,15 +1032,6 @@ const Rekomendasi = () => {
                             </Card>
                         </div>
                     </Container>
-                    {/* <DetailInfluencer
-                        appDetailRecommendationPage={appDetailRecommendationPage}
-                        setAppDetailRecommendationPage={setAppDetailRecommendationPage}
-                        appDetailRecommendationData={appDetailRecommendationData}
-                    /> */}
-
-                    <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
-                        <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
-                    </div>
                 </React.Fragment >
             }
         />
