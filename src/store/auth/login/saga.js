@@ -20,6 +20,7 @@ function* loginUser({ payload: { user, history } }) {
       if (res.status == 1) {
         ReactSession.set("menu", JSON.stringify(res.data.list));
         localStorage.setItem("menu", JSON.stringify(res.data.list));
+        localStorage.setItem('menuType', 'cpr');
       }
 
       history.push("/home");

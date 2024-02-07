@@ -150,7 +150,14 @@ const SidebarContent = props => {
                 <span>{props.t("Home")}</span>
               </a>
             </li>
-            {Array.isArray(menu) && menu.map((item) => renderMenuItem(item))}
+            {Array.isArray(menu) && menu.map(item => {
+              if (menuType === 'cpr') {
+                return renderMenuItem(item)
+              } else {
+                dispatch(getMenuRuleData())
+                return null
+              }
+            })}
 
           </ul>
         </div>
