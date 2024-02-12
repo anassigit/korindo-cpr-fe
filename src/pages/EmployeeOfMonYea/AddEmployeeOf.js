@@ -11,6 +11,7 @@ import {
     FormFeedback,
     FormGroup,
     Input,
+    InputGroup,
     Label,
     Spinner
 } from "reactstrap";
@@ -25,6 +26,7 @@ import moment from "moment";
 import { format } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import { getCandidateLov } from "store/lov/actions";
+import ListOfView from "components/Common/ListOfView";
 
 const AddEmployeeOf = (props) => {
 
@@ -207,6 +209,25 @@ const AddEmployeeOf = (props) => {
             setAppCandidateSearchLov("")
         }
     }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo, props.appAddEmployeeOfMonYea])
+
+    const [dummyArray, setDummyArray] = useState([
+        {
+            data1: 'test1',
+            data2: 1,
+        },
+        {
+            data1: 'test2',
+            data2: 2,
+        },
+        {
+            data1: 'test3',
+            data2: 2,
+        },
+        {
+            data1: 'test4',
+            data2: 34,
+        },
+    ])
 
     return (
         <Container
@@ -477,6 +498,27 @@ const AddEmployeeOf = (props) => {
                                         />
                                     </div>
                                 </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+
+                                    <div className="col-4">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            Nama Karyawan <span className="text-danger"> *</span>
+                                        </Label>
+                                    </div>
+
+                                    <div className="col-8">
+                                        <ListOfView
+                                            data={props.appEmployeeMonYeaData}
+                                        />
+                                    </div>
+                                </div>
                                 {/* <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
@@ -561,13 +603,14 @@ const AddEmployeeOf = (props) => {
             </div>
         </Container >
     );
-};
+}; 
 
 AddEmployeeOf.propTypes = {
     appAddEmployeeOfMonYea: PropTypes.any,
     setAppEmployeeOfMonYea: PropTypes.any,
     setAppAddEmployeeOfMonYea: PropTypes.any,
     setAppEmployeeOfMonYeaMsg: PropTypes.any,
+    appEmployeeMonYeaData: PropTypes.any,
 }
 
 export default AddEmployeeOf;

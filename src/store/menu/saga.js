@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects"
+import { ReactSession } from 'react-client-session';
 
 import {
   GET_MENU
@@ -15,6 +16,13 @@ function* fetchGetMenu({ payload: req }) {
   try {
     const response = yield call(getMenuBE, req)
     if (response.status == 1) {
+
+      const menuData = {
+        menu: response.data.list,
+        menuType: 'cpr'
+      }
+      localStorage.setItem("menu", JSON.stringify(menuData))
+      
       yield put(respGetMenu(response))
     } else {
       yield put(respGetMenu(response))

@@ -26,7 +26,7 @@ const DetailInfluencer = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const menu = JSON.parse(ReactSession.get("menu") || '[]');
+    const menu = JSON.parse(localStorage.getItem("menu") || '[]');
     const [linkRekomendasi, setLinkRekomendasi] = useState();
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)

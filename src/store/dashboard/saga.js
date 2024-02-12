@@ -22,11 +22,16 @@ function* fetchGetInfoProfile({ payload: req }) {
     localStorage.setItem("user", response?.data?.memberName);
     localStorage.setItem("memberId", response?.data?.memberId);
     localStorage.setItem("profileUrl", response?.data?.profileUrl);
-    
+
     const res = yield call(getMenuBE)
     if (res.status == 1) {
-      ReactSession.set("menu", JSON.stringify(res.data.list));
-      localStorage.setItem("menu", JSON.stringify(res.data.list));
+
+      const menuData = {
+        menu: res.data.list,
+        menuType: 'cpr'
+      }
+
+      localStorage.setItem("menu", JSON.stringify(menuData))
     }
 
     if (response.status == 1) {

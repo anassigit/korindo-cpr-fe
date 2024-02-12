@@ -12,15 +12,22 @@ function* loginUser({ payload: { user, history } }) {
   try {
     const response = yield call(login, user);
     if (response.status == 1) {
-      localStorage.setItem("authUser", response.data.KOR_TOKEN);
-      localStorage.setItem("user", JSON.stringify(response.data.memberName));
-      localStorage.setItem("memberId", JSON.stringify(response.data.memberId));
-      localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl));
+      localStorage.setItem("authUser", response.data.KOR_TOKEN)
+      localStorage.setItem("user", JSON.stringify(response.data.memberName))
+      localStorage.setItem("memberId", JSON.stringify(response.data.memberId))
+      localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl))
       const res = yield call(getMenuBE)
+
       if (res.status == 1) {
-        ReactSession.set("menu", JSON.stringify(res.data.list));
-        localStorage.setItem("menu", JSON.stringify(res.data.list));
-        localStorage.setItem('menuType', 'cpr');
+        
+        const menuData = {
+          menu: res.data.list,
+          menuType: 'cpr'
+
+        }
+
+        localStorage.setItem("menu", JSON.stringify(menuData))
+
       }
 
       history.push("/home");
@@ -58,7 +65,6 @@ function* logoutUser({ payload: { history } }) {
     localStorage.removeItem("user");
     localStorage.removeItem("memberId");
     ReactSession.remove("menu");
-    localStorage.removeItem("menu");
     ReactSession.remove('profileData')
 
     ReactSession.remove("currentPage")

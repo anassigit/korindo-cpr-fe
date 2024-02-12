@@ -8,6 +8,7 @@ const ListOfView = (props) => {
     const [dummyData, setDummyData] = useState()
 
     useEffect(() => {
+        debugger
         if (Array.isArray(props.data) && props.data.length > 0) {
             setDummyData(props.data[0].data1)
         }
@@ -59,7 +60,9 @@ const ListOfView = (props) => {
                                     <th>tes</th>
                                 </tr>
                             </thead>
-                            <tbody onClick={() => setDropdown(false)}>
+                            <tbody onClick={() => {
+                                setDropdown(false)
+                            }}>
                                 <tr>
                                     <td>
                                         data1

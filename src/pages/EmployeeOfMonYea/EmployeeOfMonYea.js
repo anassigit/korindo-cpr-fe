@@ -456,6 +456,7 @@ const EmployeeOfMonYea = () => {
                         appAddEmployeeOfMonYea={appAddEmployeeOfMonYea}
                         setAppAddEmployeeOfMonYea={setAppAddEmployeeOfMonYea}
                         setAppEmployeeOfMonYeaMsg={setAppEmployeeOfMonYeaMsg}
+                        appEmployeeMonYeaData={appEmployeeMonYeaData?.data?.list}
                     />
                     <EditEmployeeOf
                         setAppEmployeeOfMonYea={setAppEmployeeOfMonYea}

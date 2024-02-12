@@ -6,7 +6,7 @@ import { withTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import SimpleBar from "simplebar-react";
-import { getInfoProfileData } from "store/actions";
+import { getInfoProfileData, getMenuData } from "store/actions";
 
 const SidebarContent = props => {
 
@@ -16,7 +16,7 @@ const SidebarContent = props => {
     state.dashboardReducer.respGetInfoProfile
   ));
 
-  let menu = JSON.parse(ReactSession.get("menu") || '[]');
+  let menu = JSON.parse(localStorage.getItem("menu") || {});
 
   useEffect(() => {
     if (!profile?.data && !ReactSession.get('profileData')) {
@@ -150,11 +150,12 @@ const SidebarContent = props => {
                 <span>{props.t("Home")}</span>
               </a>
             </li>
-            {Array.isArray(menu) && menu.map(item => {
-              if (menuType === 'cpr') {
+            {Array.isArray(menu?.menu) && menu?.menu.map(item => {
+              debugger
+              if (menu.menuType === 'cpr') {
                 return renderMenuItem(item)
               } else {
-                dispatch(getMenuRuleData())
+                dispatch(getMenuData())
                 return null
               }
             })}
