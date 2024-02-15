@@ -469,7 +469,6 @@ const EditEmployeeOf = (props) => {
                                             Aktif
                                         </Label>
                                     </div>
-                                    {console.log(appEditEmployeeValidInput.values.view === 1 ? true : false)}
                                     <div className="col-8">
                                         <Input
                                             type="checkbox"
