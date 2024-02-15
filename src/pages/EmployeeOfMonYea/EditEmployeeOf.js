@@ -58,29 +58,27 @@ const EditEmployeeOf = (props) => {
             keywordName: '',
             locationId: '',
             flag: '',
-            periodFrom: '',
-            periodTo: '',
+            awardDate: '',
             star: '',
             description: '',
             memberName: '',
+            score: '',
+            view: '',
         },
         validationSchema: Yup.object().shape({
             memberId: Yup.string().required("Wajib diisi"),
             keywordName: Yup.string().required("Wajib diisi"),
             flag: Yup.string().required("Wajib diisi"),
-            periodFrom: Yup.string().required("Wajib diisi"),
-            periodTo: Yup.string().required("Wajib diisi"),
+            awardDate: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
             props.setAppEmployeeOfMonYeaMsg("")
-            let dateFrom = formatDate(values.periodFrom)
-            let dateTo = formatDate(values.periodTo)
+            let awardDate = formatDate(values.awardDate)
             dispatch(editEmployeeOf({
                 awardId: props.appEmployeeOfMonYeaData.awardId,
                 locationId: values.locationId,
-                periodFrom: dateFrom,
-                periodTo: dateTo,
+                awardDate: awardDate,
                 memberId: values.memberId,
                 description: values.description,
             }))
@@ -108,41 +106,36 @@ const EditEmployeeOf = (props) => {
             appEditEmployeeValidInput.setFieldValue('keywordName', appCandidateData?.data?.result.keywordName)
             appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
             appEditEmployeeValidInput.setFieldValue('locationId', appCandidateData?.data?.result.locationId)
-            appEditEmployeeValidInput.setFieldValue('periodFrom', appCandidateData?.data?.result.periodFrom)
-            appEditEmployeeValidInput.setFieldValue('periodTo', appCandidateData?.data?.result.periodTo)
+            appEditEmployeeValidInput.setFieldValue('awardDate', appCandidateData?.data?.result.awardDate)
             // appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
             appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
+            appEditEmployeeValidInput.setFieldValue('score', appCandidateData?.data?.result.score)
+            appEditEmployeeValidInput.setFieldValue('view', appCandidateData?.data?.result.view)
             setAppCandidateSearchLov(appCandidateData?.data?.result.memberName)
             setLoadingSpinner(false)
         }
 
     }, [appCandidateData])
 
-
     useEffect(() => {
 
-        if (appEditEmployeeValidInput.values.periodFrom === null) {
-            appEditEmployeeValidInput.setFieldValue('periodFrom', '')
-        }
-        if (appEditEmployeeValidInput.values.periodTo === null) {
-            appEditEmployeeValidInput.setFieldValue('periodTo', '')
+        if (appEditEmployeeValidInput.values.awardDate === null) {
+            appEditEmployeeValidInput.setFieldValue('awardDate', '')
         }
 
-        const formattedDateFrom = formatDate(appEditEmployeeValidInput.values.periodFrom)
-        const formattedDateTo = formatDate(appEditEmployeeValidInput.values.periodTo)
+        const formattedAwardDate = formatDate(appEditEmployeeValidInput.values.awardDate)
 
         setAppLovParam({
-            periodFrom: formattedDateFrom,
-            periodTo: formattedDateTo,
+            awardDate: formattedAwardDate,
             locationId: appEditEmployeeValidInput.values.locationId,
         })
 
-        if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.locationId) {
+        if (!formattedAwardDate || !appEditEmployeeValidInput.values.locationId) {
             appEditEmployeeValidInput.setFieldValue('memberId', '')
             // setAppCandidateSearchLov("")
         }
 
-    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo, appEditEmployeeValidInput.values.locationId])
+    }, [appEditEmployeeValidInput.values.awardDate, appEditEmployeeValidInput.values.locationId])
 
 
     const appLovCandidateListColumns = [
@@ -172,27 +165,16 @@ const EditEmployeeOf = (props) => {
         // },
     ]
 
-    const dateChanger = (name, selectedDate) => {
-
-        if (name === 'from') {
-            appEditEmployeeValidInput.setFieldValue('periodFrom', selectedDate)
-
-        } else if (name === 'to') {
-            appEditEmployeeValidInput.setFieldValue('periodTo', selectedDate)
-        }
-
-    }
-
     const appCallBackEmployee = (row) => {
         appEditEmployeeValidInput.setFieldValue("memberId", row.memberId)
         // appEditEmployeeValidInput.setFieldValue("star", row.star)
     }
 
     useEffect(() => {
-        if (!appEditEmployeeValidInput.values.periodFrom || !appEditEmployeeValidInput.values.periodTo) {
+        if (!appEditEmployeeValidInput.values.awardDate) {
             setAppCandidateSearchLov("")
         }
-    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo])
+    }, [appEditEmployeeValidInput.values.awardDate])
 
     return (
         <Container
@@ -218,7 +200,7 @@ const EditEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -270,14 +252,14 @@ const EditEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            keywordName <span className="text-danger"> *</span>
+                                            Keyword <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
@@ -304,7 +286,7 @@ const EditEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -346,35 +328,31 @@ const EditEmployeeOf = (props) => {
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Tgl Tampilan Dari <span className="text-danger"> *</span>
+                                            Tanggal Penghargaan <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <div className="col-6">
                                             <DatePicker
-                                                className={`form-control ${appEditEmployeeValidInput.touched.periodFrom && appEditEmployeeValidInput.errors.periodFrom ? 'is-invalid' : ''}`}
+                                                className={`form-control ${appEditEmployeeValidInput.touched.awardDate && appEditEmployeeValidInput.errors.awardDate ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                maxDate={appEditEmployeeValidInput.values.periodTo && new Date(appEditEmployeeValidInput.values.periodTo)}
-                                                selected={appEditEmployeeValidInput.values.periodFrom ? new Date(appEditEmployeeValidInput.values.periodFrom) : ''}
-                                                onChange={(tglMulai) =>
-                                                    dateChanger('from', tglMulai ? tglMulai : null)
-                                                }
-                                                isClearable={appEditEmployeeValidInput.values.periodFrom === '' ? false : true}
-                                                dateFormat="yyyy-MM-dd"
-                                                ariaInvalid={
-                                                    appEditEmployeeValidInput.touched.periodFrom && appEditEmployeeValidInput.errors.periodFrom
-                                                        ? true : false
-                                                }
+                                                selected={appEditEmployeeValidInput.values.awardDate ? new Date(appEditEmployeeValidInput.values.awardDate) : ''}
+                                                onChange={(selectedDate) => {
+                                                    appEditEmployeeValidInput.setFieldValue('awardDate', selectedDate)
+                                                }}
+                                                isClearable={appEditEmployeeValidInput.values.awardDate === '' ? false : true}
+                                                dateFormat="yyyy-MM"
+                                                showMonthYearPicker
                                             />
-                                            {appEditEmployeeValidInput.touched.periodFrom && appEditEmployeeValidInput.errors.periodFrom && (
-                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.periodFrom}</div>
+                                            {appEditEmployeeValidInput.touched.awardDate && appEditEmployeeValidInput.errors.awardDate && (
+                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.awardDate}</div>
                                             )}
                                         </div>
                                     </div>
@@ -383,44 +361,7 @@ const EditEmployeeOf = (props) => {
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                                whiteSpace: 'nowrap',
-                                            }}
-                                        >
-                                            Tgl Tampilan Sampai <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8">
-                                        <div className="col-6">
-                                            <DatePicker
-                                                className={`form-control ${appEditEmployeeValidInput.touched.periodTo && appEditEmployeeValidInput.errors.periodTo ? 'is-invalid' : ''}`}
-                                                wrapperClassName="customDatePicker"
-                                                minDate={appEditEmployeeValidInput.values.periodFrom && new Date(appEditEmployeeValidInput.values.periodFrom)}
-                                                selected={appEditEmployeeValidInput.values.periodTo ? new Date(appEditEmployeeValidInput.values.periodTo) : ''}
-                                                onChange={(tglSelesai) =>
-                                                    dateChanger('to', tglSelesai ? tglSelesai : null)
-                                                }
-                                                isClearable={appEditEmployeeValidInput.values.periodTo === '' ? false : true}
-                                                dateFormat="yyyy-MM-dd"
-                                                ariaInvalid={
-                                                    appEditEmployeeValidInput.touched.periodTo && appEditEmployeeValidInput.errors.periodTo
-                                                        ? true : false
-                                                }
-                                            />
-                                            {appEditEmployeeValidInput.touched.periodTo && appEditEmployeeValidInput.errors.periodTo && (
-                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.periodTo}</div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -453,7 +394,7 @@ const EditEmployeeOf = (props) => {
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -474,7 +415,7 @@ const EditEmployeeOf = (props) => {
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -495,7 +436,54 @@ const EditEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+
+                                    <div className="col-5">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            Nilai
+                                        </Label>
+                                    </div>
+                                    <div className="col-8">
+                                        <Input
+                                            type="text"
+                                            disabled
+                                            value={appEditEmployeeValidInput.values.score}
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+
+                                    <div className="col-5">
+                                        <Label
+                                            style={{
+                                                marginTop: "4px",
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            Aktif
+                                        </Label>
+                                    </div>
+                                    {console.log(appEditEmployeeValidInput.values.view === 1 ? true : false)}
+                                    <div className="col-8">
+                                        <Input
+                                            type="checkbox"
+                                            checked={appEditEmployeeValidInput.values.view === 1 ? true : false}
+                                            onChange={(e) => {
+                                                appEditEmployeeValidInput.setFieldValue('view', appEditEmployeeValidInput.values.view === 1 ? 0 : 1)
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
+                                >
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -527,7 +515,7 @@ const EditEmployeeOf = (props) => {
                 }}
             >
                 <span className="mdi mdi-arrow-left" />
-                &nbspKembali
+                &nbsp;Kembali
             </Button>
             <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                 <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
