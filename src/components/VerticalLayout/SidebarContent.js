@@ -16,7 +16,7 @@ const SidebarContent = props => {
     state.dashboardReducer.respGetInfoProfile
   ));
 
-  let menu = JSON.parse(localStorage.getItem("menu") || {});
+  let menu = JSON.parse(localStorage.getItem("menu") || '{}');
 
   useEffect(() => {
     if (!profile?.data && !ReactSession.get('profileData')) {
