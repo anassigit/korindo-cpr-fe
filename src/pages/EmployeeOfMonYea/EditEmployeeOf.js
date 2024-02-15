@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import {
     Button,
     Card,
@@ -13,18 +13,18 @@ import {
     Input,
     Label,
     Spinner
-} from "reactstrap";
-import '../../assets/scss/custom.scss';
-import '../../config';
-import { ErrorMessage, useFormik } from "formik";
-import * as Yup from "yup";
-import Lovv2 from "common/Lovv2";
-import { deleteEmployeeOf, editEmployeeOf, getCandidateData, getCandidateListData, getKeywordListData, getLocationListData, resetMessage } from "store/actions";
-import DatePicker from "react-datepicker";
-import moment from "moment";
-import { format } from 'date-fns';
-import "react-datepicker/dist/react-datepicker.css";
-import { getCandidateLov } from "store/lov/actions";
+} from "reactstrap"
+import '../../assets/scss/custom.scss'
+import '../../config'
+import { ErrorMessage, useFormik } from "formik"
+import * as Yup from "yup"
+import Lovv2 from "common/Lovv2"
+import { deleteEmployeeOf, editEmployeeOf, getCandidateData, getCandidateListData, getKeywordListData, getLocationListData, resetMessage } from "store/actions"
+import DatePicker from "react-datepicker"
+import moment from "moment"
+import { format } from 'date-fns'
+import "react-datepicker/dist/react-datepicker.css"
+import { getCandidateLov } from "store/lov/actions"
 
 const EditEmployeeOf = (props) => {
 
@@ -32,32 +32,23 @@ const EditEmployeeOf = (props) => {
 
     const [lovOneRender, setLovOneRender] = useState(0)
 
-    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
-    const [appLovParam, setAppLovParam] = useState({});
+    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("")
+    const [appLovParam, setAppLovParam] = useState({})
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [filterVal, setFilterVal] = useState("")
 
-    const appCandidateData = useSelector((state) => state.employeeOfMonYeaReducer.respGetCandidate);
-    const appLocationListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetLocationList);
+    const appCandidateData = useSelector((state) => state.employeeOfMonYeaReducer.respGetCandidate)
+    const appLocationListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetLocationList)
 
     useEffect(() => {
         dispatch(resetMessage())
     }, [dispatch])
 
     const formatDate = (date) => {
-        if (date) {
-            const isAlreadyFormatted = /^\d{4}-\d{2}-\d{2}$/.test(date);
-
-            if (!isAlreadyFormatted) {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-        }
+        if (date) if (!/^\d{4}-\d{2}$/.test(date)) return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
         return date
-    };
+    }
 
     const appEditEmployeeValidInput = useFormik({
         enableReinitialize: true,
@@ -95,7 +86,7 @@ const EditEmployeeOf = (props) => {
             }))
             props.setAppEmployeeOfMonYeaMsg('')
         }
-    });
+    })
 
     useEffect(() => {
         if (props.appEditEmployeeOfMonYea) {
@@ -137,21 +128,21 @@ const EditEmployeeOf = (props) => {
             appEditEmployeeValidInput.setFieldValue('periodTo', '')
         }
 
-        const formattedDateFrom = formatDate(appEditEmployeeValidInput.values.periodFrom);
-        const formattedDateTo = formatDate(appEditEmployeeValidInput.values.periodTo);
+        const formattedDateFrom = formatDate(appEditEmployeeValidInput.values.periodFrom)
+        const formattedDateTo = formatDate(appEditEmployeeValidInput.values.periodTo)
 
         setAppLovParam({
             periodFrom: formattedDateFrom,
             periodTo: formattedDateTo,
             locationId: appEditEmployeeValidInput.values.locationId,
-        });
+        })
 
         if (!formattedDateFrom || !formattedDateTo || !appEditEmployeeValidInput.values.locationId) {
             appEditEmployeeValidInput.setFieldValue('memberId', '')
             // setAppCandidateSearchLov("")
         }
 
-    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo, appEditEmployeeValidInput.values.locationId]);
+    }, [appEditEmployeeValidInput.values.periodFrom, appEditEmployeeValidInput.values.periodTo, appEditEmployeeValidInput.values.locationId])
 
 
     const appLovCandidateListColumns = [
@@ -184,13 +175,13 @@ const EditEmployeeOf = (props) => {
     const dateChanger = (name, selectedDate) => {
 
         if (name === 'from') {
-            appEditEmployeeValidInput.setFieldValue('periodFrom', selectedDate);
+            appEditEmployeeValidInput.setFieldValue('periodFrom', selectedDate)
 
         } else if (name === 'to') {
-            appEditEmployeeValidInput.setFieldValue('periodTo', selectedDate);
+            appEditEmployeeValidInput.setFieldValue('periodTo', selectedDate)
         }
 
-    };
+    }
 
     const appCallBackEmployee = (row) => {
         appEditEmployeeValidInput.setFieldValue("memberId", row.memberId)
@@ -215,8 +206,8 @@ const EditEmployeeOf = (props) => {
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
                         onSubmit={(e) => {
-                            e.preventDefault();
-                            appEditEmployeeValidInput.handleSubmit();
+                            e.preventDefault()
+                            appEditEmployeeValidInput.handleSubmit()
                             return false
                         }}
                     >
@@ -536,14 +527,14 @@ const EditEmployeeOf = (props) => {
                 }}
             >
                 <span className="mdi mdi-arrow-left" />
-                &nbsp;Kembali
+                &nbspKembali
             </Button>
             <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
                 <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
             </div>
         </Container >
-    );
-};
+    )
+}
 
 EditEmployeeOf.propTypes = {
     appEditEmployeeOfMonYea: PropTypes.any,
@@ -553,4 +544,4 @@ EditEmployeeOf.propTypes = {
     appEmployeeOfMonYeaData: PropTypes.any,
 }
 
-export default EditEmployeeOf;
+export default EditEmployeeOf

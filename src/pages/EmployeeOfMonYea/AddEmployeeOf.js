@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import {
     Button,
     Card,
@@ -11,49 +11,36 @@ import {
     FormFeedback,
     FormGroup,
     Input,
-    InputGroup,
-    Label,
-    Spinner
-} from "reactstrap";
-import '../../assets/scss/custom.scss';
-import '../../config';
-import { ErrorMessage, useFormik } from "formik";
-import * as Yup from "yup";
-import Lovv2 from "common/Lovv2";
-import { addEmployeeOf, getCandidateListData, getKeywordListData, getLocationListData, resetMessage } from "store/actions";
-import DatePicker from "react-datepicker";
-import moment from "moment";
-import { format } from 'date-fns';
-import "react-datepicker/dist/react-datepicker.css";
-import { getCandidateLov } from "store/lov/actions";
-import ListOfView from "components/Common/ListOfView";
+    Label
+} from "reactstrap"
+import '../../assets/scss/custom.scss'
+import '../../config'
+import { useFormik } from "formik"
+import * as Yup from "yup"
+import Lovv2 from "common/Lovv2"
+import { addEmployeeOf, getKeywordListData, getLocationListData, resetMessage } from "store/actions"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import { getCandidateLov } from "store/lov/actions"
 
 const AddEmployeeOf = (props) => {
 
     const dispatch = useDispatch()
 
-    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("");
-    const [appLovParam, setAppLovParam] = useState({});
+    const [appCandidateSearchLov, setAppCandidateSearchLov] = useState("")
+    const [appLovParam, setAppLovParam] = useState({})
 
-    const [loadingSpinner, setLoadingSpinner] = useState(false)
-    const [filterVal, setFilterVal] = useState("")
-
-    const appKeywordListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetKeywordList);
-    const appLocationListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetLocationList);
+    const appKeywordListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetKeywordList)
+    const appLocationListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetLocationList)
 
     useEffect(() => {
         dispatch(resetMessage())
     }, [dispatch])
 
     const formatDate = (date) => {
-        if (date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-        return '';
-    };
+        if (date) return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+        return ''
+    }
 
     const appAddEmployeeValidInput = useFormik({
         enableReinitialize: true,
@@ -64,9 +51,7 @@ const AddEmployeeOf = (props) => {
             keywordId: '',
             locationId: '',
             filter: 'month',
-            periodFrom: '',
-            periodTo: '',
-            star: '',
+            awardDate: '',
             description: '',
         },
         validationSchema: Yup.object().shape({
@@ -74,28 +59,21 @@ const AddEmployeeOf = (props) => {
             memberName: Yup.string().required("Wajib diisi"),
             filter: Yup.string().required("Wajib diisi"),
             locationId: Yup.string().required("Wajib diisi"),
-            periodFrom: Yup.string().required("Wajib diisi"),
-            periodTo: Yup.string().required("Wajib diisi"),
+            awardDate: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
             props.setAppEmployeeOfMonYeaMsg('')
-
-            let dateFrom = formatDate(values.periodFrom)
-            let dateTo = formatDate(values.periodTo)
-
             dispatch(addEmployeeOf({
                 filter: values.filter,
                 keywordId: values.keywordId,
                 locationId: values.locationId,
-                periodFrom: dateFrom,
-                periodTo: dateTo,
+                awardDate: formatDate(values.awardDate),
                 memberId: values.memberId,
-                description: values.description,
+                description: values.description
             }))
-
         }
-    });
+    })
 
     useEffect(() => {
         if (props.appAddEmployeeOfMonYea) {
@@ -127,29 +105,17 @@ const AddEmployeeOf = (props) => {
     }, [props.appAddEmployeeOfMonYea])
 
     useEffect(() => {
-
-        if (appAddEmployeeValidInput.values.periodFrom === null) {
-            appAddEmployeeValidInput.setFieldValue('periodFrom', '')
+        if (appAddEmployeeValidInput.values.awardDate === null) {
+            appAddEmployeeValidInput.setFieldValue('awardDate', '')
         }
-        if (appAddEmployeeValidInput.values.periodTo === null) {
-            appAddEmployeeValidInput.setFieldValue('periodTo', '')
-        }
-
-        const formattedDateFrom = formatDate(appAddEmployeeValidInput.values.periodFrom);
-        const formattedDateTo = formatDate(appAddEmployeeValidInput.values.periodTo)
-
         setAppLovParam({
-            periodFrom: formattedDateFrom,
-            periodTo: formattedDateTo,
+            awardDate: formatDate(appAddEmployeeValidInput.values.awardDate),
             locationId: appAddEmployeeValidInput.values.locationId,
-        });
-
-        if (!formattedDateFrom && !formattedDateTo && !appAddEmployeeValidInput.values.locationId) {
+        })
+        if (!formatDate(appAddEmployeeValidInput.values.awardDate) && !appAddEmployeeValidInput.values.locationId) {
             appAddEmployeeValidInput.setFieldValue('memberId', '')
-            // setAppCandidateSearchLov("")
         }
-
-    }, [appAddEmployeeValidInput.values]);
+    }, [appAddEmployeeValidInput.values])
 
     const appLovCandidateListColumns = [
         {
@@ -169,25 +135,8 @@ const AddEmployeeOf = (props) => {
             text: "Department Name",
             sort: true,
             headerStyle: { textAlign: 'center' },
-        },
-        // {
-        //     dataField: "star",
-        //     text: "Jumlah",
-        //     sort: true,
-        //     headerStyle: { textAlign: 'center' },
-        // },
-    ]
-
-    const dateChanger = (name, selectedDate) => {
-
-        if (name === 'from') {
-            appAddEmployeeValidInput.setFieldValue('periodFrom', selectedDate);
-
-        } else if (name === 'to') {
-            appAddEmployeeValidInput.setFieldValue('periodTo', selectedDate);
         }
-
-    };
+    ]
 
     const appCallBackEmployee = (row) => {
         appAddEmployeeValidInput.setFieldValue("memberId", row.memberId)
@@ -203,31 +152,12 @@ const AddEmployeeOf = (props) => {
     }, [appAddEmployeeValidInput.values.filter])
 
     useEffect(() => {
-        if (!appAddEmployeeValidInput.values.periodFrom || !appAddEmployeeValidInput.values.periodTo) {
+        if (!appAddEmployeeValidInput.values.awardDate) {
             setAppCandidateSearchLov('')
         } else {
             setAppCandidateSearchLov("")
         }
-    }, [appAddEmployeeValidInput.values.periodFrom, appAddEmployeeValidInput.values.periodTo, props.appAddEmployeeOfMonYea])
-
-    const [dummyArray, setDummyArray] = useState([
-        {
-            data1: 'test1',
-            data2: 1,
-        },
-        {
-            data1: 'test2',
-            data2: 2,
-        },
-        {
-            data1: 'test3',
-            data2: 2,
-        },
-        {
-            data1: 'test4',
-            data2: 34,
-        },
-    ])
+    }, [appAddEmployeeValidInput.values.awardDate, props.appAddEmployeeOfMonYea])
 
     return (
         <Container
@@ -241,8 +171,8 @@ const AddEmployeeOf = (props) => {
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form
                         onSubmit={(e) => {
-                            e.preventDefault();
-                            appAddEmployeeValidInput.handleSubmit();
+                            e.preventDefault()
+                            appAddEmployeeValidInput.handleSubmit()
                             return false
                         }}
                     >
@@ -253,7 +183,7 @@ const AddEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -303,7 +233,7 @@ const AddEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -356,7 +286,7 @@ const AddEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -394,35 +324,31 @@ const AddEmployeeOf = (props) => {
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
                                                 whiteSpace: 'nowrap',
                                             }}
                                         >
-                                            Tgl Tampilan Dari <span className="text-danger"> *</span>
+                                            Tanggal Penghargaan <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
                                     <div className="col-8">
                                         <div className="col-6">
                                             <DatePicker
-                                                className={`form-control ${appAddEmployeeValidInput.touched.periodFrom && appAddEmployeeValidInput.errors.periodFrom ? 'is-invalid' : ''}`}
+                                                className={`form-control ${appAddEmployeeValidInput.touched.awardDate && appAddEmployeeValidInput.errors.awardDate ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                maxDate={appAddEmployeeValidInput.values.periodTo && new Date(appAddEmployeeValidInput.values.periodTo)}
-                                                selected={appAddEmployeeValidInput.values.periodFrom ? new Date(appAddEmployeeValidInput.values.periodFrom) : ''}
-                                                onChange={(tglMulai) =>
-                                                    dateChanger('from', tglMulai ? tglMulai : null)
-                                                }
-                                                isClearable={appAddEmployeeValidInput.values.periodFrom === '' ? false : true}
-                                                dateFormat="yyyy-MM-dd"
-                                                ariaInvalid={
-                                                    appAddEmployeeValidInput.touched.periodFrom && appAddEmployeeValidInput.errors.periodFrom
-                                                        ? true : false
-                                                }
+                                                selected={appAddEmployeeValidInput.values.awardDate ? new Date(appAddEmployeeValidInput.values.awardDate) : ''}
+                                                onChange={(selectedDate) => {
+                                                    appAddEmployeeValidInput.setFieldValue('awardDate', selectedDate)
+                                                }}
+                                                isClearable={appAddEmployeeValidInput.values.awardDate === '' ? false : true}
+                                                dateFormat="yyyy-MM"
+                                                showMonthYearPicker
                                             />
-                                            {appAddEmployeeValidInput.touched.periodFrom && appAddEmployeeValidInput.errors.periodFrom && (
-                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.periodFrom}</div>
+                                            {appAddEmployeeValidInput.touched.awardDate && appAddEmployeeValidInput.errors.awardDate && (
+                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.awardDate}</div>
                                             )}
                                         </div>
                                     </div>
@@ -431,44 +357,7 @@ const AddEmployeeOf = (props) => {
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                                whiteSpace: 'nowrap',
-                                            }}
-                                        >
-                                            Tgl Tampilan Sampai <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8">
-                                        <div className="col-6">
-                                            <DatePicker
-                                                className={`form-control ${appAddEmployeeValidInput.touched.periodTo && appAddEmployeeValidInput.errors.periodTo ? 'is-invalid' : ''}`}
-                                                wrapperClassName="customDatePicker"
-                                                minDate={appAddEmployeeValidInput.values.periodFrom && new Date(appAddEmployeeValidInput.values.periodFrom)}
-                                                selected={appAddEmployeeValidInput.values.periodTo ? new Date(appAddEmployeeValidInput.values.periodTo) : ''}
-                                                onChange={(tglSelesai) =>
-                                                    dateChanger('to', tglSelesai ? tglSelesai : null)
-                                                }
-                                                isClearable={appAddEmployeeValidInput.values.periodTo === '' ? false : true}
-                                                dateFormat="yyyy-MM-dd"
-                                                ariaInvalid={
-                                                    appAddEmployeeValidInput.touched.periodTo && appAddEmployeeValidInput.errors.periodTo
-                                                        ? true : false
-                                                }
-                                            />
-                                            {appAddEmployeeValidInput.touched.periodTo && appAddEmployeeValidInput.errors.periodTo && (
-                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.periodTo}</div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -502,49 +391,7 @@ const AddEmployeeOf = (props) => {
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                                whiteSpace: 'nowrap',
-                                            }}
-                                        >
-                                            Nama Karyawan <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-
-                                    <div className="col-8">
-                                        <ListOfView
-                                            data={props.appEmployeeMonYeaData}
-                                        />
-                                    </div>
-                                </div>
-                                {/* <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-
-                                    <div className="col-4">
-                                        <Label
-                                            style={{
-                                                marginTop: "4px",
-                                                whiteSpace: 'nowrap',
-                                            }}
-                                        >
-                                            Jumlah Bintang <span className="text-danger"> *</span>
-                                        </Label>
-                                    </div>
-                                    <div className="col-8">
-                                        <Input
-                                            disabled
-                                            value={appAddEmployeeValidInput.values.star}
-                                        />
-                                    </div>
-                                </div> */}
-                                <div
-                                    className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
-                                >
-
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -565,7 +412,7 @@ const AddEmployeeOf = (props) => {
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
-                                    <div className="col-4">
+                                    <div className="col-5">
                                         <Label
                                             style={{
                                                 marginTop: "4px",
@@ -598,12 +445,9 @@ const AddEmployeeOf = (props) => {
                 <span className="mdi mdi-arrow-left" />
                 &nbsp;Kembali
             </Button>
-            <div className="spinner-wrapper" style={{ display: loadingSpinner ? "block" : "none", zIndex: "9999", position: "fixed", top: "0", right: "0", width: "100%", height: "100%", backgroundColor: "rgba(255, 255, 255, 0.5)", opacity: "1" }}>
-                <Spinner style={{ padding: "24px", display: "block", position: "fixed", top: "42.5%", right: "50%" }} color="primary" />
-            </div>
         </Container >
-    );
-}; 
+    )
+} 
 
 AddEmployeeOf.propTypes = {
     appAddEmployeeOfMonYea: PropTypes.any,
@@ -613,4 +457,4 @@ AddEmployeeOf.propTypes = {
     appEmployeeMonYeaData: PropTypes.any,
 }
 
-export default AddEmployeeOf;
+export default AddEmployeeOf

@@ -117,26 +117,19 @@ const EmployeeOfMonYea = () => {
 
         },
         {
-            dataField: "periodFrom",
-            text: "Tgl Tampilan Dari",
+            dataField: "awardDate",
+            text: "Tanggal Penghargaan",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
-            dataField: "periodTo",
-            text: "Tgl Tampilan Sampai",
+            dataField: "score",
+            text: "Nilai",
             sort: true,
             headerStyle: { textAlign: 'center' },
-            style: { textAlign: 'center' },
+
         },
-        // {
-        //     dataField: "star",
-        //     text: "Jumlah",
-        //     sort: true,
-        //     headerStyle: { textAlign: 'center' },
-        //     style: { textAlign: 'center' },
-        // },
         {
             text: "Actions",
             headerStyle: { textAlign: 'center' },
