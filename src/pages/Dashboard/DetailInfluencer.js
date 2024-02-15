@@ -45,7 +45,7 @@ const DetailInfluencer = (props) => {
 
     useEffect(() => {
         setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
-        const foundRow = menu?.find((row) => row.menuId === 'KORTRN001');
+        const foundRow = menu?.menu.find((row) => row.menuId === 'KORTRN001');
         const temp = foundRow ? foundRow.path : null;
 
         setLinkRekomendasi(temp);

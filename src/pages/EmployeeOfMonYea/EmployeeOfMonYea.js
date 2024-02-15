@@ -117,7 +117,7 @@ const EmployeeOfMonYea = () => {
 
         },
         {
-            dataField: "awardDate",
+            dataField: "award_Date",
             text: "Tanggal Penghargaan",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -128,6 +128,20 @@ const EmployeeOfMonYea = () => {
             text: "Nilai",
             sort: true,
             headerStyle: { textAlign: 'center' },
+
+        },
+        {
+            dataField: "view",
+            text: "Aktif",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+            formatter: (value, row) => {
+                return (
+                    <>
+                        {value === 0 ? 'false' : 'true'}
+                    </>
+                )
+            }
 
         },
         {
@@ -230,6 +244,7 @@ const EmployeeOfMonYea = () => {
             dispatch(getListData(appEmployeeMonYeaTabelSearch));
             setAppEmployeeOfMonYeaMsg(messageToUpdate);
         }
+        dispatch(getYearListData())
     }, [appMessageDelete]);
 
     useEffect(() => {
@@ -248,6 +263,7 @@ const EmployeeOfMonYea = () => {
             dispatch(getListData(appEmployeeMonYeaTabelSearch));
             setAppEmployeeOfMonYeaMsg(messageToUpdate);
         }
+        dispatch(getYearListData())
     }, [appMessageAdd]);
 
     useEffect(() => {
@@ -266,6 +282,7 @@ const EmployeeOfMonYea = () => {
             dispatch(getListData(appEmployeeMonYeaTabelSearch));
             setAppEmployeeOfMonYeaMsg(messageToUpdate);
         }
+        dispatch(getYearListData())
     }, [appMessageEdit]);
 
 

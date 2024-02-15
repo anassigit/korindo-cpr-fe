@@ -51,7 +51,7 @@ const AddEmployeeOf = (props) => {
             keywordId: '',
             locationId: '',
             filter: 'month',
-            awardDate: '',
+            award_Date: '',
             description: '',
         },
         validationSchema: Yup.object().shape({
@@ -59,7 +59,7 @@ const AddEmployeeOf = (props) => {
             memberName: Yup.string().required("Wajib diisi"),
             filter: Yup.string().required("Wajib diisi"),
             locationId: Yup.string().required("Wajib diisi"),
-            awardDate: Yup.string().required("Wajib diisi"),
+            award_Date: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
@@ -68,7 +68,7 @@ const AddEmployeeOf = (props) => {
                 filter: values.filter,
                 keywordId: values.keywordId,
                 locationId: values.locationId,
-                awardDate: formatDate(values.awardDate),
+                award_Date: formatDate(values.award_Date),
                 memberId: values.memberId,
                 description: values.description
             }))
@@ -105,14 +105,14 @@ const AddEmployeeOf = (props) => {
     }, [props.appAddEmployeeOfMonYea])
 
     useEffect(() => {
-        if (appAddEmployeeValidInput.values.awardDate === null) {
-            appAddEmployeeValidInput.setFieldValue('awardDate', '')
+        if (appAddEmployeeValidInput.values.award_Date === null) {
+            appAddEmployeeValidInput.setFieldValue('award_Date', '')
         }
         setAppLovParam({
-            awardDate: formatDate(appAddEmployeeValidInput.values.awardDate),
+            award_Date: formatDate(appAddEmployeeValidInput.values.award_Date),
             locationId: appAddEmployeeValidInput.values.locationId,
         })
-        if (!formatDate(appAddEmployeeValidInput.values.awardDate) && !appAddEmployeeValidInput.values.locationId) {
+        if (!formatDate(appAddEmployeeValidInput.values.award_Date) && !appAddEmployeeValidInput.values.locationId) {
             appAddEmployeeValidInput.setFieldValue('memberId', '')
         }
     }, [appAddEmployeeValidInput.values])
@@ -152,12 +152,12 @@ const AddEmployeeOf = (props) => {
     }, [appAddEmployeeValidInput.values.filter])
 
     useEffect(() => {
-        if (!appAddEmployeeValidInput.values.awardDate) {
+        if (!appAddEmployeeValidInput.values.award_Date) {
             setAppCandidateSearchLov('')
         } else {
             setAppCandidateSearchLov("")
         }
-    }, [appAddEmployeeValidInput.values.awardDate, props.appAddEmployeeOfMonYea])
+    }, [appAddEmployeeValidInput.values.award_Date, props.appAddEmployeeOfMonYea])
 
     return (
         <Container
@@ -334,24 +334,48 @@ const AddEmployeeOf = (props) => {
                                             Tanggal Penghargaan <span className="text-danger"> *</span>
                                         </Label>
                                     </div>
-                                    <div className="col-8">
-                                        <div className="col-6">
-                                            <DatePicker
-                                                className={`form-control ${appAddEmployeeValidInput.touched.awardDate && appAddEmployeeValidInput.errors.awardDate ? 'is-invalid' : ''}`}
-                                                wrapperClassName="customDatePicker"
-                                                selected={appAddEmployeeValidInput.values.awardDate ? new Date(appAddEmployeeValidInput.values.awardDate) : ''}
-                                                onChange={(selectedDate) => {
-                                                    appAddEmployeeValidInput.setFieldValue('awardDate', selectedDate)
-                                                }}
-                                                isClearable={appAddEmployeeValidInput.values.awardDate === '' ? false : true}
-                                                dateFormat="yyyy-MM"
-                                                showMonthYearPicker
-                                            />
-                                            {appAddEmployeeValidInput.touched.awardDate && appAddEmployeeValidInput.errors.awardDate && (
-                                                <div id="date-invalid">{appAddEmployeeValidInput.errors.awardDate}</div>
-                                            )}
-                                        </div>
-                                    </div>
+                                    {
+                                        appAddEmployeeValidInput.values.filter === 'month' ? (
+                                            <div className="col-8">
+                                                <div className="col-6">
+                                                    <DatePicker
+                                                        className={`form-control ${appAddEmployeeValidInput.touched.award_Date && appAddEmployeeValidInput.errors.award_Date ? 'is-invalid' : ''}`}
+                                                        wrapperClassName="customDatePicker"
+                                                        selected={appAddEmployeeValidInput.values.award_Date ? new Date(appAddEmployeeValidInput.values.award_Date) : ''}
+                                                        onChange={(selectedDate) => {
+                                                            appAddEmployeeValidInput.setFieldValue('award_Date', selectedDate)
+                                                        }}
+                                                        isClearable={appAddEmployeeValidInput.values.award_Date === '' ? false : true}
+                                                        dateFormat="yyyy-MM"
+                                                        showMonthYearPicker
+                                                    />
+                                                    {appAddEmployeeValidInput.touched.award_Date && appAddEmployeeValidInput.errors.award_Date && (
+                                                        <div id="date-invalid">{appAddEmployeeValidInput.errors.award_Date}</div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="col-8">
+                                                <div className="col-6">
+                                                    <DatePicker
+                                                        className={`form-control ${appAddEmployeeValidInput.touched.award_Date && appAddEmployeeValidInput.errors.award_Date ? 'is-invalid' : ''}`}
+                                                        wrapperClassName="customDatePicker"
+                                                        selected={appAddEmployeeValidInput.values.award_Date ? new Date(appAddEmployeeValidInput.values.award_Date) : ''}
+                                                        onChange={(selectedDate) => {
+                                                            debugger
+                                                            appAddEmployeeValidInput.setFieldValue('award_Date', selectedDate)
+                                                        }}
+                                                        isClearable={appAddEmployeeValidInput.values.award_Date === '' ? false : true}
+                                                        dateFormat="yyyy-MM"
+                                                        showYearPicker
+                                                    />
+                                                    {appAddEmployeeValidInput.touched.award_Date && appAddEmployeeValidInput.errors.award_Date && (
+                                                        <div id="date-invalid">{appAddEmployeeValidInput.errors.award_Date}</div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                                 <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
@@ -447,7 +471,7 @@ const AddEmployeeOf = (props) => {
             </Button>
         </Container >
     )
-} 
+}
 
 AddEmployeeOf.propTypes = {
     appAddEmployeeOfMonYea: PropTypes.any,

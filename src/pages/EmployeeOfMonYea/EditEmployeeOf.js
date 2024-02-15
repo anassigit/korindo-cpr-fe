@@ -58,7 +58,7 @@ const EditEmployeeOf = (props) => {
             keywordName: '',
             locationId: '',
             flag: '',
-            awardDate: '',
+            award_Date: '',
             star: '',
             description: '',
             memberName: '',
@@ -69,16 +69,17 @@ const EditEmployeeOf = (props) => {
             memberId: Yup.string().required("Wajib diisi"),
             keywordName: Yup.string().required("Wajib diisi"),
             flag: Yup.string().required("Wajib diisi"),
-            awardDate: Yup.string().required("Wajib diisi"),
+            award_Date: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
             props.setAppEmployeeOfMonYeaMsg("")
-            let awardDate = formatDate(values.awardDate)
+            let award_Date = formatDate(values.award_Date)
             dispatch(editEmployeeOf({
                 awardId: props.appEmployeeOfMonYeaData.awardId,
                 locationId: values.locationId,
-                awardDate: awardDate,
+                award_Date: award_Date,
+                view: values.view,
                 memberId: values.memberId,
                 description: values.description,
             }))
@@ -106,7 +107,7 @@ const EditEmployeeOf = (props) => {
             appEditEmployeeValidInput.setFieldValue('keywordName', appCandidateData?.data?.result.keywordName)
             appEditEmployeeValidInput.setFieldValue('flag', appCandidateData?.data?.result.flag)
             appEditEmployeeValidInput.setFieldValue('locationId', appCandidateData?.data?.result.locationId)
-            appEditEmployeeValidInput.setFieldValue('awardDate', appCandidateData?.data?.result.awardDate)
+            appEditEmployeeValidInput.setFieldValue('award_Date', appCandidateData?.data?.result.award_Date)
             // appEditEmployeeValidInput.setFieldValue('star', appCandidateData?.data?.result.star)
             appEditEmployeeValidInput.setFieldValue('description', appCandidateData?.data?.result.description)
             appEditEmployeeValidInput.setFieldValue('score', appCandidateData?.data?.result.score)
@@ -119,23 +120,23 @@ const EditEmployeeOf = (props) => {
 
     useEffect(() => {
 
-        if (appEditEmployeeValidInput.values.awardDate === null) {
-            appEditEmployeeValidInput.setFieldValue('awardDate', '')
+        if (appEditEmployeeValidInput.values.award_Date === null) {
+            appEditEmployeeValidInput.setFieldValue('award_Date', '')
         }
 
-        const formattedAwardDate = formatDate(appEditEmployeeValidInput.values.awardDate)
+        const formattedAward_Date = formatDate(appEditEmployeeValidInput.values.award_Date)
 
         setAppLovParam({
-            awardDate: formattedAwardDate,
+            award_Date: formattedAward_Date,
             locationId: appEditEmployeeValidInput.values.locationId,
         })
 
-        if (!formattedAwardDate || !appEditEmployeeValidInput.values.locationId) {
+        if (!formattedAward_Date || !appEditEmployeeValidInput.values.locationId) {
             appEditEmployeeValidInput.setFieldValue('memberId', '')
             // setAppCandidateSearchLov("")
         }
 
-    }, [appEditEmployeeValidInput.values.awardDate, appEditEmployeeValidInput.values.locationId])
+    }, [appEditEmployeeValidInput.values.award_Date, appEditEmployeeValidInput.values.locationId])
 
 
     const appLovCandidateListColumns = [
@@ -171,10 +172,10 @@ const EditEmployeeOf = (props) => {
     }
 
     useEffect(() => {
-        if (!appEditEmployeeValidInput.values.awardDate) {
+        if (!appEditEmployeeValidInput.values.award_Date) {
             setAppCandidateSearchLov("")
         }
-    }, [appEditEmployeeValidInput.values.awardDate])
+    }, [appEditEmployeeValidInput.values.award_Date])
 
     return (
         <Container
@@ -341,18 +342,18 @@ const EditEmployeeOf = (props) => {
                                     <div className="col-8">
                                         <div className="col-6">
                                             <DatePicker
-                                                className={`form-control ${appEditEmployeeValidInput.touched.awardDate && appEditEmployeeValidInput.errors.awardDate ? 'is-invalid' : ''}`}
+                                                className={`form-control ${appEditEmployeeValidInput.touched.award_Date && appEditEmployeeValidInput.errors.award_Date ? 'is-invalid' : ''}`}
                                                 wrapperClassName="customDatePicker"
-                                                selected={appEditEmployeeValidInput.values.awardDate ? new Date(appEditEmployeeValidInput.values.awardDate) : ''}
+                                                selected={appEditEmployeeValidInput.values.award_Date ? new Date(appEditEmployeeValidInput.values.award_Date) : ''}
                                                 onChange={(selectedDate) => {
-                                                    appEditEmployeeValidInput.setFieldValue('awardDate', selectedDate)
+                                                    appEditEmployeeValidInput.setFieldValue('award_Date', selectedDate)
                                                 }}
-                                                isClearable={appEditEmployeeValidInput.values.awardDate === '' ? false : true}
+                                                isClearable={appEditEmployeeValidInput.values.award_Date === '' ? false : true}
                                                 dateFormat="yyyy-MM"
                                                 showMonthYearPicker
                                             />
-                                            {appEditEmployeeValidInput.touched.awardDate && appEditEmployeeValidInput.errors.awardDate && (
-                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.awardDate}</div>
+                                            {appEditEmployeeValidInput.touched.award_Date && appEditEmployeeValidInput.errors.award_Date && (
+                                                <div id="date-invalid">{appEditEmployeeValidInput.errors.award_Date}</div>
                                             )}
                                         </div>
                                     </div>
