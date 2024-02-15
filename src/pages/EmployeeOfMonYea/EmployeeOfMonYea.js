@@ -43,7 +43,7 @@ const EmployeeOfMonYea = () => {
 
     const [searchVal, setSearchVal] = useState("")
     const [filterVal, setFilterVal] = useState("")
-    const [yearVal, setYearVal] = useState(parseInt(new Date().getFullYear()))
+    const [yearVal, setYearVal] = useState()
 
     const appEmployeeMonYeaData = useSelector((state) => state.employeeOfMonYeaReducer.respGetList);
     const appYearListData = useSelector((state) => state.employeeOfMonYeaReducer.respGetYearList);
@@ -285,6 +285,13 @@ const EmployeeOfMonYea = () => {
         dispatch(getYearListData())
     }, [appMessageEdit]);
 
+    useEffect(() => {
+        if (appYearListData.status === '1') {
+            if (Array.isArray(appYearListData?.data?.list)) {
+                setYearVal(appYearListData?.data?.list[0])
+            }
+        }
+    }, [appYearListData])
 
     return (
         <RootPageCustom msgStateGet={null} msgStateSet={null}
