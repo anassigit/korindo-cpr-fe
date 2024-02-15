@@ -31,7 +31,6 @@ const Member = (props) => {
 
   useEffect(() => {
     props.setMemberList(appMemberList2)
-    debugger
     if (appMemberList2.status === '1'){
       props.setLoadingSpinner(false)
     }
@@ -66,7 +65,6 @@ const Member = (props) => {
   useEffect(() => {
     ReactSession.set('offset', offset)
     ReactSession.set('limit', limit)
-    debugger
     if (!props.searchEntered && selectedDeptData) {
       dispatch(getMemberListData({
         "offset": offset,

@@ -68,7 +68,6 @@ const Rekomendasi = () => {
   }, [dispatch])
 
   useEffect(() => {
-    debugger
     if (appDeptData.status == '1') {
       setLoadingSpinner(false)
     } else if (appDeptData.status == '0') {
@@ -81,7 +80,6 @@ const Rekomendasi = () => {
   }, [selectedDeptName])
 
   useEffect(() => {
-    debugger
     setSelectedDeptData(null)
     if (appSearchData.status === '1' && searchVal) {
       setLoadingSpinner(false)

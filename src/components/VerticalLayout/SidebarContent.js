@@ -151,7 +151,6 @@ const SidebarContent = props => {
               </a>
             </li>
             {Array.isArray(menu?.menu) && menu?.menu.map(item => {
-              debugger
               if (menu.menuType === 'cpr') {
                 return renderMenuItem(item)
               } else {

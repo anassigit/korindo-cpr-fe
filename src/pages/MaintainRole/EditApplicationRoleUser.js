@@ -106,8 +106,6 @@ const EditApplicationRoleUser = (props) => {
 
     useEffect(() => {
         if (props.appEditUserRole) {
-            debugger
-
             let startDate = new Date(props.appSelectedRole.startDate)
             let endDate = new Date(props.appSelectedRole.endDate)
             appEditApplicationRoleValidInput.resetForm()
