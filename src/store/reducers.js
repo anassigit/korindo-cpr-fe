@@ -29,6 +29,7 @@ import laporanRekapReducer from "./laporanrekap/reducer"
 import laporanDivRateReducer from "./laporandivrate/reducer"
 
 import managementBoardReducer from "./managementboard/reducer"
+import memberTrainingReducer from "./membermaster/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
   laporanDivRateReducer,
 
   managementBoardReducer,
+  memberTrainingReducer,
 })
 
 export default rootReducer
