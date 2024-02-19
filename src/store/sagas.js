@@ -56,6 +56,5 @@ export default function* rootSaga() {
     fork(laporanDivRateSaga),
     
     fork(managementBoardSaga),
-    fork(memberTrainingSaga),
   ])
 }
