@@ -5,32 +5,22 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { LOGIN_USER, LOGOUT_USER, RELOGIN_USER } from "./actionTypes";
 import { apiError, loginSuccess, reloginSuccess } from "./actions";
 
-import { getMenuBE, login } from "helpers/backend_helper";
+import { getMenuBE, getProjectList, login } from "helpers/backend_helper";
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 function* loginUser({ payload: { user, history } }) {
   try {
     const response = yield call(login, user);
     if (response.status == 1) {
+      
       localStorage.setItem("authUser", response.data.KOR_TOKEN)
-      localStorage.setItem("user", JSON.stringify(response.data.memberName))
-      localStorage.setItem("memberId", JSON.stringify(response.data.memberId))
-      localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl))
-      const res = yield call(getMenuBE)
+      localStorage.setItem("user_id", response.data.user_id)
+      localStorage.setItem("role_id", response.data.role_id)
+      localStorage.setItem("user_name", response.data.user_name)
+      // localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl))
 
-      if (res.status == 1) {
-        
-        const menuData = {
-          menu: res.data.list,
-          menuType: 'cpr'
-
-        }
-
-        localStorage.setItem("menu", JSON.stringify(menuData))
-
-      }
-
-      history.push("/home");
+      history.push("/");
       yield put(loginSuccess(response));
     } else {
       yield put(apiError(response.message))
@@ -46,7 +36,6 @@ function* reloginUser({ payload: { user, history } }) {
     if (response.status == 1) {
       localStorage.setItem("authUser", response.data.KOR_TOKEN);
       localStorage.setItem("user", JSON.stringify(response.data.memberName));
-      localStorage.setItem("memberId", JSON.stringify(response.data.memberId));
       localStorage.setItem("profileUrl", JSON.stringify(response.data.profileUrl));
       yield put(reloginSuccess(response));
       document.getElementById("reloginForm").style.display = "none";
@@ -61,10 +50,30 @@ function* reloginUser({ payload: { user, history } }) {
 }
 function* logoutUser({ payload: { history } }) {
   try {
+<<<<<<< .mine
+    localStorage.clear()
+||||||| .r79763
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("user");
+    localStorage.removeItem("memberId");
+    ReactSession.remove("menu");
+    ReactSession.remove('profileData')
+
+    ReactSession.remove("currentPage")
+
+    ReactSession.remove('selectedMemberData')
+    ReactSession.remove('selectedDeptData')
+    ReactSession.remove('selectedDeptName')
+    ReactSession.remove('collapser')
+    ReactSession.remove('offset')
+    ReactSession.remove('limit')
+
+=======
 
     localStorage.clear()
     sessionStorage.clear()
 
+>>>>>>> .r79829
     history.push("/login")
     yield put(apiError(""))
   } catch (error) {
