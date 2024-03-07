@@ -4,15 +4,15 @@ import { Container, Row, Col } from "reactstrap"
 const Footer = () => {
   return (
     <React.Fragment>
-      <footer className="footer">
+      <footer className="footer" style={{left:"0"}}>
         <Container fluid={true}>
           <Row>
             <Col md={7}>
               {/* ©Korindo {new Date().getFullYear()} */}
-              <span className="mdi mdi-phone"></span> KTA Help Contact: &nbsp;
+              {/* <span className="mdi mdi-phone"></span> KTA Help Contact: &nbsp;
               <b>
               Venna (HRD & GA Division, ext. 214), &nbsp;  Abdul (HRD & GA Division, ext. 231)
-              </b>
+              </b> */}
             </Col>
             <Col md={5}>
               <div className="text-sm-end d-none d-sm-block">

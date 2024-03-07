@@ -48,7 +48,7 @@ const Login = props => {
   useEffect(() => {
     const checkAuthUser = () => {
       if (localStorage.getItem("authUser")) {
-        history.push("/home");
+        history.push("/dashboard");
       }
     };
 

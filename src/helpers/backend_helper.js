@@ -1,9 +1,22 @@
 
 import { get, post, getWithParam, postLogin, getWithXls, postUpload, getWithPdf, postWithParam } from "./api_helper"
 
-export const login = req => postLogin("/MemberRest/login", req)
+// Di bawah ini yang dipakai
+export const login = req => postLogin("/users/login", req)
 
 export const getInfoProfileBE = req => post("/MemberRest/getInfo", req)
+
+export const getProjectListBE = req => post("/projectList/getList", req)
+
+export const addProjecListBE = req => post("/projectList/createTask", req)
+
+export const addScheduleBE = req => post("/intvschedule/createSchedule", req)
+
+
+
+
+
+// Di bawah ini contoh
 
 export const getMenuBE = req => post("rest/MainRest/getMenuList", req)
 

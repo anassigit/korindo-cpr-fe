@@ -33,10 +33,14 @@
     padding-right: 1.5%;
     position: relative;
 }
-
+/* 
 .table-secondary th {
     background-color: white !important;
     color: #495057;
+} */
+
+.table th {
+    background-color: aqua;
 }
 
 

@@ -3,11 +3,11 @@ import { saveAs } from 'file-saver';
 import { ReactSession } from 'react-client-session';
 
 //apply base url for axios
-var API_URL = "http://localhost:9013/cpr";
+var API_URL = "http://localhost:9015/ats";
 if (process.env.REACT_APP_APIKEY === "development") {
-  API_URL = "http://192.168.0.29:9013/cpr";
+  API_URL = "http://192.168.61.70:9015/ats";
 } else if (process.env.REACT_APP_APIKEY === "production") {
-  API_URL = "http://10.10.20.94:9002/cpr";
+  API_URL = "http://10.10.20.94:9015/ats";
 }
 
 const axiosApi = axios.create({

@@ -126,11 +126,11 @@ const Layout = props => {
       <div id="layout-wrapper">
         <Header toggleMenuCallback={toggleMenuCallback} />
         
-        <Sidebar
+        {/* <Sidebar
           theme={leftSideBarTheme}
           type={leftSideBarType}
           isMobile={isMobile}
-        />
+        /> */}
         
         <div className="main-content">{props.children}
         <Alert stack={{limit: 1}} />
