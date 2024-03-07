@@ -61,20 +61,9 @@ function* reloginUser({ payload: { user, history } }) {
 }
 function* logoutUser({ payload: { history } }) {
   try {
-    localStorage.removeItem("authUser");
-    localStorage.removeItem("user");
-    localStorage.removeItem("memberId");
-    ReactSession.remove("menu");
-    ReactSession.remove('profileData')
 
-    ReactSession.remove("currentPage")
-
-    ReactSession.remove('selectedMemberData')
-    ReactSession.remove('selectedDeptData')
-    ReactSession.remove('selectedDeptName')
-    ReactSession.remove('collapser')
-    ReactSession.remove('offset')
-    ReactSession.remove('limit')
+    localStorage.clear()
+    sessionStorage.clear()
 
     history.push("/login")
     yield put(apiError(""))
