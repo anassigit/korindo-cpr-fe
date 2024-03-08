@@ -18,6 +18,7 @@ import { withRouter, Link } from "react-router-dom"
 // users
 import user1 from "../../../assets/images/users/userprofil.png"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { getInfoData, getInfoProfileData } from "store/actions";
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
@@ -26,35 +27,60 @@ const ProfileMenu = props => {
   const [menu, setMenu] = useState(false)
   const [bintang, setBintang] = useState(false)
 
+  const appGetInfo = useSelector((state) => state.dashboardReducer.respGetInfo);
+
   const [username, setusername] = useState("Admin")
   const [memberId, setmember_id] = useState("")
   const [profileUrl, setprofile_url] = useState("")
 
+  useEffect(() => {
+    dispatch(getInfoData())
+  }, [])
+
+
   // useEffect(() => {
+    
+  //   if (localStorage.getItem("user")) {
+  //     const u = localStorage.getItem("user")
 
-  //   const storedUser = localStorage.getItem("user");
-  //   const storedMemberId = localStorage.getItem("memberId");
-  //   const storedProfileUrl = localStorage.getItem("profileUrl");
+  //     const m = localStorage.getItem("memberId")
+  //     const p = localStorage.getItem("profileUrl")
+  //     setusername(u?.replace(/"/g, ''));
+  //     setmember_id(m?.replace(/"/g, ''));
+  //     setprofile_url(p?.replace(/"/g, ''));
+  //   }
+  // }, [appGetInfo])
 
-  //   // Check if the stored values are wrapped in double quotes before updating the state
-  //   const isWrappedInQuotes = (value) => /^".*"$/.test(value);
+  const profile = useSelector(state => (
+    state.dashboardReducer.respGetInfoProfile
+  ));
 
-  //   if (isWrappedInQuotes(storedUser)) {
-  //     setusername(storedUser.replace(/"/g, ''));
-  //   } else {
-  //     setusername(storedUser);
-  //   }
-  //   if (isWrappedInQuotes(storedMemberId)) {
-  //     setmember_id(storedMemberId.replace(/"/g, ''));
-  //   } else {
-  //     setmember_id(storedMemberId);
-  //   }
-  //   if (isWrappedInQuotes(storedProfileUrl)) {
-  //     setprofile_url(storedProfileUrl.replace(/"/g, ''));
-  //   } else {
-  //     setprofile_url(storedProfileUrl);
-  //   }
-  // }, [props.success, profile]);
+
+  useEffect(() => {
+
+    const storedUser = localStorage.getItem("user");
+    const storedMemberId = localStorage.getItem("memberId");
+    const storedProfileUrl = localStorage.getItem("profileUrl");
+
+    // Check if the stored values are wrapped in double quotes before updating the state
+    const isWrappedInQuotes = (value) => /^".*"$/.test(value);
+
+    if (isWrappedInQuotes(storedUser)) {
+      setusername(storedUser.replace(/"/g, ''));
+    } else {
+      setusername(storedUser);
+    }
+    if (isWrappedInQuotes(storedMemberId)) {
+      setmember_id(storedMemberId.replace(/"/g, ''));
+    } else {
+      setmember_id(storedMemberId);
+    }
+    if (isWrappedInQuotes(storedProfileUrl)) {
+      setprofile_url(storedProfileUrl.replace(/"/g, ''));
+    } else {
+      setprofile_url(storedProfileUrl);
+    }
+  }, [props.success, profile]);
 
   return (
     <React.Fragment>
@@ -63,7 +89,7 @@ const ProfileMenu = props => {
         toggle={() => setBintang(!bintang)}
         className="d-inline-block"
       >
-        {/* <DropdownToggle
+        <DropdownToggle
           className="btn header-item"
           id="page-dropdown"
           tag="button"
@@ -138,7 +164,7 @@ const ProfileMenu = props => {
             alt="Header Avatar"
             onClick={() => setFlagForDashboard(true)}
           />
-        </a> */}
+        </a>
         <DropdownToggle
           className="btn header-item "
           id="page-header-user-dropdown"

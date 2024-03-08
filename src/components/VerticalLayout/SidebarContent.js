@@ -6,12 +6,31 @@ import { withTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import SimpleBar from "simplebar-react";
+import { getInfoProfileData, getMenuData } from "store/actions";
 
 const SidebarContent = props => {
 
   const dispatch = useDispatch()
 
+  const profile = useSelector(state => (
+    state.dashboardReducer.respGetInfoProfile
+  ));
+
+  let menu = JSON.parse(localStorage.getItem("menu") || '{}');
+
+  useEffect(() => {
+    if (!profile?.data && !ReactSession.get('profileData')) {
+      dispatch(getInfoProfileData())
+      ReactSession.set('profileData', profile.data)
+    } else {
+      window.location.reload()
+    }
+  }, [])
+
+  // const [menu, setMenu] = useState([]);
+
   const ref = useRef();
+
 
   useEffect(() => {
     const pathName = props.location.pathname;
@@ -86,7 +105,15 @@ const SidebarContent = props => {
       <li key={item.menuId}>
         <a
           onClick={() => {
-            // buat apa yang dilakuin kalo udah di click salah satu menu (contoh: clear cache)
+
+            ReactSession.remove("currentPage")
+
+            ReactSession.remove('selectedMemberData')
+            ReactSession.remove('selectedDeptData')
+            ReactSession.remove('selectedDeptName')
+            ReactSession.remove('collapser')
+            ReactSession.remove('offset')
+            ReactSession.remove('limit')
           }}
           href={"/" + item.path} className={item.childList ? "has-arrow" : ""}>
           {item.icon && <i className={props.t("mdi " + item.icon)}></i>}
@@ -108,20 +135,29 @@ const SidebarContent = props => {
           <ul className="metismenu list-unstyled" id="side-menu">
             <li>
               <a href="/home" onClick={() => {
-                
+                ReactSession.remove('appDetailRecommendationData')
+                ReactSession.remove("currentPage")
+
+                ReactSession.remove('selectedMemberData')
+                ReactSession.remove('selectedDeptData')
+                ReactSession.remove('selectedDeptName')
+                ReactSession.remove('collapser')
+                ReactSession.remove('offset')
+                ReactSession.remove('limit')
+
               }}>
                 <i className="mdi mdi-home" />
                 <span>{props.t("Home")}</span>
               </a>
             </li>
-            {/* {Array.isArray(menu?.menu) && menu?.menu.map(item => {
+            {Array.isArray(menu?.menu) && menu?.menu.map(item => {
               if (menu.menuType === 'cpr') {
                 return renderMenuItem(item)
               } else {
-                
+                dispatch(getMenuData())
                 return null
               }
-            })} */}
+            })}
 
           </ul>
         </div>

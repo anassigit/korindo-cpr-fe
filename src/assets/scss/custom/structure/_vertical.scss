@@ -220,8 +220,7 @@
   }
 
   #page-topbar {
-    // left: $sidebar-collapsed-width;
-    left: 0;
+    left: $sidebar-collapsed-width;
 
     @media (max-width: 991.98px) {
       left: 0;

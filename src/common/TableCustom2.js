@@ -13,12 +13,9 @@ const TableCustom2 = props => {
             props.searchSet({ page: 1, limit: sizePerPage, offset: 0, sort: sortField, order: sortOrder, search: props.searchGet.search });
         }
         if (type === "pagination") {
-            if (page !== undefined) { // Check if page is defined
-                props.searchSet({ page: page, limit: sizePerPage, offset: ((page - 1) * sizePerPage), sort: props.searchGet.sort, order: props.searchGet.order, search: props.searchGet.search });
-            }
+            props.searchSet({ page: page, limit: sizePerPage, offset: ((page - 1) * sizePerPage), sort: props.searchGet.sort, order: props.searchGet.order, search: props.searchGet.search });
         }
     };
-    
 
     // useEffect(() => {
     //     setCustomfirstRenderDone(true);
@@ -35,7 +32,7 @@ const TableCustom2 = props => {
             ref={props.refTable}
             wrapperClasses="table-responsive"
             keyField={props.keyField}
-            rowClasses="text-nowrap"
+            rowClasses="text-nowrap secondary"
             remote={{ filter: true, pagination: true, sort: true, cellEdit: true }}
             data={props.appdata}
             columns={props.columns}
@@ -50,7 +47,7 @@ const TableCustom2 = props => {
                 "table align-middle table-nowrap"
             }
             onTableChange={customhendleTableChange}
-            // striped
+            striped
             hover
             condensed
             selectRow={props.selectRow}
