@@ -66,25 +66,28 @@ const ApplicationRoleAccess = (props) => {
 
     const appAccessColumn = [
         {
-            dataField: "menuId",
-            text: "Kode Role",
+            dataField: "menu",
+            text: "Kode Menu",
             sort: true,
             hidden: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
+            formatter: (cellContent, cellData) => cellContent?.menuId
         },
         {
-            dataField: "roleId",
+            dataField: "role",
             text: "Kode Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
+            formatter: (cellContent, cellData) => cellContent?.roleId
         },
         {
-            dataField: "menuName",
+            dataField: "menu",
             text: "Nama Menu",
             sort: true,
             headerStyle: { textAlign: 'center' },
+            formatter: (cellContent, cellData) => cellContent?.menuName
         },
         {
             dataField: "create",
