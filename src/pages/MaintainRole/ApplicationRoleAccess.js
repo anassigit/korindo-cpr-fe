@@ -232,8 +232,8 @@ const ApplicationRoleAccess = (props) => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.roleId) {
-            setMenuId(data.menuId)
+        if (data.role.roleId) {
+            setMenuId(data.menu.menuId)
         }
     }
 

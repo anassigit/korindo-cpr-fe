@@ -92,17 +92,18 @@ const EditApplicationRoleAccess = (props) => {
 
             let startDate = formatDate(values.startDate)
             let endDate = formatDate(values.endDate)
+            debugger
 
             dispatch(editApplicationRoleAccess({
                 roleId: values.roleId,
                 menuId: values.menuId,
                 startDate: startDate,
                 endDate: endDate,
-                create: values.create,
-                read: values.read,
-                update: values.update,
-                print: values.print,
-                delete: values.delete,
+                create: values.create === 1 || values.create ? true : false,
+                read: values.read === 1 || values.read ? true : false,
+                update: values.update === 1 || values.update ? true : false,
+                print: values.print === 1 || values.print ? true : false,
+                delete: values.delete === 1 || values.delete ? true : false,
             }))
 
         }
@@ -119,10 +120,10 @@ const EditApplicationRoleAccess = (props) => {
     };
 
     useEffect(() => {
+        appEditApplicationRoleValidInput.resetForm()
         if (props.appEditAccessRole) {
             const startDate = new Date(props.appAccessData.startDate);
             const endDate = new Date(props.appAccessData.endDate);
-            appEditApplicationRoleValidInput.resetForm()
             appEditApplicationRoleValidInput.setFieldValue('roleId', props.appMaintainRoleData.roleId)
             appEditApplicationRoleValidInput.setFieldValue('menuId', props.appAccessData.menu.menuId)
             appEditApplicationRoleValidInput.setFieldValue('menuName', props.appAccessData.menu.menuName)
