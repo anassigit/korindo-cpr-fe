@@ -111,7 +111,7 @@ const Organization = () => {
                     whiteSpace: "nowrap",
                     textOverflow: "ellipsis",
                   }}>
-                    {item.childList.length > 0 ? (
+                    {item.childList?.length > 0 ? (
                       <span
                         className={collapser[item.orgCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
@@ -138,7 +138,7 @@ const Organization = () => {
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
-                        // if (item.childList.length > 0) {
+                        // if (item.childList?.length > 0) {
                         //   setCollapser((prevCollapser) => {
                         //     return {
                         //       ...prevCollapser,
@@ -187,7 +187,7 @@ const Organization = () => {
               <React.Fragment>
                 <Row style={{ marginBottom: "8px" }}>
                   <div style={{ color: "#3F4031", paddingLeft }}>
-                    {data.childList.length > 0 ? (
+                    {data.childList?.length > 0 ? (
                       <span
                         className={collapser[data.orgCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
