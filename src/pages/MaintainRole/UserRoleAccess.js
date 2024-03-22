@@ -63,26 +63,26 @@ const UserRoleAccess = (props) => {
 
     const appAccessColumn = [
         {
-            dataField: "roleId",
+            dataField: "role.roleId",
             text: "Kode Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
-            dataField: "roleName",
+            dataField: "role.roleName",
             text: "Nama Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "memberId",
+            dataField: "member.memberId",
             text: "Kode Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "memberName",
+            dataField: "member.fullName",
             text: "Nama Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
