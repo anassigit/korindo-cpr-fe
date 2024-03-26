@@ -65,7 +65,7 @@ const TabAddKaryawan = (props) => {
       headerStyle: { textAlign: 'center' },
     },
     {
-      dataField: "memberName",
+      dataField: "position.positionName",
       text: "Jabatan",
       sort: true,
       headerStyle: { textAlign: 'center' },

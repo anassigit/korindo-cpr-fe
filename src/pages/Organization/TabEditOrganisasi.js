@@ -33,7 +33,7 @@ const TabEditOrganisasi = (props) => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "orgCd",
+            dataField: "deptMaster.deptName",
             text: "Nama Department",
             style: {
                 textAlign: 'center',
@@ -99,7 +99,7 @@ const TabEditOrganisasi = (props) => {
                                     return (
                                         <tr className='member-row' key={index}>
                                             <td style={appDepartmentColumn[0].style}>{department.orgCd}</td>
-                                            <td style={appDepartmentColumn[1].style}>{department.deptName}</td>
+                                            <td style={appDepartmentColumn[1].style}>{department.deptMaster.deptName}</td>
                                             <td style={appDepartmentColumn[2].style}>
                                                 <a
                                                     style={{
