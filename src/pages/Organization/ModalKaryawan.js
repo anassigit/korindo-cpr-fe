@@ -90,7 +90,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             },
         },
         {
-            dataField: "positionName",
+            dataField: "position.positionName",
             text: "Posisi",
             sort: true,
             headerStyle: { textAlign: 'center', backgroundColor: 'white' },
