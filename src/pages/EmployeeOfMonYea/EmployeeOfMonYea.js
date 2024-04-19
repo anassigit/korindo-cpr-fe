@@ -62,7 +62,7 @@ const EmployeeOfMonYea = () => {
         order: "",
         search:
         {
-            year: "",
+            year: new Date().getFullYear(),
             filter: "",
             search: "",
         }

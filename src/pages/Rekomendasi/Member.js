@@ -114,7 +114,7 @@ const Member = (props) => {
         </span>
         <div style={{ width: "100%", position: "relative", marginTop: "8px" }}>
           <Row className="text-white fw-bold bg-primary" style={{ width: props.searchEntered ? "100%" : "100%", position: "relative", left: "0.85em", paddingTop: "2%", paddingBottom: "2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            {props.searchEntered ?
+            {props.searchEntered && !props.searchIsNull ?
               <>
                 <Col xs='3'>Department</Col>
                 <Col xs='3'>Name</Col>
@@ -152,7 +152,7 @@ const Member = (props) => {
                     }}
                   >
                     &nbsp;
-                    {props.searchEntered ?
+                    {props.searchEntered && !props.searchIsNull ?
                       <>
                         <Col xs='3'
                           style={{
@@ -399,6 +399,7 @@ Member.propTypes = {
   searchEntered: PropTypes.any,
   setLoadingSpinner: PropTypes.any,
   appSearchData: PropTypes.any,
+  searchIsNull: PropTypes.any,
 };
 
 export default Member;

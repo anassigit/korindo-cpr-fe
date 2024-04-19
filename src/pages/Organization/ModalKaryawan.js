@@ -90,7 +90,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
             },
         },
         {
-            dataField: "position.positionName",
+            dataField: "positionName",
             text: "Posisi",
             sort: true,
             headerStyle: { textAlign: 'center', backgroundColor: 'white' },
@@ -166,7 +166,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                         border: selectedDeptData2 === item ? '1px solid #A084DC75' : '',
                                         borderRadius: '5px',
                                     }}>
-                                        {item.childList?.length > 0 ? (
+                                        {item.childList.length > 0 ? (
                                             <span
                                                 className={collapser[item.orgCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                                                 onClick={() => {
@@ -193,7 +193,7 @@ const ModalKaryawan = ({ modal, toggle, toggleApply, isAdd, selectedDeptData, se
                                             }}
                                             className="unselectable-two"
                                             onClick={(e) => {
-                                                if (item.childList?.length > 0) {
+                                                if (item.childList.length > 0) {
                                                     setCollapser((prevCollapser) => {
                                                         return {
                                                             ...prevCollapser,

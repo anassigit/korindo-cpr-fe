@@ -66,28 +66,25 @@ const ApplicationRoleAccess = (props) => {
 
     const appAccessColumn = [
         {
-            dataField: "menu",
-            text: "Kode Menu",
+            dataField: "menuId",
+            text: "Kode Role",
             sort: true,
             hidden: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
-            formatter: (cellContent, cellData) => cellContent?.menuId
         },
         {
-            dataField: "role",
+            dataField: "roleId",
             text: "Kode Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
-            formatter: (cellContent, cellData) => cellContent?.roleId
         },
         {
-            dataField: "menu",
+            dataField: "menuName",
             text: "Nama Menu",
             sort: true,
             headerStyle: { textAlign: 'center' },
-            formatter: (cellContent, cellData) => cellContent?.menuName
         },
         {
             dataField: "create",
@@ -232,8 +229,8 @@ const ApplicationRoleAccess = (props) => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.role.roleId) {
-            setMenuId(data.menu.menuId)
+        if (data.roleId) {
+            setMenuId(data.menuId)
         }
     }
 

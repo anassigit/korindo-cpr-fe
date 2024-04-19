@@ -132,7 +132,7 @@ const HistoryRekomendasi = (props) => {
 
     useEffect(() => {
         if (appRecommendList?.data?.list) {
-            const shouldSetSubmitEnable = appRecommendList?.data?.list.some(item => item.submit === false);
+            const shouldSetSubmitEnable = appRecommendList?.data?.list.some(item => item?.submit === false);
             if (shouldSetSubmitEnable) {
                 setSubmitEnable(true);
             } else {
@@ -170,7 +170,7 @@ const HistoryRekomendasi = (props) => {
                 }}
             >
                 {appRecommendList?.data?.list ? (
-                    appRecommendList?.data?.list.map((item, index) => {
+                    appRecommendList?.data?.list?.map((item, index) => {
                         return (
                             <Card
                                 key={index}
@@ -185,9 +185,9 @@ const HistoryRekomendasi = (props) => {
                                     className='glass-card'
                                     style={{
                                         padding: "5%",
-                                        backgroundColor: item.submit ? '#F0F0F0' : 'white',
+                                        backgroundColor: item?.submit ? '#F0F0F0' : 'white',
                                         height: "30vh",
-                                        opacity: item.submit === true ? "75%" : "100%",
+                                        opacity: item?.submit === true ? "75%" : "100%",
                                     }}>
                                     <div
                                         style={{ display: "flex", flexDirection: "row", justifyContent: 'center' }}
@@ -202,7 +202,7 @@ const HistoryRekomendasi = (props) => {
                                                     width: '80px',
                                                     marginRight: '25px',
                                                 }}
-                                                src={item.profileUrl}
+                                                src={item?.profileUrl}
                                             />
                                             <div
                                                 style={{
@@ -215,8 +215,8 @@ const HistoryRekomendasi = (props) => {
                                                 }}
                                             >
                                                 {
-                                                    item.bestEmployeeCount > 0 ? (
-                                                        Array.from({ length: item.bestEmployeeCount }, (_, i) => (
+                                                    item?.bestEmployeeCount > 0 ? (
+                                                        Array.from({ length: item?.bestEmployeeCount }, (_, i) => (
                                                             <img key={i} width={'20px'} src={star} />
                                                         ))
                                                     ) : (
@@ -237,15 +237,15 @@ const HistoryRekomendasi = (props) => {
                                             }}
                                         >
                                             <b id={`name-recommendation-${index}`} style={{ fontSize: '1.8vh' }}>
-                                                {item.memberName}
+                                                {item?.memberName}
                                             </b>
 
                                             <div className="text-primary" style={{ fontSize: '1.3vh', marginLeft: '0' }}>
-                                                {item.deptName}
+                                                {item?.deptName}
                                             </div>
                                         </div>
                                         <UncontrolledTooltip target={`name-recommendation-${index}`} placement='top'>
-                                            {item.memberName}
+                                            {item?.memberName}
                                         </UncontrolledTooltip>
 
                                     </div>
@@ -261,7 +261,7 @@ const HistoryRekomendasi = (props) => {
                                             }}
                                         >
 
-                                            {item.stickerList && Array.isArray(item.stickerList) && item.stickerList.slice(0, maxStickersToShow).map((sticker, stickerIndex) => {
+                                            {item?.stickerList && Array.isArray(item?.stickerList) && item?.stickerList.slice(0, maxStickersToShow).map((sticker, stickerIndex) => {
                                                 return (
                                                     <>
                                                         <div
@@ -282,16 +282,16 @@ const HistoryRekomendasi = (props) => {
                                                 );
                                             })}
 
-                                            {item.stickerList && item.stickerList.length > maxStickersToShow && (
+                                            {item?.stickerList && item?.stickerList.length > maxStickersToShow && (
                                                 <React.Fragment>
                                                     <div id={`sticker-no-${index}`} style={{ fontSize: '1.2vh', textOverflow: "ellipsis" }}>
-                                                        +{item.stickerList.length - maxStickersToShow} More...
+                                                        +{item?.stickerList.length - maxStickersToShow} More...
                                                     </div>
                                                     <UncontrolledTooltip target={`sticker-no-${index}`} placement='top'>
-                                                        {item.stickerList.slice(maxStickersToShow).map((row, i) => {
+                                                        {item?.stickerList.slice(maxStickersToShow).map((row, i) => {
                                                             return (
                                                                 <div key={i}>
-                                                                    {row.memberName}
+                                                                    {row.stickerName}
                                                                 </div>
                                                             )
                                                         })}
@@ -305,19 +305,19 @@ const HistoryRekomendasi = (props) => {
                                             id={`comment-recommendation-${index}`}
                                             style={{ fontSize: "1.5vh" }}
                                         >
-                                            {item.comment}
+                                            {item?.comment}
                                             <UncontrolledTooltip target={`comment-recommendation-${index}`} placement='top'>
-                                                {item.comment}
+                                                {item?.comment}
                                             </UncontrolledTooltip>
                                         </div>
                                         {
-                                            !item.submit && (
+                                            !item?.submit && (
                                                 <React.Fragment>
                                                     <a
                                                         onClick={() => {
                                                             setIsAdd(false)
                                                             setModalRekomendasi(true)
-                                                            setRecommendId(item.recommendId)
+                                                            setRecommendId(item?.recommendId)
                                                         }}
                                                         className='mdi mdi-pencil text-primary'
                                                         style={{ position: "absolute", bottom: 0, right: "15%", paddingBottom: "2%", fontSize: "2.5vh" }}
@@ -325,7 +325,7 @@ const HistoryRekomendasi = (props) => {
                                                     </a>
                                                     <a
                                                         onClick={() => {
-                                                            setRecommendId(item.recommendId)
+                                                            setRecommendId(item?.recommendId)
                                                             toggleDeleteModal()
                                                         }}
                                                         className='mdi mdi-close text-danger'

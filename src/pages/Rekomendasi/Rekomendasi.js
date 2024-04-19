@@ -27,6 +27,7 @@ const Rekomendasi = () => {
   const [searchBy, setSearchBy] = useState(false)
   const [searchVal, setSearchVal] = useState('')
   const [searchEntered, setSearchEntered] = useState(false)
+  const [searchIsNull, setSearchIsNull] = useState(false)
 
   const [offset, setOffset] = useState(0)
   const [limit, setLimit] = useState(10)
@@ -81,10 +82,12 @@ const Rekomendasi = () => {
 
   useEffect(() => {
     setSelectedDeptData(null)
-    if (appSearchData.status === '1' && searchVal) {
+    
+    if (appSearchData.status === '1') {
       setLoadingSpinner(false)
       setMemberList(appSearchData)
       ReactSession.set('searchVal', searchVal)
+      setSearchIsNull(false)
     } else if (appSearchData.status === '0') {
       setLoadingSpinner(false)
     }
@@ -142,7 +145,7 @@ const Rekomendasi = () => {
               <React.Fragment key={index}>
                 <Row style={{ marginBottom: "8px" }}>
                   <div style={{ color: "#3F4031", paddingLeft }}>
-                    {item.childList?.length > 0 ? (
+                    {item.childList.length > 0 ? (
                       <span
                         className={collapser[item.deptCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
@@ -169,7 +172,7 @@ const Rekomendasi = () => {
                       }}
                       className="unselectable-two"
                       onClick={(e) => {
-                        if (item.childList?.length > 0) {
+                        if (item.childList.length > 0) {
                           // setCollapser((prevCollapser) => {
                           //   return {
                           //     ...prevCollapser,
@@ -209,7 +212,7 @@ const Rekomendasi = () => {
                   </div>
                 </Row>
 
-                {item.childList?.length > 0 && collapser[item.deptCd] === true && (
+                {item.childList.length > 0 && collapser[item.deptCd] === true && (
                   <CollapsibleList
                     data={item.childList}
                     collapser={collapser}
@@ -235,7 +238,7 @@ const Rekomendasi = () => {
                     whiteSpace: "nowrap",
                     textOverflow: "ellipsis",
                   }}>
-                    {data.childList?.length > 0 ? (
+                    {data.childList.length > 0 ? (
                       <span
                         className={collapser[data.deptCd] ? "mdi mdi-minus-box" : "mdi mdi-plus-box"}
                         onClick={() => {
@@ -423,6 +426,7 @@ const Rekomendasi = () => {
                       searchEntered={searchEntered}
                       setLoadingSpinner={setLoadingSpinner}
                       appSearchData={appSearchData}
+                      searchIsNull={searchIsNull}
                     />
                   </Col>
                   <Col

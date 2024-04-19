@@ -14,7 +14,7 @@ const UserRoleAccess = (props) => {
 
     const [searchVal, setSearchVal] = useState('')
     const [appSelectedRole, setAppSelectedRole] = useState({})
-    
+
     const [modal, setModal] = useState(false)
     const [memberId, setMemberId] = useState('')
 
@@ -63,33 +63,29 @@ const UserRoleAccess = (props) => {
 
     const appAccessColumn = [
         {
-            dataField: "role",
+            dataField: "roleId",
             text: "Kode Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
-            formatter: (cellContent, cellData) => cellContent.roleId
         },
         {
-            dataField: "role",
+            dataField: "roleName",
             text: "Nama Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
-            formatter: (cellContent, cellData) => cellContent.roleName
         },
         {
-            dataField: "member",
+            dataField: "memberId",
             text: "Kode Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
-            formatter: (cellContent, cellData) => cellContent.memberId
         },
         {
-            dataField: "member",
+            dataField: "memberName",
             text: "Nama Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
-            formatter: (cellContent, cellData) => cellContent.fullName
         },
         {
             dataField: "startDate",
@@ -199,7 +195,7 @@ const UserRoleAccess = (props) => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.roleId) {
+        if (data.role?.roleId) {
             setMemberId(data.memberId)
         }
     }
@@ -276,15 +272,16 @@ const UserRoleAccess = (props) => {
                 </div>
 
                 <TableCustom
-                    keyField={"roleId"}
+                    keyField={row => `${row.role.roleId.toString()}_${row.memberId.toString()}`}
                     columns={appAccessColumn}
                     redukResponse={appUserRoleData}
-                    appdata={appUserRoleData?.data != null && appUserRoleData?.data.list ? appUserRoleData?.data.list : []}
+                    appdata={appUserRoleData?.data?.list?.length > 0 ? appUserRoleData?.data?.list : []}
                     appdataTotal={appUserRoleData?.data != null ? appUserRoleData?.data.count : 0}
                     searchSet={setAppUserRoleTabelSearch}
                     searchGet={appUserRoleTabelSearch}
                     redukCall={getUserRoleListDataAction}
                 />
+
             </div>
 
             <AddApplicationRoleUser

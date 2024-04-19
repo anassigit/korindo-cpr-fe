@@ -25,12 +25,14 @@ function* fetchGetInfoProfile({ payload: req }) {
 
     const res = yield call(getMenuBE)
     if (res.status == 1) {
-
-      const menuData = {
-        menu: res.data.list,
-        menuType: 'cpr'
+      let menuData = {}
+      if (res?.data?.list) {
+        menuData = {
+          menu: res.data.list,
+          menuType: 'cpr'
+        }
       }
-
+      
       localStorage.setItem("menu", JSON.stringify(menuData))
     }
 
@@ -45,7 +47,7 @@ function* fetchGetInfoProfile({ payload: req }) {
   }
 }
 function* fetchGetList({ payload: req }) {
-  try {
+  try {fetchGetList
     const response = yield call(getListMainRestBE, req)
     if (response.status == 1) {
       yield put(respGetList1(response))

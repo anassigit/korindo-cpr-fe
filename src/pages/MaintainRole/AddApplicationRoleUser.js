@@ -107,6 +107,7 @@ const AddApplicationRoleUser = (props) => {
     useEffect(() => {
         if (props.appAddUserRole) {
             appAddApplicationRoleValidInput.resetForm()
+            setAppMemberSearchLov('')
             appAddApplicationRoleValidInput.setFieldValue('roleId', props.appMaintainRoleData.roleId)
         }
     }, [props.appAddUserRole])
