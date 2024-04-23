@@ -28,7 +28,7 @@ import LaporanRekap from "pages/LaporanRekap/LaporanRekap"
 import LaporanDivRate from "pages/LaporanDivRate/LaporanDivRate"
 import MaintainMenu from "pages/MaintainMenu/MaintainMenu"
 import ManagementBoard from "pages/ManagementBoard/ManagementBoard"
-import TrainingrMasterPosition from "pages/Training/TrainingPositionMaster"
+// import TrainingrMasterPosition from "pages/Training/TrainingPositionMaster"
 
 const authProtectedRoutes = [
 
@@ -58,7 +58,7 @@ const authProtectedRoutes = [
   { path: "/korsoc000/forms/korsoc412", component: UserManualPDF},
 
   { path: "/korsoc000/forms/korsoc054", component: ManagementBoard},
-  { path: "/korsoc000/forms/training", component: TrainingrMasterPosition},
+//   { path: "/korsoc000/forms/training", component: TrainingrMasterPosition},
   
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
