@@ -96,7 +96,6 @@ const ManagementBoard = () => {
         {
             dataField: "comment",
             text: "Komentar",
-            sort: true,
             headerStyle: { textAlign: 'center' },
             style: { minWidth: "30vw", maxWidth: "25vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" },
             formatter: (row, _rowData, rowIndex) => {
@@ -291,23 +290,23 @@ const ManagementBoard = () => {
                                                 value="all"
                                                 onClick={() => setFilterVal("0")}
                                                 defaultChecked
-                                            /> All
+                                            /> Semua
                                         </Label>
                                         <Label check>
                                             <Input
                                                 type="radio"
                                                 name="searchOption"
-                                                value="year"
+                                                value="standBy"
                                                 onClick={() => setFilterVal("1")}
-                                            /> Stand By
+                                            /> Menunggu
                                         </Label>
                                         <Label check>
                                             <Input
                                                 type="radio"
                                                 name="searchOption"
-                                                value="month"
+                                                value="already"
                                                 onClick={() => setFilterVal("2")}
-                                            /> Already
+                                            /> Sudah
                                         </Label>
                                     </div>
                                 </div>
