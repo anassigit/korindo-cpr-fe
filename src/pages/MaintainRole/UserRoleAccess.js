@@ -68,12 +68,14 @@ const UserRoleAccess = (props) => {
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
+            formatter: (cellContent, cellData) => cellContent?.roleId
         },
         {
             dataField: "roleName",
             text: "Nama Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
+            formatter: (cellContent, cellData) => cellContent?.roleName
         },
         {
             dataField: "memberId",
@@ -82,7 +84,7 @@ const UserRoleAccess = (props) => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "memberName",
+            dataField: "fullName",
             text: "Nama Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
