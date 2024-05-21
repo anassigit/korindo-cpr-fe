@@ -1,0 +1,15 @@
+export const GET_DEPT = "GET_DEPT"
+export const RESP_GET_DEPT = "RESP_GET_DEPT"
+
+export const GET_MEMBER_LIST = "GET_MEMBER_LIST"
+export const RESP_GET_MEMBER_LIST = "RESP_GET_MEMBER_LIST"
+
+export const GET_SEARCH = "GET_SEARCH"
+export const RESP_GET_SEARCH = "RESP_GET_SEARCH"
+
+export const GET_RECOMMEND_LIST = "GET_RECOMMEND_LIST"
+export const RESP_GET_RECOMMEND_LIST = "RESP_GET_RECOMMEND_LIST"
+
+export const RESET_MESSAGE = "RESET_MESSAGE"
+
+export const MSG_EDIT = "MSG_EDIT"

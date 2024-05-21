@@ -1,0 +1,65 @@
+.table-rounded {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-rounded thead th:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+.table-rounded thead th:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+.table-rounded tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 10px;
+}
+
+.table-rounded tbody tr:last-child td:last-child {
+    border-radius: 0 0 10px 0;
+}
+
+.react-bootstrap-table-pagination-list .page-item {
+    margin: 0;
+    padding: 0;
+}
+
+.react-bootstrap-table-pagination-list .page-item.active .page-link {
+    border-radius: 0;
+}
+
+.react-bootstrap-table-pagination {
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    position: relative;
+}
+/* 
+.table-secondary th {
+    background-color: white !important;
+    color: #495057;
+} */
+
+.table th {
+    background-color: aqua;
+}
+
+
+/* .text-nowrap .custom-owner-column {
+    width: 180px !important;
+}
+
+.text-nowrap .custom-manager-column {
+    width: 180px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+} */
+
+.text-nowrap .custom-num-column,
+.text-nowrap .custom-insdate-column,
+.text-nowrap .custom-status-column,
+.text-nowrap .custom-replies-column,
+.text-nowrap .custom-notices-column,
+.text-nowrap .custom-statusid-column {
+    width: 20px !important;
+}
