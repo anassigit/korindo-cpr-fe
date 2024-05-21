@@ -89,7 +89,6 @@ const EditApplicationRoleAccess = (props) => {
         onSubmit: (values) => {
             props.setAppMaintainRoleMsg('')
 
-
             let startDate = formatDate(values.startDate)
             let endDate = formatDate(values.endDate)
 
@@ -108,6 +107,8 @@ const EditApplicationRoleAccess = (props) => {
         }
     });
 
+    console.log(appEditApplicationRoleValidInput.errors)
+
     const formatDate = (date) => {
         if (date) {
             const year = date.getFullYear();
@@ -124,8 +125,8 @@ const EditApplicationRoleAccess = (props) => {
             const endDate = new Date(props.appAccessData.endDate);
             appEditApplicationRoleValidInput.resetForm()
             appEditApplicationRoleValidInput.setFieldValue('roleId', props.appMaintainRoleData.roleId)
-            appEditApplicationRoleValidInput.setFieldValue('menuId', props.appAccessData.menuId)
-            appEditApplicationRoleValidInput.setFieldValue('menuName', props.appAccessData.menuName)
+            appEditApplicationRoleValidInput.setFieldValue('menuId', props.appAccessData.menu.menuId)
+            appEditApplicationRoleValidInput.setFieldValue('menuName', props.appAccessData.menu.menuName)
             appEditApplicationRoleValidInput.setFieldValue('startDate', startDate)
             appEditApplicationRoleValidInput.setFieldValue('endDate', endDate)
             appEditApplicationRoleValidInput.setFieldValue('create', props.appAccessData.create)

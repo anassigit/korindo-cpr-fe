@@ -74,14 +74,14 @@ const ApplicationRoleAccess = (props) => {
             style: { textAlign: 'center' },
         },
         {
-            dataField: "roleId",
+            dataField: "role.roleId",
             text: "Kode Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
-            dataField: "menuName",
+            dataField: "menu.menuName",
             text: "Nama Menu",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -130,10 +130,10 @@ const ApplicationRoleAccess = (props) => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.roleId}`} className="mdi mdi-pencil text-primary" onClick={() => appPreEditApplication(cellData)} />
-                        <a id={`delete-${cellData.roleId}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.roleId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.roleId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData?.role?.roleId.replace(/\s+/g, '_')}`} className="mdi mdi-pencil text-primary" onClick={() => appPreEditApplication(cellData)} />
+                        <a id={`delete-${cellData?.role?.roleId.replace(/\s+/g, '_')}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData?.role?.roleId.replace(/\s+/g, '_')}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData?.role?.roleId.replace(/\s+/g, '_')}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -145,7 +145,7 @@ const ApplicationRoleAccess = (props) => {
     useEffect(() => {
         if (appAccessRoleData.status === '1') {
             setCounter(null)
-        } else if (appAccessRoleData.status === '0' && counter != null){
+        } else if (appAccessRoleData.status === '0' && counter != null) {
             getAccessListDataAction(appAccessTabelSearch)
             setCounter(counter + 1)
         }
@@ -229,8 +229,8 @@ const ApplicationRoleAccess = (props) => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.roleId) {
-            setMenuId(data.menuId)
+        if (data.role.roleId) {
+            setMenuId(data.menu.menuId)
         }
     }
 
