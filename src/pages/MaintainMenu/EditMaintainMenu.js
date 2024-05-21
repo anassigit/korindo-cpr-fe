@@ -686,7 +686,7 @@ const EditMaintainMenu = (props) => {
                 }}
             >
                 <span className="mdi mdi-arrow-left" />
-                &nbsp;Kembali
+                &nbsp;Kembali&nsbp;
             </Button>
         </Container >
     );
