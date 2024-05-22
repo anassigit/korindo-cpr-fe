@@ -111,7 +111,7 @@ const AddMaintainMenu = (props) => {
         }
         return '';
     };
-    
+
     useEffect(() => {
         if (props.appAddMaintainMenu) {
             appAddMaintainMenuValidInput.resetForm()
@@ -198,22 +198,26 @@ const AddMaintainMenu = (props) => {
                                         </Label>
                                     </div>
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
-                                        <Lovv2
-                                            title="Menu"
-                                            keyFieldData="menuId"
-                                            columns={appLovMenuListColumns}
-                                            getData={getMenuParentListLov}
-                                            pageSize={10}
-                                            callbackFunc={appCallBackMenu}
-                                            defaultSetInput="parentMenuId"
-                                            invalidData={appAddMaintainMenuValidInput}
-                                            fieldValue="parentMenuId"
-                                            stateSearchInput={appMenuSearchLov}
-                                            stateSearchInputSet={setAppMenuSearchLov}
-                                            touchedLovField={appAddMaintainMenuValidInput.touched.parentMenuId}
-                                            errorLovField={appAddMaintainMenuValidInput.errors.parentMenuId}
-                                            hasNoSearch={true}
-                                        />
+                                        {
+                                            props.appAddMaintainMenu && (
+                                                <Lovv2
+                                                    title="Menu"
+                                                    keyFieldData="menuId"
+                                                    columns={appLovMenuListColumns}
+                                                    getData={getMenuParentListLov}
+                                                    pageSize={10}
+                                                    callbackFunc={appCallBackMenu}
+                                                    defaultSetInput="parentMenuId"
+                                                    invalidData={appAddMaintainMenuValidInput}
+                                                    fieldValue="parentMenuId"
+                                                    stateSearchInput={appMenuSearchLov}
+                                                    stateSearchInputSet={setAppMenuSearchLov}
+                                                    touchedLovField={appAddMaintainMenuValidInput.touched.parentMenuId}
+                                                    errorLovField={appAddMaintainMenuValidInput.errors.parentMenuId}
+                                                    hasNoSearch={true}
+                                                />
+                                            )
+                                        }
                                         <FormFeedback type="invalid">{appAddMaintainMenuValidInput.errors.parentMenuId}</FormFeedback>
                                     </div>
                                 </div>
@@ -227,7 +231,7 @@ const AddMaintainMenu = (props) => {
                                                 marginTop: "2px",
                                             }}
                                         >
-                                            Parent Menu Name 
+                                            Parent Menu Name
                                         </Label>
                                     </div>
                                     <div className="col-8" style={{ marginTop: "-8px" }}>

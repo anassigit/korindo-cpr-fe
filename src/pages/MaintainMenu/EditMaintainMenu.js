@@ -222,22 +222,28 @@ const EditMaintainMenu = (props) => {
                                         </Label>
                                     </div>
                                     <div className="col-8" style={{ marginTop: "-8px" }}>
-                                        <Lovv2
-                                            title="Menu"
-                                            keyFieldData="menuId"
-                                            columns={appLovMenuListColumns}
-                                            getData={getMenuParentListLov}
-                                            pageSize={10}
-                                            callbackFunc={appCallBackMenu}
-                                            defaultSetInput="parentMenuId"
-                                            invalidData={appEditMaintainMenuValidInput}
-                                            fieldValue="parentMenuId"
-                                            stateSearchInput={appMenuSearchLov}
-                                            stateSearchInputSet={setAppMenuSearchLov}
-                                            touchedLovField={appEditMaintainMenuValidInput.touched.parentMenuId}
-                                            errorLovField={appEditMaintainMenuValidInput.errors.parentMenuId}
-                                            hasNoSearch={true}
-                                        />
+                                        {
+                                            props.appEditMaintainMenu &&
+                                            (
+                                                <Lovv2
+                                                    title="Menu"
+                                                    keyFieldData="menuId"
+                                                    columns={appLovMenuListColumns}
+                                                    getData={getMenuParentListLov}
+                                                    pageSize={10}
+                                                    callbackFunc={appCallBackMenu}
+                                                    defaultSetInput="parentMenuId"
+                                                    invalidData={appEditMaintainMenuValidInput}
+                                                    fieldValue="parentMenuId"
+                                                    stateSearchInput={appMenuSearchLov}
+                                                    stateSearchInputSet={setAppMenuSearchLov}
+                                                    touchedLovField={appEditMaintainMenuValidInput.touched.parentMenuId}
+                                                    errorLovField={appEditMaintainMenuValidInput.errors.parentMenuId}
+                                                    hasNoSearch={true}
+                                                />
+
+                                            )
+                                        }
                                         <FormFeedback type="invalid">{appEditMaintainMenuValidInput.errors.parentMenuId}</FormFeedback>
                                     </div>
                                 </div>
@@ -686,7 +692,7 @@ const EditMaintainMenu = (props) => {
                 }}
             >
                 <span className="mdi mdi-arrow-left" />
-                &nbsp;Kembali&nsbp;
+                &nbsp;Kembali
             </Button>
         </Container >
     );

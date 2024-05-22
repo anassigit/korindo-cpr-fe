@@ -63,14 +63,14 @@ const UserRoleAccess = (props) => {
 
     const appAccessColumn = [
         {
-            dataField: "role.roleId",
+            dataField: "roleId",
             text: "Kode Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
-            dataField: "role.roleName",
+            dataField: "roleName",
             text: "Nama Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -82,7 +82,7 @@ const UserRoleAccess = (props) => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "fullName",
+            dataField: "memberName",
             text: "Nama Karyawan",
             sort: true,
             headerStyle: { textAlign: 'center' },
@@ -106,10 +106,10 @@ const UserRoleAccess = (props) => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.roleId}`} className="mdi mdi-pencil text-primary" onClick={() => preEditUserRole(cellData)} />
-                        <a id={`delete-${cellData.roleId}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.roleId}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.roleId}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData.memberId.replace(/\s+/g, '_')}`} className="mdi mdi-pencil text-primary" onClick={() => preEditUserRole(cellData)} />
+                        <a id={`delete-${cellData.memberId.replace(/\s+/g, '_')}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData.memberId.replace(/\s+/g, '_')}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData.memberId.replace(/\s+/g, '_')}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
@@ -195,7 +195,7 @@ const UserRoleAccess = (props) => {
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.role?.roleId) {
+        if (data.roleId) {
             setMemberId(data.memberId)
         }
     }
@@ -271,16 +271,20 @@ const UserRoleAccess = (props) => {
                     </Button>
                 </div>
 
-                <TableCustom
-                    keyField={row => `${row.role.roleId.toString()}_${row.memberId.toString()}`}
-                    columns={appAccessColumn}
-                    redukResponse={appUserRoleData}
-                    appdata={appUserRoleData?.data?.list?.length > 0 ? appUserRoleData?.data?.list : []}
-                    appdataTotal={appUserRoleData?.data != null ? appUserRoleData?.data.count : 0}
-                    searchSet={setAppUserRoleTabelSearch}
-                    searchGet={appUserRoleTabelSearch}
-                    redukCall={getUserRoleListDataAction}
-                />
+                {
+                    props.tabUserRole && (
+                        <TableCustom
+                            keyField={row => `${row.roleId.toString()}_${row.memberId.toString()}`}
+                            columns={appAccessColumn}
+                            redukResponse={appUserRoleData}
+                            appdata={appUserRoleData?.data?.list?.length > 0 ? appUserRoleData?.data?.list : []}
+                            appdataTotal={appUserRoleData?.data != null ? appUserRoleData?.data.count : 0}
+                            searchSet={setAppUserRoleTabelSearch}
+                            searchGet={appUserRoleTabelSearch}
+                            redukCall={getUserRoleListDataAction}
+                        />
+                    )
+                }
 
             </div>
 

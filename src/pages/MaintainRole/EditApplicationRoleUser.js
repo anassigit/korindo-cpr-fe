@@ -108,9 +108,9 @@ const EditApplicationRoleUser = (props) => {
             let startDate = new Date(props.appSelectedRole.startDate)
             let endDate = new Date(props.appSelectedRole.endDate)
             appEditApplicationRoleValidInput.resetForm()
-            appEditApplicationRoleValidInput.setFieldValue('roleId', props.appSelectedRole.role.roleId)
+            appEditApplicationRoleValidInput.setFieldValue('roleId', props.appSelectedRole.roleId)
             appEditApplicationRoleValidInput.setFieldValue('memberId', props.appSelectedRole.memberId)
-            appEditApplicationRoleValidInput.setFieldValue('memberName', props.appSelectedRole.fullName)
+            appEditApplicationRoleValidInput.setFieldValue('memberName', props.appSelectedRole.memberName)
             appEditApplicationRoleValidInput.setFieldValue('startDate', startDate)
             appEditApplicationRoleValidInput.setFieldValue('endDate', endDate)
         }

@@ -48,7 +48,7 @@ const Lov = props => {
   // }, [lovData])
 
   useEffect(() => {
-    if (lovfirstRenderDone) {
+    if (lovfirstRenderDone && props.fieldValue) {
       dispatch(props.getData(req))
     }
   }, [req])

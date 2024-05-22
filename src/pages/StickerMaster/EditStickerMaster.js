@@ -77,14 +77,35 @@ const EditStickerMaster = (props) => {
         appEditStickerMasterValidInput.setFieldValue('stickerName', appStickerData?.data?.result.stickerName)
         setImagePreview(appStickerData?.data?.result.stickerUrl)
 
+        if (appStickerData?.data?.result?.stickerUrl) {
+            createFileFromUrl(appStickerData?.data?.result?.stickerUrl).then(file => {
+                if (file) {
+                    setFile(file);
+                    appEditStickerMasterValidInput.setFieldValue('file', file.name);
+                }
+            });
+        }
+
         setLoadingSpinner(false)
     }, [appStickerData])
+
+    const createFileFromUrl = async (url) => {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const fileName = url.split('/').pop();
+            return new File([blob], fileName, { type: blob.type });
+        } catch (error) {
+            console.error('Error fetching image:', error);
+            return null;
+        }
+    };
 
     const handleFileChange = (e) => {
 
         const fileTemp = e.target.files[0];
         const fileName = fileTemp ? fileTemp.name : '';
-        
+
         if (fileTemp) {
             appEditStickerMasterValidInput.setFieldValue('file', fileName);
             const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/svg+xml"];
@@ -96,7 +117,7 @@ const EditStickerMaster = (props) => {
             } else {
                 console.error("Please select a valid file (PNG, JPEG, JPG, GIF, SVG).");
             }
-        } 
+        }
     };
 
     return (
@@ -106,7 +127,7 @@ const EditStickerMaster = (props) => {
         >
             <Card style={{ marginBottom: 0 }}>
                 <CardHeader>
-                    <span className="mdi mdi-account-plus"></span> Ubah Level Master
+                    <span className="mdi mdi-account-plus"></span> Ubah Sticker Master
                 </CardHeader>
                 <CardBody className="bg-light" style={{ paddingTop: "1rem", paddingBottom: "1rem", margin: 0, border: "1px solid #BBB" }}>
                     <Form

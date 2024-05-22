@@ -30,7 +30,7 @@ const DetailInfluencer = (props) => {
     const [linkRekomendasi, setLinkRekomendasi] = useState();
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
-    
+
     const [detailModal, setDetailModal] = useState(false)
     const [detailContentModal, setDetailContentModal] = useState(false)
 
@@ -44,7 +44,6 @@ const DetailInfluencer = (props) => {
     const appDetailInfluencerData = useSelector((state) => state.dashboardReducer.respGetDetailInfluencer);
 
     useEffect(() => {
-        setAppDetailRecommendationData(ReactSession.get('appDetailRecommendationData'))
         const foundRow = menu?.menu.find((row) => row.menuId === 'KORTRN001');
         const temp = foundRow ? foundRow.path : null;
 
@@ -63,7 +62,7 @@ const DetailInfluencer = (props) => {
         order: "desc",
         search:
         {
-            memberId: appDetailRecommendationData,
+            memberId: appDetailRecommendationData.memberId ? appDetailRecommendationData.memberId : appDetailRecommendationData,
         }
     });
 
@@ -169,24 +168,6 @@ const DetailInfluencer = (props) => {
         }
         setDetailContentModal(!detailContentModal)
     }
-
-    useEffect(() => {
-        if (appDetailRecommendationData) {
-            setAppDetailInfluencerTabelSearch(prevState => ({
-                ...prevState,
-                search: {
-                    ...prevState.search,
-                    memberId: appDetailRecommendationData.memberId ? appDetailRecommendationData.memberId : appDetailRecommendationData,
-                }
-            }));
-        }
-    }, [appDetailRecommendationData])
-
-    useEffect(() => {
-        if (appDetailRecommendationData) {
-            dispatch(getDetailInfluencerData(appDetailInfluencerTabelSearch))
-        }
-    }, [appDetailInfluencerTabelSearch])
 
     useEffect(() => {
         setMsgAddState(msgAdd)
