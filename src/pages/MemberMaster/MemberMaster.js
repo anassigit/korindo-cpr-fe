@@ -85,13 +85,13 @@ const MemberMaster = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "position.positionName",
+            dataField: "positionName",
             text: "Posisi",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "location.locationName",
+            dataField: "locationName",
             text: "Lokasi",
             sort: true,
             headerStyle: { textAlign: 'center' },

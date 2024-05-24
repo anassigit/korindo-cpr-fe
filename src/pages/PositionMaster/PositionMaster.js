@@ -85,19 +85,19 @@ const PositionMaster = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "level.levelCd",
+            dataField: "levelCd",
             text: "Kode Level",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "level.levelName",
+            dataField: "levelName",
             text: "Nama Level",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "location.locationName",
+            dataField: "locationName",
             text: "Lokasi",
             sort: true,
             headerStyle: { textAlign: 'center' },

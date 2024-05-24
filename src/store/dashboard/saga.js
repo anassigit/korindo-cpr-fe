@@ -47,7 +47,7 @@ function* fetchGetInfoProfile({ payload: req }) {
   }
 }
 function* fetchGetList({ payload: req }) {
-  try {
+  try {fetchGetList
     const response = yield call(getListMainRestBE, req)
     if (response.status == 1) {
       yield put(respGetList1(response))

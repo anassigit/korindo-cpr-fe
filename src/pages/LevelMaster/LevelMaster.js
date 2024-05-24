@@ -85,7 +85,7 @@ const LevelMaster = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "location.locationName",
+            dataField: "locationName",
             text: "Lokasi",
             sort: true,
             headerStyle: { textAlign: 'center' },

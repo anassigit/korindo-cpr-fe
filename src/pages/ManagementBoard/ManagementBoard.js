@@ -12,6 +12,7 @@ import {
     CardHeader,
     Container,
     Input,
+    Label,
     Spinner,
     UncontrolledAlert,
     UncontrolledTooltip
@@ -28,12 +29,10 @@ const ManagementBoard = () => {
 
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [appManagementBoardMsg, setAppManagementBoardMsg] = useState("")
-
     const [searchVal, setSearchVal] = useState("")
-
+    const [filterVal, setFilterVal] = useState("")
     const [appManagementBoard, setAppManagementBoard] = useState(true)
     const [modal, setModal] = useState(false)
-
     const [appManagementBoardData, setAppManagementBoardData] = useState({})
     const [statusId, setStatusId] = useState('')
 
@@ -65,52 +64,56 @@ const ManagementBoard = () => {
         {
             dataField: "write_time",
             text: "Tgl",
-            sort: true,
             style: { textAlign: 'center' },
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' }
         },
         {
             dataField: "reportId",
             text: "Kode Report",
-            sort: true,
             style: { textAlign: 'center' },
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' }
         },
         {
             dataField: "statusName",
             text: "Status",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' }
         },
         {
             dataField: "complainMemberName",
             text: "Reporter",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' }
         },
         {
             dataField: "fromMemberName",
             text: "Pemberi Bintang",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' }
         },
         {
             dataField: "toMemberName",
             text: "Penerima Bintang",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' }
         },
         {
             dataField: "comment",
             text: "Komentar",
-            sort: true,
             headerStyle: { textAlign: 'center' },
+            style: { minWidth: "30vw", maxWidth: "25vw", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" },
+            formatter: (row, _rowData, rowIndex) => {
+                return (
+                    <React.Fragment>
+                        <span id={`viewtooltip-${rowIndex}`}>{row}</span>
+                        <UncontrolledTooltip placement="bottom-start" target={`viewtooltip-${rowIndex}`}>
+                            {row}
+                        </UncontrolledTooltip>
+
+                    </React.Fragment>
+                )
+            }
         },
         {
             dataField: "reportName",
             text: "Jenis",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
+            headerStyle: { textAlign: 'center' }
         },
         {
             text: "Actions",
@@ -134,6 +137,21 @@ const ManagementBoard = () => {
     useEffect(() => {
         dispatch(resetMessage())
     }, [dispatch])
+
+    useEffect(() => {
+        setAppReportTabelSearch((prevState) => ({
+            ...prevState,
+            page: 1,
+            offset: 0,
+            sort: "",
+            order: "",
+            search: {
+                ...prevState.search,
+                search: searchVal,
+                viewType: filterVal
+            }
+        }));
+    }, [filterVal])
 
     const handleEnterKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -247,7 +265,51 @@ const ManagementBoard = () => {
                                         </div>
                                     </div>
                                 </div>
-
+                                <div
+                                    className="col-3 pb-3"
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        gap: "12px",
+                                        justifyContent: "left",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    Status
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            gap: "12px",
+                                        }}
+                                    >
+                                        <Label check={true}>
+                                            <Input
+                                                type="radio"
+                                                name="searchOption"
+                                                value="all"
+                                                onClick={() => setFilterVal("0")}
+                                                defaultChecked
+                                            /> Semua
+                                        </Label>
+                                        <Label check>
+                                            <Input
+                                                type="radio"
+                                                name="searchOption"
+                                                value="standBy"
+                                                onClick={() => setFilterVal("1")}
+                                            /> Menunggu
+                                        </Label>
+                                        <Label check>
+                                            <Input
+                                                type="radio"
+                                                name="searchOption"
+                                                value="already"
+                                                onClick={() => setFilterVal("2")}
+                                            /> Sudah
+                                        </Label>
+                                    </div>
+                                </div>
                                 <TableCustom
                                     keyField={"reportId"}
                                     columns={appReportColumn}

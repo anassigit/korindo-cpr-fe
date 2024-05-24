@@ -9,7 +9,7 @@ const RootPageCustom = props => {
             <div className="page-content">
                 <MetaTags>
                 <title>
-                    Korindo App
+                    KORINDO - TSE Appreciation
                 </title>
                 </MetaTags>
                 <AlertCust msg ={props.msgStateGet} stateData={props.msgStateSet}/>

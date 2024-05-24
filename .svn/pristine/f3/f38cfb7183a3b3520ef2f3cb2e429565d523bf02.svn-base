@@ -46,7 +46,7 @@ const EditStickerMaster = (props) => {
         },
         validationSchema: Yup.object().shape({
             stickerName: Yup.string().required("Wajib diisi"),
-            // file: Yup.string().required("Wajib diisi"),
+            file: Yup.string().required("Wajib diisi"),
         }),
 
         onSubmit: (values) => {
@@ -77,8 +77,48 @@ const EditStickerMaster = (props) => {
         appEditStickerMasterValidInput.setFieldValue('stickerName', appStickerData?.data?.result.stickerName)
         setImagePreview(appStickerData?.data?.result.stickerUrl)
 
+        if (appStickerData?.data?.result?.stickerUrl) {
+            createFileFromUrl(appStickerData?.data?.result?.stickerUrl).then(file => {
+                if (file) {
+                    setFile(file);
+                    appEditStickerMasterValidInput.setFieldValue('file', file.name);
+                }
+            });
+        }
+
         setLoadingSpinner(false)
     }, [appStickerData])
+
+    const createFileFromUrl = async (url) => {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const fileName = url.split('/').pop();
+            return new File([blob], fileName, { type: blob.type });
+        } catch (error) {
+            console.error('Error fetching image:', error);
+            return null;
+        }
+    };
+
+    const handleFileChange = (e) => {
+
+        const fileTemp = e.target.files[0];
+        const fileName = fileTemp ? fileTemp.name : '';
+
+        if (fileTemp) {
+            appEditStickerMasterValidInput.setFieldValue('file', fileName);
+            const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/svg+xml"];
+            if (allowedTypes.includes(fileTemp.type)) {
+                setFile(fileTemp);
+                setImagePreview(URL.createObjectURL(fileTemp));
+                setPrevFile(e.target.value)
+                console.log("Valid file selected:", fileTemp);
+            } else {
+                console.error("Please select a valid file (PNG, JPEG, JPG, GIF, SVG).");
+            }
+        }
+    };
 
     return (
         <Container
@@ -146,7 +186,7 @@ const EditStickerMaster = (props) => {
                                         <FormFeedback type="invalid">{appEditStickerMasterValidInput.errors.stickerName}</FormFeedback>
                                     </div>
                                 </div>
-                                {/* <div
+                                <div
                                     className="d-flex flex-row col-10 align-items-center py-2 justify-content-between"
                                 >
 
@@ -171,7 +211,7 @@ const EditStickerMaster = (props) => {
                                         />
                                         <FormFeedback type="invalid">{appEditStickerMasterValidInput.errors.file}</FormFeedback>
                                     </div>
-                                </div> */}
+                                </div>
                                 <div
                                     className="d-flex flex-row col-10 py-2 justify-content-between"
                                 >

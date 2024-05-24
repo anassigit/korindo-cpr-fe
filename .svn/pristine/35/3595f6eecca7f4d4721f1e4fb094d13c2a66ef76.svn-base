@@ -2,25 +2,28 @@ import TableCustom from 'common/TableCustom'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input, UncontrolledTooltip } from 'reactstrap'
-import { deleteApplicationRoleUser, getUserRoleListDataAction } from 'store/actions'
+import { deleteApplicationRoleAccess, getAccessListDataAction } from 'store/actions'
 import PropTypes from 'prop-types'
-import AddApplicationRoleUser from './AddApplicationRoleUser'
-import EditApplicationRoleUser from './EditApplicationRoleUser'
+import AddApplicationRoleAccess from './AddApplicationRoleAccess'
+import EditApplicationRoleAccess from './EditApplicationRoleAccess'
 import MsgModal from 'components/Common/MsgModal'
+import { deleteAccessRoleBE } from 'helpers/backend_helper'
 
-const UserRoleAccess = (props) => {
+const ApplicationRoleAccess = (props) => {
 
     const dispatch = useDispatch()
 
     const [searchVal, setSearchVal] = useState('')
-    const [appSelectedRole, setAppSelectedRole] = useState({})
 
     const [modal, setModal] = useState(false)
-    const [memberId, setMemberId] = useState('')
 
-    const appUserRoleData = useSelector((state) => {
-        return state.maintainRoleReducer.respGetUserRoleList
+    const [menuId, setMenuId] = useState('')
+
+    const appAccessRoleData = useSelector((state) => {
+        return state.maintainRoleReducer.respGetAccessList
     })
+
+    const [appAccessData, setAppAccessData] = useState({})
 
     const appMessageDelete = useSelector((state) => state.maintainRoleReducer.msgDelete);
     const appMessageAdd = useSelector((state) => state.maintainRoleReducer.msgAdd);
@@ -29,7 +32,7 @@ const UserRoleAccess = (props) => {
         return state.maintainRoleReducer.msgEdit
     });
 
-    const [appUserRoleTabelSearch, setAppUserRoleTabelSearch] = useState({
+    const [appAccessTabelSearch, setAppAccessTabelSearch] = useState({
         page: 1,
         limit: 10,
         offset: 0,
@@ -43,7 +46,7 @@ const UserRoleAccess = (props) => {
     });
 
     const handleClick = () => {
-        setAppUserRoleTabelSearch((prevState) => ({
+        setAppAccessTabelSearch((prevState) => ({
             ...prevState,
             page: 1,
             offset: 0,
@@ -63,28 +66,49 @@ const UserRoleAccess = (props) => {
 
     const appAccessColumn = [
         {
-            dataField: "roleId",
+            dataField: "menuId",
+            text: "Kode Role",
+            sort: true,
+            hidden: true,
+            headerStyle: { textAlign: 'center' },
+            style: { textAlign: 'center' },
+        },
+        {
+            dataField: "role.roleId",
             text: "Kode Role",
             sort: true,
             headerStyle: { textAlign: 'center' },
             style: { textAlign: 'center' },
         },
         {
-            dataField: "roleName",
-            text: "Nama Role",
+            dataField: "menu.menuName",
+            text: "Nama Menu",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "memberId",
-            text: "Kode Karyawan",
-            sort: true,
+            dataField: "create",
+            text: "Create",
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "memberName",
-            text: "Nama Karyawan",
-            sort: true,
+            dataField: "read",
+            text: "Read",
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "update",
+            text: "Update",
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "delete",
+            text: "Delete",
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "print",
+            text: "Print",
             headerStyle: { textAlign: 'center' },
         },
         {
@@ -106,28 +130,26 @@ const UserRoleAccess = (props) => {
             formatter: (cellContent, cellData) => {
                 return (
                     <React.Fragment>
-                        <a id={`edit-${cellData.memberId.replace(/\s+/g, '_')}`} className="mdi mdi-pencil text-primary" onClick={() => preEditUserRole(cellData)} />
-                        <a id={`delete-${cellData.memberId.replace(/\s+/g, '_')}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
-                        <UncontrolledTooltip target={`edit-${cellData.memberId.replace(/\s+/g, '_')}`}>Edit</UncontrolledTooltip>
-                        <UncontrolledTooltip target={`delete-${cellData.memberId.replace(/\s+/g, '_')}`}>Delete</UncontrolledTooltip>
+                        <a id={`edit-${cellData?.role?.roleId.replace(/\s+/g, '_')}`} className="mdi mdi-pencil text-primary" onClick={() => appPreEditApplication(cellData)} />
+                        <a id={`delete-${cellData?.role?.roleId.replace(/\s+/g, '_')}`} className="mdi mdi-delete text-danger" style={{ marginLeft: '1vw' }} onClick={() => toggleDeleteModal(cellData)} />
+                        <UncontrolledTooltip target={`edit-${cellData?.role?.roleId.replace(/\s+/g, '_')}`}>Edit</UncontrolledTooltip>
+                        <UncontrolledTooltip target={`delete-${cellData?.role?.roleId.replace(/\s+/g, '_')}`}>Delete</UncontrolledTooltip>
                     </React.Fragment>
                 )
             }
         },
     ]
 
-    useEffect(() => {
-        if (props.tabUserRole) {
-            setAppUserRoleTabelSearch((prevState) => ({
-                ...prevState,
-                search: {
-                    ...prevState.search,
-                    roleId: props.appMaintainRoleData.roleId,
-                },
-            }))
-        }
-    }, [props.tabUserRole])
+    const [counter, setCounter] = useState(0)
 
+    useEffect(() => {
+        if (appAccessRoleData.status === '1') {
+            setCounter(null)
+        } else if (appAccessRoleData.status === '0' && counter != null) {
+            getAccessListDataAction(appAccessTabelSearch)
+            setCounter(counter + 1)
+        }
+    }, [appAccessRoleData, counter])
 
     useEffect(() => {
         let messageToUpdate;
@@ -141,7 +163,7 @@ const UserRoleAccess = (props) => {
 
         if (messageToUpdate) {
             props.setLoadingSpinner(false);
-            dispatch(getUserRoleListDataAction(appUserRoleTabelSearch));
+            dispatch(getAccessListDataAction(appAccessTabelSearch));
             props.setAppMaintainRoleMsg(messageToUpdate);
         }
     }, [appMessageDelete]);
@@ -151,15 +173,15 @@ const UserRoleAccess = (props) => {
 
         if (appMessageAdd.status === '1' || appMessageAdd.status === '0') {
             messageToUpdate = appMessageAdd;
-            if (appMessageAdd.status === '1' && props.appAddUserRole) {
-                props.setTabUserRole(true);
-                props.setAppAddUserRole(false);
+            if (appMessageAdd.status === '1' && props.appAddAccessRole) {
+                props.setTabAppRole(true);
+                props.setAppAddAccessRole(false);
             }
         }
 
         if (messageToUpdate) {
             props.setLoadingSpinner(false);
-            dispatch(getUserRoleListDataAction(appUserRoleTabelSearch));
+            dispatch(getAccessListDataAction(appAccessTabelSearch));
             props.setAppMaintainRoleMsg(messageToUpdate);
         }
     }, [appMessageAdd]);
@@ -169,42 +191,54 @@ const UserRoleAccess = (props) => {
 
         if (appMessageEdit.status === '1' || appMessageEdit.status === '0') {
             messageToUpdate = appMessageEdit;
-            if (appMessageEdit.status === '1' && props.appEditUserRole) {
-                props.setTabUserRole(true);
-                props.setAppEditUserRole(false);
+            if (appMessageEdit.status === '1' && props.appEditAccessRole) {
+                props.setTabAppRole(true);
+                props.setAppEditAccessRole(false);
             }
         }
 
         if (messageToUpdate) {
             props.setLoadingSpinner(false);
-            dispatch(getUserRoleListDataAction(appUserRoleTabelSearch));
+            dispatch(getAccessListDataAction(appAccessTabelSearch));
             props.setAppMaintainRoleMsg(messageToUpdate);
         }
     }, [appMessageEdit]);
 
-    const appPreAddUserRole = () => {
-        props.setTabUserRole(false)
-        props.setAppAddUserRole(true)
+    useEffect(() => {
+        if (props.tabAppRole && props.appMaintainRoleData) {
+            setAppAccessTabelSearch((prevState) => ({
+                ...prevState,
+                search: {
+                    ...prevState.search,
+                    roleId: props.appMaintainRoleData.roleId,
+                },
+            }))
+        }
+    }, [props.tabAppRole, props.appMaintainRoleData])
+
+    const appPreAddApplication = () => {
+        props.setTabAppRole(false)
+        props.setAppAddAccessRole(true)
     }
 
-    const preEditUserRole = (data) => {
-        setAppSelectedRole(data)
-        props.setTabUserRole(false)
-        props.setAppEditUserRole(true)
+    const appPreEditApplication = (data) => {
+        props.setTabAppRole(false)
+        props.setAppEditAccessRole(true)
+        setAppAccessData(data)
     }
 
     const toggleDeleteModal = (data) => {
         setModal(!modal)
-        if (data.roleId) {
-            setMemberId(data.memberId)
+        if (data.role.roleId) {
+            setMenuId(data.menu.menuId)
         }
     }
 
     const toggleApply = () => {
         props.setAppMaintainRoleMsg('')
-        dispatch(deleteApplicationRoleUser({
+        dispatch(deleteApplicationRoleAccess({
             roleId: props.appMaintainRoleData.roleId,
-            memberId: memberId,
+            menuId: menuId,
         }))
         setModal(!modal)
         props.setLoadingSpinner(true)
@@ -214,7 +248,7 @@ const UserRoleAccess = (props) => {
         <>
             <div
                 style={{
-                    display: props.tabUserRole ? "block" : 'none',
+                    display: props.tabAppRole ? "block" : 'none',
                 }}
             >
                 <div style={{
@@ -265,44 +299,38 @@ const UserRoleAccess = (props) => {
                     }}
                 >
                     <Button
-                        onClick={() => appPreAddUserRole()}
+                        onClick={() => appPreAddApplication()}
                     >
                         <span className="mdi mdi-plus" /> Tambah
                     </Button>
                 </div>
 
-                {
-                    props.tabUserRole && (
-                        <TableCustom
-                            keyField={row => `${row.roleId.toString()}_${row.memberId.toString()}`}
-                            columns={appAccessColumn}
-                            redukResponse={appUserRoleData}
-                            appdata={appUserRoleData?.data?.list?.length > 0 ? appUserRoleData?.data?.list : []}
-                            appdataTotal={appUserRoleData?.data != null ? appUserRoleData?.data.count : 0}
-                            searchSet={setAppUserRoleTabelSearch}
-                            searchGet={appUserRoleTabelSearch}
-                            redukCall={getUserRoleListDataAction}
-                        />
-                    )
-                }
+                <TableCustom
+                    keyField={"roleId"}
+                    columns={appAccessColumn}
+                    redukResponse={appAccessRoleData}
+                    appdata={appAccessRoleData?.data != null && appAccessRoleData?.data.list ? appAccessRoleData?.data.list : []}
+                    appdataTotal={appAccessRoleData?.data != null ? appAccessRoleData?.data.count : 0}
+                    searchSet={setAppAccessTabelSearch}
+                    searchGet={appAccessTabelSearch}
+                    redukCall={getAccessListDataAction}
+                />
 
             </div>
-
-            <AddApplicationRoleUser
-                appAddUserRole={props.appAddUserRole}
-                setAppAddUserRole={props.setAppAddUserRole}
+            <AddApplicationRoleAccess
+                appAddAccessRole={props.appAddAccessRole}
+                setAppAddAccessRole={props.setAppAddAccessRole}
                 setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
-                setTabUserRole={props.setTabUserRole}
+                setTabAppRole={props.setTabAppRole}
                 appMaintainRoleData={props.appMaintainRoleData}
             />
-
-            <EditApplicationRoleUser
-                appEditUserRole={props.appEditUserRole}
-                setAppEditUserRole={props.setAppEditUserRole}
+            <EditApplicationRoleAccess
+                appEditAccessRole={props.appEditAccessRole}
+                setAppEditAccessRole={props.setAppEditAccessRole}
                 setAppMaintainRoleMsg={props.setAppMaintainRoleMsg}
-                setTabUserRole={props.setTabUserRole}
+                setTabAppRole={props.setTabAppRole}
                 appMaintainRoleData={props.appMaintainRoleData}
-                appSelectedRole={appSelectedRole}
+                appAccessData={appAccessData}
             />
 
             <MsgModal
@@ -315,16 +343,16 @@ const UserRoleAccess = (props) => {
     )
 }
 
-UserRoleAccess.propTypes = {
-    tabUserRole: PropTypes.any,
-    setTabUserRole: PropTypes.any,
-    appAddUserRole: PropTypes.any,
-    setAppAddUserRole: PropTypes.any,
-    appEditUserRole: PropTypes.any,
-    setAppEditUserRole: PropTypes.any,
-    setAppMaintainRoleMsg: PropTypes.any,
+ApplicationRoleAccess.propTypes = {
+    tabAppRole: PropTypes.any,
+    setTabAppRole: PropTypes.any,
+    appAddAccessRole: PropTypes.any,
+    setAppAddAccessRole: PropTypes.any,
+    appEditAccessRole: PropTypes.any,
+    setAppEditAccessRole: PropTypes.any,
     appMaintainRoleData: PropTypes.any,
+    setAppMaintainRoleMsg: PropTypes.any,
     setLoadingSpinner: PropTypes.any,
 }
 
-export default UserRoleAccess
+export default ApplicationRoleAccess

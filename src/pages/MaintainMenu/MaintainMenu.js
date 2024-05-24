@@ -88,13 +88,13 @@ const MaintainMenu = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "moduleName",
+            dataField: "menuModuleId",
             text: "ID Modul",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "parentMenu.menuId",
+            dataField: "parentMenuId",
             text: "ID Parent Menu",
             sort: true,
             headerStyle: { textAlign: 'center' },
