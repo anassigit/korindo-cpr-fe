@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 {
   "arrowParens": "avoid",
   "semi": false
 }
+=======
+{
+  "arrowParens": "avoid",
+  "semi": false
+}
+>>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca

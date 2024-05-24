@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 
 // print.scss
 //
@@ -23,4 +24,31 @@
     .card{
         border: 0;
     }
+=======
+// 
+// print.scss
+//
+
+// Used invoice page
+@media print {
+    .vertical-menu,
+    .right-bar,
+    .page-title-box,
+    .navbar-header,
+    .footer {
+        display: none !important;
+    }
+    .card-body,
+    .main-content,
+    .right-bar,
+    .page-content,
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .card{
+        border: 0;
+    }
+>>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 }

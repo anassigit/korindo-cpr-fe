@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 
 // _card.scss
 // 
@@ -22,3 +23,29 @@
   margin-bottom: 24px;  
 }
 
+=======
+// 
+// _card.scss
+// 
+
+.card {
+  margin-bottom: $grid-gutter-width;
+  box-shadow: $box-shadow;
+}
+
+.card-drop {
+  color: $body-color;
+}
+
+.card-title {
+  font-size: 15px;
+  margin: 0 0 7px 0;
+  font-weight: $font-weight-semibold;
+}
+
+.card-title-desc {
+  color: $card-title-desc;
+  margin-bottom: 24px;  
+}
+
+>>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca

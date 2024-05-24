@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 
 // backgrounds.scss
 //
@@ -11,3 +12,18 @@ $value in $theme-colors {
         }
     }
 }
+=======
+// 
+// backgrounds.scss
+//
+
+
+@each $color,
+$value in $theme-colors {
+    .bg-#{$color} {
+        &.bg-soft{
+            background-color: rgba(($value), 0.25) !important;
+        }
+    }
+}
+>>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 
 // _footer.scss
 // 
@@ -32,4 +33,40 @@ body[data-layout="horizontal"] {
     .footer {
         left: 0 !important;
     }  
+=======
+// 
+// _footer.scss
+// 
+
+.footer {
+    bottom: 0;
+    padding: 20px calc(#{$grid-gutter-width} / 2);
+    position: absolute;
+    right: 0;
+    color: $footer-color;
+    left: 200px;
+    height: $footer-height;
+    background-color: $footer-bg;
+
+    @media (max-width: 991.98px) {
+        left: 0;
+    }
+}
+  
+// Enlarge menu
+.vertical-collpsed {
+    .footer {
+        left: $sidebar-collapsed-width;
+
+        @media (max-width: 991.98px) {
+            left: 0;
+        }
+    }
+}
+
+body[data-layout="horizontal"] {
+    .footer {
+        left: 0 !important;
+    }  
+>>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   GET_MENU,
   RESP_GET_MENU
@@ -24,4 +25,32 @@ const menuReducer = (state = INIT_STATE, action) => {
   }
 }
 
+=======
+import {
+  GET_MENU,
+  RESP_GET_MENU
+} from "./actionTypes"
+
+const INIT_STATE = {
+  respGetMenu: {},
+}
+
+const menuReducer = (state = INIT_STATE, action) => {
+
+  switch (action.type) {
+    case GET_MENU:
+      return {
+        ...state,
+      }
+    case RESP_GET_MENU:
+      return {
+        ...state,
+        respGetMenu: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+>>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 export default menuReducer

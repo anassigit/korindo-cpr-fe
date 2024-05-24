@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 
 // _pagination.scss
 // 
@@ -14,4 +15,22 @@
         text-align: center;
         line-height: 32px;
     }
+=======
+// 
+// _pagination.scss
+// 
+
+// Pagination rounded (Custom)
+.pagination-rounded {
+    .page-link {
+        border-radius: 30px !important;
+        margin: 0 3px !important;
+        border: none;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        text-align: center;
+        line-height: 32px;
+    }
+>>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
   }
