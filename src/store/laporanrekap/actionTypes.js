@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export const GET_LAPORAN_REKAP = "GET_LAPORAN_REKAP"
 export const RESP_GET_LAPORAN_REKAP = "RESP_GET_LAPORAN_REKAP"
 
@@ -18,25 +17,4 @@ export const RESP_DOWNLOAD = "RESP_DOWNLOAD"
 // export const MSG_ADD = "MSG_ADD"
 // export const MSG_EDIT = "MSG_EDIT"
 // export const MSG_DELETE = "MSG_DELETE"
-=======
-export const GET_LAPORAN_REKAP = "GET_LAPORAN_REKAP"
-export const RESP_GET_LAPORAN_REKAP = "RESP_GET_LAPORAN_REKAP"
-
-export const GET_LOCATION_REKAP = "GET_LOCATION_REKAP"
-export const RESP_GET_LOCATION_REKAP = "RESP_GET_LOCATION_REKAP"
-
-export const GET_DEPT_REKAP = "GET_DEPT_REKAP"
-export const RESP_GET_DEPT_REKAP = "RESP_GET_DEPT_REKAP"
-
-export const DOWNLOAD_REKAP = "DOWNLOAD_REKAP"
-export const RESP_DOWNLOAD = "RESP_DOWNLOAD"
-
-// export const SAVE_LOCATION = "SAVE_LOCATION"
-// export const EDIT_LOCATION = "EDIT_LOCATION"
-// export const DELETE_LOCATION = "DELETE_LOCATION"
-
-// export const MSG_ADD = "MSG_ADD"
-// export const MSG_EDIT = "MSG_EDIT"
-// export const MSG_DELETE = "MSG_DELETE"
->>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 export const RESET_MESSAGE = "RESET_MESSAGE"

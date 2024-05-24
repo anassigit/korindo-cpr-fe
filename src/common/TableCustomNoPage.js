@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect,useState } from "react";
 import PropTypes from "prop-types";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -71,78 +70,4 @@ TableCustomNoPage.propTypes = {
     rowClick : PropTypes.any,
 }
 
-=======
-import React, { useEffect,useState } from "react";
-import PropTypes from "prop-types";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import { useDispatch } from "react-redux"
-
-const TableCustomNoPage = props => {
-    const dispatch = useDispatch();
-    //const [customfirstRenderDone, setCustomfirstRenderDone] = useState(false);
-
-    const customhendleTableChange = (type, { page, sortField, sortOrder, sizePerPage }) => {
-        if (type === "sort") {
-            props.searchSet({ page: 1, limit: sizePerPage, offset: 0, sort: sortField, order: sortOrder, search: props.searchGet.search });
-        }
-        if (type === "pagination") {
-            props.searchSet({ page: page, limit: sizePerPage, offset: ((page - 1) * sizePerPage), sort: props.searchGet.sort, order: props.searchGet.order, search: props.searchGet.search });
-        }
-    };
-
-    // useEffect(() => {
-    //     setCustomfirstRenderDone(true);
-    //   }, []);
-    
-    useEffect(() => {
-        //if (customfirstRenderDone) {
-          dispatch(props.redukCall(props.searchGet))
-        //}
-    }, [props.searchGet])
-
-    return (
-        <BootstrapTable
-            ref={props.refTable}
-            wrapperClasses="table-responsive"
-            keyField={props.keyField}
-            rowClasses="text-nowrap"
-            remote={{ filter: true, pagination: true, sort: true, cellEdit: true }}
-            data={props.appdata}
-            columns={props.columns}
-            pagination={paginationFactory({
-                page: props.searchGet.page,
-                sizePerPage: props.searchGet.limit,
-                sizePerPageList: [15],
-                totalSize: props.appdataTotal,
-                showTotal: true,
-            })}
-            classes={
-                "table align-middle table-nowrap"
-            }
-            onTableChange={customhendleTableChange}
-            striped
-            hover
-            condensed
-            selectRow={props.selectRow}
-            rowEvents={props.rowClick }
-        />
-    );
-}
-
-TableCustomNoPage.propTypes = {
-    refTable: PropTypes.object,
-    keyField: PropTypes.string,
-    columns: PropTypes.any,
-    redukResponse : PropTypes.any,
-    appdata: PropTypes.any,
-    appdataTotal: PropTypes.any,
-    searchSet: PropTypes.any,
-    searchGet: PropTypes.any,
-    redukCall : PropTypes.any,
-    selectRow : PropTypes.any,
-    rowClick : PropTypes.any,
-}
-
->>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 export default TableCustomNoPage;
