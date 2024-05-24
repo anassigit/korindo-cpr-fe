@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // 
 // _badge.scss
 // 
@@ -68,75 +67,4 @@
 
 .badge.bg-dark{
   color: $light;
-=======
-// 
-// _badge.scss
-// 
-
-
-.badge {
-  &[href] {
-    &:hover,
-    &:focus {
-      color: $white;
-    }
-  }
-}
-
-// Soft badge
-@mixin badge-variant-soft($bg) {
-  color: $bg;
-  background-color: rgba($bg, 0.18);
-
-  &[href] {
-    &:hover,
-    &:focus {
-      color: $bg;
-      text-decoration: none;
-      background-color: rgba($bg, 0.4);
-    }
-  }
-}
-
-@each $color, $value in $theme-colors {
-  .badge {
-  &.bg-#{$color} {
-    &[href] {
-      &:hover,
-      &:focus {
-        background-color: darken($value, 4%) !important;
-      }
-    }
-  }
-}
-
-.badge{
-  &.bg-light{
-    color: $body-color;
-
-    &[href] {
-      &:hover,
-      &:focus {
-        color: $body-color;
-      }
-    }
-  }
-}
-
-  .badge-soft-#{$color} {
-      @include badge-variant-soft($value);
-  }
-  
-}
-
-.rounded-pill{
-   padding-right: .6em;
-    padding-left: .6em;
-}
-
-// Dark badge
-
-.badge.bg-dark{
-  color: $light;
->>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 }

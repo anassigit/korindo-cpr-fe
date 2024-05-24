@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 //
 // Form-Upload
@@ -18,25 +17,4 @@
       outline: none;
     }
   }
-=======
-
-//
-// Form-Upload
-//
-
-/* Dropzone */
-.dropzone {
-  min-height: 230px;
-  border: 2px dashed $gray-400;
-  background: $card-bg;
-  border-radius: 6px;
-
-  .dz-message {
-    font-size: 24px;
-    width: 100%;
-    &:focus{
-      outline: none;
-    }
-  }
->>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 }

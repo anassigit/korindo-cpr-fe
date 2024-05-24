@@ -1,7 +1,2 @@
-<<<<<<< HEAD
 export const GET_SEND_DETAIL = "GET_SEND_DETAIL"
 export const RESP_GET_SEND_DETAIL = "RESP_GET_SEND_DETAIL"
-=======
-export const GET_SEND_DETAIL = "GET_SEND_DETAIL"
-export const RESP_GET_SEND_DETAIL = "RESP_GET_SEND_DETAIL"
->>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca

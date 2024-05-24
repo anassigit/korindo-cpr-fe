@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export const GET_DEPT = "GET_DEPT"
 export const RESP_GET_DEPT = "RESP_GET_DEPT"
 
@@ -27,34 +26,4 @@ export const RESET_MESSAGE = "RESET_MESSAGE"
 
 export const MSG_ADD = "MSG_ADD"
 export const MSG_EDIT = "MSG_EDIT"
-=======
-export const GET_DEPT = "GET_DEPT"
-export const RESP_GET_DEPT = "RESP_GET_DEPT"
-
-export const GET_MEMBER_LIST = "GET_MEMBER_LIST"
-export const RESP_GET_MEMBER_LIST = "RESP_GET_MEMBER_LIST"
-
-export const GET_SEARCH = "GET_SEARCH"
-export const RESP_GET_SEARCH = "RESP_GET_SEARCH"
-
-export const GET_RECOMMEND_LIST = "GET_RECOMMEND_LIST"
-export const RESP_GET_RECOMMEND_LIST = "RESP_GET_RECOMMEND_LIST"
-
-export const GET_RECOMMEND = "GET_RECOMMEND"
-export const RESP_GET_RECOMMEND = "RESP_GET_RECOMMEND"
-
-export const GET_STICKER_LIST = "GET_STICKER_LIST"
-export const RESP_GET_STICKER_LIST = "RESP_GET_STICKER_LIST"
-
-export const ADD_RECOMMEND = "ADD_RECOMMEND"
-export const EDIT_RECOMMEND = "EDIT_RECOMMEND"
-export const DELETE_RECOMMEND = "DELETE_RECOMMEND"
-
-export const SUBMIT_RECOMMEND = "SUBMIT_RECOMMEND"
-
-export const RESET_MESSAGE = "RESET_MESSAGE"
-
-export const MSG_ADD = "MSG_ADD"
-export const MSG_EDIT = "MSG_EDIT"
->>>>>>> f23d2f551239199f028f5e8870adde7381ad99ca
 export const MSG_DELETE = "MSG_DELETE"
