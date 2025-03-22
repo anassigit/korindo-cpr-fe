@@ -1,2 +1,0 @@
-export const GET_REPORT = "GET_REPORT"
-export const GET_REPORT_RESPONSE = "GET_REPORT_RESPONSE"
